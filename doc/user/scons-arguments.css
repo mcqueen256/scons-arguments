@@ -5,6 +5,22 @@ body {
   font-size: 10pt;
 }
 
+div.toc-title {
+  color: white;
+  background-color: #008;
+  font-size: 12pt;
+  font-family: sans-serif;
+  padding: 2px;
+}
+
+h1.title, h2.title, h3.title {
+  color: white;
+  background-color: #008;
+  font-size: 12pt;
+  font-family: sans-serif;
+  padding: 2px;
+}
+
 section.article {
   width: 800px;
   margin: auto;
