@@ -15,3 +15,5 @@
 # Test framework
 /QMTest
 /runtest.py
+# Stuff from other branches
+/README.md
