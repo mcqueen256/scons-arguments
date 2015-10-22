@@ -15,3 +15,7 @@
 # Test framework
 /QMTest
 /runtest.py
+# Stuff from gh-pages
+/index.html
+/api
+/user
