@@ -441,74 +441,74 @@ class Test__Arguments(unittest.TestCase):
 
     @classmethod
     def _mock_gdecls_supp_dicts_2(cls, gdecls):
-        def get_xxx_rename_dict(xxx):   return "rename_dict[%d]" % xxx
-        def get_xxx_resubst_dict(xxx):  return "resubst_dict[%d]" % xxx
-        def get_xxx_irename_dict(xxx):  return "irename_dict[%d]" % xxx
-        def get_xxx_iresubst_dict(xxx): return "iresubst_dict[%d]" % xxx
-        gdecls.get_xxx_rename_dict = mock.Mock(name = 'get_xxx_rename_dict', side_effect = get_xxx_rename_dict)
-        gdecls.get_xxx_irename_dict = mock.Mock(name = 'get_xxx_rename_dict', side_effect = get_xxx_irename_dict)
-        gdecls.get_xxx_resubst_dict = mock.Mock(name = 'get_xxx_rename_dict', side_effect = get_xxx_resubst_dict)
-        gdecls.get_xxx_iresubst_dict = mock.Mock(name = 'get_xxx_iresubst_dict',  side_effect = get_xxx_iresubst_dict)
+        def get_ns_rename_dict(xxx):   return "rename_dict[%d]" % xxx
+        def get_ns_resubst_dict(xxx):  return "resubst_dict[%d]" % xxx
+        def get_ns_irename_dict(xxx):  return "irename_dict[%d]" % xxx
+        def get_ns_iresubst_dict(xxx): return "iresubst_dict[%d]" % xxx
+        gdecls.get_ns_rename_dict = mock.Mock(name = 'get_ns_rename_dict', side_effect = get_ns_rename_dict)
+        gdecls.get_ns_irename_dict = mock.Mock(name = 'get_ns_rename_dict', side_effect = get_ns_irename_dict)
+        gdecls.get_ns_resubst_dict = mock.Mock(name = 'get_ns_rename_dict', side_effect = get_ns_resubst_dict)
+        gdecls.get_ns_iresubst_dict = mock.Mock(name = 'get_ns_iresubst_dict',  side_effect = get_ns_iresubst_dict)
         return gdecls
 
     @classmethod
     def _mock_gdecls_supp_dicts_3(cls, gdecls):
-        def get_xxx_rename_dict(xxx):   return None
-        def get_xxx_resubst_dict(xxx):  return None
-        def get_xxx_irename_dict(xxx):  return None
-        def get_xxx_iresubst_dict(xxx): return None
-        gdecls.get_xxx_rename_dict = mock.Mock(name = 'get_xxx_rename_dict', side_effect = get_xxx_rename_dict)
-        gdecls.get_xxx_irename_dict = mock.Mock(name = 'get_xxx_rename_dict', side_effect = get_xxx_irename_dict)
-        gdecls.get_xxx_resubst_dict = mock.Mock(name = 'get_xxx_rename_dict', side_effect = get_xxx_resubst_dict)
-        gdecls.get_xxx_iresubst_dict = mock.Mock(name = 'get_xxx_iresubst_dict',  side_effect = get_xxx_iresubst_dict)
+        def get_ns_rename_dict(xxx):   return None
+        def get_ns_resubst_dict(xxx):  return None
+        def get_ns_irename_dict(xxx):  return None
+        def get_ns_iresubst_dict(xxx): return None
+        gdecls.get_ns_rename_dict = mock.Mock(name = 'get_ns_rename_dict', side_effect = get_ns_rename_dict)
+        gdecls.get_ns_irename_dict = mock.Mock(name = 'get_ns_rename_dict', side_effect = get_ns_irename_dict)
+        gdecls.get_ns_resubst_dict = mock.Mock(name = 'get_ns_rename_dict', side_effect = get_ns_resubst_dict)
+        gdecls.get_ns_iresubst_dict = mock.Mock(name = 'get_ns_iresubst_dict',  side_effect = get_ns_iresubst_dict)
         return gdecls
 
     @classmethod
     def _mock_gdecls_supp_dicts_4(cls, gdecls):
-        def get_xxx_rename_dict(xxx):
+        def get_ns_rename_dict(xxx):
             return  [ {'a' : 'env_a'},    {'a' : 'var_a'},    {'a' : 'opt_a'}    ][xxx]
-        def get_xxx_resubst_dict(xxx):
+        def get_ns_resubst_dict(xxx):
             return  [ {'a' : '${env_a}'}, {'a' : '${var_a}'}, {'a' : '${opt_a}'} ][xxx]
-        def get_xxx_irename_dict(xxx):
+        def get_ns_irename_dict(xxx):
             return  [ {'env_a' : 'a'},    {'var_a' : 'a'},    {'opt_a' : 'a'}    ][xxx]
-        def get_xxx_iresubst_dict(xxx):
+        def get_ns_iresubst_dict(xxx):
             return  [ {'env_a' : '${a}'}, {'var_a' : '${a}'}, {'opt_a' : '${a}'} ][xxx]
-        gdecls.get_xxx_rename_dict = mock.Mock(name = 'get_xxx_rename_dict', side_effect = get_xxx_rename_dict)
-        gdecls.get_xxx_irename_dict = mock.Mock(name = 'get_xxx_rename_dict', side_effect = get_xxx_irename_dict)
-        gdecls.get_xxx_resubst_dict = mock.Mock(name = 'get_xxx_rename_dict', side_effect = get_xxx_resubst_dict)
-        gdecls.get_xxx_iresubst_dict = mock.Mock(name = 'get_xxx_iresubst_dict',  side_effect = get_xxx_iresubst_dict)
+        gdecls.get_ns_rename_dict = mock.Mock(name = 'get_ns_rename_dict', side_effect = get_ns_rename_dict)
+        gdecls.get_ns_irename_dict = mock.Mock(name = 'get_ns_rename_dict', side_effect = get_ns_irename_dict)
+        gdecls.get_ns_resubst_dict = mock.Mock(name = 'get_ns_rename_dict', side_effect = get_ns_resubst_dict)
+        gdecls.get_ns_iresubst_dict = mock.Mock(name = 'get_ns_iresubst_dict',  side_effect = get_ns_iresubst_dict)
         return gdecls
 
     @classmethod
     def _mock_gdecls_supp_dicts_5(cls, gdecls):
-        def get_xxx_rename_dict(xxx):
+        def get_ns_rename_dict(xxx):
             return  [ 
                 {'k' : 'env_k', 'e' : 'env_e', 'y' : 'env_y', 's' : 'env_s'}, 
                 {'k' : 'var_k', 'e' : 'var_e', 'y' : 'var_y', 's' : 'var_s'},
                 {'k' : 'opt_k', 'e' : 'opt_e', 'y' : 'opt_y', 's' : 'opt_s'}
             ][xxx]
-        def get_xxx_resubst_dict(xxx):
+        def get_ns_resubst_dict(xxx):
             return  [ 
                 {'k' : '${env_k}', 'e' : '${env_e}', 'y' : '${env_y}', 's' : '${env_s}'},
                 {'k' : '${var_k}', 'e' : '${var_e}', 'y' : '${var_y}', 's' : '${var_s}'},
                 {'k' : '${opt_k}', 'e' : '${opt_e}', 'y' : '${opt_y}', 's' : '${opt_s}'}
             ][xxx]
-        def get_xxx_irename_dict(xxx):
+        def get_ns_irename_dict(xxx):
             return  [
                 {'env_k' : 'k', 'env_e' : 'e', 'env_y' : 'y', 'env_s' : 's' },
                 {'var_k' : 'k', 'var_e' : 'e', 'var_y' : 'y', 'var_s' : 's' },
                 {'opt_k' : 'k', 'opt_e' : 'e', 'opt_y' : 'y', 'opt_s' : 's' }
             ][xxx]
-        def get_xxx_iresubst_dict(xxx):
+        def get_ns_iresubst_dict(xxx):
             return  [
                 {'env_k' : '${k}','env_e' : '${e}',  'env_y' : '${y}', 'env_s' : '${s}' },
                 {'var_k' : '${k}','var_e' : '${e}',  'var_y' : '${y}', 'var_s' : '${s}' },
                 {'opt_k' : '${k}','opt_e' : '${e}',  'opt_y' : '${y}', 'opt_s' : '${s}' },
             ][xxx]
-        gdecls.get_xxx_rename_dict = mock.Mock(name = 'get_xxx_rename_dict', side_effect = get_xxx_rename_dict)
-        gdecls.get_xxx_irename_dict = mock.Mock(name = 'get_xxx_rename_dict', side_effect = get_xxx_irename_dict)
-        gdecls.get_xxx_resubst_dict = mock.Mock(name = 'get_xxx_rename_dict', side_effect = get_xxx_resubst_dict)
-        gdecls.get_xxx_iresubst_dict = mock.Mock(name = 'get_xxx_iresubst_dict',  side_effect = get_xxx_iresubst_dict)
+        gdecls.get_ns_rename_dict = mock.Mock(name = 'get_ns_rename_dict', side_effect = get_ns_rename_dict)
+        gdecls.get_ns_irename_dict = mock.Mock(name = 'get_ns_rename_dict', side_effect = get_ns_irename_dict)
+        gdecls.get_ns_resubst_dict = mock.Mock(name = 'get_ns_rename_dict', side_effect = get_ns_resubst_dict)
+        gdecls.get_ns_iresubst_dict = mock.Mock(name = 'get_ns_iresubst_dict',  side_effect = get_ns_iresubst_dict)
         return gdecls
 
     def test___init___1(self):
@@ -593,44 +593,44 @@ class Test__Arguments(unittest.TestCase):
         # expect a copy of __keys, not __keys
         self.assertIsNot(gv.get_keys(), gv._Arguments__keys)
 
-    def test_get_xxx_key_ENV_x(self):
-        """_Arguments(gdecls).get_xxx_key(ENV, 'x') should be raise KeyError"""
+    def test_get_ns_key_ENV_x(self):
+        """_Arguments(gdecls).get_ns_key(ENV, 'x') should be raise KeyError"""
         gv = SConsArguments._Arguments(self._gdecls_mock_4())
         with self.assertRaises(KeyError):
-            gv.get_xxx_key(SConsArguments.ENV, 'x')
+            gv.get_ns_key(SConsArguments.ENV, 'x')
 
-    def test_get_xxx_key_VAR_x(self):
-        """_Arguments(gdecls).get_xxx_key(VAR, 'x') should be raise KeyError"""
+    def test_get_ns_key_VAR_x(self):
+        """_Arguments(gdecls).get_ns_key(VAR, 'x') should be raise KeyError"""
         gv = SConsArguments._Arguments(self._gdecls_mock_4())
         with self.assertRaises(KeyError):
-            gv.get_xxx_key(SConsArguments.VAR, 'x')
+            gv.get_ns_key(SConsArguments.VAR, 'x')
 
-    def test_get_xxx_key_OPT_x(self):
-        """_Arguments(gdecls).get_xxx_key(OPT, 'x') should be raise KeyError"""
+    def test_get_ns_key_OPT_x(self):
+        """_Arguments(gdecls).get_ns_key(OPT, 'x') should be raise KeyError"""
         gv = SConsArguments._Arguments(self._gdecls_mock_4())
         with self.assertRaises(KeyError):
-            gv.get_xxx_key(SConsArguments.OPT, 'x')
+            gv.get_ns_key(SConsArguments.OPT, 'x')
 
-    def test_get_xxx_key_123_a(self):
-        """_Arguments(gdecls).get_xxx_key(123, 'a') should be raise KeyError"""
+    def test_get_ns_key_123_a(self):
+        """_Arguments(gdecls).get_ns_key(123, 'a') should be raise KeyError"""
         gv = SConsArguments._Arguments(self._gdecls_mock_4())
         with self.assertRaises(IndexError):
-            gv.get_xxx_key(123, 'a')
+            gv.get_ns_key(123, 'a')
 
-    def test_get_xxx_key_ENV_a(self):
-        """_Arguments(gdecls).get_xxx_key(ENV, 'a') should == 'env_a'"""
+    def test_get_ns_key_ENV_a(self):
+        """_Arguments(gdecls).get_ns_key(ENV, 'a') should == 'env_a'"""
         gv = SConsArguments._Arguments(self._gdecls_mock_4())
-        self.assertEqual(gv.get_xxx_key(SConsArguments.ENV, 'a'), 'env_a')
+        self.assertEqual(gv.get_ns_key(SConsArguments.ENV, 'a'), 'env_a')
 
-    def test_get_xxx_key_VAR_a(self):
-        """_Arguments(gdecls).get_xxx_key(VAR, 'a') should == 'var_a'"""
+    def test_get_ns_key_VAR_a(self):
+        """_Arguments(gdecls).get_ns_key(VAR, 'a') should == 'var_a'"""
         gv = SConsArguments._Arguments(self._gdecls_mock_4())
-        self.assertEqual(gv.get_xxx_key(SConsArguments.VAR, 'a'), 'var_a')
+        self.assertEqual(gv.get_ns_key(SConsArguments.VAR, 'a'), 'var_a')
 
-    def test_get_xxx_key_OPT_a(self):
-        """_Arguments(gdecls).get_xxx_key(OPT, 'a') should == 'opt_a'"""
+    def test_get_ns_key_OPT_a(self):
+        """_Arguments(gdecls).get_ns_key(OPT, 'a') should == 'opt_a'"""
         gv = SConsArguments._Arguments(self._gdecls_mock_4())
-        self.assertEqual(gv.get_xxx_key(SConsArguments.OPT, 'a'), 'opt_a')
+        self.assertEqual(gv.get_ns_key(SConsArguments.OPT, 'a'), 'opt_a')
 
     def test_env_key_x(self):
         """_Arguments(gdecls).env_key('x') should raise KeyError"""

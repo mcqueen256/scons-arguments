@@ -44,59 +44,59 @@ list.append( SConsArguments.DeclareArguments({'x' : x, 'y' : y}) )
 i = 0
 for v in list:
     for c in ['x', 'y']:
-        print "ARGS[%d][%r].has_xxx_decl(ENV): %r" % (i, c, v[c].has_xxx_decl(SConsArguments.ENV))
-        print "ARGS[%d][%r].has_xxx_decl(VAR): %r" % (i, c, v[c].has_xxx_decl(SConsArguments.VAR))
-        print "ARGS[%d][%r].has_xxx_decl(OPT): %r" % (i, c, v[c].has_xxx_decl(SConsArguments.OPT))
-        print "ARGS[%d][%r].get_xxx_key(ENV): %r" % (i, c, v[c].get_xxx_key(SConsArguments.ENV))
-        print "ARGS[%d][%r].get_xxx_key(VAR): %r" % (i, c, v[c].get_xxx_key(SConsArguments.VAR))
-        print "ARGS[%d][%r].get_xxx_key(OPT): %r" % (i, c, v[c].get_xxx_key(SConsArguments.OPT))
-        print "ARGS[%d][%r].get_xxx_default(ENV): %r" % (i, c, v[c].get_xxx_default(SConsArguments.ENV))
-        print "ARGS[%d][%r].get_xxx_default(VAR): %r" % (i, c, v[c].get_xxx_default(SConsArguments.VAR))
-        print "ARGS[%d][%r].get_xxx_default(OPT): %r" % (i, c, v[c].get_xxx_default(SConsArguments.OPT))
+        print "ARGS[%d][%r].has_ns_decl(ENV): %r" % (i, c, v[c].has_ns_decl(SConsArguments.ENV))
+        print "ARGS[%d][%r].has_ns_decl(VAR): %r" % (i, c, v[c].has_ns_decl(SConsArguments.VAR))
+        print "ARGS[%d][%r].has_ns_decl(OPT): %r" % (i, c, v[c].has_ns_decl(SConsArguments.OPT))
+        print "ARGS[%d][%r].get_ns_key(ENV): %r" % (i, c, v[c].get_ns_key(SConsArguments.ENV))
+        print "ARGS[%d][%r].get_ns_key(VAR): %r" % (i, c, v[c].get_ns_key(SConsArguments.VAR))
+        print "ARGS[%d][%r].get_ns_key(OPT): %r" % (i, c, v[c].get_ns_key(SConsArguments.OPT))
+        print "ARGS[%d][%r].get_ns_default(ENV): %r" % (i, c, v[c].get_ns_default(SConsArguments.ENV))
+        print "ARGS[%d][%r].get_ns_default(VAR): %r" % (i, c, v[c].get_ns_default(SConsArguments.VAR))
+        print "ARGS[%d][%r].get_ns_default(OPT): %r" % (i, c, v[c].get_ns_default(SConsArguments.OPT))
     i += 1
 """)
 test.run()
 
 lines = [
-        "ARGS[0]['x'].has_xxx_decl(ENV): True",
-        "ARGS[0]['x'].has_xxx_decl(VAR): True",
-        "ARGS[0]['x'].has_xxx_decl(OPT): True",
-        "ARGS[0]['x'].get_xxx_key(ENV): 'env_x'",
-        "ARGS[0]['x'].get_xxx_key(VAR): 'var_x'",
-        "ARGS[0]['x'].get_xxx_key(OPT): 'opt_x'",
-        "ARGS[0]['x'].get_xxx_default(ENV): 'x default'",
-        "ARGS[0]['x'].get_xxx_default(VAR): 'x default'",
-        "ARGS[0]['x'].get_xxx_default(OPT): None",
+        "ARGS[0]['x'].has_ns_decl(ENV): True",
+        "ARGS[0]['x'].has_ns_decl(VAR): True",
+        "ARGS[0]['x'].has_ns_decl(OPT): True",
+        "ARGS[0]['x'].get_ns_key(ENV): 'env_x'",
+        "ARGS[0]['x'].get_ns_key(VAR): 'var_x'",
+        "ARGS[0]['x'].get_ns_key(OPT): 'opt_x'",
+        "ARGS[0]['x'].get_ns_default(ENV): 'x default'",
+        "ARGS[0]['x'].get_ns_default(VAR): 'x default'",
+        "ARGS[0]['x'].get_ns_default(OPT): None",
 
-        "ARGS[0]['y'].has_xxx_decl(ENV): True",
-        "ARGS[0]['y'].has_xxx_decl(VAR): True",
-        "ARGS[0]['y'].has_xxx_decl(OPT): True",
-        "ARGS[0]['y'].get_xxx_key(ENV): 'env_y'",
-        "ARGS[0]['y'].get_xxx_key(VAR): 'var_y'",
-        "ARGS[0]['y'].get_xxx_key(OPT): 'opt_y'",
-        "ARGS[0]['y'].get_xxx_default(ENV): 'y default'",
-        "ARGS[0]['y'].get_xxx_default(VAR): 'y default'",
-        "ARGS[0]['y'].get_xxx_default(OPT): None",
+        "ARGS[0]['y'].has_ns_decl(ENV): True",
+        "ARGS[0]['y'].has_ns_decl(VAR): True",
+        "ARGS[0]['y'].has_ns_decl(OPT): True",
+        "ARGS[0]['y'].get_ns_key(ENV): 'env_y'",
+        "ARGS[0]['y'].get_ns_key(VAR): 'var_y'",
+        "ARGS[0]['y'].get_ns_key(OPT): 'opt_y'",
+        "ARGS[0]['y'].get_ns_default(ENV): 'y default'",
+        "ARGS[0]['y'].get_ns_default(VAR): 'y default'",
+        "ARGS[0]['y'].get_ns_default(OPT): None",
 
-        "ARGS[1]['x'].has_xxx_decl(ENV): True",
-        "ARGS[1]['x'].has_xxx_decl(VAR): True",
-        "ARGS[1]['x'].has_xxx_decl(OPT): True",
-        "ARGS[1]['x'].get_xxx_key(ENV): 'env_x'",
-        "ARGS[1]['x'].get_xxx_key(VAR): 'var_x'",
-        "ARGS[1]['x'].get_xxx_key(OPT): 'opt_x'",
-        "ARGS[1]['x'].get_xxx_default(ENV): 'x default'",
-        "ARGS[1]['x'].get_xxx_default(VAR): 'x default'",
-        "ARGS[1]['x'].get_xxx_default(OPT): None",
+        "ARGS[1]['x'].has_ns_decl(ENV): True",
+        "ARGS[1]['x'].has_ns_decl(VAR): True",
+        "ARGS[1]['x'].has_ns_decl(OPT): True",
+        "ARGS[1]['x'].get_ns_key(ENV): 'env_x'",
+        "ARGS[1]['x'].get_ns_key(VAR): 'var_x'",
+        "ARGS[1]['x'].get_ns_key(OPT): 'opt_x'",
+        "ARGS[1]['x'].get_ns_default(ENV): 'x default'",
+        "ARGS[1]['x'].get_ns_default(VAR): 'x default'",
+        "ARGS[1]['x'].get_ns_default(OPT): None",
 
-        "ARGS[1]['y'].has_xxx_decl(ENV): True",
-        "ARGS[1]['y'].has_xxx_decl(VAR): True",
-        "ARGS[1]['y'].has_xxx_decl(OPT): True",
-        "ARGS[1]['y'].get_xxx_key(ENV): 'env_y'",
-        "ARGS[1]['y'].get_xxx_key(VAR): 'var_y'",
-        "ARGS[1]['y'].get_xxx_key(OPT): 'opt_y'",
-        "ARGS[1]['y'].get_xxx_default(ENV): 'y default'",
-        "ARGS[1]['y'].get_xxx_default(VAR): 'y default'",
-        "ARGS[1]['y'].get_xxx_default(OPT): None",
+        "ARGS[1]['y'].has_ns_decl(ENV): True",
+        "ARGS[1]['y'].has_ns_decl(VAR): True",
+        "ARGS[1]['y'].has_ns_decl(OPT): True",
+        "ARGS[1]['y'].get_ns_key(ENV): 'env_y'",
+        "ARGS[1]['y'].get_ns_key(VAR): 'var_y'",
+        "ARGS[1]['y'].get_ns_key(OPT): 'opt_y'",
+        "ARGS[1]['y'].get_ns_default(ENV): 'y default'",
+        "ARGS[1]['y'].get_ns_default(VAR): 'y default'",
+        "ARGS[1]['y'].get_ns_default(OPT): None",
 ]
 
 test.must_contain_all_lines(test.stdout(), lines)

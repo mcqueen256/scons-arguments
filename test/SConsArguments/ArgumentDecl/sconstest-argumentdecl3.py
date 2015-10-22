@@ -43,33 +43,33 @@ list.append( SConsArguments.ArgumentDecl(var_decl = ('var_x', 'help for var_x', 
 
 i = 0
 for v in list:
-    print "ARG[%d].has_xxx_decl(ENV): %r"    % (i, v.has_xxx_decl(SConsArguments.ENV))
-    print "ARG[%d].has_xxx_decl(VAR): %r"    % (i, v.has_xxx_decl(SConsArguments.VAR))
-    print "ARG[%d].has_xxx_decl(OPT): %r"    % (i, v.has_xxx_decl(SConsArguments.OPT))
-    print "ARG[%d].get_xxx_key(VAR): %r"     % (i, v.get_xxx_key(SConsArguments.VAR))
-    print "ARG[%d].get_xxx_default(VAR): %r" % (i, v.get_xxx_default(SConsArguments.VAR))
+    print "ARG[%d].has_ns_decl(ENV): %r"    % (i, v.has_ns_decl(SConsArguments.ENV))
+    print "ARG[%d].has_ns_decl(VAR): %r"    % (i, v.has_ns_decl(SConsArguments.VAR))
+    print "ARG[%d].has_ns_decl(OPT): %r"    % (i, v.has_ns_decl(SConsArguments.OPT))
+    print "ARG[%d].get_ns_key(VAR): %r"     % (i, v.get_ns_key(SConsArguments.VAR))
+    print "ARG[%d].get_ns_default(VAR): %r" % (i, v.get_ns_default(SConsArguments.VAR))
     i += 1
 """)
 test.run()
 
 lines = [
-  "ARG[0].has_xxx_decl(ENV): False",
-  "ARG[0].has_xxx_decl(VAR): True",
-  "ARG[0].has_xxx_decl(OPT): False",
-  "ARG[0].get_xxx_key(VAR): 'var_x'",
-  "ARG[0].get_xxx_default(VAR): 'var x default'",
+  "ARG[0].has_ns_decl(ENV): False",
+  "ARG[0].has_ns_decl(VAR): True",
+  "ARG[0].has_ns_decl(OPT): False",
+  "ARG[0].get_ns_key(VAR): 'var_x'",
+  "ARG[0].get_ns_default(VAR): 'var x default'",
 
-  "ARG[1].has_xxx_decl(ENV): False",
-  "ARG[1].has_xxx_decl(VAR): True",
-  "ARG[1].has_xxx_decl(OPT): False",
-  "ARG[1].get_xxx_key(VAR): 'var_x'",
-  "ARG[1].get_xxx_default(VAR): 'var x default'",
+  "ARG[1].has_ns_decl(ENV): False",
+  "ARG[1].has_ns_decl(VAR): True",
+  "ARG[1].has_ns_decl(OPT): False",
+  "ARG[1].get_ns_key(VAR): 'var_x'",
+  "ARG[1].get_ns_default(VAR): 'var x default'",
 
-  "ARG[2].has_xxx_decl(ENV): False",
-  "ARG[2].has_xxx_decl(VAR): True",
-  "ARG[2].has_xxx_decl(OPT): False",
-  "ARG[2].get_xxx_key(VAR): 'var_x'",
-  "ARG[2].get_xxx_default(VAR): 'var x default'",
+  "ARG[2].has_ns_decl(ENV): False",
+  "ARG[2].has_ns_decl(VAR): True",
+  "ARG[2].has_ns_decl(OPT): False",
+  "ARG[2].get_ns_key(VAR): 'var_x'",
+  "ARG[2].get_ns_default(VAR): 'var x default'",
 ]
 
 test.must_contain_all_lines(test.stdout(), lines)

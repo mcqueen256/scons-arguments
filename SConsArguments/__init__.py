@@ -675,7 +675,7 @@ class _Arguments(object):
         ``VAR`` or ``OPT`` constants which represent selection of
         "corresponding Environment construction variable", "corresponding SCons
         command-line variable" or "corresponding SCons command-line option"
-        respectively.  So, for example the call ``args.get_xxx_key(ENV,"foo")``
+        respectively.  So, for example the call ``args.get_ns_key(ENV,"foo")``
         returns the key of construction variable in SCons environment (``ENV``)
         which is related to our *Argument* ``foo``.
 
@@ -713,11 +713,11 @@ class _Arguments(object):
         declarations."""
         self.__reset_supp_dicts()
         if gdecls is not None:
-            for xxx in range(0,ALL):
-                self.__rename[xxx] = gdecls.get_xxx_rename_dict(xxx)
-                self.__irename[xxx] = gdecls.get_xxx_irename_dict(xxx)
-                self.__resubst[xxx] = gdecls.get_xxx_resubst_dict(xxx)
-                self.__iresubst[xxx] = gdecls.get_xxx_iresubst_dict(xxx)
+            for ns in range(0,ALL):
+                self.__rename[ns] = gdecls.get_ns_rename_dict(ns)
+                self.__irename[ns] = gdecls.get_ns_irename_dict(ns)
+                self.__resubst[ns] = gdecls.get_ns_resubst_dict(ns)
+                self.__iresubst[ns] = gdecls.get_ns_iresubst_dict(ns)
 
     #========================================================================
     def VarEnvProxy(self, env, *args, **kw):
@@ -758,19 +758,19 @@ class _Arguments(object):
         return self.__keys[:]
 
     #========================================================================
-    def get_xxx_key(self, xxx, key):
+    def get_ns_key(self, ns, key):
         #--------------------------------------------------------------------
         """Get the key identifying a variable related to *Argument* identified
         by ``key``
 
         :Parameters:
-            xxx : int
+            ns : int
                 one of `ENV`, `VAR` or `OPT`,
             key : string
                 the key identifying *Argument* of choice.
         """
         #--------------------------------------------------------------------
-        return self.__rename[xxx][key]
+        return self.__rename[ns][key]
 
     #========================================================================
     def env_key(self, key):
@@ -1302,11 +1302,11 @@ class _ArgumentDecl(object):
 
     **Note**:
 
-        In several places we use ``xxx`` as placeholder for one of the ``ENV``,
+        In several places we use ``ns`` as placeholder for one of the ``ENV``,
         ``VAR`` or ``OPT`` constants which represent selection of
         "corresponding Environment construction variable", "corresponding SCons
         command-line variable" or "corresponding SCons command-line option"
-        respectively.  So, for example the call ``decl.set_xxx_decl(ENV,decl)``
+        respectively.  So, for example the call ``decl.set_ns_decl(ENV,decl)``
         stores the declaration of corresponding construction variable in a
         SCons environment (``ENV``).
     """
@@ -1335,30 +1335,30 @@ class _ArgumentDecl(object):
         .. _SCons command-line variable: http://www.scons.org/doc/HTML/scons-user.html#sect-command-line-variables
         """
         #--------------------------------------------------------------------
-        self.__xxx_args = [None,None,None]
+        self.__ns_args = [None,None,None]
         if env_decl: self._set_env_decl(env_decl)
         if var_decl: self._set_var_decl(var_decl)
         if opt_decl: self._set_opt_decl(opt_decl)
 
     #========================================================================
-    def set_xxx_decl(self, xxx, decl):
+    def set_ns_decl(self, ns, decl):
         #--------------------------------------------------------------------
-        """Set declaration of related `xxx` variable, where `xxx` is one of
+        """Set declaration of related `ns` variable, where `ns` is one of
         `ENV`, `VAR` or `OPT`.
 
         This functions just dispatches the job between `_set_env_decl()`,
-        `_set_var_decl()` and `_set_opt_decl()` according to `xxx` argument.
+        `_set_var_decl()` and `_set_opt_decl()` according to `ns` argument.
 
         :Parameters:
-            xxx : int
+            ns : int
                 one of `ENV`, `VAR` or `OPT`,
             decl
                 declaration parameters passed to particular setter function.
         """
         #--------------------------------------------------------------------
-        if xxx == ENV:     self._set_env_decl(decl)
-        elif xxx == VAR:   self._set_var_decl(decl)
-        elif xxx == OPT:   self._set_opt_decl(decl)
+        if ns == ENV:     self._set_env_decl(decl)
+        elif ns == VAR:   self._set_var_decl(decl)
+        elif ns == OPT:   self._set_opt_decl(decl)
         else:               raise IndexError("index out of range")
 
     #========================================================================
@@ -1394,7 +1394,7 @@ class _ArgumentDecl(object):
         else:
             raise TypeError("'decl' must be tuple, dictionary or string, %r " \
                             "is not allowed" % type(decl).__name__)
-        self.__xxx_args[ENV] = decl
+        self.__ns_args[ENV] = decl
 
     #========================================================================
     def _set_var_decl(self, decl):
@@ -1451,7 +1451,7 @@ class _ArgumentDecl(object):
             raise TypeError("decl['kw'] must be a dictionary, %r is not " \
                             "allowed" % type(kw).__name__)
         kw.update(args)
-        self.__xxx_args[VAR] = kw
+        self.__ns_args[VAR] = kw
 
     #========================================================================
     def _set_opt_decl(self, decl):
@@ -1528,86 +1528,86 @@ class _ArgumentDecl(object):
                             "is not allowed" % type(decl).__name__)
         if 'dest' not in kw:
             raise ValueError("'dest' parameter is missing")
-        self.__xxx_args[OPT] = (names, kw)
+        self.__ns_args[OPT] = (names, kw)
 
     #========================================================================
-    def has_xxx_decl(self, xxx):
+    def has_ns_decl(self, ns):
         #--------------------------------------------------------------------
-        """Test if declaration of corresponding `xxx` variable was provided,
-        where `xxx` is one of `ENV`, `VAR` or `OPT`.
+        """Test if declaration of corresponding `ns` variable was provided,
+        where `ns` is one of `ENV`, `VAR` or `OPT`.
 
         :Parameters:
-            xxx : int
+            ns : int
                 one of `ENV`, `VAR` or `OPT`
         :Returns:
             ``True`` if the declaration exists, or ``False`` otherwise.
         """
         #--------------------------------------------------------------------
-        return self.__xxx_args[xxx] is not None
+        return self.__ns_args[ns] is not None
 
     #========================================================================
-    def get_xxx_key(self, xxx):
+    def get_ns_key(self, ns):
         #--------------------------------------------------------------------
-        """Get the declaration parameters for the related `xxx` variable, where
-        `xxx` is one of `ENV`, `VAR` or `OPT`.
+        """Get the declaration parameters for the related `ns` variable, where
+        `ns` is one of `ENV`, `VAR` or `OPT`.
 
         :Parameters:
-            xxx : int
+            ns : int
                 one of `ENV`, `VAR` or `OPT`
         :Returns:
-            ``decl`` parameters stored by last call `set_xxx_decl(xxx,decl)`.
+            ``decl`` parameters stored by last call `set_ns_decl(ns,decl)`.
         """
         #--------------------------------------------------------------------
-        if xxx == ENV:     return self.__xxx_args[ENV].keys()[0]
-        elif xxx == VAR:   return self.__xxx_args[VAR]['key']
-        elif xxx == OPT:   return self.__xxx_args[OPT][1]['dest']
+        if ns == ENV:     return self.__ns_args[ENV].keys()[0]
+        elif ns == VAR:   return self.__ns_args[VAR]['key']
+        elif ns == OPT:   return self.__ns_args[OPT][1]['dest']
         else:               raise IndexError("index out of range")
 
     #========================================================================
-    def _set_xxx_key(self, xxx, key):
+    def _set_ns_key(self, ns, key):
         #--------------------------------------------------------------------
-        """Define the identifying key of corresponding `xxx` variable, where
-        `xxx` is one of `ENV`, `VAR` or `OPT`.
+        """Define the identifying key of corresponding `ns` variable, where
+        `ns` is one of `ENV`, `VAR` or `OPT`.
 
         **Warning**
             This function should not be used by users. To change the key of
-            corresponding `xxx` variable, use `_ArgumentDecls.set_xxx_key()`.
+            corresponding `ns` variable, use `_ArgumentDecls.set_ns_key()`.
 
         :Parameters:
-            xxx : int
+            ns : int
                 one of `ENV`, `VAR` or `OPT`
             key : string
                 new key for the corresponding variable.
         """
         #--------------------------------------------------------------------
-        if xxx == ENV:
+        if ns == ENV:
             old_key = self.get_env_key()
-            self.__xxx_args[ENV] = { key : self.__xxx_args[ENV][old_key] }
-        elif xxx == VAR:
-            self.__xxx_args[VAR]['key'] = key
-        elif xxx == OPT:
-            self.__xxx_args[OPT][1]['dest'] = key
+            self.__ns_args[ENV] = { key : self.__ns_args[ENV][old_key] }
+        elif ns == VAR:
+            self.__ns_args[VAR]['key'] = key
+        elif ns == OPT:
+            self.__ns_args[OPT][1]['dest'] = key
         else:
             raise IndexError("index out of range")
 
-    def get_xxx_default(self, xxx):
+    def get_ns_default(self, ns):
         #--------------------------------------------------------------------
-        """Get the default value of corresponding `xxx` variable, where `xxx`
+        """Get the default value of corresponding `ns` variable, where `ns`
         is one of `ENV`, `VAR`, `OPT`.
 
         :Parameters:
-            xxx : int
+            ns : int
                 one of `ENV`, `VAR` or `OPT`
         """
         #--------------------------------------------------------------------
-        if xxx == ENV:
-            return self.__xxx_args[ENV].values()[0]
-        elif xxx == VAR:
-            args = self.__xxx_args[VAR]
+        if ns == ENV:
+            return self.__ns_args[ENV].values()[0]
+        elif ns == VAR:
+            args = self.__ns_args[VAR]
             try:             return args['default']
             except KeyError: return None
-        elif xxx == OPT:
-            args = self.__xxx_args[OPT]
+        elif ns == OPT:
+            args = self.__ns_args[OPT]
             kw = args[1]
             try: return kw['default']
             except KeyError: return None
@@ -1615,55 +1615,55 @@ class _ArgumentDecl(object):
             raise IndexError("index out of range")
 
     #========================================================================
-    def set_xxx_default(self, xxx, default):
+    def set_ns_default(self, ns, default):
         #--------------------------------------------------------------------
-        """Define the default value of corresponding `xxx` variable, where
-        `xxx` is one of `ENV`, `VAR`, `OPT`.
+        """Define the default value of corresponding `ns` variable, where
+        `ns` is one of `ENV`, `VAR`, `OPT`.
 
         :Parameters:
-            xxx : int
+            ns : int
                 one of `ENV`, `VAR` or `OPT`
             default
                 the new default value
         """
         #--------------------------------------------------------------------
-        if xxx == ENV:
-            self.__xxx_args[ENV] = { self.get_xxx_key(xxx) : default }
-        elif xxx == VAR:
-            self.__xxx_args[VAR]['default'] = default
-        elif xxx == OPT:
-            self.__xxx_args[OPT][1]['default'] = default
+        if ns == ENV:
+            self.__ns_args[ENV] = { self.get_ns_key(ns) : default }
+        elif ns == VAR:
+            self.__ns_args[VAR]['default'] = default
+        elif ns == OPT:
+            self.__ns_args[OPT][1]['default'] = default
         else:
             raise IndexError("index out of range")
 
     #========================================================================
-    def _add_to_xxx(self, xxx, *args,**kw):
+    def _add_to_ns(self, ns, *args,**kw):
         #--------------------------------------------------------------------
-        """Add new corresponding `xxx` variable, where `xxx` is one of `ENV`,
+        """Add new corresponding `ns` variable, where `ns` is one of `ENV`,
         `VAR` or `OPT`; use declaration stored in this `_ArgumentDecl` object.
 
         **Examples**:
 
-            - ``decl._add_to_xxx(ENV,env)`` creates new construction variable
+            - ``decl._add_to_ns(ENV,env)`` creates new construction variable
               in `SCons environment`_ ``env``,
-            - ``decl._add_to_xxx(VAR,vars)`` creates new command-line variable
+            - ``decl._add_to_ns(VAR,vars)`` creates new command-line variable
               in `SCons variables`_ ``vars``
-            - ``decl._add_to_xxx(OPT)`` creates a corresponding SCons
+            - ``decl._add_to_ns(OPT)`` creates a corresponding SCons
               `command-line option`_.
 
         :Parameters:
-            xxx : int
+            ns : int
                 one of `ENV`, `VAR` or `OPT`
             args, kw
-                additional arguments and keywords, depend on `xxx`:
+                additional arguments and keywords, depend on `ns`:
 
-                - if ``xxx == ENV``, then ``env=args[0]`` is assumed to be
+                - if ``ns == ENV``, then ``env=args[0]`` is assumed to be
                   a `SCons environment`_ to create construction variable for,
-                - if ``xxx == VAR`, then ``vars=args[0]`` is assumed to be
+                - if ``ns == VAR`, then ``vars=args[0]`` is assumed to be
                   a SCons `Variables`_ object, ``*args[1:]`` are used as
                   positional arguments to `vars.Add()`_ and ``**kw`` are
                   passed to `vars.Add()`_ as additional keywords,
-                - if ``xxx == OPT``, the arguments and keywords are not used.
+                - if ``ns == OPT``, the arguments and keywords are not used.
 
         .. _SCons environment:  http://www.scons.org/doc/HTML/scons-user.html#chap-environments
         .. _SCons variables: http://www.scons.org/doc/HTML/scons-user.html#sect-command-line-variables
@@ -1673,39 +1673,39 @@ class _ArgumentDecl(object):
         """
         #--------------------------------------------------------------------
         from SCons.Script.Main import AddOption
-        if xxx == ENV:
-            if self.__xxx_args[ENV].values()[0] is not _undef:
+        if ns == ENV:
+            if self.__ns_args[ENV].values()[0] is not _undef:
                 env = args[0]
-                env.SetDefault(**self.__xxx_args[ENV])
-        elif xxx == VAR:
+                env.SetDefault(**self.__ns_args[ENV])
+        elif ns == VAR:
             variables = args[0]
-            kw2 = self.__xxx_args[VAR].copy()
+            kw2 = self.__ns_args[VAR].copy()
             kw2.update(kw)
             return variables.Add(*args[1:],**kw2)
-        elif xxx == OPT:
-            AddOption(*self.__xxx_args[OPT][0], **self.__xxx_args[OPT][1])
+        elif ns == OPT:
+            AddOption(*self.__ns_args[OPT][0], **self.__ns_args[OPT][1])
         else:
             raise IndexError("index out of range")
 
     #========================================================================
-    def _safe_add_to_xxx(self, xxx, *args):
+    def _safe_add_to_ns(self, ns, *args):
         #--------------------------------------------------------------------
-        """Same as `_add_to_xxx()`, but does not raise exceptions when the
-        corresponding `xxx` variable is not declared in this `_ArgumentDecl`
+        """Same as `_add_to_ns()`, but does not raise exceptions when the
+        corresponding `ns` variable is not declared in this `_ArgumentDecl`
         object.
 
         :Parameters:
-            xxx : int
+            ns : int
                 one of `ENV`, `VAR` or `OPT`
 
         :Returns:
             returns ``True`` is new variable has been created or ``False`` if
-            there is no declaration for corresponding `xxx` variable in this
+            there is no declaration for corresponding `ns` variable in this
             object.
         """
         #--------------------------------------------------------------------
-        if self.has_xxx_decl(xxx):
-            self._add_to_xxx(xxx, *args)
+        if self.has_ns_decl(ns):
+            self._add_to_ns(ns, *args)
             return True
         else:
             return False
@@ -1889,12 +1889,12 @@ class _ArgumentDecls(dict):
 
     **Note**:
 
-        In several places we use ``xxx`` as placeholder for one of the ``ENV``,
+        In several places we use ``ns`` as placeholder for one of the ``ENV``,
         ``VAR`` or ``OPT`` constants which represent selection of
         "corresponding Environment construction variable", "corresponding SCons
         command line variable" or "corresponding SCons command line option"
         respectively.  So, for example the call
-        ``decls.set_xxx_key(ENV,"foo","ENV_FOO")`` defines the name
+        ``decls.set_ns_key(ENV,"foo","ENV_FOO")`` defines the name
         ``"ENV_FOO"`` to be used for construction variable in SCons environment
         (``ENV``) that will correspond to our *Argument* named ``foo``.
     """
@@ -1943,73 +1943,73 @@ class _ArgumentDecls(dict):
         for x in self.iteritems(): self.__append_decl_to_supp_dicts(*x)
 
     #========================================================================
-    def __replace_xxx_key_in_supp_dicts(self, xxx, key, xxx_key):
+    def __replace_ns_key_in_supp_dicts(self, ns, key, ns_key):
         #--------------------------------------------------------------------
         """Replace in the supplementary dicts the key identifying corresponding
-        `xxx` variable (where `xxx` is one of `ENV`, `VAR` or `OPT`).
+        `ns` variable (where `ns` is one of `ENV`, `VAR` or `OPT`).
 
-        If the corresponding `xxx` variable identified by ``xxx_key`` already
+        If the corresponding `ns` variable identified by ``ns_key`` already
         exists in the supplementary dictionaries, the supplementary
         dictionaries are left unaltered.
 
         :Parameters:
-            xxx : int
+            ns : int
                 selector of the corresponding variable being renamed; one of
                 `ENV`, `VAR` or `OPT`,
             key : string
                 the key identifying *Argument* declared within this
                 `_ArgumentDecls` dictionary, which subject to modification,
-            xxx_key : string
-                new name for the corresponding `xxx` variable.
+            ns_key : string
+                new name for the corresponding `ns` variable.
         """
         #--------------------------------------------------------------------
-        try: old_key = self.__rename[xxx][key]
+        try: old_key = self.__rename[ns][key]
         except KeyError: old_key = _notfound
-        if xxx_key != old_key:
-            self.__append_xxx_key_to_supp_dicts(xxx, key, xxx_key)
-            try: del self.__irename[xxx][old_key]
+        if ns_key != old_key:
+            self.__append_ns_key_to_supp_dicts(ns, key, ns_key)
+            try: del self.__irename[ns][old_key]
             except KeyError: pass
 
     #========================================================================
-    def __append_xxx_key_to_supp_dicts(self, xxx, key, xxx_key):
+    def __append_ns_key_to_supp_dicts(self, ns, key, ns_key):
         #--------------------------------------------------------------------
-        """Add to supplementary dictionaries the new `xxx` variable
+        """Add to supplementary dictionaries the new `ns` variable
         corresponding to *Argument* identified by `key`.
 
-        If the corresponding `xxx` variable identified by ``xxx_key`` already
+        If the corresponding `ns` variable identified by ``ns_key`` already
         exists in the supplementary dictionaries, a ``RuntimeError`` is raised.
 
         :Parameters:
-            xxx : int
+            ns : int
                 selector of the corresponding variable being renamed; one of
                 `ENV`, `VAR` or `OPT`,
             key : string
                 the key identifying *Argument* within this `_ArgumentDecls`
                 dictionary, which subject to modification,
-            xxx_key : string
-                new name for the corresponding `xxx` variable.
+            ns_key : string
+                new name for the corresponding `ns` variable.
         """
         #--------------------------------------------------------------------
-        if xxx_key in self.__irename[xxx]:
-            raise RuntimeError("variable %r is already declared" % xxx_key)
-        self.__rename[xxx][key] = xxx_key
-        self.__irename[xxx][xxx_key] = key
+        if ns_key in self.__irename[ns]:
+            raise RuntimeError("variable %r is already declared" % ns_key)
+        self.__rename[ns][key] = ns_key
+        self.__irename[ns][ns_key] = key
 
     #========================================================================
     def __append_decl_to_supp_dicts(self, key, decl):
-        for xxx in range(0,ALL):
-            if decl.has_xxx_decl(xxx):
-                xxx_key = decl.get_xxx_key(xxx)
-                self.__append_xxx_key_to_supp_dicts(xxx, key, xxx_key)
+        for ns in range(0,ALL):
+            if decl.has_ns_decl(ns):
+                ns_key = decl.get_ns_key(ns)
+                self.__append_ns_key_to_supp_dicts(ns, key, ns_key)
         return decl
 
     #========================================================================
     def __del_from_supp_dicts(self, key):
-        for xxx in range(0,ALL):
-            if key in self.__rename[xxx]:
-                xxx_key = self.__rename[xxx][key]
-                del self.__rename[xxx][key]
-                del self.__irename[xxx][xxx_key]
+        for ns in range(0,ALL):
+            if key in self.__rename[ns]:
+                ns_key = self.__rename[ns][key]
+                del self.__rename[ns][key]
+                del self.__irename[ns][ns_key]
 
     #========================================================================
     @staticmethod
@@ -2081,47 +2081,47 @@ class _ArgumentDecls(dict):
         return super(_ArgumentDecls,self).__delitem__(key)
 
     #========================================================================
-    def get_xxx_rename_dict(self, xxx):
+    def get_ns_rename_dict(self, ns):
         #--------------------------------------------------------------------
         """Get the dictionary mapping variable names from *Argument* namespace
-        to `xxx` (where `xxx` is one of `ENV`, `VAR` or `OPT`).
+        to `ns` (where `ns` is one of `ENV`, `VAR` or `OPT`).
 
         :Parameters:
-            xxx : int
+            ns : int
                 selector of the corresponding namespace; one of `ENV`, `VAR` or
                 `OPT`,
         :Returns:
-            dictionary with items ``(key, xxx_key)``, where ``key`` is the key
-            from *Argument* namespace and ``xxx_key`` is variable name in the
-            `xxx` (`ENV`, `VAR` or `OPT`) namespace
+            dictionary with items ``(key, ns_key)``, where ``key`` is the key
+            from *Argument* namespace and ``ns_key`` is variable name in the
+            `ns` (`ENV`, `VAR` or `OPT`) namespace
         """
         #--------------------------------------------------------------------
-        return self.__rename[xxx].copy()
+        return self.__rename[ns].copy()
 
     #========================================================================
-    def get_xxx_irename_dict(self, xxx):
+    def get_ns_irename_dict(self, ns):
         #--------------------------------------------------------------------
-        """Get the dictionary mapping variable names from `xxx` namespace to
-        *Argument* namespace (where `xxx` is one of `ENV`, `VAR` or `OPT`).
+        """Get the dictionary mapping variable names from `ns` namespace to
+        *Argument* namespace (where `ns` is one of `ENV`, `VAR` or `OPT`).
 
         :Parameters:
-            xxx : int
+            ns : int
                 selector of the corresponding namespace; one of `ENV`, `VAR` or
                 `OPT`,
         :Returns:
-            dictionary with items ``(xxx_key, key)``, where ``key`` is the key
-            from *Argument* namespace and ``xxx_key`` is variable name in the
-            `xxx` (`ENV`, `VAR` or `OPT`) namespace
+            dictionary with items ``(ns_key, key)``, where ``key`` is the key
+            from *Argument* namespace and ``ns_key`` is variable name in the
+            `ns` (`ENV`, `VAR` or `OPT`) namespace
 
         """
         #--------------------------------------------------------------------
-        return self.__irename[xxx].copy()
+        return self.__irename[ns].copy()
 
     #========================================================================
-    def get_xxx_resubst_dict(self,xxx):
+    def get_ns_resubst_dict(self,ns):
         #--------------------------------------------------------------------
         """Get the dictionary mapping variable names from *Argument* namespace
-        to placeholders for variable values from `xxx` namespace (where `xxx`
+        to placeholders for variable values from `ns` namespace (where `ns`
         is one of `ENV`, `VAR` or `OPT`).
 
         **Note**:
@@ -2130,24 +2130,24 @@ class _ArgumentDecls(dict):
             called.
 
         :Parameters:
-            xxx : int
+            ns : int
                 selector of the corresponding namespace; one of `ENV`, `VAR` or
                 `OPT`,
         :Returns:
-            dictionary with items ``(key, "${" + xxx_key + "}")``, where
-            ``key`` is the key from *Argument* namespace and ``xxx_key`` is
-            variable name in the `xxx` (`ENV`, `VAR` or `OPT`) namespace
+            dictionary with items ``(key, "${" + ns_key + "}")``, where
+            ``key`` is the key from *Argument* namespace and ``ns_key`` is
+            variable name in the `ns` (`ENV`, `VAR` or `OPT`) namespace
 
         """
         #--------------------------------------------------------------------
         self.__ensure_committed()
-        return self.__resubst[xxx].copy()
+        return self.__resubst[ns].copy()
 
     #========================================================================
-    def get_xxx_iresubst_dict(self, xxx):
+    def get_ns_iresubst_dict(self, ns):
         #--------------------------------------------------------------------
-        """Get the dictionary mapping variable names from `xxx` namespace to
-        placeholders for variable values from *Argument* namespace (where `xxx`
+        """Get the dictionary mapping variable names from `ns` namespace to
+        placeholders for variable values from *Argument* namespace (where `ns`
         is one of `ENV`, `VAR` or `OPT`).
 
         **Note**:
@@ -2156,115 +2156,115 @@ class _ArgumentDecls(dict):
             called.
 
         :Parameters:
-            xxx : int
+            ns : int
                 selector of the corresponding namespace; one of `ENV`, `VAR` or
                 `OPT`,
         :Returns:
-            dictionary with items ``(xxx_key, "${" + key + "}")``, where
-            ``key`` is the key from *Argument* namespace and ``xxx_key`` is
-            variable name in the `xxx` (`ENV`, `VAR` or `OPT`) namespace
+            dictionary with items ``(ns_key, "${" + key + "}")``, where
+            ``key`` is the key from *Argument* namespace and ``ns_key`` is
+            variable name in the `ns` (`ENV`, `VAR` or `OPT`) namespace
 
         """
         #--------------------------------------------------------------------
         self.__ensure_committed()
-        return self.__iresubst[xxx].copy()
+        return self.__iresubst[ns].copy()
 
     #========================================================================
-    def get_xxx_key(self, xxx, key):
+    def get_ns_key(self, ns, key):
         #--------------------------------------------------------------------
-        """Get the key identifying corresponding `xxx` variable  (where `xxx`
+        """Get the key identifying corresponding `ns` variable  (where `ns`
         is one of `ENV`, `VAR` or `OPT`).
 
-        If the corresponding `xxx` variable is not declared, the function
+        If the corresponding `ns` variable is not declared, the function
         raises an exception.
 
         :Parameters:
-            xxx : int
+            ns : int
                 selector of the corresponding namespace; one of `ENV`, `VAR` or
                 `OPT`,
             key : string
                 key identifying an already declared *Argument* variable to which
-                the queried `xxx` variable corresponds,
+                the queried `ns` variable corresponds,
 
         :Returns:
-            the key (name) identifying `xxx` variable corresponding to our
+            the key (name) identifying `ns` variable corresponding to our
             *Argument* identified by `key`
 
         """
         #--------------------------------------------------------------------
-        return self[key].get_xxx_key(xxx)
+        return self[key].get_ns_key(ns)
 
     #========================================================================
-    def set_xxx_key(self, xxx, key, xxx_key):
+    def set_ns_key(self, ns, key, ns_key):
         #--------------------------------------------------------------------
-        """Change the key identifying a corresponding `xxx` variable (where
-        `xxx` is one of `ENV`, `VAR` or `OPT`).
+        """Change the key identifying a corresponding `ns` variable (where
+        `ns` is one of `ENV`, `VAR` or `OPT`).
 
-        If the corresponding `xxx` variable is not declared, the function
+        If the corresponding `ns` variable is not declared, the function
         raises an exception.
 
         :Parameters:
-            xxx : int
+            ns : int
                 selector of the corresponding namespace; one of `ENV`, `VAR` or
                 `OPT`,
             key : string
                 key identifying an already declared *Argument* to which
-                the queried `xxx` variable corresponds,
+                the queried `ns` variable corresponds,
 
         :Returns:
-            the key (name) identifying `xxx` variable corresponding to our
+            the key (name) identifying `ns` variable corresponding to our
             *Argument* identified by `key`
 
         """
         #--------------------------------------------------------------------
         self.__ensure_not_committed()
-        self[key]._set_xxx_key(xxx_key)
-        self.__replace_xxx_key_in_supp_dicts(xxx, key, xxx_key)
+        self[key]._set_ns_key(ns_key)
+        self.__replace_ns_key_in_supp_dicts(ns, key, ns_key)
 
     #========================================================================
-    def _add_to_xxx(self, xxx, *args):
-        """Invoke `_ArgumentDecl._add_to_xxx()` for each *Argument* declared
+    def _add_to_ns(self, ns, *args):
+        """Invoke `_ArgumentDecl._add_to_ns()` for each *Argument* declared
         in this dictionary."""
-        for (k,v) in self.iteritems(): v._add_to_xxx(xxx,*args)
+        for (k,v) in self.iteritems(): v._add_to_ns(ns,*args)
 
     #========================================================================
-    def _safe_add_to_xxx(self, xxx, *args):
-        """Invoke `_ArgumentDecl._safe_add_to_xxx()` for each *Argument*
+    def _safe_add_to_ns(self, ns, *args):
+        """Invoke `_ArgumentDecl._safe_add_to_ns()` for each *Argument*
         declared in this dictionary."""
-        for (k,v) in self.iteritems(): v._safe_add_to_xxx(xxx, *args)
+        for (k,v) in self.iteritems(): v._safe_add_to_ns(ns, *args)
 
     #========================================================================
     def _build_resubst_dicts(self):
         """Build supplementary dictionaries used to rename placeholders in
-        values (forward, from *Argument* namespace to ``xxx`` namespaces)"""
-        for xxx in range(0,ALL):
-            self.__resubst[xxx] = _build_resubst_dict(self.__rename[xxx])
+        values (forward, from *Argument* namespace to ``ns`` namespaces)"""
+        for ns in range(0,ALL):
+            self.__resubst[ns] = _build_resubst_dict(self.__rename[ns])
 
     #========================================================================
     def _build_iresubst_dicts(self):
         """Build supplementary dictionaries used to rename placeholders in
-        values (inverse, from ``xxx`` namespaces to *Argument* namespace)"""
-        for xxx in range(0,ALL):
-            self.__iresubst[xxx] = _build_iresubst_dict(self.__rename[xxx])
+        values (inverse, from ``ns`` namespaces to *Argument* namespace)"""
+        for ns in range(0,ALL):
+            self.__iresubst[ns] = _build_iresubst_dict(self.__rename[ns])
 
     #========================================================================
     def _resubst_decl_defaults(self, decl):
         """Rename placeholders found in the declarations of default values of
-        ``xxx`` corresponding variables for the given declaration ``decl``.
+        ``ns`` corresponding variables for the given declaration ``decl``.
 
         :Parameters:
             decl : _ArgumentDecl
                 the *Argument* declaration to modify
         """
-        for xxx in range(0,ALL):
-            if decl.has_xxx_decl(xxx):
-                val = _resubst(decl.get_xxx_default(xxx), self.__resubst[xxx])
-                decl.set_xxx_default(xxx,val)
+        for ns in range(0,ALL):
+            if decl.has_ns_decl(ns):
+                val = _resubst(decl.get_ns_default(ns), self.__resubst[ns])
+                decl.set_ns_default(ns,val)
 
     #========================================================================
     def __resubst_defaults(self):
         """Rename placeholders found in the declarations of default values of
-        ``xxx`` corresponding variables for all declared *Arguments*.
+        ``ns`` corresponding variables for all declared *Arguments*.
         """
         for (k,v) in self.iteritems():
             self._resubst_decl_defaults(v)
@@ -2307,10 +2307,10 @@ class _ArgumentDecls(dict):
     #========================================================================
     def add_to(self, *args):
         #--------------------------------------------------------------------
-        """Create and initialize the corresponding ``xxx`` variables (where
-        ``xxx`` is one of `ENV`, `VAR` or `OPT`).
+        """Create and initialize the corresponding ``ns`` variables (where
+        ``ns`` is one of `ENV`, `VAR` or `OPT`).
 
-        This function calls `_safe_add_to_xxx()` for each ``xxx`` from ``(ENV,
+        This function calls `_safe_add_to_ns()` for each ``ns`` from ``(ENV,
         VAR, OPT)``.
 
         :Parameters:
@@ -2332,8 +2332,8 @@ class _ArgumentDecls(dict):
         """
         #--------------------------------------------------------------------
         self.__ensure_committed()
-        for xxx in range(0,min(len(args),ALL)):
-            if args[xxx]: self._safe_add_to_xxx(xxx, args[xxx])
+        for ns in range(0,min(len(args),ALL)):
+            if args[ns]: self._safe_add_to_ns(ns, args[ns])
 
     #========================================================================
     def Commit(self, env=None, variables=None, create_options=False, create_args=True, *args):
