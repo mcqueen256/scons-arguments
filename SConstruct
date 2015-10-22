@@ -33,17 +33,16 @@ python = sys.executable
 
 env.AlwaysBuild(env.Alias('unit-test'))
 if 'unit-test' in COMMAND_LINE_TARGETS:
-    if python:
     # Note: SCons modules are in sys.path
-	env['ENV']['PYTHONPATH'] = os.pathsep.join(sys.path)
-        #unittestflags = "-v"
-        unittestflags = ""
-	if platform.system() == 'Windows':
-            discoverflags = "-p *Tests.py"
-	else:
-            discoverflags = "-p '*Tests.py'"
-        testcom = '%(python)s -m unittest discover %(unittestflags)s %(discoverflags)s' % locals()
-        env.Execute(testcom, "Running unit tests")
+    env['ENV']['PYTHONPATH'] = os.pathsep.join(sys.path)
+    #unittestflags = "-v"
+    unittestflags = ""
+    if platform.system() == 'Windows':
+        discoverflags = "-p *Tests.py"
+    else:
+        discoverflags = "-p '*Tests.py'"
+    testcom = '%(python)s -m unittest discover %(unittestflags)s %(discoverflags)s' % locals()
+    env.Execute(testcom, "Running unit tests")
 
 env.AlwaysBuild(env.Alias('test'))
 if 'test' in COMMAND_LINE_TARGETS:
@@ -53,6 +52,9 @@ if 'test' in COMMAND_LINE_TARGETS:
         raise SCons.Errors.UserError('QMTest not found, please run %(python)s bin/downloads.py' % locals())
     testflags = "-a"
     testcom = '%(python)s runtest.py %(testflags)s' % locals()
+    # Note: SCons modules are in sys.path
+    env['ENV']['SCONS'] = sys.argv[0]
+    env['ENV']['SCONS_EXTERNAL_TEST'] = '1'
     env.Execute(testcom, "Running end-to-end tests")
 
 # Local Variables:

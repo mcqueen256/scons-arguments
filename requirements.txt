@@ -1,5 +1,4 @@
-scons
-unittest2
+mock
 discover
 docutils
 pygments
