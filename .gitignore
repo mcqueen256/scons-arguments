@@ -17,3 +17,10 @@
 /runtest.py
 # Stuff from other branches
 /README.md
+/SConsArguments
+/SConstruct
+/bin
+/doc
+/requirements.txt
+/test
+/unit_tests
