@@ -71,11 +71,11 @@ SCons command-line option (<tt class="rst-docutils literal"><span class="pre">--
 these variables/options before they get created).</p>
 <p><strong>Note</strong>:</p>
 <blockquote>
-In several places we use <tt class="rst-docutils literal">xxx</tt> as placeholder for one of the <tt class="rst-docutils literal">ENV</tt>,
+In several places we use <tt class="rst-docutils literal">ns</tt> as placeholder for one of the <tt class="rst-docutils literal">ENV</tt>,
 <tt class="rst-docutils literal">VAR</tt> or <tt class="rst-docutils literal">OPT</tt> constants which represent selection of
 &quot;corresponding Environment construction variable&quot;, &quot;corresponding SCons
 command-line variable&quot; or &quot;corresponding SCons command-line option&quot;
-respectively.  So, for example the call <tt class="rst-docutils literal">decl.set_xxx_decl(ENV,decl)</tt>
+respectively.  So, for example the call <tt class="rst-docutils literal">decl.set_ns_decl(ENV,decl)</tt>
 stores the declaration of corresponding construction variable in a
 SCons environment (<tt class="rst-docutils literal">ENV</tt>).</blockquote>
 
@@ -122,13 +122,13 @@ SCons environment (<tt class="rst-docutils literal">ENV</tt>).</blockquote>
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="SConsArguments._ArgumentDecl-class.html#set_xxx_decl" class="summary-sig-name">set_xxx_decl</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">xxx</span>,
+          <td><span class="summary-sig"><a href="SConsArguments._ArgumentDecl-class.html#set_ns_decl" class="summary-sig-name">set_ns_decl</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">ns</span>,
         <span class="summary-sig-arg">decl</span>)</span><br />
-      Set declaration of related <code class="link">xxx</code> variable, where <code class="link">xxx</code> is one of
+      Set declaration of related <code class="link">ns</code> variable, where <code class="link">ns</code> is one of
 <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecl.set_xxx_decl">source&nbsp;code</a></span>
+            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecl.set_ns_decl">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -199,12 +199,12 @@ option</a>.</td>
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="SConsArguments._ArgumentDecl-class.html#has_xxx_decl" class="summary-sig-name">has_xxx_decl</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">xxx</span>)</span><br />
-      Test if declaration of corresponding <code class="link">xxx</code> variable was provided,
-where <code class="link">xxx</code> is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>.</td>
+          <td><span class="summary-sig"><a href="SConsArguments._ArgumentDecl-class.html#has_ns_decl" class="summary-sig-name">has_ns_decl</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">ns</span>)</span><br />
+      Test if declaration of corresponding <code class="link">ns</code> variable was provided,
+where <code class="link">ns</code> is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecl.has_xxx_decl">source&nbsp;code</a></span>
+            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecl.has_ns_decl">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -218,12 +218,12 @@ where <code class="link">xxx</code> is one of <a href="SConsArguments-module.htm
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="SConsArguments._ArgumentDecl-class.html#get_xxx_key" class="summary-sig-name">get_xxx_key</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">xxx</span>)</span><br />
-      Get the declaration parameters for the related <code class="link">xxx</code> variable, where
-<code class="link">xxx</code> is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>.</td>
+          <td><span class="summary-sig"><a href="SConsArguments._ArgumentDecl-class.html#get_ns_key" class="summary-sig-name">get_ns_key</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">ns</span>)</span><br />
+      Get the declaration parameters for the related <code class="link">ns</code> variable, where
+<code class="link">ns</code> is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecl.get_xxx_key">source&nbsp;code</a></span>
+            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecl.get_ns_key">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -237,13 +237,13 @@ where <code class="link">xxx</code> is one of <a href="SConsArguments-module.htm
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="SConsArguments._ArgumentDecl-class.html#_set_xxx_key" class="summary-sig-name" onclick="show_private();">_set_xxx_key</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">xxx</span>,
+          <td><span class="summary-sig"><a href="SConsArguments._ArgumentDecl-class.html#_set_ns_key" class="summary-sig-name" onclick="show_private();">_set_ns_key</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">ns</span>,
         <span class="summary-sig-arg">key</span>)</span><br />
-      Define the identifying key of corresponding <code class="link">xxx</code> variable, where
-<code class="link">xxx</code> is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>.</td>
+      Define the identifying key of corresponding <code class="link">ns</code> variable, where
+<code class="link">ns</code> is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecl._set_xxx_key">source&nbsp;code</a></span>
+            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecl._set_ns_key">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -257,12 +257,12 @@ where <code class="link">xxx</code> is one of <a href="SConsArguments-module.htm
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="SConsArguments._ArgumentDecl-class.html#get_xxx_default" class="summary-sig-name">get_xxx_default</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">xxx</span>)</span><br />
-      Get the default value of corresponding <code class="link">xxx</code> variable, where <code class="link">xxx</code>
+          <td><span class="summary-sig"><a href="SConsArguments._ArgumentDecl-class.html#get_ns_default" class="summary-sig-name">get_ns_default</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">ns</span>)</span><br />
+      Get the default value of corresponding <code class="link">ns</code> variable, where <code class="link">ns</code>
 is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a>, <a href="SConsArguments-module.html#OPT" class="link">OPT</a>.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecl.get_xxx_default">source&nbsp;code</a></span>
+            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecl.get_ns_default">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -276,13 +276,13 @@ is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="SConsArguments._ArgumentDecl-class.html#set_xxx_default" class="summary-sig-name">set_xxx_default</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">xxx</span>,
+          <td><span class="summary-sig"><a href="SConsArguments._ArgumentDecl-class.html#set_ns_default" class="summary-sig-name">set_ns_default</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">ns</span>,
         <span class="summary-sig-arg">default</span>)</span><br />
-      Define the default value of corresponding <code class="link">xxx</code> variable, where
-<code class="link">xxx</code> is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a>, <a href="SConsArguments-module.html#OPT" class="link">OPT</a>.</td>
+      Define the default value of corresponding <code class="link">ns</code> variable, where
+<code class="link">ns</code> is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a>, <a href="SConsArguments-module.html#OPT" class="link">OPT</a>.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecl.set_xxx_default">source&nbsp;code</a></span>
+            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecl.set_ns_default">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -296,14 +296,14 @@ is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="SConsArguments._ArgumentDecl-class.html#_add_to_xxx" class="summary-sig-name" onclick="show_private();">_add_to_xxx</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">xxx</span>,
+          <td><span class="summary-sig"><a href="SConsArguments._ArgumentDecl-class.html#_add_to_ns" class="summary-sig-name" onclick="show_private();">_add_to_ns</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">ns</span>,
         <span class="summary-sig-arg">*args</span>,
         <span class="summary-sig-arg">**kw</span>)</span><br />
-      Add new corresponding <code class="link">xxx</code> variable, where <code class="link">xxx</code> is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>,
+      Add new corresponding <code class="link">ns</code> variable, where <code class="link">ns</code> is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>,
 <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>; use declaration stored in this <a href="SConsArguments._ArgumentDecl-class.html" class="link" onclick="show_private();">_ArgumentDecl</a> object.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecl._add_to_xxx">source&nbsp;code</a></span>
+            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecl._add_to_ns">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -317,14 +317,14 @@ is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="SConsArguments._ArgumentDecl-class.html#_safe_add_to_xxx" class="summary-sig-name" onclick="show_private();">_safe_add_to_xxx</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">xxx</span>,
+          <td><span class="summary-sig"><a href="SConsArguments._ArgumentDecl-class.html#_safe_add_to_ns" class="summary-sig-name" onclick="show_private();">_safe_add_to_ns</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">ns</span>,
         <span class="summary-sig-arg">*args</span>)</span><br />
-      Same as <a href="SConsArguments._ArgumentDecl-class.html#_add_to_xxx" class="link" onclick="show_private();">_add_to_xxx()</a>, but does not raise exceptions when the
-corresponding <code class="link">xxx</code> variable is not declared in this <a href="SConsArguments._ArgumentDecl-class.html" class="link" onclick="show_private();">_ArgumentDecl</a>
+      Same as <a href="SConsArguments._ArgumentDecl-class.html#_add_to_ns" class="link" onclick="show_private();">_add_to_ns()</a>, but does not raise exceptions when the
+corresponding <code class="link">ns</code> variable is not declared in this <a href="SConsArguments._ArgumentDecl-class.html" class="link" onclick="show_private();">_ArgumentDecl</a>
 object.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecl._safe_add_to_xxx">source&nbsp;code</a></span>
+            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecl._safe_add_to_ns">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -430,30 +430,30 @@ option</a>, same as  <tt class="rst-docutils literal">decl</tt> argument to <a h
   </dl>
 </td></tr></table>
 </div>
-<a name="set_xxx_decl"></a>
+<a name="set_ns_decl"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">set_xxx_decl</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">xxx</span>,
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">set_ns_decl</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">ns</span>,
         <span class="sig-arg">decl</span>)</span>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecl.set_xxx_decl">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecl.set_ns_decl">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
-  <p>Set declaration of related <code class="link">xxx</code> variable, where <code class="link">xxx</code> is one of
+  <p>Set declaration of related <code class="link">ns</code> variable, where <code class="link">ns</code> is one of
 <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>.</p>
 <p>This functions just dispatches the job between <a href="SConsArguments._ArgumentDecl-class.html#_set_env_decl" class="link" onclick="show_private();">_set_env_decl()</a>,
-<a href="SConsArguments._ArgumentDecl-class.html#_set_var_decl" class="link" onclick="show_private();">_set_var_decl()</a> and <a href="SConsArguments._ArgumentDecl-class.html#_set_opt_decl" class="link" onclick="show_private();">_set_opt_decl()</a> according to <code class="link">xxx</code> argument.</p>
+<a href="SConsArguments._ArgumentDecl-class.html#_set_var_decl" class="link" onclick="show_private();">_set_var_decl()</a> and <a href="SConsArguments._ArgumentDecl-class.html#_set_opt_decl" class="link" onclick="show_private();">_set_opt_decl()</a> according to <code class="link">ns</code> argument.</p>
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>xxx</code></strong> (int) - one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>,</li>
+        <li><strong class="pname"><code>ns</code></strong> (int) - one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>,</li>
         <li><strong class="pname"><code>decl</code></strong> - declaration parameters passed to particular setter function.</li>
     </ul></dd>
   </dl>
@@ -594,219 +594,219 @@ Note, that we require the <tt class="rst-docutils literal">dest</tt> parameter.<
   </dl>
 </td></tr></table>
 </div>
-<a name="has_xxx_decl"></a>
+<a name="has_ns_decl"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">has_xxx_decl</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">xxx</span>)</span>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">has_ns_decl</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">ns</span>)</span>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecl.has_xxx_decl">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecl.has_ns_decl">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
-  Test if declaration of corresponding <code class="link">xxx</code> variable was provided,
-where <code class="link">xxx</code> is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>.
+  Test if declaration of corresponding <code class="link">ns</code> variable was provided,
+where <code class="link">ns</code> is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>.
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>xxx</code></strong> (int) - one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a></li>
+        <li><strong class="pname"><code>ns</code></strong> (int) - one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a></li>
     </ul></dd>
     <dt>Returns:</dt>
         <dd><tt class="rst-docutils literal">True</tt> if the declaration exists, or <tt class="rst-docutils literal">False</tt> otherwise.</dd>
   </dl>
 </td></tr></table>
 </div>
-<a name="get_xxx_key"></a>
+<a name="get_ns_key"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">get_xxx_key</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">xxx</span>)</span>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">get_ns_key</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">ns</span>)</span>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecl.get_xxx_key">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecl.get_ns_key">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
-  Get the declaration parameters for the related <code class="link">xxx</code> variable, where
-<code class="link">xxx</code> is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>.
+  Get the declaration parameters for the related <code class="link">ns</code> variable, where
+<code class="link">ns</code> is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>.
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>xxx</code></strong> (int) - one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a></li>
+        <li><strong class="pname"><code>ns</code></strong> (int) - one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a></li>
     </ul></dd>
     <dt>Returns:</dt>
-        <dd><tt class="rst-docutils literal">decl</tt> parameters stored by last call <a href="SConsArguments._ArgumentDecl-class.html#set_xxx_decl" class="link">set_xxx_decl(xxx,decl)</a>.</dd>
+        <dd><tt class="rst-docutils literal">decl</tt> parameters stored by last call <a href="SConsArguments._ArgumentDecl-class.html#set_ns_decl" class="link">set_ns_decl(ns,decl)</a>.</dd>
   </dl>
 </td></tr></table>
 </div>
-<a name="_set_xxx_key"></a>
+<a name="_set_ns_key"></a>
 <div class="private">
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">_set_xxx_key</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">xxx</span>,
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">_set_ns_key</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">ns</span>,
         <span class="sig-arg">key</span>)</span>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecl._set_xxx_key">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecl._set_ns_key">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
-  <p>Define the identifying key of corresponding <code class="link">xxx</code> variable, where
-<code class="link">xxx</code> is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>.</p>
+  <p>Define the identifying key of corresponding <code class="link">ns</code> variable, where
+<code class="link">ns</code> is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>.</p>
 <dl class="rst-docutils">
 <dt><strong>Warning</strong></dt>
 <dd>This function should not be used by users. To change the key of
-corresponding <code class="link">xxx</code> variable, use <a href="SConsArguments._ArgumentDecls-class.html#set_xxx_key" class="link">_ArgumentDecls.set_xxx_key()</a>.</dd>
+corresponding <code class="link">ns</code> variable, use <a href="SConsArguments._ArgumentDecls-class.html#set_ns_key" class="link">_ArgumentDecls.set_ns_key()</a>.</dd>
 </dl>
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>xxx</code></strong> (int) - one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a></li>
+        <li><strong class="pname"><code>ns</code></strong> (int) - one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a></li>
         <li><strong class="pname"><code>key</code></strong> (string) - new key for the corresponding variable.</li>
     </ul></dd>
   </dl>
 </td></tr></table>
 </div>
-<a name="get_xxx_default"></a>
+<a name="get_ns_default"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">get_xxx_default</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">xxx</span>)</span>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">get_ns_default</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">ns</span>)</span>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecl.get_xxx_default">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecl.get_ns_default">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
-  Get the default value of corresponding <code class="link">xxx</code> variable, where <code class="link">xxx</code>
+  Get the default value of corresponding <code class="link">ns</code> variable, where <code class="link">ns</code>
 is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a>, <a href="SConsArguments-module.html#OPT" class="link">OPT</a>.
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>xxx</code></strong> (int) - one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a></li>
+        <li><strong class="pname"><code>ns</code></strong> (int) - one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a></li>
     </ul></dd>
   </dl>
 </td></tr></table>
 </div>
-<a name="set_xxx_default"></a>
+<a name="set_ns_default"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">set_xxx_default</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">xxx</span>,
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">set_ns_default</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">ns</span>,
         <span class="sig-arg">default</span>)</span>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecl.set_xxx_default">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecl.set_ns_default">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
-  Define the default value of corresponding <code class="link">xxx</code> variable, where
-<code class="link">xxx</code> is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a>, <a href="SConsArguments-module.html#OPT" class="link">OPT</a>.
+  Define the default value of corresponding <code class="link">ns</code> variable, where
+<code class="link">ns</code> is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a>, <a href="SConsArguments-module.html#OPT" class="link">OPT</a>.
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>xxx</code></strong> (int) - one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a></li>
+        <li><strong class="pname"><code>ns</code></strong> (int) - one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a></li>
         <li><strong class="pname"><code>default</code></strong> - the new default value</li>
     </ul></dd>
   </dl>
 </td></tr></table>
 </div>
-<a name="_add_to_xxx"></a>
+<a name="_add_to_ns"></a>
 <div class="private">
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">_add_to_xxx</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">xxx</span>,
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">_add_to_ns</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">ns</span>,
         <span class="sig-arg">*args</span>,
         <span class="sig-arg">**kw</span>)</span>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecl._add_to_xxx">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecl._add_to_ns">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
-  <p>Add new corresponding <code class="link">xxx</code> variable, where <code class="link">xxx</code> is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>,
+  <p>Add new corresponding <code class="link">ns</code> variable, where <code class="link">ns</code> is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>,
 <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>; use declaration stored in this <a href="SConsArguments._ArgumentDecl-class.html" class="link" onclick="show_private();">_ArgumentDecl</a> object.</p>
 <p><strong>Examples</strong>:</p>
 <blockquote>
 <ul class="rst-simple">
-<li><tt class="rst-docutils literal">decl._add_to_xxx(ENV,env)</tt> creates new construction variable
+<li><tt class="rst-docutils literal">decl._add_to_ns(ENV,env)</tt> creates new construction variable
 in <a class="rst-reference external" href="http://www.scons.org/doc/HTML/scons-user.html#chap-environments" target="_top">SCons environment</a> <tt class="rst-docutils literal">env</tt>,</li>
-<li><tt class="rst-docutils literal">decl._add_to_xxx(VAR,vars)</tt> creates new command-line variable
+<li><tt class="rst-docutils literal">decl._add_to_ns(VAR,vars)</tt> creates new command-line variable
 in <a class="rst-reference external" href="http://www.scons.org/doc/HTML/scons-user.html#sect-command-line-variables" target="_top">SCons variables</a> <tt class="rst-docutils literal">vars</tt></li>
-<li><tt class="rst-docutils literal">decl._add_to_xxx(OPT)</tt> creates a corresponding SCons
+<li><tt class="rst-docutils literal">decl._add_to_ns(OPT)</tt> creates a corresponding SCons
 <a class="rst-reference external" href="http://www.scons.org/doc/HTML/scons-user.html#sect-command-line-options" target="_top">command-line option</a>.</li>
 </ul>
 </blockquote>
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>xxx</code></strong> (int) - one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a></li>
-        <li><p><strong class="pname"><code>args</code></strong>, <strong class="pname"><code>kw</code></strong> - additional arguments and keywords, depend on <code class="link">xxx</code>:</p>
+        <li><strong class="pname"><code>ns</code></strong> (int) - one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a></li>
+        <li><p><strong class="pname"><code>args</code></strong>, <strong class="pname"><code>kw</code></strong> - additional arguments and keywords, depend on <code class="link">ns</code>:</p>
 <ul class="rst-simple">
-<li>if <tt class="rst-docutils literal">xxx == ENV</tt>, then <tt class="rst-docutils literal">env=args[0]</tt> is assumed to be
+<li>if <tt class="rst-docutils literal">ns == ENV</tt>, then <tt class="rst-docutils literal">env=args[0]</tt> is assumed to be
 a <a class="rst-reference external" href="http://www.scons.org/doc/HTML/scons-user.html#chap-environments" target="_top">SCons environment</a> to create construction variable for,</li>
-<li>if <tt class="rst-docutils literal">xxx == VAR`, then ``vars=args[0]</tt> is assumed to be
+<li>if <tt class="rst-docutils literal">ns == VAR`, then ``vars=args[0]</tt> is assumed to be
 a SCons <a class="rst-reference external" href="http://www.scons.org/doc/latest/HTML/scons-api/SCons.Variables.Variables-class.html" target="_top">Variables</a> object, <tt class="rst-docutils literal">*args[1:]</tt> are used as
 positional arguments to <a class="rst-reference external" href="http://www.scons.org/doc/latest/HTML/scons-api/SCons.Variables.Variables-class.html#Add" target="_top">vars.Add()</a> and <tt class="rst-docutils literal">**kw</tt> are
 passed to <a class="rst-reference external" href="http://www.scons.org/doc/latest/HTML/scons-api/SCons.Variables.Variables-class.html#Add" target="_top">vars.Add()</a> as additional keywords,</li>
-<li>if <tt class="rst-docutils literal">xxx == OPT</tt>, the arguments and keywords are not used.</li>
+<li>if <tt class="rst-docutils literal">ns == OPT</tt>, the arguments and keywords are not used.</li>
 </ul></li>
     </ul></dd>
   </dl>
 </td></tr></table>
 </div>
-<a name="_safe_add_to_xxx"></a>
+<a name="_safe_add_to_ns"></a>
 <div class="private">
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">_safe_add_to_xxx</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">xxx</span>,
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">_safe_add_to_ns</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">ns</span>,
         <span class="sig-arg">*args</span>)</span>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecl._safe_add_to_xxx">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecl._safe_add_to_ns">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
-  Same as <a href="SConsArguments._ArgumentDecl-class.html#_add_to_xxx" class="link" onclick="show_private();">_add_to_xxx()</a>, but does not raise exceptions when the
-corresponding <code class="link">xxx</code> variable is not declared in this <a href="SConsArguments._ArgumentDecl-class.html" class="link" onclick="show_private();">_ArgumentDecl</a>
+  Same as <a href="SConsArguments._ArgumentDecl-class.html#_add_to_ns" class="link" onclick="show_private();">_add_to_ns()</a>, but does not raise exceptions when the
+corresponding <code class="link">ns</code> variable is not declared in this <a href="SConsArguments._ArgumentDecl-class.html" class="link" onclick="show_private();">_ArgumentDecl</a>
 object.
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>xxx</code></strong> (int) - one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a></li>
+        <li><strong class="pname"><code>ns</code></strong> (int) - one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a></li>
     </ul></dd>
     <dt>Returns:</dt>
         <dd>returns <tt class="rst-docutils literal">True</tt> is new variable has been created or <tt class="rst-docutils literal">False</tt> if
-there is no declaration for corresponding <code class="link">xxx</code> variable in this
+there is no declaration for corresponding <code class="link">ns</code> variable in this
 object.</dd>
   </dl>
 </td></tr></table>
@@ -839,7 +839,7 @@ object.</dd>
   <tr>
     <td align="left" class="footer">
     Generated by Epydoc 3.0.1
-    on Thu Oct 22 14:20:31 2015
+    on Thu Oct 22 14:52:22 2015
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"
