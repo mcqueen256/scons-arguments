@@ -41,17 +41,17 @@ list.append( SConsArguments.DeclareArgument() )
 
 i = 0
 for v in list:
-    print "ARG[%d].has_ns_decl(ENV): %r" % (i, v.has_ns_decl(SConsArguments.ENV))
-    print "ARG[%d].has_ns_decl(VAR): %r" % (i, v.has_ns_decl(SConsArguments.VAR))
-    print "ARG[%d].has_ns_decl(OPT): %r" % (i, v.has_ns_decl(SConsArguments.OPT))
+    print "ARG[%d].has_decl(ENV): %r" % (i, v.has_decl(SConsArguments.ENV))
+    print "ARG[%d].has_decl(VAR): %r" % (i, v.has_decl(SConsArguments.VAR))
+    print "ARG[%d].has_decl(OPT): %r" % (i, v.has_decl(SConsArguments.OPT))
     i += 1
 """)
 test.run()
 
 lines = [
-  "ARG[0].has_ns_decl(ENV): False",
-  "ARG[0].has_ns_decl(VAR): False",
-  "ARG[0].has_ns_decl(OPT): False",
+  "ARG[0].has_decl(ENV): False",
+  "ARG[0].has_decl(VAR): False",
+  "ARG[0].has_decl(OPT): False",
 ]
 
 test.must_contain_all_lines(test.stdout(), lines)

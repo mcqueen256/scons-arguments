@@ -42,27 +42,27 @@ list.append( SConsArguments.DeclareArgument(env_key = 'env_x', default = 'env x 
 
 i = 0
 for v in list:
-    print "ARG[%d].has_ns_decl(ENV): %r" % (i, v.has_ns_decl(SConsArguments.ENV))
-    print "ARG[%d].has_ns_decl(VAR): %r" % (i, v.has_ns_decl(SConsArguments.VAR))
-    print "ARG[%d].has_ns_decl(OPT): %r" % (i, v.has_ns_decl(SConsArguments.OPT))
-    print "ARG[%d].get_ns_key(ENV): %r" % (i, v.get_ns_key(SConsArguments.ENV))
-    print "ARG[%d].get_ns_default(ENV): %r" % (i, v.get_ns_default(SConsArguments.ENV))
+    print "ARG[%d].has_decl(ENV): %r" % (i, v.has_decl(SConsArguments.ENV))
+    print "ARG[%d].has_decl(VAR): %r" % (i, v.has_decl(SConsArguments.VAR))
+    print "ARG[%d].has_decl(OPT): %r" % (i, v.has_decl(SConsArguments.OPT))
+    print "ARG[%d].get_key(ENV): %r" % (i, v.get_key(SConsArguments.ENV))
+    print "ARG[%d].get_default(ENV): %r" % (i, v.get_default(SConsArguments.ENV))
     i += 1
 """)
 test.run()
 
 lines = [
-  "ARG[0].has_ns_decl(ENV): True",
-  "ARG[0].has_ns_decl(VAR): False",
-  "ARG[0].has_ns_decl(OPT): False",
-  "ARG[0].get_ns_key(ENV): 'env_x'",
-  "ARG[0].get_ns_default(ENV): 'env x default'",
+  "ARG[0].has_decl(ENV): True",
+  "ARG[0].has_decl(VAR): False",
+  "ARG[0].has_decl(OPT): False",
+  "ARG[0].get_key(ENV): 'env_x'",
+  "ARG[0].get_default(ENV): 'env x default'",
 
-  "ARG[1].has_ns_decl(ENV): True",
-  "ARG[1].has_ns_decl(VAR): False",
-  "ARG[1].has_ns_decl(OPT): False",
-  "ARG[1].get_ns_key(ENV): 'env_x'",
-  "ARG[1].get_ns_default(ENV): 'env x default'",
+  "ARG[1].has_decl(ENV): True",
+  "ARG[1].has_decl(VAR): False",
+  "ARG[1].has_decl(OPT): False",
+  "ARG[1].get_key(ENV): 'env_x'",
+  "ARG[1].get_default(ENV): 'env x default'",
 ]
 
 test.must_contain_all_lines(test.stdout(), lines)

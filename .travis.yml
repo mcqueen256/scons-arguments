@@ -12,6 +12,7 @@ addons:
       - xsltproc
       - imagemagick
       - python-epydoc
+      - libssl-dev # try to fix error with missing 'openssl_md_meth_names'
 install:
   - python bin/downloads.py
   - pip install --upgrade pip

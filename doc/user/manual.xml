@@ -9,7 +9,7 @@
 			Tomulik</personname>
 			<email xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">ptomulik@meil.pw.edu.pl</email>
 		</author>
-		<pubdate xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">2014-10-23</pubdate>
+		<pubdate xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">2014-11-06</pubdate>
 	</info>
 	<section xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="sec-intro" version="5.0">
 		<title xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Introduction</title>
@@ -17,16 +17,20 @@
 		<package xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">scons-arguments</package> 
 		package is an extension to 
 		<productname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"><link xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://scons.org">SCons</link></productname> 
-		which simplifies the task of defining custom command-line options and 
-		variables in SCons.</para>
+		which adds more flexibility when customizing command-line options and 
+		variables in SCons. It&apos;s based on existing SCons functionality 
+		(command line variables and options) but is targeted towards 
+		compacting the notation when defining multiple command-line 
+		variables/options. It also provides a way to define 
+		mutually-dependent arguments, where the (default) value of one 
+		command-line argument may refer another arguments.</para>
 	</section>
 	<section xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="sec-args-basics">
 		<title xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Arguments 
 		basics</title>
 		<para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Arguments 
-		are &quot;special variables&quot; accessible from outside of scons 
-		script. In general, an Argument is an object which associates up to 
-		three entities:</para>
+		are &quot;special variables&quot;. In general, an Argument is an 
+		object which associates up to three endpoints:</para>
 		<itemizedlist xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
 			<listitem xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
 				<para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">a 
@@ -57,7 +61,7 @@
 		addition, values from the operating system environment may be easily 
 		incorporated into Arguments.</para>
 		<para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">With 
-		Arguments we maintain abstract variables whose values are settable 
+		Arguments, we maintain abstract variables whose values are settable 
 		via scons command line and are passed to scons environment 
 		automagically. Command line variables or options act as inputs for 
 		Arguments whereas construction variables are their destination 
@@ -118,8 +122,12 @@
 		<section xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
 			<title xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Declaring 
 			single Argument</title>
-			<para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Single 
-			Argument declaration may be created with either 
+			<para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">In 
+			most scenarios you&apos;ll declare multiple arguments at once. This 
+			section is provided only to document in details the parameters used 
+			to declare single argument, because same parameters will appear in 
+			the plural declarations described in other sections.</para>
+			<para>Single Argument declaration may be created with either 
 			<methodname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">ArgumentDecl</methodname> 
 			or 
 			<methodname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">DeclareArgument</methodname> 
@@ -201,7 +209,8 @@ decl = ArgumentDecl( {&apos;xvar&apos; : None}, None, (&apos;--xvar&apos;, {&apo
 							default)</code> tuple or one-entry dict 
 							<code xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">{name 
 							: default}</code> . This data is used to initialize associated 
-							construction variable. The variable is initialized with 
+							construction variable at later stage. The variable will be 
+							initialized with 
 							<code xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">env.SetDefault(name 
 							= default)</code> , where 
 							<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">env</varname> 
@@ -599,10 +608,10 @@ decl = DeclareArgument(env_key = &apos;xvar&apos;, opt_key = &apos;xvar&apos;, o
 				.</para>
 				<programlisting xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">from SConsArguments import ArgumentDecls, ArgumentDecl
 # create single declarations
-foodecl = ArgumentDecl( {&apos;ENV_FOO&apos; : &apos;default ENV_FOO&apos;},        # ENV
+foodecl = ArgumentDecl( {&apos;ENV_FOO&apos; : &apos;default ENV_FOO&apos;},      # ENV
             (&apos;var_foo&apos;, &apos;var_foo help&apos;, ),                    # VAR
             (&apos;--foo&apos;, {&apos;dest&apos; : &quot;opt_foo&quot;}) )                 # OPT
-bardecl = ArgumentDecl( {&apos;ENV_BAR&apos; : None},                     # ENV
+bardecl = ArgumentDecl( {&apos;ENV_BAR&apos; : None},                   # ENV
             (&apos;var_bar&apos;, &apos;var_bar help&apos;, &apos;default var_bar&apos;),   # VAR
             (&apos;--bar&apos;, {&apos;dest&apos;:&quot;opt_bar&quot;, &quot;type&quot;:&quot;string&quot;}))   # OPT
 # put them all together
@@ -835,9 +844,9 @@ env[&apos;ENV_BAR&apos;] == &apos;BAR&apos;        # True</programlisting>
 		<classname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">_Arguments</classname> 
 		. Once 
 		<classname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">_Arguments</classname> 
-		variables are created, the 
+		are created, the 
 		<classname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">_ArgumentDecls</classname> 
-		collection is no longer needed.</para>
+		are no longer needed.</para>
 		<example xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
 			<title xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Committing 
 			Argument Declarations</title>
@@ -886,7 +895,7 @@ env[&apos;ENV_BAR&apos;] == &apos;BAR&apos;        # True</programlisting>
 					<td xmlns="http://docbook.org/ns/docbook">A 
 					<link xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="www.scons.org/doc/latest/HTML/scons-api/SCons.Environment.Base-class.html">SCons 
 					Environment</link> object to be populated with default values of 
-					construction variables defined by Arguments declared here.</td>
+					Arguments.</td>
 				</tr>
 				<tr xmlns="http://docbook.org/ns/docbook">
 					<td xmlns="http://docbook.org/ns/docbook"><parameter xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">variables</parameter></td>
@@ -1176,13 +1185,13 @@ scons: `.&apos; is up to date.</screen>
 		<example xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="example-args-complete">
 			<title xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Complete 
 			example involving Arguments</title>
-			<programlisting xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"># SConstruct                                                                                         
+			<programlisting xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"># SConstruct
 import SConsArguments
-decls = SConsArguments.DeclareArguments(                                                                            
-prefix      = { &apos;env_key&apos; : &apos;GNU_PREFIX&apos;, &apos;var_key&apos; : &apos;PREFIX&apos;, &apos;opt_key&apos; : &apos;opt_prefix&apos;,          
-                &apos;option&apos; : &apos;--prefix&apos;, &apos;default&apos; : &apos;/usr/local&apos;, &apos;type&apos; : &apos;string&apos;,                
-                &apos;help&apos; : &apos;installation prefix&apos; },                                                  
-exec_prefix = { &apos;env_key&apos; : &apos;GNU_EXEC_PREFIX&apos;, &apos;var_key&apos; : &apos;EXEC_PREFIX&apos;, &apos;opt_key&apos; : &apos;opt_exec_prefix&apos;,                                                                                                
+decls = SConsArguments.DeclareArguments(
+prefix      = { &apos;env_key&apos; : &apos;GNU_PREFIX&apos;, &apos;var_key&apos; : &apos;PREFIX&apos;, &apos;opt_key&apos; : &apos;opt_prefix&apos;,
+                &apos;option&apos; : &apos;--prefix&apos;, &apos;default&apos; : &apos;/usr/local&apos;, &apos;type&apos; : &apos;string&apos;,
+                &apos;help&apos; : &apos;installation prefix&apos; },
+exec_prefix = { &apos;env_key&apos; : &apos;GNU_EXEC_PREFIX&apos;, &apos;var_key&apos; : &apos;EXEC_PREFIX&apos;, &apos;opt_key&apos; : &apos;opt_exec_prefix&apos;,
                 &apos;option&apos; : &apos;--exec-prefix&apos;, &apos;default&apos; : &apos;$prefix&apos;, &apos;type&apos; : &apos;string&apos;,
                 &apos;help&apos; : &apos;installation prefix for executable files&apos; },
 bindir      = { &apos;env_key&apos; : &apos;GNU_BINDIR&apos;, &apos;var_key&apos; : &apos;BINDIR&apos;, &apos;opt_key&apos; : &apos;opt_bindir&apos;,

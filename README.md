@@ -8,12 +8,16 @@ scons-arguments
 Welcome to ``scons-arguments``.
 
 This scons extension enables one to easily define scons command-line variables
-and options. It provides a concept of "Argument" which correlates up to three
+and options. It provides a concept of *Argument* which correlates three
 entities:
 
 - command line option (e.g. ``scons --prefix=/usr/bin`` in command line),
 - command line variable (e.g. ``scons PREFIX=/usr/bin`` in command line),
 - scons construction variable (e.g. ``env['PREFIX']`` inside of a scons script).
+
+*Arguments* allows to easily define how data should flow from scons command
+line and operating system's environment to a scons environment (to scons
+construction variables).
 
 INSTALLATION
 ------------
@@ -45,6 +49,20 @@ sys.path.append(Dir('#3rd/scons-arguments').abspath)
 DOCUMENTATION
 -------------
 
+### User documentation
+
+Online User Manual may be found at:
+
+  * <http://ptomulik.github.io/scons-arguments/user/manual.html>
+
+User documentation can be generated from the top level directory with the
+following command (see also requirements below)
+
+```shell
+scons user-doc
+```
+The generated documentation is located in ``build/doc/user``.
+
 ### API documentation
 
 Online API documentation may be found at:
@@ -59,37 +77,6 @@ scons api-doc
 ```
 
 The generated documentation will be written to ``build/doc/api``.
-
-#### Requirements for api-doc
-
-To generate API documentation, you may need following packages on your system:
-
-  * python-epydoc <http://epydoc.sourceforge.net/>
-  * python-docutils <http://pypi.python.org/pypi/docutils>
-  * python-pygments <http://pygments.org/>
-
-Note, that epydoc is no longer developed, last activities in the project are
-dated to 2008. The pip epydoc package 3.0.1 is not usable with current versions
-of python. Fortunately Debian package is patched to work with current python.
-Please use the ``python-epydoc`` package installed with apt-get.
-
-```shell
-apt-get install python-epydoc python-docutils python-pygments
-```
-
-### User documentation
-
-Online User Manual may be found at:
-
-  * <http://ptomulik.github.io/scons-arguments/user/manual.html>
-
-User documentation can be generated from the top level directory with the
-following command (see also requirements below)
-
-```shell
-scons user-doc
-```
-The generated documentation is located in ``build/doc/user``.
 
 #### Requirements for user-doc
 
@@ -118,6 +105,22 @@ python bin/downloads.py
 
 from the top level directory.
 
+#### Requirements for api-doc
+
+To generate API documentation, you may need following packages on your system:
+
+  * python-epydoc <http://epydoc.sourceforge.net/>
+  * python-docutils <http://pypi.python.org/pypi/docutils>
+  * python-pygments <http://pygments.org/>
+
+Note, that epydoc is no longer developed, last activities in the project are
+dated to 2008. The pip epydoc package 3.0.1 is not usable with current versions
+of python. Fortunately Debian package is patched to work with current python.
+Please use the ``python-epydoc`` package installed with apt-get.
+
+```shell
+apt-get install python-epydoc python-docutils python-pygments
+```
 
 TESTING
 -------

@@ -1,23 +1,28 @@
 """`SConsArguments`
 
-This module provides an implementation of SCons *Arguments*. An *Argument* is
-an entity which correlates up to three things:
+**Intro**
+
+This module implements SCons *Arguments*. An *Argument* is an entity which
+correlates up to three *Endpoints*:
 
 - single construction variable in SCons environment (``env['NAME'], env.subst('$NAME')``),
-- single SCons command-line variable (``variable=value``), and
-- single SCons command-line option (``--option=value``).
+- single SCons command-line variable (``scons variable=value`` in command-line), and
+- single SCons command-line option (``scons --option=value`` in command-line).
 
 Some of the above may be missing in *Argument* definition, so we may for
-example correlate only a construction variable with command-line option (no
-command-line variable in definition).
+example correlate only a construction variable with command-line option without
+involving command-line variable. *Arguments* specify how information shall flow
+from command-line to SCons environment.
 
-*Arguments* define how information flows from command-line to SCons environent.
-They also may sink values from OS environment and persist them to a file.
+**Endpoint names and data flow**
 
-*Arguments* use separate "namespaces" for environment variables, command-line
-variables and command-line options; the user then defines mappings between
-these. For example, you may create an *Argument* named ``foo`` which correlates
-a construction variable named ``ENV_FOO``, command-line variable named
+Each *Argument* has up to three *Endpoints*: a construction variable in
+SCons environment (``ENV`` endpoint), a command line variable (``VAR``
+endpoint) and a command line option (``OPT`` endpoint).  *Arguments* use
+separate "namespaces" for construction variables, command-line variables and
+command-line options; the user defines mappings between these *Endpoints*.
+For example, you may create an *Argument* named ``foo`` which correlates a
+construction variable named ``ENV_FOO``, command-line variable named
 ``VAR_FOO`` and command-line option identified by key ``opt_foo`` (we use
 ``dest`` attribute of command line option as its identifying key, see `option
 attributes`_ of python ``optparse``). At certain point you request *Arguments*
@@ -28,16 +33,18 @@ taken from command-line variable ``VAR_FOO`` or value from command-line option
 command-line variable and command-line option are set, then command-line option
 takes precedence.
 
+**Substitutions in Arguments**
+
 If a command-line value is a string, it may contain substitutions (e.g.
 ``VAR_FOO`` may be a string in form ``"bleah bleah ${VAR_BAR}"``).
-Placeholders are assumed to be variable/option names in "local namespace". It
-means, that if we have a command-line variable, and its value is
+Placeholders are assumed to be variable/option names in endpoint's namespace.
+It means, that if we have a command-line variable, and its value is
 a string containing placeholder ``"$VVV"``, then ``VVV`` is assumed to be the
-name of another command-line variable (and not, for example, construction or
-environment variable). When passing strings from command-line variables and
-options to an environment, the placeholders are renamed to represent
-corresponding construction variables in SCons environment. This is
-shown in the example below.
+name of another command-line variable (and not, for example, construction
+variable). When passing strings from command-line variables and options to an
+environment, the placeholders are renamed such that they refer to corresponding
+construction variables in SCons environment. This is shown in the example
+below.
 
 **Example**
 
@@ -66,11 +73,17 @@ environment will have the following construction variables set::
 The arrow ``-x->`` denotes the fact, that there was no command-line variable
 named ``foo``, so the ``"${foo}"`` placeholder was left unaltered.
 
-Now, as we know the general idea, let's see some code examples.
-
 **Example**
 
-Consider following ``SConsctruct`` file
+The following ``SConstruct`` file defines three *Arguments*: ``foo``, ``bar``
+and ``geez``. Corresponding construction variables (environment) are named
+``ENV_FOO``, ``ENV_BAR`` and ``ENV_GEEZ`` respectively. Corresponding
+command-line variables are: ``VAR_FOO``, ``VAR_BAR`` and ``VAR_GEEZ``. Finally,
+the command-line options that correspond to our *Arguments* are named
+``opt_foo``, ``opt_bar`` and ``opt_geez`` (note: these are actually keys
+identifying options within SCons script, they may be different from the option
+names that user sees on his screen - here we have key ``opt_foo`` and
+command-line option ``--foo``).
 
 .. python::
 
@@ -78,9 +91,9 @@ Consider following ``SConsctruct`` file
     env = Environment()
     decls = ArgumentDecls(
        # Argument 'foo'
-       foo =  (   {'ENV_FOO' : 'ENV_FOO default'},                  # ENV
-                  ('VAR_FOO',  'VAR_FOO help'),                     # VAR
-                  ('--foo', {'dest' : "opt_foo"})         ),        # OPT
+       foo = (   {'ENV_FOO' : 'ENV_FOO default'},                   # ENV
+                 ('VAR_FOO',  'VAR_FOO help'),                      # VAR
+                 ('--foo', {'dest' : "opt_foo"})         ),         # OPT
        # Argument 'bar'
        bar = (   {'ENV_BAR' : None},                                # ENV
                  ('VAR_BAR', 'VAR_BAR help', 'VAR_BAR default'),    # VAR
@@ -98,21 +111,9 @@ Consider following ``SConsctruct`` file
     print "env['ENV_BAR']: %r" %  env['ENV_BAR']
     print "env['ENV_GEEZ']: %r" %  env['ENV_GEEZ']
 
-In above we define three *Arguments*: ``foo``, ``bar`` and ``geez``.
-Corresponding construction variables (environment) are named ``ENV_FOO``,
-``ENV_BAR`` and ``ENV_GEEZ`` respectively. Corresponding command-line variables
-are: ``VAR_FOO``, ``VAR_BAR`` and ``VAR_GEEZ``. Finally, the command-line
-options that correspond to our *Arguments* are named ``opt_foo``, ``opt_bar``
-and ``opt_geez`` (note: these are actually keys identifying options within
-SCons script, they may be different from the option names that user sees
-on his screen - here we have key ``opt_foo`` and command-line option ``--foo``).
-
-To learn details about *Arguments* and possible ways to declare them
-start with `ArgumentDecls()` and `ArgumentDecl()` documentation.
-
-Running scons several times, you may obtain different output depending on
-command-line variables and options provided. Let's do some experiments, first
-show the help message to see available command-line options::
+Running scons several times for this example, different results may be obtained
+depending on command-line variables and options provided. Let's do some
+experiments, first show the help message to see available command-line options::
 
     user@host:$ scons -Q -h
     env['ENV_FOO']: 'ENV_FOO default'
@@ -225,9 +226,9 @@ Some experiments with command-line yield following output::
     scons: `.' is up to date.
 
 
-For more details we refer you to the documentation of `ArgumentDecls()`,
-`ArgumentDecl()` functions and `_ArgumentDecls`, `_Arguments`, and
-`_ArgumentDecl` classes.
+For more details go to the documentation of `ArgumentDecls()`,
+`ArgumentDecl()`, `DeclareArguments()` and `DeclareArgument()`.
+See also `_ArgumentDecls`, `_Arguments`, and `_ArgumentDecl` classes.
 
 .. _option attributes: http://docs.python.org/2/library/optparse.html#option-attributes
 """
@@ -255,6 +256,9 @@ For more details we refer you to the documentation of `ArgumentDecls()`,
 
 __docformat__ = "restructuredText"
 
+import SCons.Util
+import string
+
 #############################################################################
 ENV = 0
 """Represents selection of construction variable corresponding to particular
@@ -272,15 +276,30 @@ ALL = 3
 ``OPT``)"""
 #############################################################################
 
+#############################################################################
+class _missing_meta(type):
+    "Meta-class for the _missing class"
+    def __bool__(self):
+        return False
+    __nonzero__ = __bool__
+    def __repr__(cls):
+        return 'MISSING'
 
 #############################################################################
 class _missing(object):
     "Represents missing argument to function."
-    pass
+    __metaclass__ = _missing_meta
+
+#############################################################################
+MISSING = _missing
+"""Represents missing argument to function."""
 
 #############################################################################
 class _undef_meta(type):
     """Meta-class for the _undef class"""
+    def __bool__(self):
+        return False
+    __nonzero__ = __bool__
     def __repr__(cls):
         return 'UNDEFINED'
 
@@ -294,8 +313,8 @@ UNDEFINED = _undef
 
 #############################################################################
 class _notfound(object):
-    "Something that has not been found."
-    pass # represents a key that is never present in dict
+    "Something that has not been found, a result of failed search."
+    pass
 
 #############################################################################
 def _resubst(value, resubst_dict = {}):
@@ -304,22 +323,20 @@ def _resubst(value, resubst_dict = {}):
     :Parameters:
         value
             the value to process; if it is string it is passed through
-            placeholder renaming procedure, otherwise it is returned unaltered,
+            placeholder renaming procedure; otherwise it is returned unaltered,
         resubst_dict
-            a dictionary of the form ``{ "xxx" : "${yyy}", "vvv" : "${www}",
-            ...}`` used to rename placeholders within ``value`` string; with
-            above dictionary, all occurrences of ``$xxx`` or ``${xxx}`` within
+            a dictionary of the form ``{ "xxx":"${yyy}", "vvv":"${www}", ...}``
+            used to rename placeholders within ``value`` string; with the above
+            dictionary, all occurrences of ``$xxx`` or ``${xxx}`` within
             `value` string will be replaced with ``${yyy}``, all occurrences of
             ``$vvv`` or ``${vvv}`` with ``${www}`` and so on; see also
             `_build_resubst_dict()`,
     :Returns:
         returns the ``value`` with placeholders renamed.
     """
-    from string import Template
-    from SCons.Util import is_String
-    if is_String(value):
+    if SCons.Util.is_String(value):
         # make substitution in strings only
-        return Template(value).safe_substitute(**resubst_dict)
+        return string.Template(value).safe_substitute(**resubst_dict)
     else:
         return value
 
@@ -331,8 +348,8 @@ def _build_resubst_dict(rename_dict):
 
     .. python::
 
-        >>> from SConsArguments import _build_resubst_dict
-        >>> _build_resubst_dict( {"xxx":"yyy", "vvv":"www", "zzz":"zzz" })
+        >>> import SConsArguments
+        >>> SConsArguments._build_resubst_dict( {"xxx":"yyy", "vvv":"www", "zzz":"zzz" })
         {'vvv': '${www}', 'xxx': '${yyy}'}
 
     :Parameters:
@@ -351,14 +368,14 @@ def _build_resubst_dict(rename_dict):
 
 #############################################################################
 def _build_iresubst_dict(rename_dict):
-    """Build inverted dictionary for later use with `_resubst()`.
+    """Build inversed dictionary for later use with `_resubst()`.
 
     **Example**
 
     .. python::
 
-        >>> from SConsArguments import _build_resubst_dict
-        >>> _build_iresubst_dict( {"xxx":"yyy", "vvv":"www", "zzz":"zzz" })
+        >>> import SConsArguments
+        >>> SConsArguments._build_iresubst_dict( {"xxx":"yyy", "vvv":"www", "zzz":"zzz" })
         {'www': '${vvv}', 'yyy': '${xxx}'}
 
     :Parameters:
@@ -376,7 +393,7 @@ def _build_iresubst_dict(rename_dict):
                     filter(lambda (k,v) : k != v, rename_dict.iteritems())))
 
 #############################################################################
-def _compose_dicts(dict1, dict2):
+def _compose_mappings(dict1, dict2):
     """Compose two mappings expressed by dicts ``dict1`` and ``dict2``.
 
     :Parameters:
@@ -395,25 +412,30 @@ def _invert_dict(_dict):
     return dict(map(lambda (k,v) : (v,k), _dict.iteritems()))
 
 #############################################################################
-class _ArgumentsEnvProxy(object):
+class _ArgumentsProxy(object):
     #========================================================================
-    """Proxy used to get/set construction variables in `SCons environment`_
-    while operating on mapped variable names.
+    """Proxy used to access construction variables stored in a **target**
+    dictionary while using their *Argument* names.
 
-    This object reimplements several methods of SCons
-    ``SubstitutionEnvironment`` used to access environment's construction
-    variables. The variable names (and placeholders found in their values) are
-    translated forth and backk from/to *Arguments* namespace when accessing the
-    variables.
+    This object implements indirect access to variables stored in a **target**
+    dictionary, (supposedly a `SCons environment`_ construction variables)
+    while using their *Argument* names. The variable names (and placeholders
+    found in their values) are translated forth and back from/to *Arguments*
+    namespace when accessing the variables. The `_ArgumentsProxy` object
+    provides `subst()` method, which handles the renaming in substitution
+    strings, the method currently only works with SCons
+    ``SubstitutionEnvironment`` object as the **target** dictionary.
 
     **Example**::
 
         user@host:$ scons -Q -f -
 
-        from SConsArguments import _ArgumentsEnvProxy
+        from SConsArguments import _ArgumentsProxy
         env = Environment()
-        proxy = _ArgumentsEnvProxy(env, {'foo':'ENV_FOO'}, {'foo':'${ENV_FOO}'},
-                                    {'ENV_FOO':'foo'}, {'ENV_FOO':'${foo}'})
+        proxy = _ArgumentsProxy(env, { 'foo'     : 'ENV_FOO'     },
+                                     { 'foo'     : '${ENV_FOO}'  },
+                                     { 'ENV_FOO' : 'foo'         },
+                                     { 'ENV_FOO' : '${foo}'      })
         proxy['foo'] = "FOO"
         print "proxy['foo'] is %r" % proxy['foo']
         print "env['ENV_FOO'] is %r" % env['ENV_FOO']
@@ -425,14 +447,14 @@ class _ArgumentsEnvProxy(object):
     .. _SCons environment:  http://www.scons.org/doc/HTML/scons-user.html#chap-environments
     """
     #========================================================================
-    def __init__(self, env, rename={}, resubst={}, irename={}, iresubst={},
+    def __init__(self, tgt, rename={}, resubst={}, irename={}, iresubst={},
                  strict=False):
         # -------------------------------------------------------------------
-        """Initializes `_ArgumentsEnvProxy` object.
+        """Initializes `_ArgumentsProxy` object.
 
         :Parameters:
-            env
-                a SCons environment object to be proxied,
+            tgt
+                the **target** dictionary to be proxied,
             rename
                 dictionary used for mapping variable names from user namespace
                 to environment namespace (used by `__setitem__()` and
@@ -451,10 +473,10 @@ class _ArgumentsEnvProxy(object):
             strict
                 if ``True`` only the keys defined in rename/resubst
                 dictionaries are allowed, otherwise the original variables
-                from ``env`` are also accessible via their keys
+                from ``tgt`` are also accessible via their keys
         """
         # -------------------------------------------------------------------
-        self.env = env
+        self.tgt = tgt
         self.__rename = rename
         self.__resubst = resubst
         self.__irename = irename
@@ -463,15 +485,46 @@ class _ArgumentsEnvProxy(object):
 
     #========================================================================
     def is_strict(self):
+        """Whether the proxy is in "strict" mode
+
+        A "strict" mode proxy allows to access only these variables for which
+        entries exist in rename/resubst dictionaries. If some variable is
+        missing from dictionaries, a KeyError is raised.
+
+        A "non-strict" proxy bypasses the rename/resubst dictionaries for
+        variables that are not present therein and accesses the corresponding
+        variable/option using Argument's name directly (without mapping).
+
+        :Return:
+            ``True``, if "strict" mode is enabled or ``False`` otherwise.
+        """
         return self.__strict
 
     #========================================================================
     def set_strict(self, strict):
+        """Set the proxy to "strict" or "non-strict" mode
+
+        A "strict" mode proxy allows to access only these variables for which
+        entries exist in rename/resubst dictionaries (for which mapping is
+        defined). If some variable is not present in dictionaries, a KeyError
+        is raised.
+
+        A "non-strict" proxy bypasses the rename/resubst dictionaries for
+        variables that are not present therein and accesses the corresponding
+        variable/option using Argument's name directly (without mapping).
+
+        :Parameters:
+            strict
+                determines whether to enable (``True``) or disable (``False``)
+                the "strict" mode
+        """
         self.__setup_methods(strict)
         self.__strict = strict
 
     #========================================================================
     def __setup_methods(self, strict):
+        # switch between "strict" and "non-strict" mode by replacing certain
+        # methods (accessors)
         if strict:
             self.__delitem__impl = self.__delitem__strict
             self.__getitem__impl = self.__getitem__strict
@@ -495,11 +548,11 @@ class _ArgumentsEnvProxy(object):
 
     #========================================================================
     def __delitem__strict(self, key):
-        self.env.__delitem__(self.__rename[key])
+        self.tgt.__delitem__(self.__rename[key])
 
     #========================================================================
     def __delitem__nonstrict(self, key):
-        self.env.__delitem__(self.__rename.get(key,key))
+        self.tgt.__delitem__(self.__rename.get(key,key))
 
     #========================================================================
     def __getitem__(self, key):
@@ -507,13 +560,13 @@ class _ArgumentsEnvProxy(object):
 
     #========================================================================
     def __getitem__strict(self, key):
-        env_key = self.__rename[key]
-        return _resubst(self.env[env_key], self.__iresubst)
+        tgt_key = self.__rename[key]
+        return _resubst(self.tgt[tgt_key], self.__iresubst)
 
     #========================================================================
     def __getitem__nonstrict(self, key):
-        env_key = self.__rename.get(key,key)
-        return _resubst(self.env[env_key], self.__iresubst)
+        tgt_key = self.__rename.get(key,key)
+        return _resubst(self.tgt[tgt_key], self.__iresubst)
 
     #========================================================================
     def __setitem__(self, key, value):
@@ -522,36 +575,36 @@ class _ArgumentsEnvProxy(object):
     #========================================================================
     def __setitem__strict(self, key, value):
         # FIXME: What may seem to be irrational is that we actually can't
-        # insert to env items that are not already covered by __rename hash.
-        # Maybe we sohuld provide some default way of extending __rename when
+        # insert to tgt items that are not already covered by __rename hash.
+        # Maybe we should provide some default way of extending __rename when
         # setting new items in strict mode?
-        env_key = self.__rename[key]
-        env_value = _resubst(value, self.__resubst)
-        self.env[env_key] = env_value
+        tgt_key = self.__rename[key]
+        tgt_val = _resubst(value, self.__resubst)
+        self.tgt[tgt_key] = tgt_val
 
     #========================================================================
     def __setitem__nonstrict(self, key, value):
-        env_key = self.__rename.get(key,key)
-        env_value = _resubst(value, self.__resubst)
-        self.env[env_key] = env_value
+        tgt_key = self.__rename.get(key,key)
+        tgt_val = _resubst(value, self.__resubst)
+        self.tgt[tgt_key] = tgt_val
 
     #========================================================================
     def _get_strict(self, key, default=None):
-        env_key = self.__rename[key]
-        return _resubst(self.env.get(env_key, default), self.__iresubst)
+        tgt_key = self.__rename[key]
+        return _resubst(self.tgt.get(tgt_key, default), self.__iresubst)
 
     #========================================================================
     def _get_nonstrict(self, key, default=None):
-        env_key = self.__rename.get(key,key)
-        return _resubst(self.env.get(env_key, default), self.__iresubst)
+        tgt_key = self.__rename.get(key,key)
+        return _resubst(self.tgt.get(tgt_key, default), self.__iresubst)
 
     #========================================================================
     def _has_key_strict(self, key):
-        return self.__rename.has_key(key) and self.env.has_key(self.__rename[key])
+        return self.__rename.has_key(key) and self.tgt.has_key(self.__rename[key])
 
     #========================================================================
     def _has_key_nonstrict(self, key):
-        return self.env.has_key(self.__rename.get(key,key))
+        return self.tgt.has_key(self.__rename.get(key,key))
 
     #========================================================================
     def __contains__(self, key):
@@ -559,11 +612,11 @@ class _ArgumentsEnvProxy(object):
 
     #========================================================================
     def __contains__strict(self, key):
-        return self.__rename.has_key(key) and self.env.__contains__(self.__rename[key])
+        return self.__rename.has_key(key) and self.tgt.__contains__(self.__rename[key])
 
     #========================================================================
     def __contains__nonstrict(self, key):
-        return self.env.__contains__(self.__rename.get(key,key))
+        return self.tgt.__contains__(self.__rename.get(key,key))
 
     #========================================================================
     def _items_strict(self):
@@ -574,15 +627,30 @@ class _ArgumentsEnvProxy(object):
     def _items_nonstrict(self):
         iresubst = lambda v : _resubst(v, self.__iresubst)
         irename = lambda k : self.__irename.get(k,k)
-        return [ (irename(k), iresubst(v)) for (k,v) in self.env.items() ]
+        return [ (irename(k), iresubst(v)) for (k,v) in self.tgt.items() ]
 
     #========================================================================
     def subst(self, string, *args):
-        env_string = _resubst(string, self.__resubst)
-        return self.env.subst(env_string, *args)
+        """Interpolates construction variables from the Environment into the
+        specific string, returning expanded result.
+
+        This is merely same as
+
+        .. python::
+
+            self.tgt.subst(_resubst(string, self.__resubst), *args)
+
+
+        The core job of interpolating the variables is left to the ``tgt``.
+        What the method does is to replace *Argument* names with their
+        construction variable names before substitution is made.
+        """
+        return self.tgt.subst(_resubst(string, self.__resubst), *args)
 
 #############################################################################
 class _VariablesWrapper(object):
+    """Wrapper class used to overcome several issues with original
+    implementation of SCons Variables."""
 
     #========================================================================
     def __init__(self, variables):
@@ -668,19 +736,19 @@ class _VariablesWrapper(object):
 #############################################################################
 class _Arguments(object):
     #========================================================================
-    """Correlates construction variables from SCons environment with
-    command-line variables (``variable=value``) and command-line options
-    (``--option=value``).
+    """A dict-like object which correlates construction variables from SCons
+    environment with command-line variables (``variable=value``) and
+    command-line options (``--option=value``).
 
     **Note**:
 
-        In several places we use ``xxx`` as placeholder for one of the ``ENV``,
+        In several places we use ``ns`` as placeholder for one of the ``ENV``,
         ``VAR`` or ``OPT`` constants which represent selection of
         "corresponding Environment construction variable", "corresponding SCons
         command-line variable" or "corresponding SCons command-line option"
-        respectively.  So, for example the call ``args.get_ns_key(ENV,"foo")``
+        respectively.  So, for example the call ``args.get_key(ENV,"foo")``
         returns the key of construction variable in SCons environment (``ENV``)
-        which is related to our *Argument* ``foo``.
+        which is "bound" to our *Argument* ``foo``.
 
     In fact, the only internal data the object holds is a list of supplementary
     dictionaries to map the names of variables from one namespace (e.g ``ENV``)
@@ -689,18 +757,17 @@ class _Arguments(object):
     #========================================================================
 
     #========================================================================
-    def __init__(self, gdecls):
+    def __init__(self, decls):
         # -------------------------------------------------------------------
-        """Initializes `_Arguments` object according to declarations `gdecls` of
-        *Arguments*.
+        """Initializes `_Arguments` object from *Argument* Declarations `decls`.
 
         :Parameters:
-            gdecls : `_ArgumentDecls`
+            decls : `_ArgumentDecls`
                 declarations of *Arguments*,
         """
         # -------------------------------------------------------------------
-        self.__keys = gdecls.keys()
-        self.__init_supp_dicts(gdecls)
+        self.__keys = decls.keys()
+        self.__init_supp_dicts(decls)
 
     #========================================================================
     def __reset_supp_dicts(self):
@@ -711,48 +778,46 @@ class _Arguments(object):
         self.__iresubst = [{} for n in range(0,ALL)]
 
     #========================================================================
-    def __init_supp_dicts(self, gdecls):
+    def __init_supp_dicts(self, decls):
         """Initialize supplementary dictionaries according to variable
         declarations."""
         self.__reset_supp_dicts()
-        if gdecls is not None:
+        if decls is not None:
             for ns in range(0,ALL):
-                self.__rename[ns] = gdecls.get_ns_rename_dict(ns)
-                self.__irename[ns] = gdecls.get_ns_irename_dict(ns)
-                self.__resubst[ns] = gdecls.get_ns_resubst_dict(ns)
-                self.__iresubst[ns] = gdecls.get_ns_iresubst_dict(ns)
+                self.__rename[ns] = decls.get_rename_dict(ns)
+                self.__irename[ns] = decls.get_irename_dict(ns)
+                self.__resubst[ns] = decls.get_resubst_dict(ns)
+                self.__iresubst[ns] = decls.get_iresubst_dict(ns)
 
     #========================================================================
     def VarEnvProxy(self, env, *args, **kw):
         """Return proxy to SCons environment `env` which uses keys from
         `VAR` namespace to access corresponding environment construction
         variables"""
-        rename = _compose_dicts(self.__irename[VAR], self.__rename[ENV])
+        rename = _compose_mappings(self.__irename[VAR], self.__rename[ENV])
         irename = _invert_dict(rename)
         resubst = _build_resubst_dict(rename)
         iresubst = _build_resubst_dict(irename)
-        return _ArgumentsEnvProxy(env, rename, resubst, irename, iresubst, *args,
-                              **kw)
+        return _ArgumentsProxy(env, rename, resubst, irename, iresubst, *args, **kw)
 
     #========================================================================
     def OptEnvProxy(self, env, *args, **kw):
         """Return proxy to SCons environment `env` which uses keys from
         `OPT` namespace to access corresponding environment construction
         variables"""
-        rename = _compose_dicts(self.__irename[OPT], self.__rename[ENV])
+        rename = _compose_mappings(self.__irename[OPT], self.__rename[ENV])
         irename = _invert_dict(rename)
         resubst = _build_resubst_dict(rename)
         iresubst = _build_resubst_dict(irename)
-        return _ArgumentsEnvProxy(env, rename, resubst, irename, iresubst, *args,
-                              **kw)
+        return _ArgumentsProxy(env, rename, resubst, irename, iresubst, *args, **kw)
 
     #========================================================================
     def EnvProxy(self, env, *args, **kw):
         """Return proxy to SCons environment `env` which uses original keys
         identifying *Arguments* to access construction variables"""
-        return _ArgumentsEnvProxy(env, self.__rename[ENV], self.__resubst[ENV],
-                                   self.__irename[ENV], self.__iresubst[ENV],
-                                   *args, **kw)
+        return _ArgumentsProxy(env, self.__rename[ENV], self.__resubst[ENV],
+                                  self.__irename[ENV], self.__iresubst[ENV],
+                                  *args, **kw)
 
     #========================================================================
     def get_keys(self):
@@ -761,16 +826,38 @@ class _Arguments(object):
         return self.__keys[:]
 
     #========================================================================
-    def get_ns_key(self, ns, key):
+    def get_key(self, ns, key):
         #--------------------------------------------------------------------
-        """Get the key identifying a variable related to *Argument* identified
-        by ``key``
+        """Map *Argument* to a variable from `ENV`, `VAR` or `OPT` namespace.
+        Maps only names (keys), not values.
 
         :Parameters:
             ns : int
-                one of `ENV`, `VAR` or `OPT`,
+                namespace identifier, one of `ENV`, `VAR` or `OPT`,
             key : string
-                the key identifying *Argument* of choice.
+                the input key (*Argument* name) to be mapped.
+
+        :Return:
+            The name of mapped variable (resultant key) from namespace ``ns``.
+
+        **Example**::
+
+            import SConsArguments
+            decls = SConsArguments.DeclareArguments(
+                foo = { 'env_key' : 'ENV_FOO',
+                        'var_key' : 'VAR_FOO',
+                        'opt_key' : 'OPT_FOO', 'option' : '--foo' },
+                bar = { 'env_key' : 'ENV_BAR',
+                        'var_key' : 'VAR_BAR',
+                        'opt_key' : 'OPT_BAR', 'option' : '--bar' }
+            )
+            args = decls.Commit()
+            assert(args.get_key(SConsArguments.ENV, 'foo') == 'ENV_FOO')
+            assert(args.get_key(SConsArguments.VAR, 'foo') == 'VAR_FOO')
+            assert(args.get_key(SConsArguments.OPT, 'foo') == 'OPT_FOO')
+            assert(args.get_key(SConsArguments.ENV, 'bar') == 'ENV_BAR')
+            assert(args.get_key(SConsArguments.VAR, 'bar') == 'VAR_BAR')
+            assert(args.get_key(SConsArguments.OPT, 'bar') == 'OPT_BAR')
         """
         #--------------------------------------------------------------------
         return self.__rename[ns][key]
@@ -797,12 +884,12 @@ class _Arguments(object):
         **Note**:
 
             This function calls the `variables.Update(proxy[,args])`_ method
-            passing proxy to `env` (see `_ArgumentsEnvProxy`) to introduce mappings
-            between ``ENV`` and ``VAR`` namespaces.
+            passing `env` proxy (see `_ArgumentsProxy`) to the method in
+            order to enable mappings between ``ENV`` and ``VAR`` namespaces.
 
         :Parameters:
             env
-                `SCons environment`_ object to update
+                `SCons environment`_ object to be updated,
             variables
                 `SCons variables`_ object to take values from
 
@@ -811,7 +898,6 @@ class _Arguments(object):
         .. _variables.Update(proxy[,args]): http://www.scons.org/doc/latest/HTML/scons-api/SCons.Variables.Variables-class.html#Update
         """
         #--------------------------------------------------------------------
-
         proxy = self.VarEnvProxy(env)
         _VariablesWrapper(variables).Update(proxy,args)
 
@@ -825,7 +911,7 @@ class _Arguments(object):
 
         :Parameters:
             env
-                `SCons environment`_ object to update
+                `SCons environment`_ object to be updated
 
         .. _SCons environment:  http://www.scons.org/doc/HTML/scons-user.html#chap-environments
         .. _command-line options: http://www.scons.org/doc/HTML/scons-user.html#sect-command-line-options
@@ -835,11 +921,12 @@ class _Arguments(object):
         proxy = self.OptEnvProxy(env)
         for opt_key in self.__irename[OPT]:
             opt_value = GetOption(opt_key)
-            if opt_value is not None:
+            # FIXME: why not pass None to environment (currently it's skipped)?
+            if opt_value is not None and opt_value is not _undef:
                 proxy[opt_key] = opt_value
 
     #========================================================================
-    def UpdateEnvironment(self, env, variables=None, options=False, args=None):
+    def UpdateEnvironment(self, env, variables=None, use_options=False, args=None):
         #--------------------------------------------------------------------
         """Update construction variables in SCons environment
         (``env["VARIABLE"]=VALUE``) according to values stored in their
@@ -852,7 +939,7 @@ class _Arguments(object):
             variables : ``SCons.Variables.Variables`` | None
                 if not ``None``, it should be a `SCons.Variables.Variables`_
                 object with `SCons variables`_ to retrieve values from,
-            options : boolean
+            use_options : boolean
                 if ``True``, `command-line options`_ are taken into account
                 when updating `env`.
             args
@@ -868,7 +955,7 @@ class _Arguments(object):
         # TODO: implement priority?
         if variables is not None:
             self.update_env_from_vars(env, variables, args)
-        if options:
+        if use_options:
             self.update_env_from_opts(env)
 
     def SaveVariables(self, variables, filename, env):
@@ -953,7 +1040,7 @@ class _Arguments(object):
             cur
                 *Argument* proxy to `SCons Environment`_ or simply to a
                 dictionary which holds current values of variables. An
-                `_ArgumentsEnvProxy` object.
+                `_ArgumentsProxy` object.
             org
                 *Argument* proxy to a dictionary containig original values of
                 *Arguments*.
@@ -1309,7 +1396,7 @@ class _ArgumentDecl(object):
         ``VAR`` or ``OPT`` constants which represent selection of
         "corresponding Environment construction variable", "corresponding SCons
         command-line variable" or "corresponding SCons command-line option"
-        respectively.  So, for example the call ``decl.set_ns_decl(ENV,decl)``
+        respectively.  So, for example the call ``decl.set_decl(ENV,decl)``
         stores the declaration of corresponding construction variable in a
         SCons environment (``ENV``).
     """
@@ -1325,32 +1412,34 @@ class _ArgumentDecl(object):
             env_decl
                 parameters used later to create related construction variable
                 in `SCons environment`_, same as ``decl`` argument to
-                `_set_env_decl()`,
+                `set_env_decl()`,
             var_decl
                 parameters used later to create related `SCons command-line
-                variable`_, same as ``decl`` argument to `_set_var_decl()`,
+                variable`_, same as ``decl`` argument to `set_var_decl()`,
             opt_decl
                 parameters used later to create related `SCons command-line
-                option`_, same as  ``decl`` argument to `_set_opt_decl()`.
+                option`_, same as  ``decl`` argument to `set_opt_decl()`.
 
         .. _SCons environment:  http://www.scons.org/doc/HTML/scons-user.html#chap-environments
         .. _SCons command-line option: http://www.scons.org/doc/HTML/scons-user.html#sect-command-line-options
         .. _SCons command-line variable: http://www.scons.org/doc/HTML/scons-user.html#sect-command-line-variables
         """
         #--------------------------------------------------------------------
-        self.__ns_args = [None,None,None]
-        if env_decl: self._set_env_decl(env_decl)
-        if var_decl: self._set_var_decl(var_decl)
-        if opt_decl: self._set_opt_decl(opt_decl)
+        # __decl_tab is an internal 3-element list and holds argument info
+        #            for ENV, VAR and OPT endpoints.
+        self.__decl_tab = [None,None,None]
+        if env_decl: self.set_env_decl(env_decl)
+        if var_decl: self.set_var_decl(var_decl)
+        if opt_decl: self.set_opt_decl(opt_decl)
 
     #========================================================================
-    def set_ns_decl(self, ns, decl):
+    def set_decl(self, ns, decl):
         #--------------------------------------------------------------------
-        """Set declaration of related `ns` variable, where `ns` is one of
-        `ENV`, `VAR` or `OPT`.
+        """Set declaration of related *endpoint* variable in `ns` namespace,
+        where `ns` is one of `ENV`, `VAR` or `OPT`.
 
-        This functions just dispatches the job between `_set_env_decl()`,
-        `_set_var_decl()` and `_set_opt_decl()` according to `ns` argument.
+        This functions just dispatches the job between `set_env_decl()`,
+        `set_var_decl()` and `set_opt_decl()` according to `ns` argument.
 
         :Parameters:
             ns : int
@@ -1359,13 +1448,13 @@ class _ArgumentDecl(object):
                 declaration parameters passed to particular setter function.
         """
         #--------------------------------------------------------------------
-        if ns == ENV:     self._set_env_decl(decl)
-        elif ns == VAR:   self._set_var_decl(decl)
-        elif ns == OPT:   self._set_opt_decl(decl)
+        if ns == ENV:     self.set_env_decl(decl)
+        elif ns == VAR:   self.set_var_decl(decl)
+        elif ns == OPT:   self.set_opt_decl(decl)
         else:               raise IndexError("index out of range")
 
     #========================================================================
-    def _set_env_decl(self, decl):
+    def set_env_decl(self, decl):
         #--------------------------------------------------------------------
         """Set parameters for later creation of the related construction
         variable in `SCons environment`_.
@@ -1375,32 +1464,32 @@ class _ArgumentDecl(object):
                 may be a tuple in form ``("name", default)``, one-entry
                 dictionary ``{"name": default}`` or just a string ``"name"``;
                 later, when requested, this data is used to create construction
-                variable for user provided `SCons environment`_ ``env`` with
+                variable for user-provided `SCons environment`_ ``env`` with
                 ``env.SetDefault(name = default)``
 
         .. _SCons environment:  http://www.scons.org/doc/HTML/scons-user.html#chap-environments
         """
         #--------------------------------------------------------------------
-        from SCons.Util import is_Dict, is_Tuple, is_List, is_String
-        if is_Tuple(decl):
+        if SCons.Util.is_Tuple(decl):
             if not len(decl) == 2:
                 raise ValueError("tuple 'decl' must have 2 elements but " \
                                  "has %d" % len(decl))
-            else:
-                decl = {decl[0] : decl[1]}
-        elif is_Dict(decl):
+            decl = { 'key' : decl[0], 'default' : decl[1] }
+        elif SCons.Util.is_Dict(decl):
             if not len(decl) == 1:
                 raise ValueError("dictionary 'decl' must have 1 item but " \
                                  "has %d" % len(decl))
-        elif is_String(decl):
-            decl = { decl : _undef }
+            first = decl.items()[0]
+            decl = { 'key' : first[0], 'default' : first[1] }
+        elif SCons.Util.is_String(decl):
+            decl = { 'key' : decl,  'default' : _undef }
         else:
             raise TypeError("'decl' must be tuple, dictionary or string, %r " \
                             "is not allowed" % type(decl).__name__)
-        self.__ns_args[ENV] = decl
+        self.__decl_tab[ENV] = decl
 
     #========================================================================
-    def _set_var_decl(self, decl):
+    def set_var_decl(self, decl):
         #--------------------------------------------------------------------
         """Set parameters for later creation of the related `SCons command-line
         variable`_.
@@ -1433,14 +1522,13 @@ class _ArgumentDecl(object):
         .. _SCons command-line variable: http://www.scons.org/doc/HTML/scons-user.html#sect-command-line-variables
         """
         #--------------------------------------------------------------------
-        from SCons.Util import is_Dict, is_Tuple, is_List
-        if is_Tuple(decl) or is_List(decl):
+        if SCons.Util.is_Tuple(decl) or SCons.Util.is_List(decl):
             keys = [ 'key', 'help', 'default', 'validator', 'converter', 'kw' ]
             if len(decl) > len(keys):
                 raise ValueError('len(decl) should be less or greater than ' \
                                  '%d, but is %d' % (len(keys),len(decl) ))
             args = dict(zip(keys, decl))
-        elif is_Dict(decl):
+        elif SCons.Util.is_Dict(decl):
             args = decl.copy()
         else:
             raise TypeError("'decl' must be a list, tuple or dict, %r " \
@@ -1450,14 +1538,14 @@ class _ArgumentDecl(object):
             del args['kw']
         except KeyError:
             kw = {}
-        if not is_Dict(kw):
+        if not SCons.Util.is_Dict(kw):
             raise TypeError("decl['kw'] must be a dictionary, %r is not " \
                             "allowed" % type(kw).__name__)
         kw.update(args)
-        self.__ns_args[VAR] = kw
+        self.__decl_tab[VAR] = kw
 
     #========================================================================
-    def _set_opt_decl(self, decl):
+    def set_opt_decl(self, decl):
         #--------------------------------------------------------------------
         """Set parameters for later creation of the related `SCons command-line
         option`_.
@@ -1487,7 +1575,7 @@ class _ArgumentDecl(object):
                       'type'           : "string",
                       'dest'           : "file_name", ... }
 
-                or
+                or::
 
                     { 'names'          : ("-f", "--file-name")
                       'kw' : { 'action'         : "store",
@@ -1503,38 +1591,47 @@ class _ArgumentDecl(object):
         .. _option attributes: http://docs.python.org/2/library/optparse.html#option-attributes
         """
         #--------------------------------------------------------------------
-        from SCons.Util import is_String, is_Dict, is_Tuple, is_List
-        if is_Tuple(decl) or is_List(decl):
+        if SCons.Util.is_Tuple(decl) or SCons.Util.is_List(decl):
             try:
-                if is_String(decl[0]):
+                if SCons.Util.is_String(decl[0]):
                     names = tuple(decl[0].split())
-                elif is_Tuple(decl[0]):
+                elif SCons.Util.is_Tuple(decl[0]):
                     names = decl[0]
+                elif SCons.Util.is_List(decl[0]):
+                    names = tuple(decl[0])
                 else:
-                    raise TypeError("decl[0] must be a string or tuple, %r "\
+                    raise TypeError("decl[0] must be a string, tuple or list, %s "\
                                     "is not allowed" % type(decl[0]).__name__)
             except IndexError:
-                raise ValueError("'decl' must not be empty, got %r" % decl)
+                raise ValueError("'decl' must not be empty, got %(decl)r" % locals())
             try:
                 kw  = decl[1]
             except IndexError:
                 kw = {}
-        elif is_Dict(decl):
-            names = decl['names']
+        elif SCons.Util.is_Dict(decl):
+            if SCons.Util.is_String(decl['names']):
+                names = tuple(decl['names'].split())
+            elif SCons.Util.is_Tuple(decl['names']):
+                names = decl['names']
+            elif SCons.Util.is_List(decl['names']):
+                names = tuple(decl['names'])
+            else:
+                raise TypeError("decl['names'] must be a string, tuple or list, %s "\
+                                "is not allowed" % type(decl['names']).__name__)
             try:
                 kw = decl['kw']
             except KeyError:
                 kw = decl.copy()
                 del(kw['names'])
         else:
-            raise TypeError("'decl' must be a tuple list or dictionary, %r " \
+            raise TypeError("'decl' must be a tuple list or dictionary, %s " \
                             "is not allowed" % type(decl).__name__)
         if 'dest' not in kw:
             raise ValueError("'dest' parameter is missing")
-        self.__ns_args[OPT] = (names, kw)
+        self.__decl_tab[OPT] = (names, kw)
 
     #========================================================================
-    def has_ns_decl(self, ns):
+    def has_decl(self, ns):
         #--------------------------------------------------------------------
         """Test if declaration of corresponding `ns` variable was provided,
         where `ns` is one of `ENV`, `VAR` or `OPT`.
@@ -1546,35 +1643,111 @@ class _ArgumentDecl(object):
             ``True`` if the declaration exists, or ``False`` otherwise.
         """
         #--------------------------------------------------------------------
-        return self.__ns_args[ns] is not None
+        return self.__decl_tab[ns] is not None
 
     #========================================================================
-    def get_ns_key(self, ns):
+    def has_env_decl(self):
+        """Same as `has_decl(ENV)`"""
+        return self.has_decl(ENV)
+
+    #========================================================================
+    def has_var_decl(self):
+        """Same as `has_decl(VAR)`"""
+        return self.has_decl(VAR)
+
+    #========================================================================
+    def has_opt_decl(self):
+        """Same as `has_decl(OPT)`"""
+        return self.has_decl(OPT)
+
+    #========================================================================
+    def get_decl(self, ns):
         #--------------------------------------------------------------------
-        """Get the declaration parameters for the related `ns` variable, where
-        `ns` is one of `ENV`, `VAR` or `OPT`.
+        """Return internal representation of declaration for *Endpoint*
+        variable from `ns` namespace.
+
+        If the corresponding `ns` declaration does not exist, or `ns` is out of
+        range, the method throws an IndexError.
 
         :Parameters:
             ns : int
                 one of `ENV`, `VAR` or `OPT`
         :Returns:
-            ``decl`` parameters stored by last call `set_ns_decl(ns,decl)`.
+            The corresponding declaration
         """
         #--------------------------------------------------------------------
-        if ns == ENV:     return self.__ns_args[ENV].keys()[0]
-        elif ns == VAR:   return self.__ns_args[VAR]['key']
-        elif ns == OPT:   return self.__ns_args[OPT][1]['dest']
-        else:               raise IndexError("index out of range")
+        if (ns < 0) or ns > ALL:
+            raise IndexError("index out of range")
+        elif not self.has_decl(ns):
+            nsstr = [ 'ENV', 'VAR', 'OPT' ]
+            raise IndexError("there is no %s declaration in this _ArgumentDecl" % nsstr[ns])
+        return self.__decl_tab[ns]
 
     #========================================================================
-    def _set_ns_key(self, ns, key):
+    def get_env_decl(self):
+        """Same as `get_decl(ENV)`"""
+        return self.get_decl(ENV)
+
+    #========================================================================
+    def get_var_decl(self):
+        """Same as `get_decl(VAR)`"""
+        return self.get_decl(VAR)
+
+    #========================================================================
+    def get_opt_decl(self):
+        """Same as `get_decl(OPT)`"""
+        return self.get_decl(OPT)
+
+    #========================================================================
+    def get_key(self, ns):
+        #--------------------------------------------------------------------
+        """Returns the key (variable name) identifying *endpoint* variable in
+        namespace `ns`, where `ns` is one of `ENV`, `VAR` or `OPT`.
+
+        :Parameters:
+            ns : int
+                one of `ENV`, `VAR` or `OPT`
+        :Returns:
+            ``decl`` parameters stored by last call `set_decl(ns,decl)`.
+        """
+        #--------------------------------------------------------------------
+        decl = self.get_decl(ns)
+        if ns == ENV:
+            return decl['key']
+        elif ns == VAR:
+            return decl['key']
+        elif ns == OPT:
+            return decl[1]['dest']
+        else:
+            raise IndexError("index out of range")
+
+    #========================================================================
+    def get_env_key(self):
+        """Same as `get_key(ENV)`"""
+        return self.get_key(ENV)
+
+    #========================================================================
+    def get_var_key(self):
+        """Same as `get_key(VAR)`"""
+        return self.get_key(VAR)
+
+    #========================================================================
+    def get_opt_key(self):
+        """Same as `get_key(OPT)`"""
+        return self.get_key(OPT)
+
+    #========================================================================
+    def set_key(self, ns, key):
         #--------------------------------------------------------------------
         """Define the identifying key of corresponding `ns` variable, where
         `ns` is one of `ENV`, `VAR` or `OPT`.
 
+        The corresponding declaration must exists, that is ``has_decl(ns)``
+        must be ``True``. Otherwise, ``IndexError`` will be raised.
+
         **Warning**
             This function should not be used by users. To change the key of
-            corresponding `ns` variable, use `_ArgumentDecls.set_ns_key()`.
+            corresponding `ns` variable, use `_ArgumentDecls.set_key()`.
 
         :Parameters:
             ns : int
@@ -1583,17 +1756,33 @@ class _ArgumentDecl(object):
                 new key for the corresponding variable.
         """
         #--------------------------------------------------------------------
+        decl = self.get_decl(ns)
         if ns == ENV:
-            old_key = self.get_env_key()
-            self.__ns_args[ENV] = { key : self.__ns_args[ENV][old_key] }
+            decl['key'] = key
         elif ns == VAR:
-            self.__ns_args[VAR]['key'] = key
+            decl['key'] = key
         elif ns == OPT:
-            self.__ns_args[OPT][1]['dest'] = key
+            decl[1]['dest'] = key
         else:
             raise IndexError("index out of range")
 
-    def get_ns_default(self, ns):
+    #========================================================================
+    def set_env_key(self, key):
+        """Same as `set_key(ENV, key)`"""
+        self.set_key(ENV,key)
+
+    #========================================================================
+    def set_var_key(self, key):
+        """Same as `set_key(VAR, key)`"""
+        self.set_key(VAR,key)
+
+    #========================================================================
+    def set_opt_key(self, key):
+        """Same as `set_key(OPT, key)`"""
+        self.set_key(OPT,key)
+
+    #========================================================================
+    def get_default(self, ns):
         #--------------------------------------------------------------------
         """Get the default value of corresponding `ns` variable, where `ns`
         is one of `ENV`, `VAR`, `OPT`.
@@ -1603,22 +1792,33 @@ class _ArgumentDecl(object):
                 one of `ENV`, `VAR` or `OPT`
         """
         #--------------------------------------------------------------------
+        decl = self.get_decl(ns)
         if ns == ENV:
-            return self.__ns_args[ENV].values()[0]
+            return decl.get('default', _undef)
         elif ns == VAR:
-            args = self.__ns_args[VAR]
-            try:             return args['default']
-            except KeyError: return None
+            return decl.get('default', _undef)
         elif ns == OPT:
-            args = self.__ns_args[OPT]
-            kw = args[1]
-            try: return kw['default']
-            except KeyError: return None
+            return decl[1].get('default', _undef)
         else:
             raise IndexError("index out of range")
 
     #========================================================================
-    def set_ns_default(self, ns, default):
+    def get_env_default(self):
+        """Same as `get_default(ENV)`"""
+        return self.get_default(ENV)
+
+    #========================================================================
+    def get_var_default(self):
+        """Same as `get_default(VAR)`"""
+        return self.get_default(VAR)
+
+    #========================================================================
+    def get_opt_default(self):
+        """Same as `get_default(OPT)`"""
+        return self.get_default(OPT)
+
+    #========================================================================
+    def set_default(self, ns, default):
         #--------------------------------------------------------------------
         """Define the default value of corresponding `ns` variable, where
         `ns` is one of `ENV`, `VAR`, `OPT`.
@@ -1630,28 +1830,51 @@ class _ArgumentDecl(object):
                 the new default value
         """
         #--------------------------------------------------------------------
+        decl = self.get_decl(ns)
         if ns == ENV:
-            self.__ns_args[ENV] = { self.get_ns_key(ns) : default }
+            decl['default'] = default
         elif ns == VAR:
-            self.__ns_args[VAR]['default'] = default
+            decl['default'] = default
         elif ns == OPT:
-            self.__ns_args[OPT][1]['default'] = default
+            decl[1]['default'] = default
         else:
             raise IndexError("index out of range")
 
     #========================================================================
-    def _add_to_ns(self, ns, *args,**kw):
+    def set_env_default(self, default):
+        """Same as `set_default(ENV, default)`"""
+        self.set_default(ENV,default)
+
+    #========================================================================
+    def set_var_default(self, default):
+        """Same as `set_default(VAR, default)`"""
+        self.set_default(VAR,default)
+
+    #========================================================================
+    def set_opt_default(self, default):
+        """Same as `set_default(OPT, default)`"""
+        self.set_default(OPT,default)
+
+    #========================================================================
+    def add_to(self, ns, *args, **kw):
         #--------------------------------------------------------------------
-        """Add new corresponding `ns` variable, where `ns` is one of `ENV`,
-        `VAR` or `OPT`; use declaration stored in this `_ArgumentDecl` object.
+        """Add new corresponding construction variable, command-line variable
+        or command-line option depending on the `ns` variable. The `ns` is one
+        of `ENV`, `VAR` or `OPT`.
+
+        The method actually dispatches the job between `add_to_env()`,
+        `add_to_var()` and `add_to_opt()`.
+
+        The method raises ``IndexError`` if there is no declaration for the
+        given *endpoint* indicated with `ns`.
 
         **Examples**:
 
-            - ``decl._add_to_ns(ENV,env)`` creates new construction variable
+            - ``decl.add_to(ENV,env)`` creates new construction variable
               in `SCons environment`_ ``env``,
-            - ``decl._add_to_ns(VAR,vars)`` creates new command-line variable
+            - ``decl.add_to(VAR,vars)`` creates new command-line variable
               in `SCons variables`_ ``vars``
-            - ``decl._add_to_ns(OPT)`` creates a corresponding SCons
+            - ``decl.add_to(OPT)`` creates a corresponding SCons
               `command-line option`_.
 
         :Parameters:
@@ -1675,25 +1898,89 @@ class _ArgumentDecl(object):
         .. _command-line option: http://www.scons.org/doc/HTML/scons-user.html#sect-command-line-options
         """
         #--------------------------------------------------------------------
-        from SCons.Script.Main import AddOption
         if ns == ENV:
-            if self.__ns_args[ENV].values()[0] is not _undef:
-                env = args[0]
-                env.SetDefault(**self.__ns_args[ENV])
+            self.add_to_env(args[0])
         elif ns == VAR:
-            variables = args[0]
-            kw2 = self.__ns_args[VAR].copy()
-            kw2.update(kw)
-            return variables.Add(*args[1:],**kw2)
+            self.add_to_var(args[0],*args[1:],**kw)
         elif ns == OPT:
-            AddOption(*self.__ns_args[OPT][0], **self.__ns_args[OPT][1])
+            self.add_to_opt()
         else:
             raise IndexError("index out of range")
 
     #========================================================================
-    def _safe_add_to_ns(self, ns, *args):
+    def add_to_env(self, env):
         #--------------------------------------------------------------------
-        """Same as `_add_to_ns()`, but does not raise exceptions when the
+        """Add construction variable to `SCons environment`_ corresponding to
+        this *Argument* and set it do default value.
+
+        The method raises ``IndexError`` if there is no declaration for
+        construction variable in this `_ArgumentDecl` object.
+
+        **Remarks**:
+            
+            - the construction variable is "created" with ``env.SetDefault()``;
+              existing construction variables are NOT overwritten by this call,
+            - the construction variable is not created if the default value
+              of this *Argument* for construction variable is `_undef`.
+
+        :Parameters:
+            env
+                  a `SCons environment`_ to create construction variable for,
+
+        .. _SCons environment:  http://www.scons.org/doc/HTML/scons-user.html#chap-environments
+        """
+        #--------------------------------------------------------------------
+        decl = self.get_decl(ENV)
+        default = decl.get('default', _undef)
+        if default is not _undef:
+            env.SetDefault(**{decl['key'] : default})
+
+    #========================================================================
+    def add_to_var(self, variables, *args, **kw):
+        #--------------------------------------------------------------------
+        """Add new SCons `command-line variable`_ corresponding to this *Argument*.
+
+        The method raises ``IndexError`` if there is no declaration for the
+        corresponding command-line variable in this `_ArgumentDecl` object.
+
+        :Parameters:
+            variables
+                SCons `Variables`_ object,
+                
+            args, kw
+                additional arguments and keywords, ``*args`` are used as
+                positional arguments to `variables.Add()`_ and ``**kw`` are
+                passed to `variables.Add()`_ as additional keywords
+
+        .. _command-line variable: http://www.scons.org/doc/HTML/scons-user.html#sect-command-line-variables
+        .. _Variables: http://www.scons.org/doc/latest/HTML/scons-api/SCons.Variables.Variables-class.html
+        .. _variables.Add(): http://www.scons.org/doc/latest/HTML/scons-api/SCons.Variables.Variables-class.html#Add
+        """
+        #--------------------------------------------------------------------
+        decl = self.get_decl(VAR)
+        kw2 = decl.copy()
+        kw2.update(kw)
+        return variables.Add(*args,**kw2)
+
+    #========================================================================
+    def add_to_opt(self):
+        #--------------------------------------------------------------------
+        """Add new SCons `command-line option`_ corresponding to this *Argument*.
+
+        The method raises ``IndexError`` if there is no declaration for the
+        command-line option in this `_ArgumentDecl` object.
+
+        .. _command-line option: http://www.scons.org/doc/HTML/scons-user.html#sect-command-line-options
+        """
+        #--------------------------------------------------------------------
+        from SCons.Script.Main import AddOption
+        decl = self.get_decl(OPT)
+        AddOption(*decl[0], **decl[1])
+
+    #========================================================================
+    def safe_add_to(self, ns, *args):
+        #--------------------------------------------------------------------
+        """Same as `add_to()`, but does not raise exceptions when the
         corresponding `ns` variable is not declared in this `_ArgumentDecl`
         object.
 
@@ -1707,8 +1994,8 @@ class _ArgumentDecl(object):
             object.
         """
         #--------------------------------------------------------------------
-        if self.has_ns_decl(ns):
-            self._add_to_ns(ns, *args)
+        if self.has_decl(ns):
+            self.add_to(ns, *args)
             return True
         else:
             return False
@@ -1738,12 +2025,11 @@ def DeclareArgument(env_key=None, var_key=None, opt_key=None, default=_undef,
     #------------------------------------------------------------------------
     """Convert unified set of arguments to `_ArgumentDecl` instance.
 
-    This function accepts minimal set of parameters to declare consistently a
-    *Argument* and its corresponding `ENV`, `VAR` and `OPT`
-    counterparts.  If the first argument named `env_key` is an instance of
-    `_ArgumentDecl`, then it is returned unaltered. Otherwise the arguments are
-    mapped onto following attributes of corresponding `ENV`, `VAR` and `OPT`
-    variables/options::
+    This function accepts minimal set of parameters to declare consistently an
+    *Argument* and its corresponding `ENV`, `VAR` and `OPT` counterparts.  If
+    the first argument named `env_key` is an instance of `_ArgumentDecl`, then
+    it is returned unaltered. Otherwise the arguments are mapped onto following
+    attributes of corresponding `ENV`, `VAR` and `OPT` variables/options::
 
         ARG                 ENV         VAR         OPT
         ----------------+-----------------------------------------
@@ -1792,7 +2078,7 @@ def DeclareArgument(env_key=None, var_key=None, opt_key=None, default=_undef,
         validator
             same as for `SCons.Variables.Variables.Add()`_,
         converter
-            same sd for `SCons.Variables.Variables.Add()`_,
+            same as for `SCons.Variables.Variables.Add()`_,
         option
             option string, e.g. ``"--option"`` used for corresponding
             command-line option,
@@ -1859,13 +2145,13 @@ def DeclareArgument(env_key=None, var_key=None, opt_key=None, default=_undef,
 #############################################################################
 class _ArgumentDecls(dict):
     #========================================================================
-    """Dictionary-like object to hold declarations of *Arguments*.
+    """Dictionary-like object with *Argument* declarations as values.
 
-    The `_ArgumentDecls` object is a subclass of ``dict`` with keys being strings
-    identifying declared *Arguments* and values being instances of
-    `_ArgumentDecl` objects. The `_ArgumentDecls` dictionary also maintains internally
-    *supplementary dictionaries* used to map names of registered variables
-    between four namespaces: `ENV` (construction variables in SCons
+    The `_ArgumentDecls` object is a subclass of ``dict`` with keys being
+    strings identifying declared *Arguments* and values being instances of
+    `_ArgumentDecl` objects. The `_ArgumentDecls` dictionary also maintains
+    *supplementary dictionaries* used internally to map names of registered
+    variables between four namespaces: `ENV` (construction variables in SCons
     environment), `VAR` (command-line variables ``variable=value``), `OPT`
     (command-line options ``--option=value``) and *Argument* (the keys used to
     identify the *Arguments* declared within `_ArgumentDecls` dictionary).
@@ -1877,8 +2163,8 @@ class _ArgumentDecls(dict):
           existing ones may be modified via dictionary interface, see
           `__setitem__()`, `update()` and others,
         - committing declared variables, see `commit()`; after commit, the
-          contents of `_ArgumentDecls` is frozen and any attempts to modifications
-          end-up with a `RuntimeError` exception being raised,
+          contents of `_ArgumentDecls` is "frozen" and any attempts to
+          modifications end-up with a `RuntimeError` exception being raised,
         - creating related construction variables (``env["VARIABLE"]=VALUE``),
           command-line variables (``variable=value``) and command-line options
           (``--option=value``) according to committed `_ArgumentDecls`
@@ -1897,7 +2183,7 @@ class _ArgumentDecls(dict):
         "corresponding Environment construction variable", "corresponding SCons
         command line variable" or "corresponding SCons command line option"
         respectively.  So, for example the call
-        ``decls.set_ns_key(ENV,"foo","ENV_FOO")`` defines the name
+        ``decls.set_key(ENV,"foo","ENV_FOO")`` defines the name
         ``"ENV_FOO"`` to be used for construction variable in SCons environment
         (``ENV``) that will correspond to our *Argument* named ``foo``.
     """
@@ -1926,7 +2212,7 @@ class _ArgumentDecls(dict):
         """
         #--------------------------------------------------------------------
         self.__committed = False
-        self.__validate_values(*args,**kw)
+        _ArgumentDecls.__validate_values(*args,**kw)
         super(_ArgumentDecls, self).__init__(*args,**kw)
         self.__update_supp_dicts()
 
@@ -1946,7 +2232,7 @@ class _ArgumentDecls(dict):
         for x in self.iteritems(): self.__append_decl_to_supp_dicts(*x)
 
     #========================================================================
-    def __replace_ns_key_in_supp_dicts(self, ns, key, ns_key):
+    def __replace_key_in_supp_dicts(self, ns, key, ns_key):
         #--------------------------------------------------------------------
         """Replace in the supplementary dicts the key identifying corresponding
         `ns` variable (where `ns` is one of `ENV`, `VAR` or `OPT`).
@@ -1969,12 +2255,12 @@ class _ArgumentDecls(dict):
         try: old_key = self.__rename[ns][key]
         except KeyError: old_key = _notfound
         if ns_key != old_key:
-            self.__append_ns_key_to_supp_dicts(ns, key, ns_key)
+            self.__append_key_to_supp_dicts(ns, key, ns_key)
             try: del self.__irename[ns][old_key]
             except KeyError: pass
 
     #========================================================================
-    def __append_ns_key_to_supp_dicts(self, ns, key, ns_key):
+    def __append_key_to_supp_dicts(self, ns, key, ns_key):
         #--------------------------------------------------------------------
         """Add to supplementary dictionaries the new `ns` variable
         corresponding to *Argument* identified by `key`.
@@ -2001,9 +2287,9 @@ class _ArgumentDecls(dict):
     #========================================================================
     def __append_decl_to_supp_dicts(self, key, decl):
         for ns in range(0,ALL):
-            if decl.has_ns_decl(ns):
-                ns_key = decl.get_ns_key(ns)
-                self.__append_ns_key_to_supp_dicts(ns, key, ns_key)
+            if decl.has_decl(ns):
+                ns_key = decl.get_key(ns)
+                self.__append_key_to_supp_dicts(ns, key, ns_key)
         return decl
 
     #========================================================================
@@ -2029,15 +2315,15 @@ class _ArgumentDecls(dict):
     @staticmethod
     def __validate_value(value):
         if not isinstance(value, _ArgumentDecl):
-            raise TypeError("value must be instance of _ArgumentDecl, %r is not "\
-                            "allowed"  % type(value).__name__)
+            raise TypeError("value must be an instance of _ArgumentDecl, %r is not allowed"  % value)
+
     #========================================================================
     def setdefault(self, key, value = _missing):
         if value is _missing:
             return super(_ArgumentDecls,self).setdefault(key)
         else:
             self.__ensure_not_committed()
-            value = self.__validate_value(value)
+            _ArgumentDecls.__validate_value(value)
             return super(_ArgumentDecls,self).setdefault(key, value)
 
     #========================================================================
@@ -2073,18 +2359,18 @@ class _ArgumentDecls(dict):
     #========================================================================
     def __setitem__(self, key, value):
         self.__ensure_not_committed()
-        value = self.__validate_value(value)
+        _ArgumentDecls.__validate_value(value)
         self.__append_decl_to_supp_dicts(key, value)
-        return super(_ArgumentDecls,self).__setitem__(key, decl)
+        return super(_ArgumentDecls,self).__setitem__(key, value)
 
     #========================================================================
     def __delitem__(self, key):
         self.__ensure_not_committed()
-        self.__del_from_supp_ducats(key)
+        self.__del_from_supp_dicts(key)
         return super(_ArgumentDecls,self).__delitem__(key)
 
     #========================================================================
-    def get_ns_rename_dict(self, ns):
+    def get_rename_dict(self, ns):
         #--------------------------------------------------------------------
         """Get the dictionary mapping variable names from *Argument* namespace
         to `ns` (where `ns` is one of `ENV`, `VAR` or `OPT`).
@@ -2102,7 +2388,7 @@ class _ArgumentDecls(dict):
         return self.__rename[ns].copy()
 
     #========================================================================
-    def get_ns_irename_dict(self, ns):
+    def get_irename_dict(self, ns):
         #--------------------------------------------------------------------
         """Get the dictionary mapping variable names from `ns` namespace to
         *Argument* namespace (where `ns` is one of `ENV`, `VAR` or `OPT`).
@@ -2121,7 +2407,7 @@ class _ArgumentDecls(dict):
         return self.__irename[ns].copy()
 
     #========================================================================
-    def get_ns_resubst_dict(self,ns):
+    def get_resubst_dict(self,ns):
         #--------------------------------------------------------------------
         """Get the dictionary mapping variable names from *Argument* namespace
         to placeholders for variable values from `ns` namespace (where `ns`
@@ -2147,7 +2433,7 @@ class _ArgumentDecls(dict):
         return self.__resubst[ns].copy()
 
     #========================================================================
-    def get_ns_iresubst_dict(self, ns):
+    def get_iresubst_dict(self, ns):
         #--------------------------------------------------------------------
         """Get the dictionary mapping variable names from `ns` namespace to
         placeholders for variable values from *Argument* namespace (where `ns`
@@ -2173,7 +2459,7 @@ class _ArgumentDecls(dict):
         return self.__iresubst[ns].copy()
 
     #========================================================================
-    def get_ns_key(self, ns, key):
+    def get_key(self, ns, key):
         #--------------------------------------------------------------------
         """Get the key identifying corresponding `ns` variable  (where `ns`
         is one of `ENV`, `VAR` or `OPT`).
@@ -2195,10 +2481,10 @@ class _ArgumentDecls(dict):
 
         """
         #--------------------------------------------------------------------
-        return self[key].get_ns_key(ns)
+        return self[key].get_key(ns)
 
     #========================================================================
-    def set_ns_key(self, ns, key, ns_key):
+    def set_key(self, ns, key, ns_key):
         #--------------------------------------------------------------------
         """Change the key identifying a corresponding `ns` variable (where
         `ns` is one of `ENV`, `VAR` or `OPT`).
@@ -2221,20 +2507,20 @@ class _ArgumentDecls(dict):
         """
         #--------------------------------------------------------------------
         self.__ensure_not_committed()
-        self[key]._set_ns_key(ns_key)
-        self.__replace_ns_key_in_supp_dicts(ns, key, ns_key)
+        self[key].set_key(ns, ns_key)
+        self.__replace_key_in_supp_dicts(ns, key, ns_key)
 
     #========================================================================
-    def _add_to_ns(self, ns, *args):
-        """Invoke `_ArgumentDecl._add_to_ns()` for each *Argument* declared
+    def _add_to(self, ns, *args):
+        """Invoke `_ArgumentDecl.add_to()` for each *Argument* declared
         in this dictionary."""
-        for (k,v) in self.iteritems(): v._add_to_ns(ns,*args)
+        for (k,v) in self.iteritems(): v.add_to(ns,*args)
 
     #========================================================================
-    def _safe_add_to_ns(self, ns, *args):
-        """Invoke `_ArgumentDecl._safe_add_to_ns()` for each *Argument*
+    def _safe_add_to(self, ns, *args):
+        """Invoke `_ArgumentDecl.safe_add_to()` for each *Argument*
         declared in this dictionary."""
-        for (k,v) in self.iteritems(): v._safe_add_to_ns(ns, *args)
+        for (k,v) in self.iteritems(): v.safe_add_to(ns, *args)
 
     #========================================================================
     def _build_resubst_dicts(self):
@@ -2260,9 +2546,9 @@ class _ArgumentDecls(dict):
                 the *Argument* declaration to modify
         """
         for ns in range(0,ALL):
-            if decl.has_ns_decl(ns):
-                val = _resubst(decl.get_ns_default(ns), self.__resubst[ns])
-                decl.set_ns_default(ns,val)
+            if decl.has_decl(ns):
+                val = _resubst(decl.get_default(ns), self.__resubst[ns])
+                decl.set_default(ns,val)
 
     #========================================================================
     def __resubst_defaults(self):
@@ -2313,7 +2599,7 @@ class _ArgumentDecls(dict):
         """Create and initialize the corresponding ``ns`` variables (where
         ``ns`` is one of `ENV`, `VAR` or `OPT`).
 
-        This function calls `_safe_add_to_ns()` for each ``ns`` from ``(ENV,
+        This function calls `safe_add_to()` for each ``ns`` from ``(ENV,
         VAR, OPT)``.
 
         :Parameters:
@@ -2336,7 +2622,7 @@ class _ArgumentDecls(dict):
         #--------------------------------------------------------------------
         self.__ensure_committed()
         for ns in range(0,min(len(args),ALL)):
-            if args[ns]: self._safe_add_to_ns(ns, args[ns])
+            if args[ns]: self._safe_add_to(ns, args[ns])
 
     #========================================================================
     def Commit(self, env=None, variables=None, create_options=False, create_args=True, *args):
@@ -2395,8 +2681,8 @@ def ArgumentDecls(*args, **kw):
     resultant dictionary is used as initializer to `ArgumentDecl`. You may for
     example pass a dictionary of the form ``{ 'foo' : (env, var, opt)}``,
     where ``env``, ``var`` and ``opt`` are parameters accepted by
-    `_ArgumentDecl._set_env_decl()`, `_ArgumentDecl._set_var_decl()` and
-    `_ArgumentDecl._set_opt_decl()` respectively.
+    `_ArgumentDecl.set_env_decl()`, `_ArgumentDecl.set_var_decl()` and
+    `_ArgumentDecl.set_opt_decl()` respectively.
 
     **Example**
 
@@ -2510,6 +2796,23 @@ def ArgumentDecls(*args, **kw):
 
 #############################################################################
 def DeclareArguments(*args, **kw):
+    """Declare multiple *Arguments* at once
+
+    This function may be used to declare multiple *Arguments* at once while
+    using same parameters as `DeclareArgument()` for each individual
+    *Argument*.
+
+    **Example**
+
+    .. python::
+
+        decls = DeclareArguments(
+            foo = ('ENV_FOO', 'VAR_FOO', 'OPT_FOO', 'default foo', 'help for argument foo'),
+            bar = ('ENV_BAR', 'VAR_BAR', 'OPT_BAR', 'default bar', 'help for argument bar'),
+            gez = {'env_key' : 'ENV_GEZ', 'var_key' : 'VAR_GEZ', 'default' : 'default GEEZ' }
+        )
+
+    """
     convert = lambda x : x if isinstance(x, _ArgumentDecl) \
                            else DeclareArgument(**x) if hasattr(x, 'keys') \
                            else DeclareArgument(*tuple(x))
