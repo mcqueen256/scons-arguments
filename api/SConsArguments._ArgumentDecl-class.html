@@ -1,0 +1,861 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>SConsArguments._ArgumentDecl</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="SConsArguments-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="SConsArguments-module.html">Package&nbsp;SConsArguments</a> ::
+        Class&nbsp;_ArgumentDecl
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="SConsArguments._ArgumentDecl-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class _ArgumentDecl</h1><p class="nomargin-top"><span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecl">source&nbsp;code</a></span></p>
+<pre class="base-tree">
+object --+
+         |
+        <strong class="uidshort">_ArgumentDecl</strong>
+</pre>
+
+<hr />
+<p>Declaration of single <em>Argument</em>.</p>
+<p>This object holds information necessary to create construction variable in
+SCons Environment, SCons command-line variable (<tt class="rst-docutils literal">variable=value</tt>) and
+SCons command-line option (<tt class="rst-docutils literal"><span class="pre">--option=value</span></tt>) corresponding to a given
+<em>Argument</em> (it for example holds the names and default values of
+these variables/options before they get created).</p>
+<p><strong>Note</strong>:</p>
+<blockquote>
+In several places we use <tt class="rst-docutils literal">xxx</tt> as placeholder for one of the <tt class="rst-docutils literal">ENV</tt>,
+<tt class="rst-docutils literal">VAR</tt> or <tt class="rst-docutils literal">OPT</tt> constants which represent selection of
+&quot;corresponding Environment construction variable&quot;, &quot;corresponding SCons
+command-line variable&quot; or &quot;corresponding SCons command-line option&quot;
+respectively.  So, for example the call <tt class="rst-docutils literal">decl.set_xxx_decl(ENV,decl)</tt>
+stores the declaration of corresponding construction variable in a
+SCons environment (<tt class="rst-docutils literal">ENV</tt>).</blockquote>
+
+<!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="SConsArguments._ArgumentDecl-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">env_decl</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">var_decl</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">opt_decl</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Constructor for _ArgumentDecl object</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecl.__init__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="SConsArguments._ArgumentDecl-class.html#set_xxx_decl" class="summary-sig-name">set_xxx_decl</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">xxx</span>,
+        <span class="summary-sig-arg">decl</span>)</span><br />
+      Set declaration of related <code class="link">xxx</code> variable, where <code class="link">xxx</code> is one of
+<a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecl.set_xxx_decl">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="SConsArguments._ArgumentDecl-class.html#_set_env_decl" class="summary-sig-name" onclick="show_private();">_set_env_decl</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">decl</span>)</span><br />
+      Set parameters for later creation of the related construction
+variable in <a class="rst-reference external" href="http://www.scons.org/doc/HTML/scons-user.html#chap-environments" target="_top">SCons environment</a>.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecl._set_env_decl">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="SConsArguments._ArgumentDecl-class.html#_set_var_decl" class="summary-sig-name" onclick="show_private();">_set_var_decl</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">decl</span>)</span><br />
+      Set parameters for later creation of the related <a class="rst-reference external" href="http://www.scons.org/doc/HTML/scons-user.html#sect-command-line-variables" target="_top">SCons command-line
+variable</a>.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecl._set_var_decl">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="SConsArguments._ArgumentDecl-class.html#_set_opt_decl" class="summary-sig-name" onclick="show_private();">_set_opt_decl</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">decl</span>)</span><br />
+      Set parameters for later creation of the related <a class="rst-reference external" href="http://www.scons.org/doc/HTML/scons-user.html#sect-command-line-options" target="_top">SCons command-line
+option</a>.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecl._set_opt_decl">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="SConsArguments._ArgumentDecl-class.html#has_xxx_decl" class="summary-sig-name">has_xxx_decl</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">xxx</span>)</span><br />
+      Test if declaration of corresponding <code class="link">xxx</code> variable was provided,
+where <code class="link">xxx</code> is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecl.has_xxx_decl">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="SConsArguments._ArgumentDecl-class.html#get_xxx_key" class="summary-sig-name">get_xxx_key</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">xxx</span>)</span><br />
+      Get the declaration parameters for the related <code class="link">xxx</code> variable, where
+<code class="link">xxx</code> is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecl.get_xxx_key">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="SConsArguments._ArgumentDecl-class.html#_set_xxx_key" class="summary-sig-name" onclick="show_private();">_set_xxx_key</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">xxx</span>,
+        <span class="summary-sig-arg">key</span>)</span><br />
+      Define the identifying key of corresponding <code class="link">xxx</code> variable, where
+<code class="link">xxx</code> is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecl._set_xxx_key">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="SConsArguments._ArgumentDecl-class.html#get_xxx_default" class="summary-sig-name">get_xxx_default</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">xxx</span>)</span><br />
+      Get the default value of corresponding <code class="link">xxx</code> variable, where <code class="link">xxx</code>
+is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a>, <a href="SConsArguments-module.html#OPT" class="link">OPT</a>.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecl.get_xxx_default">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="SConsArguments._ArgumentDecl-class.html#set_xxx_default" class="summary-sig-name">set_xxx_default</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">xxx</span>,
+        <span class="summary-sig-arg">default</span>)</span><br />
+      Define the default value of corresponding <code class="link">xxx</code> variable, where
+<code class="link">xxx</code> is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a>, <a href="SConsArguments-module.html#OPT" class="link">OPT</a>.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecl.set_xxx_default">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="SConsArguments._ArgumentDecl-class.html#_add_to_xxx" class="summary-sig-name" onclick="show_private();">_add_to_xxx</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">xxx</span>,
+        <span class="summary-sig-arg">*args</span>,
+        <span class="summary-sig-arg">**kw</span>)</span><br />
+      Add new corresponding <code class="link">xxx</code> variable, where <code class="link">xxx</code> is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>,
+<a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>; use declaration stored in this <a href="SConsArguments._ArgumentDecl-class.html" class="link" onclick="show_private();">_ArgumentDecl</a> object.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecl._add_to_xxx">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="SConsArguments._ArgumentDecl-class.html#_safe_add_to_xxx" class="summary-sig-name" onclick="show_private();">_safe_add_to_xxx</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">xxx</span>,
+        <span class="summary-sig-arg">*args</span>)</span><br />
+      Same as <a href="SConsArguments._ArgumentDecl-class.html#_add_to_xxx" class="link" onclick="show_private();">_add_to_xxx()</a>, but does not raise exceptions when the
+corresponding <code class="link">xxx</code> variable is not declared in this <a href="SConsArguments._ArgumentDecl-class.html" class="link" onclick="show_private();">_ArgumentDecl</a>
+object.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecl._safe_add_to_xxx">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__delattr__</code>,
+      <code>__format__</code>,
+      <code>__getattribute__</code>,
+      <code>__hash__</code>,
+      <code>__new__</code>,
+      <code>__reduce__</code>,
+      <code>__reduce_ex__</code>,
+      <code>__repr__</code>,
+      <code>__setattr__</code>,
+      <code>__sizeof__</code>,
+      <code>__str__</code>,
+      <code>__subclasshook__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== PROPERTIES ==================== -->
+<a name="section-Properties"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Properties</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Properties"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__class__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="__init__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">env_decl</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">var_decl</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">opt_decl</span>=<span class="sig-default">None</span>)</span>
+    <br /><em class="fname">(Constructor)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecl.__init__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Constructor for _ArgumentDecl object</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>env_decl</code></strong> - parameters used later to create related construction variable
+in <a class="rst-reference external" href="http://www.scons.org/doc/HTML/scons-user.html#chap-environments" target="_top">SCons environment</a>, same as <tt class="rst-docutils literal">decl</tt> argument to
+<a href="SConsArguments._ArgumentDecl-class.html#_set_env_decl" class="link" onclick="show_private();">_set_env_decl()</a>,</li>
+        <li><strong class="pname"><code>var_decl</code></strong> - parameters used later to create related <a class="rst-reference external" href="http://www.scons.org/doc/HTML/scons-user.html#sect-command-line-variables" target="_top">SCons command-line
+variable</a>, same as <tt class="rst-docutils literal">decl</tt> argument to <a href="SConsArguments._ArgumentDecl-class.html#_set_var_decl" class="link" onclick="show_private();">_set_var_decl()</a>,</li>
+        <li><strong class="pname"><code>opt_decl</code></strong> - parameters used later to create related <a class="rst-reference external" href="http://www.scons.org/doc/HTML/scons-user.html#sect-command-line-options" target="_top">SCons command-line
+option</a>, same as  <tt class="rst-docutils literal">decl</tt> argument to <a href="SConsArguments._ArgumentDecl-class.html#_set_opt_decl" class="link" onclick="show_private();">_set_opt_decl()</a>.</li>
+    </ul></dd>
+    <dt>Overrides:
+        object.__init__
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="set_xxx_decl"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">set_xxx_decl</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">xxx</span>,
+        <span class="sig-arg">decl</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecl.set_xxx_decl">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Set declaration of related <code class="link">xxx</code> variable, where <code class="link">xxx</code> is one of
+<a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>.</p>
+<p>This functions just dispatches the job between <a href="SConsArguments._ArgumentDecl-class.html#_set_env_decl" class="link" onclick="show_private();">_set_env_decl()</a>,
+<a href="SConsArguments._ArgumentDecl-class.html#_set_var_decl" class="link" onclick="show_private();">_set_var_decl()</a> and <a href="SConsArguments._ArgumentDecl-class.html#_set_opt_decl" class="link" onclick="show_private();">_set_opt_decl()</a> according to <code class="link">xxx</code> argument.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>xxx</code></strong> (int) - one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>,</li>
+        <li><strong class="pname"><code>decl</code></strong> - declaration parameters passed to particular setter function.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="_set_env_decl"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">_set_env_decl</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">decl</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecl._set_env_decl">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Set parameters for later creation of the related construction
+variable in <a class="rst-reference external" href="http://www.scons.org/doc/HTML/scons-user.html#chap-environments" target="_top">SCons environment</a>.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>decl</code></strong> (tuple | dict | str) - may be a tuple in form <tt class="rst-docutils literal">(&quot;name&quot;, default)</tt>, one-entry
+dictionary <tt class="rst-docutils literal">{&quot;name&quot;: default}</tt> or just a string <tt class="rst-docutils literal">&quot;name&quot;</tt>;
+later, when requested, this data is used to create construction
+variable for user provided <a class="rst-reference external" href="http://www.scons.org/doc/HTML/scons-user.html#chap-environments" target="_top">SCons environment</a> <tt class="rst-docutils literal">env</tt> with
+<tt class="rst-docutils literal">env.SetDefault(name = default)</tt></li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="_set_var_decl"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">_set_var_decl</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">decl</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecl._set_var_decl">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Set parameters for later creation of the related <a class="rst-reference external" href="http://www.scons.org/doc/HTML/scons-user.html#sect-command-line-variables" target="_top">SCons command-line
+variable</a>.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><p><strong class="pname"><code>decl</code></strong> (tuple | dict) - declaration parameters used later to add the related <a class="rst-reference external" href="http://www.scons.org/doc/HTML/scons-user.html#sect-command-line-variables" target="_top">SCons
+command-line variable</a>; if <code class="link">decl</code> is a tuple, it must have
+the form:</p>
+<pre class="rst-literal-block">
+( key [, help, default, validator, converter, kw] ),
+</pre>
+<p>where entries in square brackets are optional; the consecutive
+elements  are interpreted in order shown above as <tt class="rst-docutils literal">key</tt>,
+<tt class="rst-docutils literal">help</tt>, <tt class="rst-docutils literal">default</tt>, <tt class="rst-docutils literal">validator</tt>, <tt class="rst-docutils literal">converter</tt>, <tt class="rst-docutils literal">kw</tt>;
+the meaning of these arguments is same as for
+<a class="rst-reference external" href="http://www.scons.org/doc/latest/HTML/scons-api/SCons.Variables.Variables-class.html#Add" target="_top">SCons.Variables.Variables.Add()</a>; the <tt class="rst-docutils literal">kw</tt>, if present,
+must be a dictionary;</p>
+<p>if <code class="link">decl</code> is a dictionary, it should have the form:</p>
+<pre class="rst-literal-block">
+{ 'key'         : &quot;file_name&quot;,
+  'help'        : &quot;File name to read&quot;, ...  }
+</pre>
+<p>the <tt class="rst-docutils literal">'kw'</tt> entry, if present, must be a dictionary; the
+arguments enclosed in the dictionary are later passed verbatim
+to <a class="rst-reference external" href="http://www.scons.org/doc/latest/HTML/scons-api/SCons.Variables.Variables-class.html#Add" target="_top">SCons.Variables.Variables.Add()</a>.</p></li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="_set_opt_decl"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">_set_opt_decl</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">decl</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecl._set_opt_decl">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Set parameters for later creation of the related <a class="rst-reference external" href="http://www.scons.org/doc/HTML/scons-user.html#sect-command-line-options" target="_top">SCons command-line
+option</a>.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><p><strong class="pname"><code>decl</code></strong> (tuple | list | dict) - declaration parameters used later when creating the related
+<a class="rst-reference external" href="http://www.scons.org/doc/HTML/scons-user.html#sect-command-line-options" target="_top">SCons command-line option</a>; if it is a tuple or list, it
+should have the form:</p>
+<pre class="rst-literal-block">
+(names, args) or [names, args]
+</pre>
+<p>where <tt class="rst-docutils literal">names</tt> is a string or tuple of option names (e.g.
+<tt class="rst-docutils literal"><span class="pre">&quot;-f</span> <span class="pre">--file&quot;</span></tt> or <tt class="rst-docutils literal"><span class="pre">('-f',</span> <span class="pre">'--file')</span></tt>) and <tt class="rst-docutils literal">args</tt> is a
+dictionary defining the remaining <a class="rst-reference external" href="http://docs.python.org/2/library/optparse.html#option-attributes" target="_top">option attributes</a>; the
+entire <code class="link">decl</code> may be for example:</p>
+<pre class="rst-literal-block">
+( ('-f','--file-name'),
+  { 'action'         : &quot;store&quot;,
+    'dest'           : &quot;file_name&quot; } )
+</pre>
+<p>if <code class="link">decl</code> is a dictionary, it should have following form
+(keys are important, values are just examples):</p>
+<pre class="rst-literal-block">
+{ 'names'          : (&quot;-f&quot;, &quot;--file-name&quot;)
+  'action'         : &quot;store&quot;,
+  'type'           : &quot;string&quot;,
+  'dest'           : &quot;file_name&quot;, ... }
+</pre>
+<p>or</p>
+<blockquote>
+<dl class="rst-docutils">
+<dt>{ 'names' <span class="classifier-delimiter">:</span> <span class="rst-classifier">(&quot;-f&quot;, &quot;--file-name&quot;)</span></dt>
+<dd><dl class="rst-first rst-last rst-docutils">
+<dt>'kw' <span class="classifier-delimiter">:</span> <span class="rst-classifier">{ 'action'</span> <span class="classifier-delimiter">:</span> <span class="rst-classifier">&quot;store&quot;,</span></dt>
+<dd>'type'           : &quot;string&quot;,
+'dest'           : &quot;file_name&quot;, ... } }</dd>
+</dl>
+</dd>
+</dl>
+</blockquote>
+<p>the parameters enclosed in <tt class="rst-docutils literal">decl</tt> dictionary are later
+passed verbatim to <a class="rst-reference external" href="http://www.scons.org/doc/latest/HTML/scons-api/SCons.Script.Main-module.html#AddOption" target="_top">SCons.Script.Main.AddOption()</a>.
+Note, that we require the <tt class="rst-docutils literal">dest</tt> parameter.</p></li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="has_xxx_decl"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">has_xxx_decl</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">xxx</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecl.has_xxx_decl">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  Test if declaration of corresponding <code class="link">xxx</code> variable was provided,
+where <code class="link">xxx</code> is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>.
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>xxx</code></strong> (int) - one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a></li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd><tt class="rst-docutils literal">True</tt> if the declaration exists, or <tt class="rst-docutils literal">False</tt> otherwise.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="get_xxx_key"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">get_xxx_key</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">xxx</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecl.get_xxx_key">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  Get the declaration parameters for the related <code class="link">xxx</code> variable, where
+<code class="link">xxx</code> is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>.
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>xxx</code></strong> (int) - one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a></li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd><tt class="rst-docutils literal">decl</tt> parameters stored by last call <a href="SConsArguments._ArgumentDecl-class.html#set_xxx_decl" class="link">set_xxx_decl(xxx,decl)</a>.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="_set_xxx_key"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">_set_xxx_key</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">xxx</span>,
+        <span class="sig-arg">key</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecl._set_xxx_key">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Define the identifying key of corresponding <code class="link">xxx</code> variable, where
+<code class="link">xxx</code> is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>.</p>
+<dl class="rst-docutils">
+<dt><strong>Warning</strong></dt>
+<dd>This function should not be used by users. To change the key of
+corresponding <code class="link">xxx</code> variable, use <a href="SConsArguments._ArgumentDecls-class.html#set_xxx_key" class="link">_ArgumentDecls.set_xxx_key()</a>.</dd>
+</dl>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>xxx</code></strong> (int) - one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a></li>
+        <li><strong class="pname"><code>key</code></strong> (string) - new key for the corresponding variable.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="get_xxx_default"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">get_xxx_default</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">xxx</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecl.get_xxx_default">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  Get the default value of corresponding <code class="link">xxx</code> variable, where <code class="link">xxx</code>
+is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a>, <a href="SConsArguments-module.html#OPT" class="link">OPT</a>.
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>xxx</code></strong> (int) - one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a></li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="set_xxx_default"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">set_xxx_default</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">xxx</span>,
+        <span class="sig-arg">default</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecl.set_xxx_default">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  Define the default value of corresponding <code class="link">xxx</code> variable, where
+<code class="link">xxx</code> is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a>, <a href="SConsArguments-module.html#OPT" class="link">OPT</a>.
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>xxx</code></strong> (int) - one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a></li>
+        <li><strong class="pname"><code>default</code></strong> - the new default value</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="_add_to_xxx"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">_add_to_xxx</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">xxx</span>,
+        <span class="sig-arg">*args</span>,
+        <span class="sig-arg">**kw</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecl._add_to_xxx">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Add new corresponding <code class="link">xxx</code> variable, where <code class="link">xxx</code> is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>,
+<a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>; use declaration stored in this <a href="SConsArguments._ArgumentDecl-class.html" class="link" onclick="show_private();">_ArgumentDecl</a> object.</p>
+<p><strong>Examples</strong>:</p>
+<blockquote>
+<ul class="rst-simple">
+<li><tt class="rst-docutils literal">decl._add_to_xxx(ENV,env)</tt> creates new construction variable
+in <a class="rst-reference external" href="http://www.scons.org/doc/HTML/scons-user.html#chap-environments" target="_top">SCons environment</a> <tt class="rst-docutils literal">env</tt>,</li>
+<li><tt class="rst-docutils literal">decl._add_to_xxx(VAR,vars)</tt> creates new command-line variable
+in <a class="rst-reference external" href="http://www.scons.org/doc/HTML/scons-user.html#sect-command-line-variables" target="_top">SCons variables</a> <tt class="rst-docutils literal">vars</tt></li>
+<li><tt class="rst-docutils literal">decl._add_to_xxx(OPT)</tt> creates a corresponding SCons
+<a class="rst-reference external" href="http://www.scons.org/doc/HTML/scons-user.html#sect-command-line-options" target="_top">command-line option</a>.</li>
+</ul>
+</blockquote>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>xxx</code></strong> (int) - one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a></li>
+        <li><p><strong class="pname"><code>args</code></strong>, <strong class="pname"><code>kw</code></strong> - additional arguments and keywords, depend on <code class="link">xxx</code>:</p>
+<ul class="rst-simple">
+<li>if <tt class="rst-docutils literal">xxx == ENV</tt>, then <tt class="rst-docutils literal">env=args[0]</tt> is assumed to be
+a <a class="rst-reference external" href="http://www.scons.org/doc/HTML/scons-user.html#chap-environments" target="_top">SCons environment</a> to create construction variable for,</li>
+<li>if <tt class="rst-docutils literal">xxx == VAR`, then ``vars=args[0]</tt> is assumed to be
+a SCons <a class="rst-reference external" href="http://www.scons.org/doc/latest/HTML/scons-api/SCons.Variables.Variables-class.html" target="_top">Variables</a> object, <tt class="rst-docutils literal">*args[1:]</tt> are used as
+positional arguments to <a class="rst-reference external" href="http://www.scons.org/doc/latest/HTML/scons-api/SCons.Variables.Variables-class.html#Add" target="_top">vars.Add()</a> and <tt class="rst-docutils literal">**kw</tt> are
+passed to <a class="rst-reference external" href="http://www.scons.org/doc/latest/HTML/scons-api/SCons.Variables.Variables-class.html#Add" target="_top">vars.Add()</a> as additional keywords,</li>
+<li>if <tt class="rst-docutils literal">xxx == OPT</tt>, the arguments and keywords are not used.</li>
+</ul></li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="_safe_add_to_xxx"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">_safe_add_to_xxx</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">xxx</span>,
+        <span class="sig-arg">*args</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecl._safe_add_to_xxx">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  Same as <a href="SConsArguments._ArgumentDecl-class.html#_add_to_xxx" class="link" onclick="show_private();">_add_to_xxx()</a>, but does not raise exceptions when the
+corresponding <code class="link">xxx</code> variable is not declared in this <a href="SConsArguments._ArgumentDecl-class.html" class="link" onclick="show_private();">_ArgumentDecl</a>
+object.
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>xxx</code></strong> (int) - one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a></li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>returns <tt class="rst-docutils literal">True</tt> is new variable has been created or <tt class="rst-docutils literal">False</tt> if
+there is no declaration for corresponding <code class="link">xxx</code> variable in this
+object.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="SConsArguments-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1
+    on Thu Oct 22 14:20:31 2015
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

@@ -1,0 +1,1070 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>SConsArguments</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th bgcolor="#70b0f0" class="navbar-select"
+          >&nbsp;&nbsp;&nbsp;Home&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        Package&nbsp;SConsArguments
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="SConsArguments-module.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== PACKAGE DESCRIPTION ==================== -->
+<h1 class="epydoc">Package SConsArguments</h1><p class="nomargin-top"><span class="codelink"><a href="SConsArguments-pysrc.html">source&nbsp;code</a></span></p>
+<p><a href="SConsArguments-module.html" class="link">SConsArguments</a></p>
+<p>This module provides an implementation of SCons <em>Arguments</em>. An <em>Argument</em> is
+an entity which correlates up to three things:</p>
+<ul class="rst-simple">
+<li>single construction variable in SCons environment (<tt class="rst-docutils literal"><span class="pre">env['NAME'],</span> <span class="pre">env.subst('$NAME')</span></tt>),</li>
+<li>single SCons command-line variable (<tt class="rst-docutils literal">variable=value</tt>), and</li>
+<li>single SCons command-line option (<tt class="rst-docutils literal"><span class="pre">--option=value</span></tt>).</li>
+</ul>
+<p>Some of the above may be missing in <em>Argument</em> definition, so we may for
+example correlate only a construction variable with command-line option (no
+command-line variable in definition).</p>
+<p><em>Arguments</em> define how information flows from command-line to SCons environent.
+They also may sink values from OS environment and persist them to a file.</p>
+<p><em>Arguments</em> use separate &quot;namespaces&quot; for environment variables, command-line
+variables and command-line options; the user then defines mappings between
+these. For example, you may create an <em>Argument</em> named <tt class="rst-docutils literal">foo</tt> which correlates
+a construction variable named <tt class="rst-docutils literal">ENV_FOO</tt>, command-line variable named
+<tt class="rst-docutils literal">VAR_FOO</tt> and command-line option identified by key <tt class="rst-docutils literal">opt_foo</tt> (we use
+<tt class="rst-docutils literal">dest</tt> attribute of command line option as its identifying key, see <a class="rst-reference external" href="http://docs.python.org/2/library/optparse.html#option-attributes" target="_top">option
+attributes</a> of python <tt class="rst-docutils literal">optparse</tt>). At certain point you request <em>Arguments</em>
+to update your SCons environment <tt class="rst-docutils literal">env</tt>, that is to populate environment with
+values taken from command-line variables and/or options.  At this point, value
+taken from command-line variable <tt class="rst-docutils literal">VAR_FOO</tt> or value from command-line option
+<tt class="rst-docutils literal">opt_foo</tt> is passed to construction variable <tt class="rst-docutils literal">ENV_FOO</tt>. If both,
+command-line variable and command-line option are set, then command-line option
+takes precedence.</p>
+<p>If a command-line value is a string, it may contain substitutions (e.g.
+<tt class="rst-docutils literal">VAR_FOO</tt> may be a string in form <tt class="rst-docutils literal">&quot;bleah bleah ${VAR_BAR}&quot;</tt>).
+Placeholders are assumed to be variable/option names in &quot;local namespace&quot;. It
+means, that if we have a command-line variable, and its value is
+a string containing placeholder <tt class="rst-docutils literal">&quot;$VVV&quot;</tt>, then <tt class="rst-docutils literal">VVV</tt> is assumed to be the
+name of another command-line variable (and not, for example, construction or
+environment variable). When passing strings from command-line variables and
+options to an environment, the placeholders are renamed to represent
+corresponding construction variables in SCons environment. This is
+shown in the example below.</p>
+<p><strong>Example</strong></p>
+<p>Assume, we have the following three <em>Arguments</em> defined:</p>
+<pre class="rst-literal-block">
+.               (1)         (2)         (3)
+Arguments:      foo         bar         geez
+Environment:    ENV_FOO     ENV_BAR     ENV_GEEZ
+Variables:      VAR_FOO     VAR_BAR     VAR_GEEZ
+Options:        opt_foo     opt_bar     opt_geez
+.             --opt-foo   --opt-bar   --opt-geez
+</pre>
+<p>and we invoked scons as follows:</p>
+<pre class="rst-literal-block">
+# Command line:
+scons VAR_FOO='${VAR_BAR}' VAR_BAR='${foo}' --opt-geez='${opt_foo}'
+</pre>
+<p>then, after updating a SCons environment <tt class="rst-docutils literal">env</tt> with <em>Arguments</em>, the
+environment will have the following construction variables set:</p>
+<pre class="rst-literal-block">
+env['ENV_FOO'] = '${ENV_BAR}'   # VAR_FOO -&gt; ENV_FOO,  VAR_BAR -&gt; ENV_BAR
+env['ENV_BAR'] = '${foo}'       # VAR_BAR -&gt; ENV_BAR,  foo -x-&gt; foo
+env['ENV_GEEZ'] = '${ENV_FOO}'  # opt_geez-&gt; ENV_GEEZ, opt_foo -&gt; ENV_FOO
+</pre>
+<p>The arrow <tt class="rst-docutils literal"><span class="pre">-x-&gt;</span></tt> denotes the fact, that there was no command-line variable
+named <tt class="rst-docutils literal">foo</tt>, so the <tt class="rst-docutils literal"><span class="pre">&quot;${foo}&quot;</span></tt> placeholder was left unaltered.</p>
+<p>Now, as we know the general idea, let's see some code examples.</p>
+<p><strong>Example</strong></p>
+<p>Consider following <tt class="rst-docutils literal">SConsctruct</tt> file</p>
+<pre class="py-doctest">
+<span class="py-keyword">from</span> SConsArguments <span class="py-keyword">import</span> ArgumentDecls
+env = Environment()
+decls = ArgumentDecls(
+   <span class="py-comment"># Argument 'foo'</span>
+   foo =  (   {<span class="py-string">'ENV_FOO'</span> : <span class="py-string">'ENV_FOO default'</span>},                  <span class="py-comment"># ENV</span>
+              (<span class="py-string">'VAR_FOO'</span>,  <span class="py-string">'VAR_FOO help'</span>),                     <span class="py-comment"># VAR</span>
+              (<span class="py-string">'--foo'</span>, {<span class="py-string">'dest'</span> : <span class="py-string">&quot;opt_foo&quot;</span>})         ),        <span class="py-comment"># OPT</span>
+   <span class="py-comment"># Argument 'bar'</span>
+   bar = (   {<span class="py-string">'ENV_BAR'</span> : None},                                <span class="py-comment"># ENV</span>
+             (<span class="py-string">'VAR_BAR'</span>, <span class="py-string">'VAR_BAR help'</span>, <span class="py-string">'VAR_BAR default'</span>),    <span class="py-comment"># VAR</span>
+             (<span class="py-string">'--bar'</span>,  {<span class="py-string">'dest'</span>:<span class="py-string">&quot;opt_bar&quot;</span>, <span class="py-string">&quot;type&quot;</span>:<span class="py-string">&quot;string&quot;</span>})),  <span class="py-comment"># OPT</span>
+   <span class="py-comment"># Argument 'geez'</span>
+   geez =(   {<span class="py-string">'ENV_GEEZ'</span> : None},                               <span class="py-comment"># ENV</span>
+             (<span class="py-string">'VAR_GEEZ'</span>, <span class="py-string">'VAR_GEEZ help'</span>, <span class="py-string">'VAR_GEEZ default'</span>), <span class="py-comment"># VAR</span>
+             (<span class="py-string">'--geez'</span>, {<span class="py-string">'dest'</span>:<span class="py-string">&quot;opt_geez&quot;</span>, <span class="py-string">&quot;type&quot;</span>:<span class="py-string">&quot;string&quot;</span>}))  <span class="py-comment"># OPT</span>
+)
+variables = Variables()
+args = decls.Commit(env, variables, True)
+args.UpdateEnvironment(env, variables, True)
+
+<span class="py-keyword">print</span> <span class="py-string">&quot;env['ENV_FOO']: %r&quot;</span> %  env[<span class="py-string">'ENV_FOO'</span>]
+<span class="py-keyword">print</span> <span class="py-string">&quot;env['ENV_BAR']: %r&quot;</span> %  env[<span class="py-string">'ENV_BAR'</span>]
+<span class="py-keyword">print</span> <span class="py-string">&quot;env['ENV_GEEZ']: %r&quot;</span> %  env[<span class="py-string">'ENV_GEEZ'</span>]</pre>
+<p>In above we define three <em>Arguments</em>: <tt class="rst-docutils literal">foo</tt>, <tt class="rst-docutils literal">bar</tt> and <tt class="rst-docutils literal">geez</tt>.
+Corresponding construction variables (environment) are named <tt class="rst-docutils literal">ENV_FOO</tt>,
+<tt class="rst-docutils literal">ENV_BAR</tt> and <tt class="rst-docutils literal">ENV_GEEZ</tt> respectively. Corresponding command-line variables
+are: <tt class="rst-docutils literal">VAR_FOO</tt>, <tt class="rst-docutils literal">VAR_BAR</tt> and <tt class="rst-docutils literal">VAR_GEEZ</tt>. Finally, the command-line
+options that correspond to our <em>Arguments</em> are named <tt class="rst-docutils literal">opt_foo</tt>, <tt class="rst-docutils literal">opt_bar</tt>
+and <tt class="rst-docutils literal">opt_geez</tt> (note: these are actually keys identifying options within
+SCons script, they may be different from the option names that user sees
+on his screen - here we have key <tt class="rst-docutils literal">opt_foo</tt> and command-line option <tt class="rst-docutils literal"><span class="pre">--foo</span></tt>).</p>
+<p>To learn details about <em>Arguments</em> and possible ways to declare them
+start with <a href="SConsArguments-module.html#ArgumentDecls" class="link">ArgumentDecls()</a> and <a href="SConsArguments-module.html#ArgumentDecl" class="link">ArgumentDecl()</a> documentation.</p>
+<p>Running scons several times, you may obtain different output depending on
+command-line variables and options provided. Let's do some experiments, first
+show the help message to see available command-line options:</p>
+<pre class="rst-literal-block">
+user&#64;host:$ scons -Q -h
+env['ENV_FOO']: 'ENV_FOO default'
+env['ENV_BAR']: 'VAR_BAR default'
+env['ENV_GEEZ']: 'VAR_GEEZ default'
+usage: scons [OPTION] [TARGET] ...
+
+SCons Options:
+   &lt;.... lot of output here ...&gt;
+Local Options:
+  --geez=OPT_GEEZ
+  --foo=OPT_FOO
+  --bar=OPT_BAR
+</pre>
+<p>then play with them a little bit (as well as with command-line variables):</p>
+<pre class="rst-literal-block">
+user&#64;host:$ scons -Q --foo='OPT FOO'
+env['ENV_FOO']: 'OPT FOO'
+env['ENV_BAR']: 'VAR_BAR default'
+env['ENV_GEEZ']: 'VAR_GEEZ default'
+scons: `.' is up to date.
+
+user&#64;host:$ scons -Q VAR_FOO='VAR_FOO cmdline'
+env['ENV_FOO']: 'VAR_FOO cmdline'
+env['ENV_BAR']: 'VAR_BAR default'
+env['ENV_GEEZ']: 'VAR_GEEZ default'
+scons: `.' is up to date.
+
+user&#64;host:$ scons -Q VAR_FOO='VAR_FOO cmdline' --foo='opt_foo cmdline'
+env['ENV_FOO']: 'opt_foo cmdline'
+env['ENV_BAR']: 'VAR_BAR default'
+env['ENV_GEEZ']: 'VAR_GEEZ default'
+scons: `.' is up to date.
+
+user&#64;host:$ scons -Q VAR_FOO='VAR_FOO and ${VAR_BAR}'
+env['ENV_FOO']: 'VAR_FOO and ${ENV_BAR}'
+env['ENV_BAR']: 'VAR_BAR default'
+env['ENV_GEEZ']: 'VAR_GEEZ default'
+scons: `.' is up to date.
+
+user&#64;host:$ scons -Q --foo='opt_foo with ${opt_geez}'
+env['ENV_FOO']: 'opt_foo with ${ENV_GEEZ}'
+env['ENV_BAR']: 'VAR_BAR default'
+env['ENV_GEEZ']: 'VAR_GEEZ default'
+scons: `.' is up to date.
+</pre>
+<p>You may decide to not create corresponding command-line variable or
+command-line option for a particular <em>Argument</em>. In following example we
+declare two <em>Arguments</em> named <tt class="rst-docutils literal">foo</tt> and <tt class="rst-docutils literal">bar</tt>. Argument <tt class="rst-docutils literal">foo</tt> has no
+corresponding command-line variable and argument <tt class="rst-docutils literal">bar</tt> has no corresponding
+command-line option.</p>
+<p><strong>Example</strong></p>
+<p>Consider following <tt class="rst-docutils literal">SConstruct</tt> file:</p>
+<pre class="py-doctest">
+<span class="py-keyword">from</span> SConsArguments <span class="py-keyword">import</span> ArgumentDecls
+env = Environment()
+decls = ArgumentDecls(
+   <span class="py-comment"># Argument 'foo'</span>
+   foo =  (   {<span class="py-string">'ENV_FOO'</span> : <span class="py-string">'ENV_FOO default'</span>},                  <span class="py-comment"># ENV</span>
+              None,                                             <span class="py-comment"># no VAR</span>
+              (<span class="py-string">'--foo'</span>,       {<span class="py-string">'dest'</span> : <span class="py-string">&quot;opt_foo&quot;</span>})         ),  <span class="py-comment"># OPT</span>
+   <span class="py-comment"># Argument 'bar'</span>
+   bar = (   {<span class="py-string">'ENV_BAR'</span> : None},                                <span class="py-comment"># ENV</span>
+             (<span class="py-string">'VAR_BAR'</span>, <span class="py-string">'VAR_BAR help'</span>, <span class="py-string">'VAR_BAR default'</span>),    <span class="py-comment"># VAR</span>
+             None                                           ),  <span class="py-comment"># no OPT</span>
+)
+variables = Variables()
+args = decls.Commit(env, variables, True)
+args.UpdateEnvironment(env, variables, True)
+
+<span class="py-keyword">print</span> <span class="py-string">&quot;env['ENV_FOO']: %r&quot;</span> %  env[<span class="py-string">'ENV_FOO'</span>]
+<span class="py-keyword">print</span> <span class="py-string">&quot;env['ENV_BAR']: %r&quot;</span> %  env[<span class="py-string">'ENV_BAR'</span>]</pre>
+<p>Some experiments with command-line yield following output:</p>
+<pre class="rst-literal-block">
+user&#64;host:$ scons -Q VAR_FOO='VAR_FOO cmdline'
+env['ENV_FOO']: 'ENV_FOO default'
+env['ENV_BAR']: 'VAR_BAR default'
+scons: `.' is up to date.
+
+user&#64;host:$ scons -Q --bar='opt_bar cmdline'
+env['ENV_FOO']: 'ENV_FOO default'
+env['ENV_BAR']: 'VAR_BAR default'
+usage: scons [OPTION] [TARGET] ...
+
+SCons error: no such option: --bar
+
+user&#64;host:$ scons -Q --foo='opt_foo and ${opt_bar}'
+env['ENV_FOO']: 'opt_foo and ${opt_bar}'
+env['ENV_BAR']: 'VAR_BAR default'
+scons: `.' is up to date.
+
+user&#64;host:$ scons -Q --foo='opt_foo and ${opt_foo}'
+env['ENV_FOO']: 'opt_foo and ${ENV_FOO}'
+env['ENV_BAR']: 'VAR_BAR default'
+scons: `.' is up to date.
+
+user&#64;host:$ scons -Q VAR_BAR='VAR_BAR and ${VAR_FOO}'
+env['ENV_FOO']: 'ENV_FOO default'
+env['ENV_BAR']: 'VAR_BAR and ${VAR_FOO}'
+scons: `.' is up to date.
+
+user&#64;host:$ scons -Q VAR_BAR='VAR_BAR and ${VAR_BAR}'
+env['ENV_FOO']: 'ENV_FOO default'
+env['ENV_BAR']: 'VAR_BAR and ${ENV_BAR}'
+scons: `.' is up to date.
+</pre>
+<p>For more details we refer you to the documentation of <a href="SConsArguments-module.html#ArgumentDecls" class="link">ArgumentDecls()</a>,
+<a href="SConsArguments-module.html#ArgumentDecl" class="link">ArgumentDecl()</a> functions and <a href="SConsArguments._ArgumentDecls-class.html" class="link" onclick="show_private();">_ArgumentDecls</a>, <a href="SConsArguments._Arguments-class.html" class="link" onclick="show_private();">_Arguments</a>, and
+<a href="SConsArguments._ArgumentDecl-class.html" class="link" onclick="show_private();">_ArgumentDecl</a> classes.</p>
+
+<!-- ==================== CLASSES ==================== -->
+<a name="section-Classes"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Classes</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Classes"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="SConsArguments._missing-class.html" class="summary-name" onclick="show_private();">_missing</a><br />
+      Represents missing argument to function.
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="SConsArguments._undef_meta-class.html" class="summary-name" onclick="show_private();">_undef_meta</a><br />
+      Meta-class for the _undef class
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="SConsArguments._undef-class.html" class="summary-name" onclick="show_private();">_undef</a><br />
+      Represents undefined/inexistent variable. This is not the same as None
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="SConsArguments._notfound-class.html" class="summary-name" onclick="show_private();">_notfound</a><br />
+      Something that has not been found.
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="SConsArguments._ArgumentsEnvProxy-class.html" class="summary-name" onclick="show_private();">_ArgumentsEnvProxy</a><br />
+      Proxy used to get/set construction variables in <a class="rst-reference external" href="http://www.scons.org/doc/HTML/scons-user.html#chap-environments" target="_top">SCons environment</a>
+while operating on mapped variable names.
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="SConsArguments._VariablesWrapper-class.html" class="summary-name" onclick="show_private();">_VariablesWrapper</a>
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="SConsArguments._Arguments-class.html" class="summary-name" onclick="show_private();">_Arguments</a><br />
+      Correlates construction variables from SCons environment with
+command-line variables (<tt class="rst-docutils literal">variable=value</tt>) and command-line options
+(<tt class="rst-docutils literal"><span class="pre">--option=value</span></tt>).
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="SConsArguments._ArgumentDecl-class.html" class="summary-name" onclick="show_private();">_ArgumentDecl</a><br />
+      Declaration of single <em>Argument</em>.
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="SConsArguments._ArgumentDecls-class.html" class="summary-name" onclick="show_private();">_ArgumentDecls</a><br />
+      Dictionary-like object to hold declarations of <em>Arguments</em>.
+    </td>
+  </tr>
+</table>
+<!-- ==================== FUNCTIONS ==================== -->
+<a name="section-Functions"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Functions</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Functions"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="SConsArguments-module.html#_resubst" class="summary-sig-name" onclick="show_private();">_resubst</a>(<span class="summary-sig-arg">value</span>,
+        <span class="summary-sig-arg">resubst_dict</span>=<span class="summary-sig-default"><code class="variable-group">{</code><code class="variable-group">}</code></span>)</span><br />
+      Rename placeholders (substrings like <tt class="rst-docutils literal">$name</tt>) in a string value.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="SConsArguments-pysrc.html#_resubst">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="SConsArguments-module.html#_build_resubst_dict" class="summary-sig-name" onclick="show_private();">_build_resubst_dict</a>(<span class="summary-sig-arg">rename_dict</span>)</span><br />
+      Build dictionary for later use with <a href="SConsArguments-module.html#_resubst" class="link" onclick="show_private();">_resubst()</a>.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="SConsArguments-pysrc.html#_build_resubst_dict">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="SConsArguments-module.html#_build_iresubst_dict" class="summary-sig-name" onclick="show_private();">_build_iresubst_dict</a>(<span class="summary-sig-arg">rename_dict</span>)</span><br />
+      Build inverted dictionary for later use with <a href="SConsArguments-module.html#_resubst" class="link" onclick="show_private();">_resubst()</a>.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="SConsArguments-pysrc.html#_build_iresubst_dict">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="SConsArguments-module.html#_compose_dicts" class="summary-sig-name" onclick="show_private();">_compose_dicts</a>(<span class="summary-sig-arg">dict1</span>,
+        <span class="summary-sig-arg">dict2</span>)</span><br />
+      Compose two mappings expressed by dicts <tt class="rst-docutils literal">dict1</tt> and <tt class="rst-docutils literal">dict2</tt>.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="SConsArguments-pysrc.html#_compose_dicts">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="_invert_dict"></a><span class="summary-sig-name">_invert_dict</span>(<span class="summary-sig-arg">_dict</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="SConsArguments-pysrc.html#_invert_dict">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="SConsArguments-module.html#ArgumentDecl" class="summary-sig-name">ArgumentDecl</a>(<span class="summary-sig-arg">*args</span>,
+        <span class="summary-sig-arg">**kw</span>)</span><br />
+      Convert input arguments to <a href="SConsArguments._ArgumentDecl-class.html" class="link" onclick="show_private();">_ArgumentDecl</a> instance.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="SConsArguments-pysrc.html#ArgumentDecl">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="SConsArguments-module.html#DeclareArgument" class="summary-sig-name">DeclareArgument</a>(<span class="summary-sig-arg">env_key</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">var_key</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">opt_key</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">default</span>=<span class="summary-sig-default">UNDEFINED</span>,
+        <span class="summary-sig-arg">help</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">validator</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">converter</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">option</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">type</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">opt_default</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">metavar</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">nargs</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">choices</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">action</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">const</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">callback</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">callback_args</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">callback_kwargs</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Convert unified set of arguments to <a href="SConsArguments._ArgumentDecl-class.html" class="link" onclick="show_private();">_ArgumentDecl</a> instance.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="SConsArguments-pysrc.html#DeclareArgument">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="__dict_converted"></a><span class="summary-sig-name">__dict_converted</span>(<span class="summary-sig-arg">convert</span>,
+        <span class="summary-sig-arg">initializer</span>=<span class="summary-sig-default">&lt;class 'SConsArguments._missing'&gt;</span>,
+        <span class="summary-sig-arg">**kw</span>)</span><br />
+      Generic algorithm for dict initialization while converting the values
+provided within initializers</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="SConsArguments-pysrc.html#__dict_converted">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="SConsArguments-module.html#ArgumentDecls" class="summary-sig-name">ArgumentDecls</a>(<span class="summary-sig-arg">*args</span>,
+        <span class="summary-sig-arg">**kw</span>)</span><br />
+      Create <a href="SConsArguments._ArgumentDecls-class.html" class="link" onclick="show_private();">_ArgumentDecls</a> dictionary with <em>Argument</em> declarations.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="SConsArguments-pysrc.html#ArgumentDecls">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="DeclareArguments"></a><span class="summary-sig-name">DeclareArguments</span>(<span class="summary-sig-arg">*args</span>,
+        <span class="summary-sig-arg">**kw</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="SConsArguments-pysrc.html#DeclareArguments">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+</table>
+<!-- ==================== VARIABLES ==================== -->
+<a name="section-Variables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Variables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="ENV"></a><span class="summary-name">ENV</span> = <code title="0">0</code><br />
+      Represents selection of construction variable corresponding to particular
+<em>Argument</em>.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="VAR"></a><span class="summary-name">VAR</span> = <code title="1">1</code><br />
+      Represents selection of command-line variable corresponding to particular
+<em>Argument</em> variable.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="OPT"></a><span class="summary-name">OPT</span> = <code title="2">2</code><br />
+      Represents selection of command-line option related to particular <em>Argument</em>.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="ALL"></a><span class="summary-name">ALL</span> = <code title="3">3</code><br />
+      Number of all namespaces (currently there are three: <tt class="rst-docutils literal">ENV</tt>, <tt class="rst-docutils literal">VAR</tt>,
+<tt class="rst-docutils literal">OPT</tt>)
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="__package__"></a><span class="summary-name">__package__</span> = <code title="None">None</code><br />
+      hash(x)
+    </td>
+  </tr>
+</table>
+<!-- ==================== FUNCTION DETAILS ==================== -->
+<a name="section-FunctionDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Function Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-FunctionDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="_resubst"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">_resubst</span>(<span class="sig-arg">value</span>,
+        <span class="sig-arg">resubst_dict</span>=<span class="sig-default"><code class="variable-group">{</code><code class="variable-group">}</code></span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="SConsArguments-pysrc.html#_resubst">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  Rename placeholders (substrings like <tt class="rst-docutils literal">$name</tt>) in a string value.
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>value</code></strong> - the value to process; if it is string it is passed through
+placeholder renaming procedure, otherwise it is returned unaltered,</li>
+        <li><strong class="pname"><code>resubst_dict</code></strong> - a dictionary of the form <tt class="rst-docutils literal">{ &quot;xxx&quot; : <span class="pre">&quot;${yyy}&quot;,</span> &quot;vvv&quot; : <span class="pre">&quot;${www}&quot;,</span>
+<span class="pre">...}</span></tt> used to rename placeholders within <tt class="rst-docutils literal">value</tt> string; with
+above dictionary, all occurrences of <tt class="rst-docutils literal">$xxx</tt> or <tt class="rst-docutils literal">${xxx}</tt> within
+<code class="link">value</code> string will be replaced with <tt class="rst-docutils literal">${yyy}</tt>, all occurrences of
+<tt class="rst-docutils literal">$vvv</tt> or <tt class="rst-docutils literal">${vvv}</tt> with <tt class="rst-docutils literal">${www}</tt> and so on; see also
+<a href="SConsArguments-module.html#_build_resubst_dict" class="link" onclick="show_private();">_build_resubst_dict()</a>,</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>returns the <tt class="rst-docutils literal">value</tt> with placeholders renamed.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="_build_resubst_dict"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">_build_resubst_dict</span>(<span class="sig-arg">rename_dict</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="SConsArguments-pysrc.html#_build_resubst_dict">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Build dictionary for later use with <a href="SConsArguments-module.html#_resubst" class="link" onclick="show_private();">_resubst()</a>.</p>
+<p><strong>Example</strong></p>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span><span class="py-keyword">from</span> SConsArguments <span class="py-keyword">import</span> _build_resubst_dict
+<span class="py-prompt">&gt;&gt;&gt; </span>_build_resubst_dict( {<span class="py-string">&quot;xxx&quot;</span>:<span class="py-string">&quot;yyy&quot;</span>, <span class="py-string">&quot;vvv&quot;</span>:<span class="py-string">&quot;www&quot;</span>, <span class="py-string">&quot;zzz&quot;</span>:<span class="py-string">&quot;zzz&quot;</span> })
+{<span class="py-string">'vvv'</span>: <span class="py-string">'${www}'</span>, <span class="py-string">'xxx'</span>: <span class="py-string">'${yyy}'</span>}</pre>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>rename_dict</code></strong> (dict) - dictionary of the form <tt class="rst-docutils literal"><span class="pre">{&quot;xxx&quot;:&quot;yyy&quot;,</span> <span class="pre">&quot;vvv&quot;:&quot;www&quot;,</span> <span class="pre">...}</span></tt>
+mapping variable names from one namespace to another,</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>returns dictionary of the form <tt class="rst-docutils literal"><span class="pre">{&quot;xxx&quot;:&quot;${yyy}&quot;,</span> <span class="pre">&quot;vvv&quot;:&quot;${www}&quot;}</span></tt>
+created from <code class="link">rename_dict</code>; items <tt class="rst-docutils literal">(key, val)</tt> with <tt class="rst-docutils literal"><span class="pre">key==val</span></tt> are
+ignored, so the entries of type <tt class="rst-docutils literal"><span class="pre">&quot;zzz&quot;:&quot;zzz&quot;</span></tt> do not enter the
+result.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="_build_iresubst_dict"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">_build_iresubst_dict</span>(<span class="sig-arg">rename_dict</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="SConsArguments-pysrc.html#_build_iresubst_dict">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Build inverted dictionary for later use with <a href="SConsArguments-module.html#_resubst" class="link" onclick="show_private();">_resubst()</a>.</p>
+<p><strong>Example</strong></p>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span><span class="py-keyword">from</span> SConsArguments <span class="py-keyword">import</span> _build_resubst_dict
+<span class="py-prompt">&gt;&gt;&gt; </span>_build_iresubst_dict( {<span class="py-string">&quot;xxx&quot;</span>:<span class="py-string">&quot;yyy&quot;</span>, <span class="py-string">&quot;vvv&quot;</span>:<span class="py-string">&quot;www&quot;</span>, <span class="py-string">&quot;zzz&quot;</span>:<span class="py-string">&quot;zzz&quot;</span> })
+{<span class="py-string">'www'</span>: <span class="py-string">'${vvv}'</span>, <span class="py-string">'yyy'</span>: <span class="py-string">'${xxx}'</span>}</pre>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>rename_dict</code></strong> (dict) - dictionary of the form <tt class="rst-docutils literal"><span class="pre">{&quot;xxx&quot;:&quot;yyy&quot;,</span> <span class="pre">&quot;vvv&quot;:&quot;www&quot;,</span> <span class="pre">...}</span></tt>
+mapping variable names from one namespace to another</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>returns dictionary of the form <tt class="rst-docutils literal"><span class="pre">{&quot;yyy&quot;:&quot;${xxx}&quot;,</span> <span class="pre">&quot;www&quot;:&quot;${vvv}&quot;,</span>
+<span class="pre">...}</span></tt> created from inverted dictionary <code class="link">rename_dict</code>; items <tt class="rst-docutils literal">(key,
+val)</tt> with <tt class="rst-docutils literal"><span class="pre">key==val</span></tt> are ignored, so the entries of type
+<tt class="rst-docutils literal"><span class="pre">&quot;zzz&quot;:&quot;zzz&quot;</span></tt> do not enter the result;</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="_compose_dicts"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">_compose_dicts</span>(<span class="sig-arg">dict1</span>,
+        <span class="sig-arg">dict2</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="SConsArguments-pysrc.html#_compose_dicts">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  Compose two mappings expressed by dicts <tt class="rst-docutils literal">dict1</tt> and <tt class="rst-docutils literal">dict2</tt>.
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>dict1</code></strong>, <strong class="pname"><code>dict2</code></strong> - dictionaries to compose</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>returns a dictionary such that for each item <tt class="rst-docutils literal">(k1,v1)</tt> from <code class="link">dict1</code>
+and <tt class="rst-docutils literal">v2 = dict2[v1]</tt> the corresponding item in returned dictionary is
+<tt class="rst-docutils literal">(k1,v2)</tt></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="ArgumentDecl"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">ArgumentDecl</span>(<span class="sig-arg">*args</span>,
+        <span class="sig-arg">**kw</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="SConsArguments-pysrc.html#ArgumentDecl">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  Convert input arguments to <a href="SConsArguments._ArgumentDecl-class.html" class="link" onclick="show_private();">_ArgumentDecl</a> instance.
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd><ul class="rst-simple">
+<li>if <tt class="rst-docutils literal">args[0]</tt> is an instance of <a href="SConsArguments._ArgumentDecl-class.html" class="link" onclick="show_private();">_ArgumentDecl</a>, then returns
+<tt class="rst-docutils literal">args[0]</tt> unaltered,</li>
+<li>otherwise returns result of <a href="SConsArguments._ArgumentDecl-class.html" class="link" onclick="show_private();">_ArgumentDecl(*args,**kw)</a></li>
+</ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="DeclareArgument"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">DeclareArgument</span>(<span class="sig-arg">env_key</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">var_key</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">opt_key</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">default</span>=<span class="sig-default">UNDEFINED</span>,
+        <span class="sig-arg">help</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">validator</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">converter</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">option</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">type</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">opt_default</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">metavar</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">nargs</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">choices</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">action</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">const</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">callback</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">callback_args</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">callback_kwargs</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="SConsArguments-pysrc.html#DeclareArgument">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Convert unified set of arguments to <a href="SConsArguments._ArgumentDecl-class.html" class="link" onclick="show_private();">_ArgumentDecl</a> instance.</p>
+<p>This function accepts minimal set of parameters to declare consistently a
+<em>Argument</em> and its corresponding <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> and <a href="SConsArguments-module.html#OPT" class="link">OPT</a>
+counterparts.  If the first argument named <code class="link">env_key</code> is an instance of
+<a href="SConsArguments._ArgumentDecl-class.html" class="link" onclick="show_private();">_ArgumentDecl</a>, then it is returned unaltered. Otherwise the arguments are
+mapped onto following attributes of corresponding <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> and <a href="SConsArguments-module.html#OPT" class="link">OPT</a>
+variables/options:</p>
+<pre class="rst-literal-block">
+ARG                 ENV         VAR         OPT
+----------------+-----------------------------------------
+env_key         |   key         -           -
+var_key         |   -           key         -
+opt_key         |   -           -           dest
+default         |   default     default     -
+help            |   -           help        help
+validator       |   -           validator   -
+converter       |   -           converter   -
+option          |   -           -           option strings
+type            |   -           -           type
+opt_default     |   -           -           default
+metavar         |   -           -           metavar
+nargs           |   -           -           nargs
+choices         |   -           -           choices
+action          |   -           -           action
+const           |   -           -           const
+callback        |   -           -           callback
+callback_args   |   -           -           callback_args
+callback_kwargs |   -           -           callback_kwargs
+----------------+------------------------------------------
+</pre>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>env_key</code></strong> (<a href="SConsArguments._ArgumentDecl-class.html" class="link" onclick="show_private();">_ArgumentDecl</a> | string | None) - if an instance of <a href="SConsArguments._ArgumentDecl-class.html" class="link" onclick="show_private();">_ArgumentDecl</a>, then this object is returned to the
+caller, key used to identify corresponding construction variable
+(<a href="SConsArguments-module.html#ENV" class="link">ENV</a>); if <tt class="rst-docutils literal">None</tt> the <em>Argument</em> has no corresponding
+construction variable,</li>
+        <li><strong class="pname"><code>var_key</code></strong> (string | None) - key used to identify corresponding command-line variable (<a href="SConsArguments-module.html#VAR" class="link">VAR</a>);
+if <tt class="rst-docutils literal">None</tt>, the <em>Argument</em> has no corresponding command-line
+variable,</li>
+        <li><strong class="pname"><code>opt_key</code></strong> (string | None) - key used to identify corresponding command-line option (<a href="SConsArguments-module.html#OPT" class="link">OPT</a>);
+if <tt class="rst-docutils literal">None</tt> the <em>Argument</em> variable  has no corresponding
+command-line option,</li>
+        <li><strong class="pname"><code>default</code></strong> - default value used to initialize corresponding construction
+variable (<a href="SConsArguments-module.html#ENV" class="link">ENV</a>) and command-line variable (<a href="SConsArguments-module.html#VAR" class="link">VAR</a>);
+note that there is separate <code class="link">opt_default</code> argument for command-line
+option,</li>
+        <li><strong class="pname"><code>help</code></strong> (string | None) - message used to initialize help in corresponding command-line
+variable (<a href="SConsArguments-module.html#VAR" class="link">VAR</a>) and command-line option (<a href="SConsArguments-module.html#OPT" class="link">OPT</a>),</li>
+        <li><strong class="pname"><code>validator</code></strong> - same as for <a class="rst-reference external" href="http://www.scons.org/doc/latest/HTML/scons-api/SCons.Variables.Variables-class.html#Add" target="_top">SCons.Variables.Variables.Add()</a>,</li>
+        <li><strong class="pname"><code>converter</code></strong> - same sd for <a class="rst-reference external" href="http://www.scons.org/doc/latest/HTML/scons-api/SCons.Variables.Variables-class.html#Add" target="_top">SCons.Variables.Variables.Add()</a>,</li>
+        <li><strong class="pname"><code>option</code></strong> - option string, e.g. <tt class="rst-docutils literal"><span class="pre">&quot;--option&quot;</span></tt> used for corresponding
+command-line option,</li>
+        <li><strong class="pname"><code>type</code></strong> - same as <code class="link">type</code> in <a class="rst-reference external" href="http://docs.python.org/2/library/optparse.html#option-attributes" target="_top">optparse option attributes</a>,</li>
+        <li><strong class="pname"><code>opt_default</code></strong> - same as <code class="link">default</code> in <a class="rst-reference external" href="http://docs.python.org/2/library/optparse.html#option-attributes" target="_top">optparse option attributes</a>,</li>
+        <li><strong class="pname"><code>metavar</code></strong> - same as <code class="link">metavar</code> in <a class="rst-reference external" href="http://docs.python.org/2/library/optparse.html#option-attributes" target="_top">optparse option attributes</a>,</li>
+        <li><strong class="pname"><code>nargs</code></strong> - same as <code class="link">nargs</code> in <a class="rst-reference external" href="http://docs.python.org/2/library/optparse.html#option-attributes" target="_top">optparse option attributes</a>,</li>
+        <li><strong class="pname"><code>choices</code></strong> - same as <code class="link">choices</code> in <a class="rst-reference external" href="http://docs.python.org/2/library/optparse.html#option-attributes" target="_top">optparse option attributes</a>,</li>
+        <li><strong class="pname"><code>action</code></strong> - same as <code class="link">action</code> in <a class="rst-reference external" href="http://docs.python.org/2/library/optparse.html#option-attributes" target="_top">optparse option attributes</a>,</li>
+        <li><strong class="pname"><code>const</code></strong> - same as <code class="link">const</code> in <a class="rst-reference external" href="http://docs.python.org/2/library/optparse.html#option-attributes" target="_top">optparse option attributes</a>,</li>
+        <li><strong class="pname"><code>callback</code></strong> - same as <code class="link">callback</code> in <a class="rst-reference external" href="http://docs.python.org/2/library/optparse.html#option-attributes" target="_top">optparse option attributes</a>,</li>
+        <li><strong class="pname"><code>callback_args</code></strong> - same as <code class="link">callback_args</code> in <a class="rst-reference external" href="http://docs.python.org/2/library/optparse.html#option-attributes" target="_top">optparse option attributes</a>,</li>
+        <li><strong class="pname"><code>callback_kwargs</code></strong> - same as <code class="link">callback_kwargs</code> in <a class="rst-reference external" href="http://docs.python.org/2/library/optparse.html#option-attributes" target="_top">optparse option attributes</a>,</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd><ul class="rst-simple">
+<li>if <code class="link">env_key</code> is present and it is an instance of <a href="SConsArguments._ArgumentDecl-class.html" class="link" onclick="show_private();">_ArgumentDecl</a>, then it
+is returned unaltered,</li>
+<li>otherwise returns new <a href="SConsArguments._ArgumentDecl-class.html" class="link" onclick="show_private();">_ArgumentDecl</a> object initialized according to
+rules given above.</li>
+</ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="ArgumentDecls"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">ArgumentDecls</span>(<span class="sig-arg">*args</span>,
+        <span class="sig-arg">**kw</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="SConsArguments-pysrc.html#ArgumentDecls">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Create <a href="SConsArguments._ArgumentDecls-class.html" class="link" onclick="show_private();">_ArgumentDecls</a> dictionary with <em>Argument</em> declarations.</p>
+<p>The function supports several forms of invocation, see the section
+<strong>Returns</strong> to find systematic description. Here we give just a couple of
+examples.</p>
+<p>If the first positional argument is a mapping (a dictionary for example)
+then values from the dictionary are passed through <a href="SConsArguments-module.html#ArgumentDecl" class="link">ArgumentDecl()</a> and the
+resultant dictionary is used as initializer to <a href="SConsArguments-module.html#ArgumentDecl" class="link">ArgumentDecl</a>. You may for
+example pass a dictionary of the form <tt class="rst-docutils literal">{ 'foo' : (env, var, opt)}</tt>,
+where <tt class="rst-docutils literal">env</tt>, <tt class="rst-docutils literal">var</tt> and <tt class="rst-docutils literal">opt</tt> are parameters accepted by
+<a href="SConsArguments._ArgumentDecl-class.html#_set_env_decl" class="link" onclick="show_private();">_ArgumentDecl._set_env_decl()</a>, <a href="SConsArguments._ArgumentDecl-class.html#_set_var_decl" class="link" onclick="show_private();">_ArgumentDecl._set_var_decl()</a> and
+<a href="SConsArguments._ArgumentDecl-class.html#_set_opt_decl" class="link" onclick="show_private();">_ArgumentDecl._set_opt_decl()</a> respectively.</p>
+<p><strong>Example</strong></p>
+<pre class="py-doctest">
+decls = {
+   <span class="py-comment"># Argument 'foo'</span>
+  <span class="py-string">'foo'</span> : (   {<span class="py-string">'ENV_FOO'</span> : <span class="py-string">'default ENV_FOO'</span>},                  <span class="py-comment"># ENV</span>
+              (<span class="py-string">'VAR_FOO'</span>, <span class="py-string">'VAR_FOO help'</span>, ),                    <span class="py-comment"># VAR</span>
+              (<span class="py-string">'--foo'</span>, {<span class="py-string">'dest'</span> : <span class="py-string">&quot;opt_foo&quot;</span>})               ),  <span class="py-comment"># OPT</span>
+
+   <span class="py-comment"># Argument 'bar'</span>
+  <span class="py-string">'bar'</span> : (   {<span class="py-string">'ENV_BAR'</span> : None},                               <span class="py-comment"># ENV</span>
+              (<span class="py-string">'VAR_BAR'</span>, <span class="py-string">'VAR_BAR help'</span>, <span class="py-string">'default VAR_BAR'</span>),   <span class="py-comment"># VAR</span>
+              (<span class="py-string">'--bar'</span>, {<span class="py-string">'dest'</span>:<span class="py-string">&quot;opt_bar&quot;</span>, <span class="py-string">&quot;type&quot;</span>:<span class="py-string">&quot;string&quot;</span>}))   <span class="py-comment"># OPT</span>
+}
+decls = ArgumentDecls(decls)</pre>
+<p>The first positional argument may be iterable as well, in which case it
+should yield tuples in form <tt class="rst-docutils literal">(key, value)</tt>, where <tt class="rst-docutils literal">value</tt> is any value
+convertible to <a href="SConsArguments._ArgumentDecl-class.html" class="link" onclick="show_private();">_ArgumentDecl</a>.</p>
+<p><strong>Example</strong></p>
+<pre class="py-doctest">
+decls = [
+   <span class="py-comment"># Argument 'foo'</span>
+  <span class="py-string">'foo'</span> , (   {<span class="py-string">'ENV_FOO'</span> : <span class="py-string">'default ENV_FOO'</span>},                  <span class="py-comment"># ENV</span>
+              (<span class="py-string">'VAR_FOO'</span>, <span class="py-string">'VAR_FOO help'</span>, ),                    <span class="py-comment"># VAR</span>
+              (<span class="py-string">'--foo'</span>, {<span class="py-string">'dest'</span> : <span class="py-string">&quot;opt_foo&quot;</span>})               ),  <span class="py-comment"># OPT</span>
+
+   <span class="py-comment"># Argument 'bar'</span>
+  <span class="py-string">'bar'</span> , (   {<span class="py-string">'ENV_BAR'</span> : None},                               <span class="py-comment"># ENV</span>
+              (<span class="py-string">'VAR_BAR'</span>, <span class="py-string">'VAR_BAR help'</span>, <span class="py-string">'default VAR_BAR'</span>),   <span class="py-comment"># VAR</span>
+              (<span class="py-string">'--bar'</span>, {<span class="py-string">'dest'</span>:<span class="py-string">&quot;opt_bar&quot;</span>, <span class="py-string">&quot;type&quot;</span>:<span class="py-string">&quot;string&quot;</span>}))   <span class="py-comment"># OPT</span>
+]
+decls = ArgumentDecls(decls)</pre>
+<p>You may also define variables via keyword arguments to <a href="SConsArguments-module.html#ArgumentDecls" class="link">ArgumentDecls()</a>.</p>
+<p><strong>Example</strong></p>
+<pre class="py-doctest">
+decls = ArgumentDecls(
+   <span class="py-comment"># Argument 'foo'</span>
+   foo  = (   {<span class="py-string">'ENV_FOO'</span> : <span class="py-string">'ENV default FOO'</span>},                  <span class="py-comment"># ENV</span>
+              (<span class="py-string">'FOO'</span>,         <span class="py-string">'FOO variable help'</span>, ),           <span class="py-comment"># VAR</span>
+              (<span class="py-string">'--foo'</span>,       {<span class="py-string">'dest'</span> : <span class="py-string">&quot;opt_foo&quot;</span>})         ),  <span class="py-comment"># OPT</span>
+
+   <span class="py-comment"># Argument 'bar'</span>
+   bar  = (   {<span class="py-string">'ENV_BAR'</span> : None},                               <span class="py-comment"># ENV</span>
+              (<span class="py-string">'BAR'</span>, <span class="py-string">'BAR variable help'</span>, <span class="py-string">'VAR default BAR'</span>),  <span class="py-comment"># VAR</span>
+              (<span class="py-string">'--bar'</span>, {<span class="py-string">'dest'</span>:<span class="py-string">&quot;opt_bar&quot;</span>, <span class="py-string">&quot;type&quot;</span>:<span class="py-string">&quot;string&quot;</span>}))   <span class="py-comment"># OPT</span>
+)</pre>
+<p>You may of course append keyword arguments to normal arguments to pass
+extra declarations.</p>
+<p><strong>Example</strong></p>
+<pre class="py-doctest">
+decls = ArgumentDecls(
+   <span class="py-comment"># Argument 'foo'</span>
+   [(<span class="py-string">'foo'</span>,(   {<span class="py-string">'ENV_FOO'</span> : <span class="py-string">'ENV default FOO'</span>},                 <span class="py-comment"># ENV</span>
+              (<span class="py-string">'FOO'</span>,         <span class="py-string">'FOO variable help'</span>, ),           <span class="py-comment"># VAR</span>
+              (<span class="py-string">'--foo'</span>,       {<span class="py-string">'dest'</span> : <span class="py-string">&quot;opt_foo&quot;</span>})         ))],<span class="py-comment"># OPT</span>
+   <span class="py-comment"># Argument 'geez'</span>
+   geez  = (   {<span class="py-string">'ENV_GEEZ'</span> : None},                             <span class="py-comment"># ENV</span>
+              (<span class="py-string">'GEEZ'</span>, <span class="py-string">'GEEZ variable help'</span>, <span class="py-string">'VAR default GEEZ'</span>),<span class="py-comment"># VAR</span>
+              (<span class="py-string">'--geez'</span>, {<span class="py-string">'dest'</span>:<span class="py-string">&quot;opt_geez&quot;</span>, <span class="py-string">&quot;type&quot;</span>:<span class="py-string">&quot;string&quot;</span>})) <span class="py-comment"># OPT</span>
+)</pre>
+<p>or</p>
+<p><strong>Example</strong></p>
+<pre class="py-doctest">
+decls = ArgumentDecls(
+   <span class="py-comment"># Argument 'bar'</span>
+   {<span class="py-string">'bar'</span>:(   {<span class="py-string">'ENV_BAR'</span> : None},                               <span class="py-comment"># ENV</span>
+              (<span class="py-string">'BAR'</span>, <span class="py-string">'BAR variable help'</span>, <span class="py-string">'VAR default BAR'</span>),  <span class="py-comment"># VAR</span>
+              (<span class="py-string">'--bar'</span>, {<span class="py-string">'dest'</span>:<span class="py-string">&quot;opt_bar&quot;</span>, <span class="py-string">&quot;type&quot;</span>:<span class="py-string">&quot;string&quot;</span>}))}, <span class="py-comment"># OPT</span>
+   <span class="py-comment"># Argument 'geez'</span>
+   geez  = (   {<span class="py-string">'ENV_GEEZ'</span> : None},                             <span class="py-comment"># ENV</span>
+              (<span class="py-string">'GEEZ'</span>, <span class="py-string">'GEEZ variable help'</span>, <span class="py-string">'VAR default GEEZ'</span>),<span class="py-comment"># VAR</span>
+              (<span class="py-string">'--geez'</span>, {<span class="py-string">'dest'</span>:<span class="py-string">&quot;opt_geez&quot;</span>, <span class="py-string">&quot;type&quot;</span>:<span class="py-string">&quot;string&quot;</span>})) <span class="py-comment"># OPT</span>
+)</pre>
+<p>This function</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd><ul class="rst-simple">
+<li><a href="SConsArguments-module.html#ArgumentDecls" class="link">ArgumentDecls()</a> returns an empty <a href="SConsArguments._ArgumentDecls-class.html" class="link" onclick="show_private();">_ArgumentDecls</a> dictionary <tt class="rst-docutils literal">{}</tt>,</li>
+<li><a href="SConsArguments-module.html#ArgumentDecls" class="link">ArgumentDecls(mapping)</a> returns <a href="SConsArguments._ArgumentDecls-class.html" class="link" onclick="show_private();">_ArgumentDecls</a> dictionary initialized
+with <tt class="rst-docutils literal">{k : ArgumentDecl(mapping[k]) for k in <span class="pre">mapping.keys()}</span></tt></li>
+<li><a href="SConsArguments-module.html#ArgumentDecls" class="link">ArgumentDecls(iterable)</a> returns <a href="SConsArguments._ArgumentDecls-class.html" class="link" onclick="show_private();">_ArgumentDecls</a> dictionary initialized
+with <tt class="rst-docutils literal">{k : ArgumentDecl(v) for (k,v) in iter(initializer)}</tt></li>
+</ul>
+<p>In any case, the keyword arguments <tt class="rst-docutils literal">**kw</tt> are appended to the
+initializer.</p></dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th bgcolor="#70b0f0" class="navbar-select"
+          >&nbsp;&nbsp;&nbsp;Home&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1
+    on Thu Oct 22 14:20:31 2015
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>
