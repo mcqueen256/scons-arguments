@@ -3,7 +3,7 @@ scons-arguments
 
 | travis-ci | appveyor  |
 |-----------|-----------|
-|[![Build Status](https://travis-ci.org/ptomulik/scons-arguments.png?branch=master)](https://travis-ci.org/ptomulik/scons-arguments)| [![Build status](https://ci.appveyor.com/api/projects/status/0fvtobp37lh1le0y?svg=true)](https://ci.appveyor.com/project/ptomulik/scons-arguments) |
+|[![Build Status](https://travis-ci.org/ptomulik/scons-arguments.png?branch=master)](https://travis-ci.org/ptomulik/scons-arguments)| [![Build status](https://ci.appveyor.com/api/projects/status/0fvtobp37lh1le0y/branch/master?svg=true)](https://ci.appveyor.com/project/ptomulik/scons-arguments/branch/master) |
 
 Welcome to ``scons-arguments``.
 
