@@ -1,0 +1,5 @@
+scons
+unittest2
+discover
+docutils
+pygments

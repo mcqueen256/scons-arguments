@@ -45,6 +45,10 @@ DOCUMENTATION
 
 ### API documentation
 
+Online API documentation may be found at:
+
+  * <http://ptomulik.github.io/scons-arguments/api/>
+
 API documentation can be generated from the top level directory with the
 following command (see also requirements below)
 
@@ -62,12 +66,20 @@ To generate API documentation, you may need following packages on your system:
   * python-docutils <http://pypi.python.org/pypi/docutils>
   * python-pygments <http://pygments.org/>
 
-Note, that epydoc is no longer developed, last activities in the project date
-to 2008. The pip epydoc package 3.0.1 is not usable with current versions of
-python. Fortunately Debian package is patched to work with current python.
+Note, that epydoc is no longer developed, last activities in the project are
+dated to 2008. The pip epydoc package 3.0.1 is not usable with current versions
+of python. Fortunately Debian package is patched to work with current python.
 Please use the ``python-epydoc`` package installed with apt-get.
 
+```shell
+apt-get install python-epydoc python-docutils python-pygments
+```
+
 ### User documentation
+
+Online User Manual may be found at:
+
+  * <http://ptomulik.github.io/scons-arguments/user/manual.html>
 
 User documentation can be generated from the top level directory with the
 following command (see also requirements below)
@@ -93,7 +105,13 @@ You also must install locally the SCons docbook tool by Dirk Baechle:
 this is easily done by running the following bash script
 
 ```
-bin/download-devel-deps.sh
+python bin/downloads.py scons-docbook
+```
+
+or simply (to download all dependencies)
+
+```
+python bin/downloads.py
 ```
 
 from the top level directory.
@@ -138,13 +156,13 @@ SCONS_EXTERNAL_TEST=1 python runtest.py -a
 Download the SCons testing framework with:
 
 ```shell
-./bin/download-test-framework.sh
+python ./bin/downloads.py scons-test
 ```
 
 or
 
 ```shell
-./bin/download-deps.sh
+python ./bin/downloads.py
 ```
 
 LICENSE
