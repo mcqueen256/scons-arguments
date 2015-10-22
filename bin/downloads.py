@@ -69,7 +69,7 @@ def untar(tar, **kw):
     members = [m for m in tar.getmembers() if len(m.name.split('/')) > strip_components]
     if strip_components > 0:
         for m in members:
-            m.name = os.path.join(*(m.name.split('/')[strip_components:]))
+            m.name = '/'.join(m.name.split('/')[strip_components:])
 
     members = [m for m in members if member_name_filter(m.name) ]
     tar.extractall(path = path, members = members)

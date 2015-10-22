@@ -148,8 +148,16 @@ apt-get install python-unittest2 python-mock
 To run end-to-end tests, type
 
 ```shell
-SCONS_EXTERNAL_TEST=1 python runtest.py -a
+scons test
 ```
+
+End-to-end tests are stored under ``test/`` directory. To run particular test
+type (on Linux):
+
+```shell
+SCONS_EXTERNAL_TEST=1 python runtest.py test/SConsArguments/ArgumentDecl/sconstest-argumentdecl1.py
+```
+
 
 ### Requirements for end-to-end tests
 
