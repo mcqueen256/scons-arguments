@@ -1,7 +1,9 @@
 scons-arguments
 ===============
 
-[![Build Status](https://travis-ci.org/ptomulik/scons-arguments.png?branch=master)](https://travis-ci.org/ptomulik/scons-arguments)
+| travis-ci |
+|-----------|
+|[![Build Status](https://travis-ci.org/ptomulik/scons-arguments.png?branch=master)](https://travis-ci.org/ptomulik/scons-arguments)|
 
 Welcome to ``scons-arguments``.
 
