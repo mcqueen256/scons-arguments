@@ -289,6 +289,9 @@ class _undef(object):
     "Represents undefined/inexistent variable. This is not the same as None"
     __metaclass__ = _undef_meta
 
+UNDEFINED = _undef
+"""Represents undefined/inexistent variable. This is not the same as None"""
+
 #############################################################################
 class _notfound(object):
     "Something that has not been found."
