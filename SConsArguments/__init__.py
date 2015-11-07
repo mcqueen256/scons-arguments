@@ -1136,29 +1136,29 @@ class _Arguments(object):
                     pass
         return res
 
-    def Postprocess(self, env, variables=None, options=False, ose={},
+    def Postprocess(self, env, variables=None, use_options=False, ose={},
                     args=None, filename=None):
         #--------------------------------------------------------------------
         """Postprocess **variables** and **options** updating variables in
         **env** and optionally saving them to file.
 
-        This method gathers values from **variables**, **options** and
-        writes them to **env**. After that it optionally saves the variables
-        to file (if **filename** is given) and updates variables with values
-        from **ose** (only those that were not changed by **variables** nor the
-        **options**).
+        This method gathers values from `variables`, command-line options and
+        writes them to `env`. After that it optionally saves the variables
+        to file (if `filename` is given) and updates variables with values
+        from `ose` (only those that were not changed by `variables` nor the
+        command-line options).
 
         The effect of this method is the following:
 
-        - command line **variables** are handled,
-        - command line **options** are handled,
-        - command line **variables** are saved to filename if requested,
-        - additional source **ose** (usually ``os.environ``) handled,
+        - command line `variables` are handled,
+        - command line options are handled,
+        - command line `variables` are saved to filename if requested,
+        - additional source `ose` (usually ``os.environ``) handled,
 
-        The values from **ose** are not written to file. Also, they influence
-        only variables that were not set by **variables** nor the **options**.
-        The intent is to not let the variables from OS environment to overwrite
-        these provided by commandline (or retrieved from file).
+        The values from `ose` are not written to file. Also, they influence
+        only variables that were not set by `variables` nor the command-line
+        options. The intent is to not let the variables from OS environment to
+        overwrite these provided by commandline (or retrieved from file).
 
         **Example**::
 
@@ -1168,9 +1168,9 @@ class _Arguments(object):
 
             env = Environment()
             var = Variables('.scons.variables')
-            gds = DeclareArguments( foo = { 'env_key' : 'foo', 'var_key' : 'foo' } )
-            gvs = gds.Commit(env, var, False)
-            gvs.Postprocess(env, var, False, os.environ, filename = '.scons.variables')
+            decls = DeclareArguments( foo = { 'env_key' : 'foo', 'var_key' : 'foo' } )
+            args = decls.Commit(env, var, False)
+            args.Postprocess(env, var, False, os.environ, filename = '.scons.variables')
 
             print "env['foo']: %r" % env['foo']
 
@@ -1218,7 +1218,7 @@ class _Arguments(object):
             variables : ``SCons.Variables.Variables`` | None
                 if not ``None``, it should be a `SCons.Variables.Variables`_
                 object with `SCons variables`_ to retrieve values from,
-            options : boolean
+            use_options : boolean
                 if ``True``, `command-line options`_ are taken into account
                 when updating `env`.
             ose : dict
@@ -1246,7 +1246,7 @@ class _Arguments(object):
         """
         #--------------------------------------------------------------------
         org = self.GetCurrentValues(env)
-        self.UpdateEnvironment(env, variables, options, args)
+        self.UpdateEnvironment(env, variables, use_options, args)
         alt = self.GetAltered(env, org)
         if filename:
             self.SaveVariables(variables, filename, env)

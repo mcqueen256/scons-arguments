@@ -9,7 +9,7 @@
 			Tomulik</personname>
 			<email xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">ptomulik@meil.pw.edu.pl</email>
 		</author>
-		<pubdate xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">2015-11-06</pubdate>
+		<pubdate xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">2015-11-07</pubdate>
 	</info>
 	<section xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="sec-intro" version="5.0">
 		<title xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Introduction</title>
@@ -880,7 +880,7 @@ env[&apos;ENV_BAR&apos;] == &apos;BAR&apos;        # True</programlisting>
 		prototype of the
 		<methodname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Commit</methodname>
 		method is</para>
-		<programlisting xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">_Arguments|None Commit(self, env=None, variables=None, options=False, args=True, *args)</programlisting>
+		<programlisting xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">_Arguments|None Commit(self, env=None, variables=None, create_options=False, args=True, *args)</programlisting>
 		<para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Parameters
 		are summarized in the following table</para>
 		<informaltable xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -906,13 +906,13 @@ env[&apos;ENV_BAR&apos;] == &apos;BAR&apos;        # True</programlisting>
 					by Arguments.</td>
 				</tr>
 				<tr xmlns="http://docbook.org/ns/docbook">
-					<td xmlns="http://docbook.org/ns/docbook"><parameter xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">options</parameter></td>
+					<td xmlns="http://docbook.org/ns/docbook"><parameter xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">create_options</parameter></td>
 					<td xmlns="http://docbook.org/ns/docbook">If
 					<literal xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">True</literal>,
 					the command-line options declared by Arguments are created.</td>
 				</tr>
 				<tr xmlns="http://docbook.org/ns/docbook">
-					<td xmlns="http://docbook.org/ns/docbook"><parameter xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">args</parameter></td>
+					<td xmlns="http://docbook.org/ns/docbook"><parameter xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">create_args</parameter></td>
 					<td xmlns="http://docbook.org/ns/docbook">If
 					<literal xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">True</literal>
 					(default) create and return a
@@ -976,7 +976,7 @@ args = SConsArguments._Arguments(decls)</programlisting>
 		prototype of
 		<methodname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Postprocess</methodname>
 		is the following</para>
-		<programlisting xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Postprocess(self, env, variables=None, options=False, ose={}, args=None, filename=None)</programlisting>
+		<programlisting xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Postprocess(self, env, variables=None, use_options=False, ose={}, args=None, filename=None)</programlisting>
 		<para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">The
 		parameters are summarized in the following table</para>
 		<informaltable xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -1006,7 +1006,7 @@ args = SConsArguments._Arguments(decls)</programlisting>
 					Variables</link> are not taken into account.</td>
 				</tr>
 				<tr xmlns="http://docbook.org/ns/docbook">
-					<td xmlns="http://docbook.org/ns/docbook"><parameter xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">options</parameter></td>
+					<td xmlns="http://docbook.org/ns/docbook"><parameter xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">use_options</parameter></td>
 					<td xmlns="http://docbook.org/ns/docbook">If
 					<literal xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">True</literal>
 					,
