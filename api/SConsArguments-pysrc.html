@@ -1198,29 +1198,29 @@ SConsArguments._Arguments.__reset_supp_dicts" class="py-name" href="#" onclick="
 <a name="L1136"></a><tt class="py-lineno">1136</tt>  <tt class="py-line">                    <tt class="py-keyword">pass</tt> </tt>
 <a name="L1137"></a><tt class="py-lineno">1137</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">res</tt> </tt>
 </div><a name="L1138"></a><tt class="py-lineno">1138</tt>  <tt class="py-line"> </tt>
-<a name="_Arguments.Postprocess"></a><div id="_Arguments.Postprocess-def"><a name="L1139"></a><tt class="py-lineno">1139</tt> <a class="py-toggle" href="#" id="_Arguments.Postprocess-toggle" onclick="return toggle('_Arguments.Postprocess');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="SConsArguments._Arguments-class.html#Postprocess">Postprocess</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">env</tt><tt class="py-op">,</tt> <tt class="py-param">variables</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">,</tt> <tt class="py-param">options</tt><tt class="py-op">=</tt><tt class="py-name">False</tt><tt class="py-op">,</tt> <tt class="py-param">ose</tt><tt class="py-op">=</tt><tt class="py-op">{</tt><tt class="py-op">}</tt><tt class="py-op">,</tt> </tt>
+<a name="_Arguments.Postprocess"></a><div id="_Arguments.Postprocess-def"><a name="L1139"></a><tt class="py-lineno">1139</tt> <a class="py-toggle" href="#" id="_Arguments.Postprocess-toggle" onclick="return toggle('_Arguments.Postprocess');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="SConsArguments._Arguments-class.html#Postprocess">Postprocess</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">env</tt><tt class="py-op">,</tt> <tt class="py-param">variables</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">,</tt> <tt class="py-param">use_options</tt><tt class="py-op">=</tt><tt class="py-name">False</tt><tt class="py-op">,</tt> <tt class="py-param">ose</tt><tt class="py-op">=</tt><tt class="py-op">{</tt><tt class="py-op">}</tt><tt class="py-op">,</tt> </tt>
 <a name="L1140"></a><tt class="py-lineno">1140</tt>  <tt class="py-line">                    <tt class="py-param">args</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">,</tt> <tt class="py-param">filename</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
 </div><div id="_Arguments.Postprocess-collapsed" style="display:none;" pad="++++" indent="++++++++"></div><div id="_Arguments.Postprocess-expanded"><a name="L1141"></a><tt class="py-lineno">1141</tt>  <tt class="py-line">        <tt class="py-comment">#--------------------------------------------------------------------</tt> </tt>
 <a name="L1142"></a><tt class="py-lineno">1142</tt>  <tt class="py-line">        <tt class="py-docstring">"""Postprocess **variables** and **options** updating variables in</tt> </tt>
 <a name="L1143"></a><tt class="py-lineno">1143</tt>  <tt class="py-line"><tt class="py-docstring">        **env** and optionally saving them to file.</tt> </tt>
 <a name="L1144"></a><tt class="py-lineno">1144</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
-<a name="L1145"></a><tt class="py-lineno">1145</tt>  <tt class="py-line"><tt class="py-docstring">        This method gathers values from **variables**, **options** and</tt> </tt>
-<a name="L1146"></a><tt class="py-lineno">1146</tt>  <tt class="py-line"><tt class="py-docstring">        writes them to **env**. After that it optionally saves the variables</tt> </tt>
-<a name="L1147"></a><tt class="py-lineno">1147</tt>  <tt class="py-line"><tt class="py-docstring">        to file (if **filename** is given) and updates variables with values</tt> </tt>
-<a name="L1148"></a><tt class="py-lineno">1148</tt>  <tt class="py-line"><tt class="py-docstring">        from **ose** (only those that were not changed by **variables** nor the</tt> </tt>
-<a name="L1149"></a><tt class="py-lineno">1149</tt>  <tt class="py-line"><tt class="py-docstring">        **options**).</tt> </tt>
+<a name="L1145"></a><tt class="py-lineno">1145</tt>  <tt class="py-line"><tt class="py-docstring">        This method gathers values from `variables`, command-line options and</tt> </tt>
+<a name="L1146"></a><tt class="py-lineno">1146</tt>  <tt class="py-line"><tt class="py-docstring">        writes them to `env`. After that it optionally saves the variables</tt> </tt>
+<a name="L1147"></a><tt class="py-lineno">1147</tt>  <tt class="py-line"><tt class="py-docstring">        to file (if `filename` is given) and updates variables with values</tt> </tt>
+<a name="L1148"></a><tt class="py-lineno">1148</tt>  <tt class="py-line"><tt class="py-docstring">        from `ose` (only those that were not changed by `variables` nor the</tt> </tt>
+<a name="L1149"></a><tt class="py-lineno">1149</tt>  <tt class="py-line"><tt class="py-docstring">        command-line options).</tt> </tt>
 <a name="L1150"></a><tt class="py-lineno">1150</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
 <a name="L1151"></a><tt class="py-lineno">1151</tt>  <tt class="py-line"><tt class="py-docstring">        The effect of this method is the following:</tt> </tt>
 <a name="L1152"></a><tt class="py-lineno">1152</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
-<a name="L1153"></a><tt class="py-lineno">1153</tt>  <tt class="py-line"><tt class="py-docstring">        - command line **variables** are handled,</tt> </tt>
-<a name="L1154"></a><tt class="py-lineno">1154</tt>  <tt class="py-line"><tt class="py-docstring">        - command line **options** are handled,</tt> </tt>
-<a name="L1155"></a><tt class="py-lineno">1155</tt>  <tt class="py-line"><tt class="py-docstring">        - command line **variables** are saved to filename if requested,</tt> </tt>
-<a name="L1156"></a><tt class="py-lineno">1156</tt>  <tt class="py-line"><tt class="py-docstring">        - additional source **ose** (usually ``os.environ``) handled,</tt> </tt>
+<a name="L1153"></a><tt class="py-lineno">1153</tt>  <tt class="py-line"><tt class="py-docstring">        - command line `variables` are handled,</tt> </tt>
+<a name="L1154"></a><tt class="py-lineno">1154</tt>  <tt class="py-line"><tt class="py-docstring">        - command line options are handled,</tt> </tt>
+<a name="L1155"></a><tt class="py-lineno">1155</tt>  <tt class="py-line"><tt class="py-docstring">        - command line `variables` are saved to filename if requested,</tt> </tt>
+<a name="L1156"></a><tt class="py-lineno">1156</tt>  <tt class="py-line"><tt class="py-docstring">        - additional source `ose` (usually ``os.environ``) handled,</tt> </tt>
 <a name="L1157"></a><tt class="py-lineno">1157</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
-<a name="L1158"></a><tt class="py-lineno">1158</tt>  <tt class="py-line"><tt class="py-docstring">        The values from **ose** are not written to file. Also, they influence</tt> </tt>
-<a name="L1159"></a><tt class="py-lineno">1159</tt>  <tt class="py-line"><tt class="py-docstring">        only variables that were not set by **variables** nor the **options**.</tt> </tt>
-<a name="L1160"></a><tt class="py-lineno">1160</tt>  <tt class="py-line"><tt class="py-docstring">        The intent is to not let the variables from OS environment to overwrite</tt> </tt>
-<a name="L1161"></a><tt class="py-lineno">1161</tt>  <tt class="py-line"><tt class="py-docstring">        these provided by commandline (or retrieved from file).</tt> </tt>
+<a name="L1158"></a><tt class="py-lineno">1158</tt>  <tt class="py-line"><tt class="py-docstring">        The values from `ose` are not written to file. Also, they influence</tt> </tt>
+<a name="L1159"></a><tt class="py-lineno">1159</tt>  <tt class="py-line"><tt class="py-docstring">        only variables that were not set by `variables` nor the command-line</tt> </tt>
+<a name="L1160"></a><tt class="py-lineno">1160</tt>  <tt class="py-line"><tt class="py-docstring">        options. The intent is to not let the variables from OS environment to</tt> </tt>
+<a name="L1161"></a><tt class="py-lineno">1161</tt>  <tt class="py-line"><tt class="py-docstring">        overwrite these provided by commandline (or retrieved from file).</tt> </tt>
 <a name="L1162"></a><tt class="py-lineno">1162</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
 <a name="L1163"></a><tt class="py-lineno">1163</tt>  <tt class="py-line"><tt class="py-docstring">        **Example**::</tt> </tt>
 <a name="L1164"></a><tt class="py-lineno">1164</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
@@ -1230,9 +1230,9 @@ SConsArguments._Arguments.__reset_supp_dicts" class="py-name" href="#" onclick="
 <a name="L1168"></a><tt class="py-lineno">1168</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
 <a name="L1169"></a><tt class="py-lineno">1169</tt>  <tt class="py-line"><tt class="py-docstring">            env = Environment()</tt> </tt>
 <a name="L1170"></a><tt class="py-lineno">1170</tt>  <tt class="py-line"><tt class="py-docstring">            var = Variables('.scons.variables')</tt> </tt>
-<a name="L1171"></a><tt class="py-lineno">1171</tt>  <tt class="py-line"><tt class="py-docstring">            gds = DeclareArguments( foo = { 'env_key' : 'foo', 'var_key' : 'foo' } )</tt> </tt>
-<a name="L1172"></a><tt class="py-lineno">1172</tt>  <tt class="py-line"><tt class="py-docstring">            gvs = gds.Commit(env, var, False)</tt> </tt>
-<a name="L1173"></a><tt class="py-lineno">1173</tt>  <tt class="py-line"><tt class="py-docstring">            gvs.Postprocess(env, var, False, os.environ, filename = '.scons.variables')</tt> </tt>
+<a name="L1171"></a><tt class="py-lineno">1171</tt>  <tt class="py-line"><tt class="py-docstring">            decls = DeclareArguments( foo = { 'env_key' : 'foo', 'var_key' : 'foo' } )</tt> </tt>
+<a name="L1172"></a><tt class="py-lineno">1172</tt>  <tt class="py-line"><tt class="py-docstring">            args = decls.Commit(env, var, False)</tt> </tt>
+<a name="L1173"></a><tt class="py-lineno">1173</tt>  <tt class="py-line"><tt class="py-docstring">            args.Postprocess(env, var, False, os.environ, filename = '.scons.variables')</tt> </tt>
 <a name="L1174"></a><tt class="py-lineno">1174</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
 <a name="L1175"></a><tt class="py-lineno">1175</tt>  <tt class="py-line"><tt class="py-docstring">            print "env['foo']: %r" % env['foo']</tt> </tt>
 <a name="L1176"></a><tt class="py-lineno">1176</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
@@ -1280,7 +1280,7 @@ SConsArguments._Arguments.__reset_supp_dicts" class="py-name" href="#" onclick="
 <a name="L1218"></a><tt class="py-lineno">1218</tt>  <tt class="py-line"><tt class="py-docstring">            variables : ``SCons.Variables.Variables`` | None</tt> </tt>
 <a name="L1219"></a><tt class="py-lineno">1219</tt>  <tt class="py-line"><tt class="py-docstring">                if not ``None``, it should be a `SCons.Variables.Variables`_</tt> </tt>
 <a name="L1220"></a><tt class="py-lineno">1220</tt>  <tt class="py-line"><tt class="py-docstring">                object with `SCons variables`_ to retrieve values from,</tt> </tt>
-<a name="L1221"></a><tt class="py-lineno">1221</tt>  <tt class="py-line"><tt class="py-docstring">            options : boolean</tt> </tt>
+<a name="L1221"></a><tt class="py-lineno">1221</tt>  <tt class="py-line"><tt class="py-docstring">            use_options : boolean</tt> </tt>
 <a name="L1222"></a><tt class="py-lineno">1222</tt>  <tt class="py-line"><tt class="py-docstring">                if ``True``, `command-line options`_ are taken into account</tt> </tt>
 <a name="L1223"></a><tt class="py-lineno">1223</tt>  <tt class="py-line"><tt class="py-docstring">                when updating `env`.</tt> </tt>
 <a name="L1224"></a><tt class="py-lineno">1224</tt>  <tt class="py-line"><tt class="py-docstring">            ose : dict</tt> </tt>
@@ -1308,7 +1308,7 @@ SConsArguments._Arguments.__reset_supp_dicts" class="py-name" href="#" onclick="
 <a name="L1246"></a><tt class="py-lineno">1246</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
 <a name="L1247"></a><tt class="py-lineno">1247</tt>  <tt class="py-line">        <tt class="py-comment">#--------------------------------------------------------------------</tt> </tt>
 <a name="L1248"></a><tt class="py-lineno">1248</tt>  <tt class="py-line">        <tt class="py-name">org</tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-104" class="py-name" targets="Method SConsArguments._Arguments.GetCurrentValues()=SConsArguments._Arguments-class.html#GetCurrentValues"><a title="SConsArguments._Arguments.GetCurrentValues" class="py-name" href="#" onclick="return doclink('link-104', 'GetCurrentValues', 'link-104');">GetCurrentValues</a></tt><tt class="py-op">(</tt><tt class="py-name">env</tt><tt class="py-op">)</tt> </tt>
-<a name="L1249"></a><tt class="py-lineno">1249</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-105" class="py-name" targets="Method SConsArguments._Arguments.UpdateEnvironment()=SConsArguments._Arguments-class.html#UpdateEnvironment"><a title="SConsArguments._Arguments.UpdateEnvironment" class="py-name" href="#" onclick="return doclink('link-105', 'UpdateEnvironment', 'link-105');">UpdateEnvironment</a></tt><tt class="py-op">(</tt><tt class="py-name">env</tt><tt class="py-op">,</tt> <tt class="py-name">variables</tt><tt class="py-op">,</tt> <tt class="py-name">options</tt><tt class="py-op">,</tt> <tt class="py-name">args</tt><tt class="py-op">)</tt> </tt>
+<a name="L1249"></a><tt class="py-lineno">1249</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-105" class="py-name" targets="Method SConsArguments._Arguments.UpdateEnvironment()=SConsArguments._Arguments-class.html#UpdateEnvironment"><a title="SConsArguments._Arguments.UpdateEnvironment" class="py-name" href="#" onclick="return doclink('link-105', 'UpdateEnvironment', 'link-105');">UpdateEnvironment</a></tt><tt class="py-op">(</tt><tt class="py-name">env</tt><tt class="py-op">,</tt> <tt class="py-name">variables</tt><tt class="py-op">,</tt> <tt class="py-name">use_options</tt><tt class="py-op">,</tt> <tt class="py-name">args</tt><tt class="py-op">)</tt> </tt>
 <a name="L1250"></a><tt class="py-lineno">1250</tt>  <tt class="py-line">        <tt class="py-name">alt</tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-106" class="py-name" targets="Method SConsArguments._Arguments.GetAltered()=SConsArguments._Arguments-class.html#GetAltered"><a title="SConsArguments._Arguments.GetAltered" class="py-name" href="#" onclick="return doclink('link-106', 'GetAltered', 'link-106');">GetAltered</a></tt><tt class="py-op">(</tt><tt class="py-name">env</tt><tt class="py-op">,</tt> <tt class="py-name">org</tt><tt class="py-op">)</tt> </tt>
 <a name="L1251"></a><tt class="py-lineno">1251</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">filename</tt><tt class="py-op">:</tt> </tt>
 <a name="L1252"></a><tt class="py-lineno">1252</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-107" class="py-name" targets="Method SConsArguments._Arguments.SaveVariables()=SConsArguments._Arguments-class.html#SaveVariables"><a title="SConsArguments._Arguments.SaveVariables" class="py-name" href="#" onclick="return doclink('link-107', 'SaveVariables', 'link-107');">SaveVariables</a></tt><tt class="py-op">(</tt><tt class="py-name">variables</tt><tt class="py-op">,</tt> <tt class="py-name">filename</tt><tt class="py-op">,</tt> <tt class="py-name">env</tt><tt class="py-op">)</tt> </tt>
@@ -2893,7 +2893,7 @@ expandto(location.href);
   <tr>
     <td align="left" class="footer">
     Generated by Epydoc 3.0.1
-    on Sat Nov  7 18:30:17 2015
+    on Sat Nov  7 19:01:43 2015
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

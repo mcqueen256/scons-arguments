@@ -500,7 +500,7 @@ values (see <a href="SConsArguments._Arguments-class.html#_is_unaltered" class="
           <td><span class="summary-sig"><a href="SConsArguments._Arguments-class.html#Postprocess" class="summary-sig-name">Postprocess</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">env</span>,
         <span class="summary-sig-arg">variables</span>=<span class="summary-sig-default">None</span>,
-        <span class="summary-sig-arg">options</span>=<span class="summary-sig-default">False</span>,
+        <span class="summary-sig-arg">use_options</span>=<span class="summary-sig-default">False</span>,
         <span class="summary-sig-arg">ose</span>=<span class="summary-sig-default"><code class="variable-group">{</code><code class="variable-group">}</code></span>,
         <span class="summary-sig-arg">args</span>=<span class="summary-sig-default">None</span>,
         <span class="summary-sig-arg">filename</span>=<span class="summary-sig-default">None</span>)</span><br />
@@ -1087,7 +1087,7 @@ will only contain variables that are present in in this object;</dd>
   <h3 class="epydoc"><span class="sig"><span class="sig-name">Postprocess</span>(<span class="sig-arg">self</span>,
         <span class="sig-arg">env</span>,
         <span class="sig-arg">variables</span>=<span class="sig-default">None</span>,
-        <span class="sig-arg">options</span>=<span class="sig-default">False</span>,
+        <span class="sig-arg">use_options</span>=<span class="sig-default">False</span>,
         <span class="sig-arg">ose</span>=<span class="sig-default"><code class="variable-group">{</code><code class="variable-group">}</code></span>,
         <span class="sig-arg">args</span>=<span class="sig-default">None</span>,
         <span class="sig-arg">filename</span>=<span class="sig-default">None</span>)</span>
@@ -1099,22 +1099,22 @@ will only contain variables that are present in in this object;</dd>
   
   <p>Postprocess <strong>variables</strong> and <strong>options</strong> updating variables in
 <strong>env</strong> and optionally saving them to file.</p>
-<p>This method gathers values from <strong>variables</strong>, <strong>options</strong> and
-writes them to <strong>env</strong>. After that it optionally saves the variables
-to file (if <strong>filename</strong> is given) and updates variables with values
-from <strong>ose</strong> (only those that were not changed by <strong>variables</strong> nor the
-<strong>options</strong>).</p>
+<p>This method gathers values from <code class="link">variables</code>, command-line options and
+writes them to <code class="link">env</code>. After that it optionally saves the variables
+to file (if <code class="link">filename</code> is given) and updates variables with values
+from <code class="link">ose</code> (only those that were not changed by <code class="link">variables</code> nor the
+command-line options).</p>
 <p>The effect of this method is the following:</p>
 <ul class="rst-simple">
-<li>command line <strong>variables</strong> are handled,</li>
-<li>command line <strong>options</strong> are handled,</li>
-<li>command line <strong>variables</strong> are saved to filename if requested,</li>
-<li>additional source <strong>ose</strong> (usually <tt class="rst-docutils literal">os.environ</tt>) handled,</li>
+<li>command line <code class="link">variables</code> are handled,</li>
+<li>command line options are handled,</li>
+<li>command line <code class="link">variables</code> are saved to filename if requested,</li>
+<li>additional source <code class="link">ose</code> (usually <tt class="rst-docutils literal">os.environ</tt>) handled,</li>
 </ul>
-<p>The values from <strong>ose</strong> are not written to file. Also, they influence
-only variables that were not set by <strong>variables</strong> nor the <strong>options</strong>.
-The intent is to not let the variables from OS environment to overwrite
-these provided by commandline (or retrieved from file).</p>
+<p>The values from <code class="link">ose</code> are not written to file. Also, they influence
+only variables that were not set by <code class="link">variables</code> nor the command-line
+options. The intent is to not let the variables from OS environment to
+overwrite these provided by commandline (or retrieved from file).</p>
 <p><strong>Example</strong>:</p>
 <pre class="rst-literal-block">
 # SConstruct
@@ -1123,9 +1123,9 @@ from SConsArguments import DeclareArguments
 
 env = Environment()
 var = Variables('.scons.variables')
-gds = DeclareArguments( foo = { 'env_key' : 'foo', 'var_key' : 'foo' } )
-gvs = gds.Commit(env, var, False)
-gvs.Postprocess(env, var, False, os.environ, filename = '.scons.variables')
+decls = DeclareArguments( foo = { 'env_key' : 'foo', 'var_key' : 'foo' } )
+args = decls.Commit(env, var, False)
+args.Postprocess(env, var, False, os.environ, filename = '.scons.variables')
 
 print &quot;env['foo']: %r&quot; % env['foo']
 </pre>
@@ -1173,7 +1173,7 @@ scons: `.' is up to date.
 <em>arguments</em>.</li>
         <li><strong class="pname"><code>variables</code></strong> (<tt class="rst-docutils literal">SCons.Variables.Variables</tt> | None) - if not <tt class="rst-docutils literal">None</tt>, it should be a <a class="rst-reference external" href="http://www.scons.org/doc/latest/HTML/scons-api/SCons.Variables.Variables-class.html" target="_top">SCons.Variables.Variables</a>
 object with <a class="rst-reference external" href="http://www.scons.org/doc/HTML/scons-user.html#sect-command-line-variables" target="_top">SCons variables</a> to retrieve values from,</li>
-        <li><strong class="pname"><code>options</code></strong> (boolean) - if <tt class="rst-docutils literal">True</tt>, <a class="rst-reference external" href="http://www.scons.org/doc/HTML/scons-user.html#sect-command-line-options" target="_top">command-line options</a> are taken into account
+        <li><strong class="pname"><code>use_options</code></strong> (boolean) - if <tt class="rst-docutils literal">True</tt>, <a class="rst-reference external" href="http://www.scons.org/doc/HTML/scons-user.html#sect-command-line-options" target="_top">command-line options</a> are taken into account
 when updating <code class="link">env</code>.</li>
         <li><strong class="pname"><code>ose</code></strong> (dict) - third source of data, usually taken from <tt class="rst-docutils literal">os.environ</tt></li>
         <li><strong class="pname"><code>args</code></strong> - passed as <strong>args</strong> to <a href="SConsArguments._Arguments-class.html#UpdateEnvironment" class="link">UpdateEnvironment()</a>.</li>
@@ -1273,7 +1273,7 @@ transformed back to namespace of <em>arguments</em>.</dd>
   <tr>
     <td align="left" class="footer">
     Generated by Epydoc 3.0.1
-    on Sat Nov  7 18:30:17 2015
+    on Sat Nov  7 19:01:43 2015
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"
