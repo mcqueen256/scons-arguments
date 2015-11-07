@@ -414,6 +414,67 @@ class Test__ArgumentsProxy(unittest.TestCase):
             self.fail(str(e))
 
 #############################################################################
+class Test__VariablesWrapper(unittest.TestCase):
+    class _Option:
+        def __init__(self, key, default = None, validator = None, converter = None, aliases = []):
+            self.key = key
+            self.default = default
+            self.validator = validator
+            self.converter = converter
+            self.aliases = aliases
+
+    class _Variables:
+        def __init__(self, files=[], args={}, is_global=1):
+            self.files = files
+            self.args = args
+            self.is_global = is_global
+            self.unknown = dict()
+
+    def test___init___1(self):
+        """_VariablesWrapper.__init__(variables) should initialize variables"""
+        class _test_variables: pass
+        wrap = SConsArguments._VariablesWrapper(_test_variables)
+        self.assertIs(wrap.variables, _test_variables)
+
+    def test___getattr___1(self):
+        """_VariablesWrapper.foo should return _VariablesWrapper.variables.foo"""
+        class _test_variables:
+            foo = 10
+        wrap = SConsArguments._VariablesWrapper(_test_variables)
+        self.assertIs(wrap.foo, _test_variables.foo)
+
+    def test_Update_1(self):
+        """Test <_VaraiblesWrapper>.Update()"""
+        _Variables = Test__VariablesWrapper._Variables
+        _Option = Test__VariablesWrapper._Option
+        validate_d = mock.Mock(name = 'validate_d')
+        variables = _Variables( files = ['existing/file', 'inexistent/file'])
+        variables.options = [ 
+            _Option('a', SConsArguments._undef),
+            _Option('b'),
+            _Option('c', 'C def'),
+            _Option('d', validator = validate_d),
+            _Option('e', 'E def', converter = lambda x : x + ' converted'),
+            _Option('f', 'F def'),
+            _Option('g', 'G def', aliases = ['g_alias']),
+            _Option('h', 'H def', aliases = ['h_alias'])
+        ]
+        args = { 'd' : 'D', 'e' : 'E', 'g_alias' : 'G' , 'z' : 'Z'}
+        env = dict()
+        fd = mock.Mock(name = 'fd')
+        fd.read = mock.Mock(name = 'read', return_value = "b='B file'\nf=None\nh_alias='H file'")
+        wrapper = SConsArguments._VariablesWrapper(variables)
+        with mock.patch('__builtin__.open', spec=open, return_value = fd) as _open, \
+             mock.patch('os.path.exists', side_effect = lambda f : f == 'existing/file') as _os_path_exists:
+            wrapper.Update(env, args)
+        _os_path_exists.assert_has_calls([mock.call('existing/file'), mock.call('inexistent/file')])
+        _open.assert_called_once_with('existing/file','rU')
+        validate_d.assert_called_once_with('d', 'D', env)
+        self.assertEquals(env, {'c' : 'C def', 'b' : 'B file', 'd' :'D', 'e' : 'E converted', 'f' : None, 'g' : 'G', 'h' : 'H def'})
+        self.assertEquals(variables.unknown, {'z' : 'Z'})
+            
+
+#############################################################################
 class Test__Arguments(unittest.TestCase):
 
     @classmethod
@@ -851,6 +912,61 @@ class Test__Arguments(unittest.TestCase):
         """<_Arguments>._is_unaltered({'a' : None}, {}, 'a') should be False"""
         self.assertFalse(SConsArguments._Arguments._is_unaltered({ 'a' : None }, {}, 'a'))
 
+    def test_GetAltered_1(self):
+        """Test <_Arguments>.GetAltered()"""
+        args = SConsArguments._Arguments(self._decls_mock_5())
+        env = { 'env_k' : 'K', 'env_e' : 'E', 'env_s' : None, 'env_x' : 'X' }
+        org = { 'env_k' : 'k', 'env_e' : 'E' }
+        altered = args.GetAltered(env, org)
+        self.assertEqual(altered, {'env_k' : 'K', 'env_s' : None})
+
+    def test_ReplaceUnaltered_1(self):
+        """Test <_Arguments>.ReplaceUnaltered()"""
+        args = SConsArguments._Arguments(self._decls_mock_5())
+        env = { 'env_k' : 'K', 'env_e' : 'E', 'env_s' : None, 'env_x' : 'X' }
+        org = { 'env_k' : 'k', 'env_e' : 'E' }
+        new = { 'k' : 'new K', 'e' : 'new E', 's' : 'new S', 'x' : 'new X'}
+        chg = args.ReplaceUnaltered(env, org, new)
+        self.assertEqual(env, { 'env_k' : 'K', 'env_e' : 'new E', 'env_s' : None, 'env_x' : 'X' })
+        self.assertEqual(chg, { 'env_e' : 'new E' })
+
+    def test_WithUnalteredReplaced_1(self):
+        """Test <_Arguments>.ReplaceUnaltered()"""
+        args = SConsArguments._Arguments(self._decls_mock_5())
+        env = { 'env_k' : 'K',      'env_e' : 'E',                      'env_x' : 'X'       }
+        org = { 'env_k' : 'org K',  'env_e' : 'E',      'env_y' : 'y',                      }
+        new = { 'k'     : 'new K',  'e'     : 'new E',                  'x'     : 'new X'   }
+        ret = args.WithUnalteredReplaced(env, org, new)
+        self.assertEqual(ret, { 'env_k' : 'K', 'env_e' : 'new E'              })
+        self.assertEqual(env, { 'env_k' : 'K', 'env_e' : 'E',   'env_x' : 'X' })
+
+    def test_Postprocess_1(self):
+        """Test <_Arguments>.Postorpcess()"""
+        class _test_alt(object): pass
+        _test_alt.update = mock.Mock(name = 'update')
+            
+        args = SConsArguments._Arguments(self._decls_mock_5())
+        args.GetCurrentValues = mock.Mock(name = 'GetCurrentValues', return_value  = 'org')
+        args.UpdateEnvironment = mock.Mock(name = 'UpdateEnvironment')
+        args.GetAltered = mock.Mock(name = 'GetAltered', return_value = _test_alt)
+        args.SaveVariables = mock.Mock(name = 'SaveVariables')
+        args.ReplaceUnaltered = mock.Mock(name = 'ReplaceUnaltered', return_value = 'chg')
+
+        args.Postprocess('env', 'variables', 'options', 'ose', 'args', 'filename')
+
+        args.GetCurrentValues.assert_called_once_with('env')
+        args.UpdateEnvironment.assert_called_once_with('env', 'variables', 'options', 'args')
+        args.GetAltered.assert_called_once_with('env', 'org')
+        args.SaveVariables.assert_called_once_with('variables', 'filename', 'env')
+        args.ReplaceUnaltered.assert_called_once_with('env', 'org', 'ose')
+        _test_alt.update.assert_called_once_with('chg')
+
+    def test_Demangle_1(self):
+        """Test <_Arguments>.Demangle()"""
+        args = SConsArguments._Arguments(self._decls_mock_5())
+        env = { 'env_k' : 'K', 'env_e' : 'E', 'env_s' : None, 'env_x' : 'X' }
+        res = args.Demangle(env)
+        self.assertEquals(res, { 'k' : 'K', 'e' : 'E', 's' : None })
 
 #############################################################################
 class Test__ArgumentDecl(unittest.TestCase):
@@ -1125,15 +1241,32 @@ class Test__ArgumentDecl(unittest.TestCase):
 
     def test_set_opt_decl__ValueError_1(self):
         """<_ArgumentDecl>.set_opt_decl(tuple()) should raise ValueError"""
+        empty = tuple()
         decl = SConsArguments._ArgumentDecl()
-        with self.assertRaises(ValueError):
-            decl.set_opt_decl(tuple())
+        with self.assertRaises(ValueError) as cm:
+            decl.set_opt_decl(empty)
+        self.assertEqual(str(cm.exception), "'decl' must not be empty, got %(empty)r" % locals())
 
     def test_set_opt_decl__ValueError_2(self):
+        """<_ArgumentDecl>.set_opt_decl(('--foo',)) should raise ValueError"""
+        decl = SConsArguments._ArgumentDecl()
+        with self.assertRaises(ValueError) as cm:
+            decl.set_opt_decl(('-foo',))
+        self.assertEqual(str(cm.exception), "missing parameter 'dest' in option specification")
+
+    def test_set_opt_decl__ValueError_3(self):
+        """<_ArgumentDecl>.set_opt_decl(['--foo']) should raise ValueError"""
+        decl = SConsArguments._ArgumentDecl()
+        with self.assertRaises(ValueError) as cm:
+            decl.set_opt_decl(['-foo'])
+        self.assertEqual(str(cm.exception), "missing parameter 'dest' in option specification")
+
+    def test_set_opt_decl__ValueError_4(self):
         """<_ArgumentDecl>.set_opt_decl({'names' : '--foo'}) should raise ValueError (missing 'dest')"""
         decl = SConsArguments._ArgumentDecl()
-        with self.assertRaises(ValueError):
+        with self.assertRaises(ValueError) as cm:
             decl.set_opt_decl({'names' : '--foo'})
+        self.assertEqual(str(cm.exception), "missing parameter 'dest' in option specification")
 
     def test_set_opt_decl__KeyError_1(self):
         """<_ArgumentDecl>.set_opt_decl(dict()) should raise KeyError"""
@@ -1365,8 +1498,9 @@ class Test__ArgumentDecl(unittest.TestCase):
     def test_get_key__123_IndexError_1(self):
         """<_ArgumentDecl>.get_key(123) should raise IndexError"""
         decl = SConsArguments._ArgumentDecl()
-        with self.assertRaises(IndexError):
+        with self.assertRaises(IndexError) as cm:
             decl.get_key(123)
+        self.assertEqual(str(cm.exception), "index out of range")
 
     def test_get_env_decl_1(self):
         """<_ArgumentDecl>.get_env_decl() should invoke get_decl(ENV)"""
@@ -1944,6 +2078,127 @@ class Test__ArgumentDecls(unittest.TestCase):
             decls = SConsArguments._ArgumentDecls(a1 = a1, a2 = a2)
         self.assertEqual(str(cm.exception), "variable 'a' is already declared")
 
+    def test___reset_supp_dicts_1(self):
+        """<_ArgumentDecls>.__reset_supp_dicts() should reset all supplementary dictionaries, including resubst dicts"""
+        a = SConsArguments._ArgumentDecl(('ENV_a',None), ('VAR_a',), ('--a', {'dest' : 'OPT_a'}))
+        b = SConsArguments._ArgumentDecl(('ENV_b',None), ('VAR_b',), ('--b', {'dest' : 'OPT_b'}))
+        decls = SConsArguments._ArgumentDecls(a = a, b = b)
+        decls.commit() # to generate resubst/iresubst dicts
+        decls._ArgumentDecls__reset_supp_dicts()
+        self.assertEqual(decls._ArgumentDecls__rename,   [dict(),dict(),dict()])
+        self.assertEqual(decls._ArgumentDecls__irename,  [dict(),dict(),dict()])
+        self.assertEqual(decls._ArgumentDecls__resubst,  [dict(),dict(),dict()])
+        self.assertEqual(decls._ArgumentDecls__iresubst, [dict(),dict(),dict()])
+
+    def test___replace_key_in_supp_dicts__ENV_1(self):
+        """<_ArgumentDecls>.__replace_key_in_supp_dicts(ENV,'a','ENX_a') should replace 'ENV_a' with 'ENX_a' in rename/irename dicts"""
+        a = SConsArguments._ArgumentDecl(('ENV_a',None), ('VAR_a',), ('--a', {'dest' : 'OPT_a'}))
+        b = SConsArguments._ArgumentDecl(('ENV_b',None), ('VAR_b',), ('--b', {'dest' : 'OPT_b'}))
+        decls = SConsArguments._ArgumentDecls(a = a, b = b)
+        decls._ArgumentDecls__replace_key_in_supp_dicts(SConsArguments.ENV, 'a', 'ENX_a')
+        self.assertEqual(decls._ArgumentDecls__rename,   [  {'a' : 'ENX_a', 'b' : 'ENV_b'},
+                                                            {'a' : 'VAR_a', 'b' : 'VAR_b'},
+                                                            {'a' : 'OPT_a', 'b' : 'OPT_b'} ])
+        self.assertEqual(decls._ArgumentDecls__irename,  [  {'ENX_a' : 'a', 'ENV_b' : 'b'},
+                                                            {'VAR_a' : 'a', 'VAR_b' : 'b'},
+                                                            {'OPT_a' : 'a', 'OPT_b' : 'b'} ])
+
+    def test___replace_key_in_supp_dicts__VAR_1(self):
+        """<_ArgumentDecls>.__replace_key_in_supp_dicts(VAR,'a','VAX_a') should replace 'VAR_a' with 'VAX_a' in rename/irename dicts"""
+        a = SConsArguments._ArgumentDecl(('ENV_a',None), ('VAR_a',), ('--a', {'dest' : 'OPT_a'}))
+        b = SConsArguments._ArgumentDecl(('ENV_b',None), ('VAR_b',), ('--b', {'dest' : 'OPT_b'}))
+        decls = SConsArguments._ArgumentDecls(a = a, b = b)
+        decls._ArgumentDecls__replace_key_in_supp_dicts(SConsArguments.VAR, 'a', 'VAX_a')
+        self.assertEqual(decls._ArgumentDecls__rename,   [  {'a' : 'ENV_a', 'b' : 'ENV_b'},
+                                                            {'a' : 'VAX_a', 'b' : 'VAR_b'},
+                                                            {'a' : 'OPT_a', 'b' : 'OPT_b'} ])
+        self.assertEqual(decls._ArgumentDecls__irename,  [  {'ENV_a' : 'a', 'ENV_b' : 'b'},
+                                                            {'VAX_a' : 'a', 'VAR_b' : 'b'},
+                                                            {'OPT_a' : 'a', 'OPT_b' : 'b'} ])
+
+    def test___replace_key_in_supp_dicts__OPT_1(self):
+        """<_ArgumentDecls>.__replace_key_in_supp_dicts(OPT,'a','OPX_a') should replace 'OPT_a' with 'OPX_a' in rename/irename dicts"""
+        a = SConsArguments._ArgumentDecl(('ENV_a',None), ('VAR_a',), ('--a', {'dest' : 'OPT_a'}))
+        b = SConsArguments._ArgumentDecl(('ENV_b',None), ('VAR_b',), ('--b', {'dest' : 'OPT_b'}))
+        decls = SConsArguments._ArgumentDecls(a = a, b = b)
+        decls._ArgumentDecls__replace_key_in_supp_dicts(SConsArguments.OPT, 'a', 'OPX_a')
+        self.assertEqual(decls._ArgumentDecls__rename,   [  {'a' : 'ENV_a', 'b' : 'ENV_b'},
+                                                            {'a' : 'VAR_a', 'b' : 'VAR_b'},
+                                                            {'a' : 'OPX_a', 'b' : 'OPT_b'} ])
+        self.assertEqual(decls._ArgumentDecls__irename,  [  {'ENV_a' : 'a', 'ENV_b' : 'b'},
+                                                            {'VAR_a' : 'a', 'VAR_b' : 'b'},
+                                                            {'OPX_a' : 'a', 'OPT_b' : 'b'} ])
+    def test___replace_key_in_supp_dicts__nokey_1(self):
+        """<_ArgumentDecls>.__replace_key_in_supp_dicts(ENV,'inexistent', 'foo') should add new name mapping"""
+        a = SConsArguments._ArgumentDecl(('ENV_a',None), ('VAR_a',), ('--a', {'dest' : 'OPT_a'}))
+        b = SConsArguments._ArgumentDecl(('ENV_b',None), ('VAR_b',), ('--b', {'dest' : 'OPT_b'}))
+        decls = SConsArguments._ArgumentDecls(a = a, b = b)
+        decls._ArgumentDecls__replace_key_in_supp_dicts(SConsArguments.ENV, 'inexistent', 'foo')
+        self.assertEqual(decls._ArgumentDecls__rename,   [  {'a' : 'ENV_a', 'b' : 'ENV_b', 'inexistent' : 'foo'},
+                                                            {'a' : 'VAR_a', 'b' : 'VAR_b'},
+                                                            {'a' : 'OPT_a', 'b' : 'OPT_b'} ])
+        self.assertEqual(decls._ArgumentDecls__irename,  [  {'ENV_a' : 'a', 'ENV_b' : 'b', 'foo': 'inexistent'},
+                                                            {'VAR_a' : 'a', 'VAR_b' : 'b'},
+                                                            {'OPT_a' : 'a', 'OPT_b' : 'b'} ])
+
+    def test___del_from_supp_dicts_1(self):
+        """<_ArgumentDecls>.__del_from_supp_dicts('a') should delete 'a' from rename/irename dictionaries"""
+        a = SConsArguments._ArgumentDecl(('ENV_a',None), ('VAR_a',), ('--a', {'dest' : 'OPT_a'}))
+        b = SConsArguments._ArgumentDecl(('ENV_b',None), ('VAR_b',), ('--b', {'dest' : 'OPT_b'}))
+        decls = SConsArguments._ArgumentDecls(a = a, b = b)
+        decls._ArgumentDecls__del_from_supp_dicts('a')
+        self.assertEqual(decls._ArgumentDecls__rename,   [  {'b' : 'ENV_b'},
+                                                            {'b' : 'VAR_b'},
+                                                            {'b' : 'OPT_b'} ])
+        self.assertEqual(decls._ArgumentDecls__irename,  [  {'ENV_b' : 'b'},
+                                                            {'VAR_b' : 'b'},
+                                                            {'OPT_b' : 'b'} ])
+
+    def test___del_from_supp_dicts_2(self):
+        """<_ArgumentDecls>.__del_from_supp_dicts('b') should delete 'a' from rename/irename dictionaries"""
+        a = SConsArguments._ArgumentDecl(('ENV_a',None), ('VAR_a',), ('--a', {'dest' : 'OPT_a'}))
+        b = SConsArguments._ArgumentDecl(('ENV_b',None), ('VAR_b',), ('--b', {'dest' : 'OPT_b'}))
+        decls = SConsArguments._ArgumentDecls(a = a, b = b)
+        decls._ArgumentDecls__del_from_supp_dicts('b')
+        self.assertEqual(decls._ArgumentDecls__rename,   [  {'a' : 'ENV_a'},
+                                                            {'a' : 'VAR_a'},
+                                                            {'a' : 'OPT_a'} ])
+        self.assertEqual(decls._ArgumentDecls__irename,  [  {'ENV_a' : 'a'},
+                                                            {'VAR_a' : 'a'},
+                                                            {'OPT_a' : 'a'} ])
+
+    def test___ensure_not_committed_1(self):
+        """<_ArgumetnDecls>.__ensure_not_committed() should not raise on a committed <_ArgumentDecls>"""
+        decls = SConsArguments._ArgumentDecls()
+        try:
+            decls._ArgumentDecls__ensure_not_committed()
+        except RuntimeError:
+            self.fail("__ensure_not_committed() raised RuntimeError unexpectedly")
+
+    def test___ensure_not_committed_2(self):
+        """<_ArgumetnDecls>.__ensure_not_committed() should raise RuntimeError on an uncommitted <_ArgumentDecls>"""
+        decls = SConsArguments._ArgumentDecls()
+        decls.commit()
+        with self.assertRaises(RuntimeError) as cm:
+           decls._ArgumentDecls__ensure_not_committed()
+        self.assertEquals(str(cm.exception), "declarations are already committed, can't be modified")
+        
+    def test___ensure_committed_1(self):
+        """<_ArgumetnDecls>.__ensure_committed() should not raise on a committed <_ArgumentDecls>"""
+        decls = SConsArguments._ArgumentDecls()
+        decls.commit()
+        try:
+            decls._ArgumentDecls__ensure_committed()
+        except RuntimeError:
+            self.fail("__ensure_committed() raised RuntimeError unexpectedly")
+
+    def test___ensure_committed_2(self):
+        """<_ArgumetnDecls>.__ensure_committed() should raise RuntimeError on an uncommitted <_ArgumentDecls>"""
+        decls = SConsArguments._ArgumentDecls()
+        with self.assertRaises(RuntimeError) as cm:
+           decls._ArgumentDecls__ensure_committed()
+        self.assertEquals(str(cm.exception), "declarations must be committed before performing this operation")
+        
     def test_setdefault__TypeError_1(self):
         """<_ArgumentDecls>.setdefault('foo', None) should raise TypeError"""
         decls = SConsArguments._ArgumentDecls()
@@ -2709,6 +2964,12 @@ class Test_ArgumentDecl(unittest.TestCase):
 
 #############################################################################
 class Test_DeclareArgument(unittest.TestCase):
+    def test_DeclareArgument_1(self):
+        """DeclareArgument(<_ArgumentDecl>) should return same <_ArgumentDecl> object"""
+        decl1 = SConsArguments._ArgumentDecl()
+        decl2 = SConsArguments.DeclareArgument(decl1)
+        self.assertIs(decl2, decl1)
+
     def test_user_doc_example_2(self):
         """example 2 from user documentation should work"""
         decl = SConsArguments.DeclareArgument(env_key = 'xvar', opt_key = 'xvar', option = '--xvar', type = 'string')
@@ -2842,6 +3103,7 @@ if __name__ == "__main__":
                , Test__compose_mappings
                , Test__invert_dict
                , Test__ArgumentsProxy
+               , Test__VariablesWrapper
                , Test__Arguments
                , Test__ArgumentDecl
                , Test__ArgumentDecls

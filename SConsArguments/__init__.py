@@ -694,7 +694,7 @@ class _VariablesWrapper(object):
                     del values['__name__']
 
         # set the values specified on the command line
-        if args is None:
+        if args is None: # pragma: no cover
             args = variables.args
 
         for arg, value in args.items():
@@ -712,7 +712,7 @@ class _VariablesWrapper(object):
             try:
                 if values[option.key] is not _undef:
                     env[option.key] = values[option.key]
-            except KeyError:
+            except KeyError: # pragma: no cover
                 pass
 
         # Call the convert functions:
@@ -722,9 +722,9 @@ class _VariablesWrapper(object):
                 try:
                     try:
                         env[option.key] = option.converter(value)
-                    except TypeError:
+                    except TypeError: # pragma: no cover
                         env[option.key] = option.converter(value, env)
-                except ValueError, x:
+                except ValueError, x: # pragma: no cover
                     raise SCons.Errors.UserError('Error converting option: %s\n%s'%(option.key, x))
 
 
@@ -1072,33 +1072,6 @@ class _Arguments(object):
                     result = True
         return result
 
-    def GetUnaltered(self, env, org):
-        #--------------------------------------------------------------------
-        """Return *Arguments* which are not changed with respect to **org**.
-
-        :Parameters:
-            env
-                `SCons environment`_ object or simply a dictionary which holds
-                current values of *Arguments*.
-            org
-                Dict containing orginal (default) values of variables.
-
-        :Return:
-            Dictionary with *Arguments* that didn't change their value. The
-            keys are in ENV namespace (i.e. they're same as keys in **env**).
-
-        .. _SCons environment:  http://www.scons.org/doc/HTML/scons-user.html#chap-environments
-        """
-        #--------------------------------------------------------------------
-        res = {}
-        envp = self.EnvProxy(env, strict = True)
-        orgp = self.EnvProxy(org, strict = True)
-        resp = self.EnvProxy(res, strict = True)
-        for k in self.__keys:
-            if _Arguments._is_unaltered(envp, orgp, k):
-                resp[k] = envp[k]
-        return res
-
     def GetAltered(self, env, org):
         #--------------------------------------------------------------------
         """Return *Arguments* which have changed with respect to orig.
@@ -1139,11 +1112,14 @@ class _Arguments(object):
             env
                 `SCons environment`_ object or simply a dict which holds
                 curreng values of *Arguments*. It's also being updated with new
-                values,
+                values; the keys in `env` should be in ENV namespace,
             org
-                Dict containing orginal (default) values of variables
+                Dict containing original (default) values of variables;
+                the keys in `org` should be in ENV namespace,
             new
-                Dict with new values to be used to update entries in **env**.
+                Dict with new values to be used to update entries in **env**;
+                the keys in `new` should identify *Argument* names (they're
+                not in ENV/VAR/OPT namespace as opposite to `env` and `org`).
 
         :Return:
             A dictionary containing only the values from **new** that were
@@ -1168,20 +1144,26 @@ class _Arguments(object):
     def WithUnalteredReplaced(self, env, org, new):
         #--------------------------------------------------------------------
         """Return result of replacing *Arguments* stored in **env** with
-        corresponding values from **new**, replacing only unaltered values.
+        corresponding values from **new**, while replacing only unaltered
+        values (see `_is_unaltered()`).
 
         :Parameters:
             env
                 `SCons environment`_ object or simply a dict which holds
-                current values of *Arguments*.
+                current values of *Arguments*; the keys in `env` should be in
+                ENV namespace,
             org
-                Dict containing orginal (default) values of variables
+                Dict containing orginal (default) values of variables;
+                the keys in `org` should be in ENV namespace,
             new
-                Dict with new values to be used instead of those from **env**.
+                Dict with new values to be used instead of those from **env**;
+                the keys in `new` should identify *Argument* names (they're
+                not in ENV/VAR/OPT namespace as opposite to `env` and `org`).
 
         :Return:
-            New dictionary with values taken from **env** with some of them
-            overwriten by corresponding values from **new**.
+            New dictionary with values taken from `env` with some of them
+            overwriten by corresponding values from `new`; the returned dict
+            will only contain variables that are present in in this object;
 
         .. _SCons environment:  http://www.scons.org/doc/HTML/scons-user.html#chap-environments
         """
@@ -1195,9 +1177,17 @@ class _Arguments(object):
                 try:
                     resp[k] = new[k]
                 except KeyError:
-                    resp[k] = envp[k]
+                    try:
+                        resp[k] = envp[k]
+                    except KeyError:
+                        # envp[k] may not exist (this handles _undefs)
+                        pass
             else:
-                resp[k] = envp[k]
+                try:
+                    resp[k] = envp[k]
+                except KeyError:
+                    # envp[k] may not exist (this handles _undefs)
+                    pass
         return res
 
     def Postprocess(self, env, variables=None, options=False, ose={},
@@ -1318,7 +1308,7 @@ class _Arguments(object):
         alt.update(chg)
         return alt
 
-    def Unmangle(self, env):
+    def Demangle(self, env):
         #--------------------------------------------------------------------
         """Return dictionary containing variable values with original names.
 
@@ -1332,9 +1322,9 @@ class _Arguments(object):
             from SConsArguments import DeclareArguments
 
             env = Environment()
-            gds = DeclareArguments( foo = { 'env_key' : 'env_foo' } )
-            gvs = gds.Commit(env)
-            var = gvs.Unmangle(env)
+            decls = DeclareArguments( foo = { 'env_key' : 'env_foo' } )
+            args = decls.Commit(env)
+            vars = args.Demangle(env)
 
             try:
                 print "env['foo']: %r" % env['foo']
@@ -1347,16 +1337,16 @@ class _Arguments(object):
                 print "env['foo'] is missing"
 
             try:
-                print "var['foo']: %r" % var['foo']
+                print "vars['foo']: %r" % vars['foo']
             except KeyError:
-                print "var['foo'] is missing"
+                print "vars['foo'] is missing"
 
         The result of running the above SCons script is::
 
             ptomulik@tea:$ scons -Q
             env['foo'] is missing
             env['env_foo']: None
-            var['foo']: None
+            vars['foo']: None
             scons: `.' is up to date.
 
         :Parameters:
@@ -1627,7 +1617,7 @@ class _ArgumentDecl(object):
             raise TypeError("'decl' must be a tuple list or dictionary, %s " \
                             "is not allowed" % type(decl).__name__)
         if 'dest' not in kw:
-            raise ValueError("'dest' parameter is missing")
+            raise ValueError("missing parameter 'dest' in option specification")
         self.__decl_tab[OPT] = (names, kw)
 
     #========================================================================
@@ -1712,13 +1702,11 @@ class _ArgumentDecl(object):
         """
         #--------------------------------------------------------------------
         decl = self.get_decl(ns)
-        if ns == ENV:
-            return decl['key']
-        elif ns == VAR:
+        if ns == ENV or ns == VAR:
             return decl['key']
         elif ns == OPT:
             return decl[1]['dest']
-        else:
+        else: # pragma: no cover
             raise IndexError("index out of range")
 
     #========================================================================
@@ -1757,13 +1745,11 @@ class _ArgumentDecl(object):
         """
         #--------------------------------------------------------------------
         decl = self.get_decl(ns)
-        if ns == ENV:
-            decl['key'] = key
-        elif ns == VAR:
+        if ns == ENV or ns == VAR:
             decl['key'] = key
         elif ns == OPT:
             decl[1]['dest'] = key
-        else:
+        else: # pragma: no cover
             raise IndexError("index out of range")
 
     #========================================================================
@@ -1793,13 +1779,11 @@ class _ArgumentDecl(object):
         """
         #--------------------------------------------------------------------
         decl = self.get_decl(ns)
-        if ns == ENV:
-            return decl.get('default', _undef)
-        elif ns == VAR:
+        if ns == ENV or ns == VAR:
             return decl.get('default', _undef)
         elif ns == OPT:
             return decl[1].get('default', _undef)
-        else:
+        else: # pragma: no cover
             raise IndexError("index out of range")
 
     #========================================================================
@@ -1831,13 +1815,11 @@ class _ArgumentDecl(object):
         """
         #--------------------------------------------------------------------
         decl = self.get_decl(ns)
-        if ns == ENV:
-            decl['default'] = default
-        elif ns == VAR:
+        if ns == ENV or ns == VAR:
             decl['default'] = default
         elif ns == OPT:
             decl[1]['default'] = default
-        else:
+        else: # pragma: no cover
             raise IndexError("index out of range")
 
     #========================================================================
@@ -2237,6 +2219,9 @@ class _ArgumentDecls(dict):
         """Replace in the supplementary dicts the key identifying corresponding
         `ns` variable (where `ns` is one of `ENV`, `VAR` or `OPT`).
 
+        **Note**: This only alters rename/irename dictionaries, the
+        resubst/iresubst dicts are not altered.
+
         If the corresponding `ns` variable identified by ``ns_key`` already
         exists in the supplementary dictionaries, the supplementary
         dictionaries are left unaltered.
@@ -2252,8 +2237,7 @@ class _ArgumentDecls(dict):
                 new name for the corresponding `ns` variable.
         """
         #--------------------------------------------------------------------
-        try: old_key = self.__rename[ns][key]
-        except KeyError: old_key = _notfound
+        old_key = self.__rename[ns].get(key,_notfound)
         if ns_key != old_key:
             self.__append_key_to_supp_dicts(ns, key, ns_key)
             try: del self.__irename[ns][old_key]
