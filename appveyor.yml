@@ -18,5 +18,5 @@ before_test:
 build: off
 
 test_script:
-  - scons unit-test
   - scons test
+  - scons unit-test
