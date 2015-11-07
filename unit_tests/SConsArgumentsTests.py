@@ -28,7 +28,23 @@ __docformat__ = "restructuredText"
 
 import SConsArguments
 import unittest
-import mock
+
+# The mock module does not come as a part of python 2.x stdlib, it has to be
+# installed separatelly. Here we detect whether mock is present and if not,
+# we skip all the tests that use mock.
+_mock_missing = True
+try:
+    # Try unittest.mock first (python 3.x) ...
+    import unittest.mock as mock
+    _mock_missing = False
+except ImportError:
+    try:
+        # ... then try mock (python 2.x)
+        import mock
+        _mock_missing = False
+    except ImportError:
+        # mock not installed
+        pass
 
 #############################################################################
 class Test_module_constants(unittest.TestCase):
@@ -167,6 +183,7 @@ class Test__ArgumentsProxy(unittest.TestCase):
         self.assertIs(SConsArguments._ArgumentsProxy('tgt', strict = False).is_strict(), False)
         self.assertIs(SConsArguments._ArgumentsProxy('tgt', strict = True).is_strict(), True)
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_set_strict_False_calls__setup_methods_False(self):
         """<_ArgumentsProxy>.set_strict(False) should call <_ArgumentsProxy>.__setup_methods(False)"""
         proxy = SConsArguments._ArgumentsProxy('tgt')
@@ -177,6 +194,7 @@ class Test__ArgumentsProxy(unittest.TestCase):
         except AssertionError as e:
             self.fail(str(e))
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_set_strict_True_calls__setup_methods_True(self):
         """<_ArgumentsProxy>.set_strict(True) should call <_ArgumentsProxy>.__setup_methods(True)"""
         proxy = SConsArguments._ArgumentsProxy('tgt')
@@ -393,6 +411,7 @@ class Test__ArgumentsProxy(unittest.TestCase):
         """_ArgumentsProxy({'a' : 'a'}, irename = {'a' : 'b'}, iresubst = {'a' : '${b}'}).items() should be [('b', 'a')]"""
         self.assertEqual(SConsArguments._ArgumentsProxy({'a' : 'a'}, irename = {'a' : 'b'}, iresubst = {'a' : '${b}'}).items(), [('b', 'a')])
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_subst_1(self):
         """_ArgumentsProxy(tgt).subst('${a} ${b}') should call tgt.subst('${a} ${b}')"""
         tgt = mock.Mock(name = 'tgt')
@@ -403,6 +422,7 @@ class Test__ArgumentsProxy(unittest.TestCase):
         except AssertionError as e:
             self.fail(str(e))
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_subst_2(self):
         """_ArgumentsProxy(tgt, resubst = {'b' : '${c}}).subst('${a} ${b}') should call tgt.subst('${a} ${c}')"""
         tgt = mock.Mock(name = 'tgt')
@@ -443,6 +463,7 @@ class Test__VariablesWrapper(unittest.TestCase):
         wrap = SConsArguments._VariablesWrapper(_test_variables)
         self.assertIs(wrap.foo, _test_variables.foo)
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_Update_1(self):
         """Test <_VaraiblesWrapper>.Update()"""
         _Variables = Test__VariablesWrapper._Variables
@@ -584,6 +605,7 @@ class Test__Arguments(unittest.TestCase):
         decls.get_iresubst_dict = mock.Mock(name = 'get_iresubst_dict',  side_effect = get_iresubst_dict)
         return decls
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test___init___1(self):
         """_Arguments.__init__(decls) should call decls.keys() and self.__init_supp_dicts(decls)"""
         decls = self._decls_mock_1()
@@ -597,6 +619,7 @@ class Test__Arguments(unittest.TestCase):
         self.assertIsInstance(args, SConsArguments._Arguments)
         self.assertEqual(args._Arguments__keys, ['k', 'e', 'y', 's'])
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test___init___2(self):
         """_Arguments.__init__(decls) should initialize its iternal dicts"""
         args = SConsArguments._Arguments(self._decls_mock_2())
@@ -606,6 +629,7 @@ class Test__Arguments(unittest.TestCase):
         self.assertEqual(args._Arguments__iresubst, ['iresubst_dict[0]', 'iresubst_dict[1]', 'iresubst_dict[2]'])
 
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test___reset_supp_dicts(self):
         """<_Arguments>.__reset_supp_dicts() should reset internal dicts to {}"""
         args = SConsArguments._Arguments(self._decls_mock_2())
@@ -615,6 +639,7 @@ class Test__Arguments(unittest.TestCase):
         self.assertEqual(args._Arguments__irename, [{},{},{}])
         self.assertEqual(args._Arguments__iresubst, [{},{},{}])
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test___init_supp_dicts(self):
         """<_Arguments>.__init_supp_dicts(decls) should initialize internal dicts appropriately"""
         decls = self._decls_mock_3()
@@ -647,18 +672,22 @@ class Test__Arguments(unittest.TestCase):
                 self.fail(str(e))
             self.assertEqual(proxy, 'ok')
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_VarEnvProxy(self):
         """_Arguments(decls).VarEnvProxy(env) should _ArgumentsProxy() with appropriate arguments"""
         self.XxxEnvProxy_test('var_')
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_OptEnvProxy(self):
         """_Arguments(decls).OptEnvProxy(env) should _ArgumentsProxy() with appropriate arguments"""
         self.XxxEnvProxy_test('opt_')
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_EnvProxy(self):
         """_Arguments(decls).EnvProxy(env) should _ArgumentsProxy() with appropriate arguments"""
         self.XxxEnvProxy_test('')
         
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_get_keys(self):
         """_Arguments(decls).get_keys() should return attribute __keys"""
         args = SConsArguments._Arguments(self._decls_mock_1())
@@ -666,40 +695,47 @@ class Test__Arguments(unittest.TestCase):
         # expect a copy of __keys, not __keys
         self.assertIsNot(args.get_keys(), args._Arguments__keys)
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_get_key_ENV_x(self):
         """_Arguments(decls).get_key(ENV, 'x') should be raise KeyError"""
         args = SConsArguments._Arguments(self._decls_mock_4())
         with self.assertRaises(KeyError):
             args.get_key(SConsArguments.ENV, 'x')
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_get_key_VAR_x(self):
         """_Arguments(decls).get_key(VAR, 'x') should be raise KeyError"""
         args = SConsArguments._Arguments(self._decls_mock_4())
         with self.assertRaises(KeyError):
             args.get_key(SConsArguments.VAR, 'x')
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_get_key_OPT_x(self):
         """_Arguments(decls).get_key(OPT, 'x') should be raise KeyError"""
         args = SConsArguments._Arguments(self._decls_mock_4())
         with self.assertRaises(KeyError):
             args.get_key(SConsArguments.OPT, 'x')
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_get_key_123_a(self):
         """_Arguments(decls).get_key(123, 'a') should be raise KeyError"""
         args = SConsArguments._Arguments(self._decls_mock_4())
         with self.assertRaises(IndexError):
             args.get_key(123, 'a')
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_get_key_ENV_a(self):
         """_Arguments(decls).get_key(ENV, 'a') should == 'env_a'"""
         args = SConsArguments._Arguments(self._decls_mock_4())
         self.assertEqual(args.get_key(SConsArguments.ENV, 'a'), 'env_a')
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_get_key_VAR_a(self):
         """_Arguments(decls).get_key(VAR, 'a') should == 'var_a'"""
         args = SConsArguments._Arguments(self._decls_mock_4())
         self.assertEqual(args.get_key(SConsArguments.VAR, 'a'), 'var_a')
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_get_key_OPT_a(self):
         """_Arguments(decls).get_key(OPT, 'a') should == 'opt_a'"""
         args = SConsArguments._Arguments(self._decls_mock_4())
@@ -719,39 +755,46 @@ class Test__Arguments(unittest.TestCase):
         self.assertEqual(args.get_key(SConsArguments.VAR, 'bar'), 'VAR_BAR')
         self.assertEqual(args.get_key(SConsArguments.OPT, 'bar'), 'OPT_BAR')
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_get_env_key_x(self):
         """_Arguments(decls).get_env_key('x') should raise KeyError"""
         args = SConsArguments._Arguments(self._decls_mock_4())
         with self.assertRaises(KeyError):
             args.get_env_key('x')
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_get_env_key_a(self):
         """_Arguments(decls).get_env_key('a') should == 'env_a'"""
         args = SConsArguments._Arguments(self._decls_mock_4())
         self.assertEqual(args.get_env_key('a'), 'env_a')
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_get_var_key_x(self):
         """_Arguments(decls).get_var_key('x') should raise KeyError"""
         args = SConsArguments._Arguments(self._decls_mock_4())
         with self.assertRaises(KeyError):
             args.get_var_key('x')
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_get_var_key_a(self):
         """_Arguments(decls).get_var_key('a') should == 'var_a'"""
         args = SConsArguments._Arguments(self._decls_mock_4())
         self.assertEqual(args.get_var_key('a'), 'var_a')
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_get_opt_key_x(self):
         """_Arguments(decls).get_opt_key('x') should raise KeyError"""
         args = SConsArguments._Arguments(self._decls_mock_4())
         with self.assertRaises(KeyError):
             args.get_opt_key('x')
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_get_opt_key_a(self):
         """_Arguments(decls).get_opt_key('a') should == 'opt_a'"""
         args = SConsArguments._Arguments(self._decls_mock_4())
         self.assertEqual(args.get_opt_key('a'), 'opt_a')
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_update_env_from_vars_1(self):
         """_Arguments(decls).update_env_from_vars('env', variables)"""
         args = SConsArguments._Arguments(self._decls_mock_4())
@@ -767,6 +810,7 @@ class Test__Arguments(unittest.TestCase):
             except AssertionError as e:
                 self.fail(str(e))
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_update_env_from_vars_2(self):
         """_Arguments(decls).update_env_from_vars('env', variables, 'arg')"""
         args = SConsArguments._Arguments(self._decls_mock_4())
@@ -782,6 +826,7 @@ class Test__Arguments(unittest.TestCase):
             except AssertionError as e:
                 self.fail(str(e))
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_update_env_from_opts_1(self):
         """_Arguments(decls).update_env_from_opts('env')"""
         proxy = { 'env1' : {} }
@@ -796,6 +841,7 @@ class Test__Arguments(unittest.TestCase):
                 self.fail(str(e))
             self.assertEqual(proxy['env1']['opt_a'], 'val_opt_a')
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_UpdateEnvironment_1(self):
         """_Arguments(decls).UpdateEnvironment('env') never calls update_env_from_{vars,opts}"""
         args = self._arguments_mock_4_UpdateEnvironment()
@@ -806,6 +852,7 @@ class Test__Arguments(unittest.TestCase):
         except AssertionError as e:
             self.fail(str(e))
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_UpdateEnvironment_2(self):
         """_Arguments(decls).UpdateEnvironment('env','variables1') calls update_env_from_vars('env', 'variables1') once"""
         args = self._arguments_mock_4_UpdateEnvironment()
@@ -816,6 +863,7 @@ class Test__Arguments(unittest.TestCase):
         except AssertionError as e:
             self.fail(str(e))
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_UpdateEnvironment_3(self):
         """_Arguments(decls).UpdateEnvironment('env',None,True) calls update_env_from_opts('env') once"""
         args = self._arguments_mock_4_UpdateEnvironment()
@@ -826,6 +874,7 @@ class Test__Arguments(unittest.TestCase):
         except AssertionError as e:
             self.fail(str(e))
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_UpdateEnvironment_4(self):
         """_Arguments(decls).UpdateEnvironment('env','variables1',True) calls update_env_from_{opts,vars} once"""
         args = self._arguments_mock_4_UpdateEnvironment()
@@ -836,6 +885,7 @@ class Test__Arguments(unittest.TestCase):
         except AssertionError as e:
             self.fail(str(e))
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_SaveVariables(self):
         """_Arguments(decls).SaveVariables(variables, 'filename1', 'env1')"""
         def VarEnvProxy(arg): return 'var_%s_proxy' % arg
@@ -849,6 +899,7 @@ class Test__Arguments(unittest.TestCase):
         except AssertionError as e:
             self.fail(str(e))
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_GenerateVariablesHelpText_1(self):
         """_Arguments(decls).GenerateVariablesHelpText(variables, 'env1')"""
         def VarEnvProxy(arg): return 'var_%s_proxy' % arg
@@ -862,6 +913,7 @@ class Test__Arguments(unittest.TestCase):
         except AssertionError as e:
             self.fail(str(e))
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_GenerateVariablesHelpText_2(self):
         """_Arguments(decls).GenerateVariablesHelpText(variables, 'env1', 'arg1', 'arg2')"""
         def VarEnvProxy(arg): return 'var_%s_proxy' % arg
@@ -875,6 +927,7 @@ class Test__Arguments(unittest.TestCase):
         except AssertionError as e:
             self.fail(str(e))
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_GetCurrentValues_1(self):
         """_Arguments(decls).GetCurrentValues(env) works as expected"""
         args = SConsArguments._Arguments(self._decls_mock_5())
@@ -912,6 +965,7 @@ class Test__Arguments(unittest.TestCase):
         """<_Arguments>._is_unaltered({'a' : None}, {}, 'a') should be False"""
         self.assertFalse(SConsArguments._Arguments._is_unaltered({ 'a' : None }, {}, 'a'))
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_GetAltered_1(self):
         """Test <_Arguments>.GetAltered()"""
         args = SConsArguments._Arguments(self._decls_mock_5())
@@ -920,6 +974,7 @@ class Test__Arguments(unittest.TestCase):
         altered = args.GetAltered(env, org)
         self.assertEqual(altered, {'env_k' : 'K', 'env_s' : None})
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_ReplaceUnaltered_1(self):
         """Test <_Arguments>.ReplaceUnaltered()"""
         args = SConsArguments._Arguments(self._decls_mock_5())
@@ -930,6 +985,7 @@ class Test__Arguments(unittest.TestCase):
         self.assertEqual(env, { 'env_k' : 'K', 'env_e' : 'new E', 'env_s' : None, 'env_x' : 'X' })
         self.assertEqual(chg, { 'env_e' : 'new E' })
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_WithUnalteredReplaced_1(self):
         """Test <_Arguments>.ReplaceUnaltered()"""
         args = SConsArguments._Arguments(self._decls_mock_5())
@@ -940,6 +996,7 @@ class Test__Arguments(unittest.TestCase):
         self.assertEqual(ret, { 'env_k' : 'K', 'env_e' : 'new E'              })
         self.assertEqual(env, { 'env_k' : 'K', 'env_e' : 'E',   'env_x' : 'X' })
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_Postprocess_1(self):
         """Test <_Arguments>.Postorpcess()"""
         class _test_alt(object): pass
@@ -961,6 +1018,7 @@ class Test__Arguments(unittest.TestCase):
         args.ReplaceUnaltered.assert_called_once_with('env', 'org', 'ose')
         _test_alt.update.assert_called_once_with('chg')
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_Demangle_1(self):
         """Test <_Arguments>.Demangle()"""
         args = SConsArguments._Arguments(self._decls_mock_5())
@@ -970,6 +1028,7 @@ class Test__Arguments(unittest.TestCase):
 
 #############################################################################
 class Test__ArgumentDecl(unittest.TestCase):
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test___init___1(self):
         """_ArgumentDecl.__init__() should not call any of _set_XXX_decl()"""
         with mock.patch.object(SConsArguments._ArgumentDecl, 'set_env_decl') as m_env, \
@@ -983,6 +1042,7 @@ class Test__ArgumentDecl(unittest.TestCase):
             except AssertionError as e:
                 self.fail(str(e))
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test___init___2(self):
         """_ArgumentDecl.__init__() should set __decl_tab to [None, None, None]"""
         with mock.patch.object(SConsArguments._ArgumentDecl, '_ArgumentDecl__decl_tab', create=True) as m:
@@ -992,6 +1052,7 @@ class Test__ArgumentDecl(unittest.TestCase):
             self.assertIs(decl._ArgumentDecl__decl_tab[SConsArguments.VAR], None)
             self.assertIs(decl._ArgumentDecl__decl_tab[SConsArguments.OPT], None)
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test___init___3(self):
         """_ArgumentDecl.__init__('a', 'b', 'c') should call of set_env_decl('a'), set_var_decl('b'), set_opt_decl('c')"""
         with mock.patch.object(SConsArguments._ArgumentDecl, 'set_env_decl', autospec=True) as m_env, \
@@ -1011,6 +1072,7 @@ class Test__ArgumentDecl(unittest.TestCase):
         with self.assertRaises(IndexError):
             decl.set_decl(123,'a')
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_set_decl__ENV(self):
         """<_ArgumentDecl>.set_decl(ENV,'a') should call set_env_decl('a')"""
         decl = SConsArguments._ArgumentDecl()
@@ -1025,6 +1087,7 @@ class Test__ArgumentDecl(unittest.TestCase):
         except AssertionError as e:
             self.fail(str(e))
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_set_decl__VAR(self):
         """<_ArgumentDecl>.set_decl(VAR,'b') should call set_var_decl('b')"""
         decl = SConsArguments._ArgumentDecl()
@@ -1039,6 +1102,7 @@ class Test__ArgumentDecl(unittest.TestCase):
         except AssertionError as e:
             self.fail(str(e))
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_set_decl__OPT(self):
         """<_ArgumentDecl>.set_decl(OPT,'a') should call set_opt_decl('a')"""
         decl = SConsArguments._ArgumentDecl()
@@ -1418,6 +1482,7 @@ class Test__ArgumentDecl(unittest.TestCase):
         self.assertFalse(decl.has_decl(SConsArguments.VAR))
         self.assertTrue(decl.has_decl(SConsArguments.OPT))
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_has_env_decl_1(self):
         """<_ArgumentDecl>.has_env_decl() should invoke has_decl(ENV)"""
         class _test_val: pass
@@ -1430,6 +1495,7 @@ class Test__ArgumentDecl(unittest.TestCase):
         except AssertionError as e:
             self.fail(str(e))
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_has_var_decl_1(self):
         """<_ArgumentDecl>.has_var_decl() should invoke has_decl(VAR)"""
         class _test_val: pass
@@ -1442,6 +1508,7 @@ class Test__ArgumentDecl(unittest.TestCase):
         except AssertionError as e:
             self.fail(str(e))
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_has_opt_decl_1(self):
         """<_ArgumentDecl>.has_opt_decl() should invoke has_decl(OPT)"""
         class _test_val: pass
@@ -1502,6 +1569,7 @@ class Test__ArgumentDecl(unittest.TestCase):
             decl.get_key(123)
         self.assertEqual(str(cm.exception), "index out of range")
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_get_env_decl_1(self):
         """<_ArgumentDecl>.get_env_decl() should invoke get_decl(ENV)"""
         class _test_val: pass
@@ -1514,6 +1582,7 @@ class Test__ArgumentDecl(unittest.TestCase):
         except AssertionError as e:
             self.fail(str(e))
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_get_var_decl_1(self):
         """<_ArgumentDecl>.get_var_decl() should invoke get_decl(VAR)"""
         class _test_val: pass
@@ -1526,6 +1595,7 @@ class Test__ArgumentDecl(unittest.TestCase):
         except AssertionError as e:
             self.fail(str(e))
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_get_opt_decl_1(self):
         """<_ArgumentDecl>.get_opt_decl() should invoke get_decl(OPT)"""
         class _test_val: pass
@@ -1565,6 +1635,7 @@ class Test__ArgumentDecl(unittest.TestCase):
         """_ArgumentDecl(opt_decl = ('--foo', {'dest' : 'OPT_FOO'})).get_key(OPT) should return 'OPT_FOO'"""
         self.assertEqual(SConsArguments._ArgumentDecl(opt_decl = ('--foo', {'dest' : 'OPT_FOO'})).get_key(SConsArguments.OPT), 'OPT_FOO')
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_get_env_key_1(self):
         """<_ArgumentDecl>.get_env_key() should invoke get_key(ENV)"""
         class _test_val: pass
@@ -1577,6 +1648,7 @@ class Test__ArgumentDecl(unittest.TestCase):
         except AssertionError as e:
             self.fail(str(e))
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_get_var_key_1(self):
         """<_ArgumentDecl>.get_var_key() should invoke get_key(VAR)"""
         class _test_val: pass
@@ -1589,6 +1661,7 @@ class Test__ArgumentDecl(unittest.TestCase):
         except AssertionError as e:
             self.fail(str(e))
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_get_opt_key_1(self):
         """<_ArgumentDecl>.get_opt_key() should invoke get_key(OPT)"""
         class _test_val: pass
@@ -1650,6 +1723,7 @@ class Test__ArgumentDecl(unittest.TestCase):
         self.assertIs(decl._ArgumentDecl__decl_tab[SConsArguments.OPT][1]['dest'], 'BAR')
         self.assertIs(decl._ArgumentDecl__decl_tab[SConsArguments.OPT][1]['default'], valu)
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_set_env_key_1(self):
         """<_ArgumentDecl>.set_env_key(key) should invoke set_key(ENV,key)"""
         class _test_key: pass
@@ -1661,6 +1735,7 @@ class Test__ArgumentDecl(unittest.TestCase):
         except AssertionError as e:
             self.fail(str(e))
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_set_var_key_1(self):
         """<_ArgumentDecl>.set_var_key(key) should invoke set_key(VAR,key)"""
         class _test_key: pass
@@ -1672,6 +1747,7 @@ class Test__ArgumentDecl(unittest.TestCase):
         except AssertionError as e:
             self.fail(str(e))
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_set_opt_key_1(self):
         """<_ArgumentDecl>.set_opt_key(key) should invoke set_key(OPT,key)"""
         class _test_key: pass
@@ -1724,6 +1800,7 @@ class Test__ArgumentDecl(unittest.TestCase):
         decl = SConsArguments._ArgumentDecl(var_decl = {'key' : 'FOO', 'default' : 123})
         self.assertEqual(decl.get_default(SConsArguments.VAR), 123)
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_get_env_default_1(self):
         """<_ArgumentDecl>.get_env_default() should invoke get_default(ENV)"""
         class _test_val: pass
@@ -1736,6 +1813,7 @@ class Test__ArgumentDecl(unittest.TestCase):
         except AssertionError as e:
             self.fail(str(e))
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_get_var_default_1(self):
         """<_ArgumentDecl>.get_var_default() should invoke get_default(VAR)"""
         class _test_val: pass
@@ -1748,6 +1826,7 @@ class Test__ArgumentDecl(unittest.TestCase):
         except AssertionError as e:
             self.fail(str(e))
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_get_opt_default_1(self):
         """<_ArgumentDecl>.get_opt_default() should invoke get_default(OPT)"""
         class _test_val: pass
@@ -1799,6 +1878,7 @@ class Test__ArgumentDecl(unittest.TestCase):
         decl.set_default(SConsArguments.OPT, 123)
         self.assertEqual(decl.get_default(SConsArguments.OPT), 123)
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_set_env_default_1(self):
         """<_ArgumentDecl>.set_env_default(default) should invoke set_default(ENV,default)"""
         class _test_default: pass
@@ -1810,6 +1890,7 @@ class Test__ArgumentDecl(unittest.TestCase):
         except AssertionError as e:
             self.fail(str(e))
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_set_var_default_1(self):
         """<_ArgumentDecl>.set_var_default(default) should invoke set_default(VAR,default)"""
         class _test_default: pass
@@ -1821,6 +1902,7 @@ class Test__ArgumentDecl(unittest.TestCase):
         except AssertionError as e:
             self.fail(str(e))
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_set_opt_default_1(self):
         """<_ArgumentDecl>.set_opt_default(default) should invoke set_default(OPT,default)"""
         class _test_default: pass
@@ -1853,6 +1935,7 @@ class Test__ArgumentDecl(unittest.TestCase):
         with self.assertRaises(IndexError):
             SConsArguments._ArgumentDecl().add_to(SConsArguments.OPT)
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_add_to__ENV_0(self):
         """_ArgumentDecl(env_decl = 'FOO').add_to(ENV,env) should not call env.SetDefault()"""
         env = mock.Mock(name = 'env')
@@ -1871,6 +1954,7 @@ class Test__ArgumentDecl(unittest.TestCase):
         except AssertionError as e:
             self.fail(str(e))
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_add_to__ENV_1(self):
         """_ArgumentDecl(env_decl = {'FOO' : 123}).add_to(ENV,env) should call env.SetDefault(FOO = 123)"""
         env = mock.Mock(name = 'env')
@@ -1882,6 +1966,7 @@ class Test__ArgumentDecl(unittest.TestCase):
         except AssertionError as e:
             self.fail(str(e))
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_add_to__VAR_1(self):
         """_ArgumentDecl(var_decl = ('FOO',)).add_to(VAR,var) should call var.Add(key='FOO')"""
         var = mock.Mock(name = 'var')
@@ -1893,6 +1978,7 @@ class Test__ArgumentDecl(unittest.TestCase):
         except AssertionError as e:
             self.fail(str(e))
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_add_to__VAR_2(self):
         """_ArgumentDecl(var_decl = ('FOO', 'some help', 123)).add_to(VAR,var) should call var.Add(key = 'FOO', default = 123)"""
         var = mock.Mock(name = 'var')
@@ -1904,6 +1990,7 @@ class Test__ArgumentDecl(unittest.TestCase):
         except AssertionError as e:
             self.fail(str(e))
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_add_to__OPT_1(self):
         """_ArgumentDecl(opt_decl = ('--foo',{'dest' : 'FOO'})).add_to(OPT,opt) should call SCons.Script.Main.AddOption('--foo', dest='FOO')"""
         with mock.patch('SCons.Script.Main.AddOption') as AddOption:
@@ -1914,6 +2001,7 @@ class Test__ArgumentDecl(unittest.TestCase):
             except AssertionError as e:
                 self.fail(str(e))
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_safe_add_to__ENV_0(self):
         """_ArgumentDecl().safe_add_to(ENV,env) should not call <_ArgumentDecl>.add_to()"""
         decl = SConsArguments._ArgumentDecl()
@@ -1926,6 +2014,7 @@ class Test__ArgumentDecl(unittest.TestCase):
             self.fail(str(e))
         self.assertFalse(ret)
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_safe_add_to__VAR_0(self):
         """_ArgumentDecl().safe_add_to(VAR,var) should not call <_ArgumentDecl>.add_to()"""
         decl = SConsArguments._ArgumentDecl()
@@ -1938,6 +2027,7 @@ class Test__ArgumentDecl(unittest.TestCase):
             self.fail(str(e))
         self.assertFalse(ret)
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_safe_add_to__OPT_0(self):
         """_ArgumentDecl().safe_add_to(OPT) should not call <_ArgumentDecl>.add_to()"""
         decl = SConsArguments._ArgumentDecl()
@@ -1949,6 +2039,7 @@ class Test__ArgumentDecl(unittest.TestCase):
             self.fail(str(e))
         self.assertFalse(ret)
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_safe_add_to__ENV_1(self):
         """_ArgumentDecl(env_decl = 'FOO').safe_add_to(ENV,env) should call <_ArgumentDecl>.add_to(ENV,env)"""
         decl = SConsArguments._ArgumentDecl(env_decl = 'FOO')
@@ -1961,6 +2052,7 @@ class Test__ArgumentDecl(unittest.TestCase):
             self.fail(str(e))
         self.assertTrue(ret)
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_safe_add_to__VAR_1(self):
         """_ArgumentDecl(var_decl = ('FOO',)).safe_add_to(VAR,var) should call <_ArgumentDecl>.add_to(VAR,var)"""
         decl = SConsArguments._ArgumentDecl(var_decl = ('FOO',))
@@ -1973,6 +2065,7 @@ class Test__ArgumentDecl(unittest.TestCase):
             self.fail(str(e))
         self.assertTrue(ret)
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_safe_add_to__OPT_1(self):
         """_ArgumentDecl(opt_decl = ('--foo', {'dest' : 'FOO'})).safe_add_to(OPT) should call <_ArgumentDecl>.add_to(OPT)"""
         decl = SConsArguments._ArgumentDecl(opt_decl = ('--foo', {'dest' : 'FOO'}))
@@ -1986,6 +2079,7 @@ class Test__ArgumentDecl(unittest.TestCase):
 
 #############################################################################
 class Test__ArgumentDecls(unittest.TestCase):
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test___init___mock_1(self):
         """Test, using mock, _ArgumentDecls.__init__() with no arguments"""
         with mock.patch.object(SConsArguments._ArgumentDecls, '_ArgumentDecls__validate_values') as __validate_values, \
@@ -1998,6 +2092,7 @@ class Test__ArgumentDecls(unittest.TestCase):
             except AssertionError as e:
                 self.fail(str(e))
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test___init___mock_2(self):
         """Test, using mocks, _ArgumentDecls.__init__() with mixed arguments"""
         with mock.patch.object(SConsArguments._ArgumentDecls, '_ArgumentDecls__validate_values') as __validate_values, \
@@ -2206,6 +2301,7 @@ class Test__ArgumentDecls(unittest.TestCase):
             decls.setdefault('foo', None)
         self.assertEqual(str(cm.exception), "value must be an instance of _ArgumentDecl, None is not allowed")
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_setdefault__0(self):
         """<_ArgumentDecls>.setdefault('foo', 'bar') does not invoke __ensure_not_committed() nor __validate_value()"""
         decls = SConsArguments._ArgumentDecls()
@@ -2220,6 +2316,7 @@ class Test__ArgumentDecls(unittest.TestCase):
         foo = decls['foo']
         self.assertIs(foo, None)
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_setdefault__1(self):
         """<_ArgumentDecls>.setdefault('foo', 'bar') invokes __ensure_not_committed() and __validate_value()"""
         decls = SConsArguments._ArgumentDecls()
@@ -2268,6 +2365,7 @@ class Test__ArgumentDecls(unittest.TestCase):
             decls.update({'a' : 'b'})
         self.assertEqual(str(cm.exception), "value must be an instance of _ArgumentDecl, %r is not allowed" % 'b')
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_update__1(self):
         """<_ArgumentDecls>.update(*args, **kw) invokes __ensure_not_committed(), __validate_values() and __update_supp_dicts()"""
         decls = SConsArguments._ArgumentDecls()
@@ -2296,6 +2394,7 @@ class Test__ArgumentDecls(unittest.TestCase):
         self.assertIs(decls['b'], b2)
         self.assertIs(decls['c'], c)
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_clear__1(self):
         """<_ArgumentDecls>.clear() should invoke __ensure_not_committed() and __update_supp_dicts()"""
         a = SConsArguments._ArgumentDecl()
@@ -2321,6 +2420,7 @@ class Test__ArgumentDecls(unittest.TestCase):
         decls.clear()
         self.assertFalse(decls) # is empty
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_pop__1(self):
         """<_ArgumentDecls>.pop('a') should invoke __ensure_not_committed() and __del_from_supp_dicts()"""
         a = SConsArguments._ArgumentDecl()
@@ -2356,6 +2456,7 @@ class Test__ArgumentDecls(unittest.TestCase):
         # The operation should not touch anything
         self.assertEqual(decls, {'a' : a, 'b': b})
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_popitem__1(self):
         """<_ArgumentDecls>.popitem() should invoke __ensure_not_committed() and __del_from_supp_dicts()"""
         a = SConsArguments._ArgumentDecl()
@@ -2394,6 +2495,7 @@ class Test__ArgumentDecls(unittest.TestCase):
         self.assertIsNot(decls, dcopy) # but not same object...
         self.assertIs(type(dcopy), SConsArguments._ArgumentDecls)
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test___setitem___1(self):
         """<_ArgumentDecls>.__setitem__() should invoke __ensure_not_committed(), __validate_value() and __append_decl_to_supp_dicts()"""
         a = SConsArguments._ArgumentDecl()
@@ -2454,6 +2556,7 @@ class Test__ArgumentDecls(unittest.TestCase):
         decls['b'] = b2
         self.assertEqual(decls, { 'b' : b2 })
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test___delitem___1(self):
         """<_ArgumentDecls>.__delitem__() should invoke __ensure_not_committed(), and __del_from_supp_dicts()"""
         a = SConsArguments._ArgumentDecl()
@@ -2726,6 +2829,7 @@ class Test__ArgumentDecls(unittest.TestCase):
         decls.commit()
         self.assertEqual(decls.get_iresubst_dict(SConsArguments.OPT), {'OPT_a' : '${a}', 'OPT_b' : '${b}'})
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_get_key_1(self):
         """<_ArgumentDecls>.get_key('ns','a') should return self[key].get_key(ENV)"""
         class _test_key: pass
@@ -2763,6 +2867,7 @@ class Test__ArgumentDecls(unittest.TestCase):
         self.assertEqual(decls.get_key(SConsArguments.OPT, 'a'), 'OPT_a')
         self.assertEqual(decls.get_key(SConsArguments.OPT, 'b'), 'OPT_b')
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_set_key_1(self):
         """<_ArgumentDecls>.set_key('ns', 'a', 'ns_a') should invoke __ensure_not_committed(), self['a'].set_key('ns', 'ns_a') and __replace_key_in_supp_dicts('ns', 'a', 'ns_a')"""
         a = SConsArguments._ArgumentDecl()
@@ -2805,6 +2910,7 @@ class Test__ArgumentDecls(unittest.TestCase):
         self.assertEqual(decls.get_rename_dict(SConsArguments.OPT), {'a' : 'OPT_a'})
         self.assertEqual(decls.get_irename_dict(SConsArguments.OPT), {'OPT_a' : 'a'})
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test__add_to_1(self):
         """<_ArgumentDecls>._add_to(ns,*args) should invoke v.add_to(ns,*args) for each (k,v) in <_ArgumentDecls>.iteritems()"""
         a = SConsArguments._ArgumentDecl()
@@ -2819,6 +2925,7 @@ class Test__ArgumentDecls(unittest.TestCase):
         except AssertionError as e:
             self.fail(str(e))
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test__safe_add_to_1(self):
         """<_ArgumentDecls>._add_to(ns,*args) should invoke v.add_to(ns,*args) for each (k,v) in <_ArgumentDecls>.iteritems()"""
         a = SConsArguments._ArgumentDecl()
@@ -2833,6 +2940,7 @@ class Test__ArgumentDecls(unittest.TestCase):
         except AssertionError as e:
             self.fail(str(e))
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_commit_1(self):
         """<_ArgumentDecls>.commit(*args) should do nothing on already committed object"""
         decls = SConsArguments._ArgumentDecls()
@@ -2850,6 +2958,7 @@ class Test__ArgumentDecls(unittest.TestCase):
         except AssertionError as e:
             self.fail(str(e))
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_commit_2(self):
         """<_ArgumentDecls>.commit(*args) should invoke appropriate methods"""
         decls = SConsArguments._ArgumentDecls()
@@ -2867,6 +2976,7 @@ class Test__ArgumentDecls(unittest.TestCase):
             self.fail(str(e))
         self.assertTrue(decls._ArgumentDecls__committed)
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_Commit_1(self):
         """<_ArgumentDecls>.Commit('env', 'variables', 'create_options') should invoke <_ArgumentDecls>.commit() and return <_Arguments>"""
         decls = SConsArguments._ArgumentDecls()
@@ -2879,6 +2989,7 @@ class Test__ArgumentDecls(unittest.TestCase):
             self.fail(str(e))
         self.assertIs(ret, '_Arguments')
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_Commit_2(self):
         """<_ArgumentDecls>.Commit('env', 'variables', 'create_options', True) should invoke <_ArgumentDecls>.commit() and return None"""
         decls = SConsArguments._ArgumentDecls()
@@ -2891,6 +3002,7 @@ class Test__ArgumentDecls(unittest.TestCase):
             self.fail(str(e))
         self.assertIs(ret, '_Arguments')
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_Commit_3(self):
         """<_ArgumentDecls>.Commit('env', 'variables', 'create_options', True, 'arg1', 'arg2') should invoke <_ArgumentDecls>.commit() and return None"""
         decls = SConsArguments._ArgumentDecls()
@@ -2903,6 +3015,7 @@ class Test__ArgumentDecls(unittest.TestCase):
             self.fail(str(e))
         self.assertIs(ret, '_Arguments')
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_Commit_4(self):
         """<_ArgumentDecls>.Commit('env', 'variables', 'create_options', False) should invoke <_ArgumentDecls>.commit() and return None"""
         decls = SConsArguments._ArgumentDecls()
@@ -2916,6 +3029,7 @@ class Test__ArgumentDecls(unittest.TestCase):
         self.assertIs(ret, None)
 
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_Commit_5(self):
         """<_ArgumentDecls>.Commit('env', 'variables', 'create_options', False, 'arg1', 'arg2') should invoke <_ArgumentDecls>.commit() and return None"""
         decls = SConsArguments._ArgumentDecls()
@@ -2929,6 +3043,7 @@ class Test__ArgumentDecls(unittest.TestCase):
         self.assertIs(ret, None)
 
 
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_add_to_1(self):
         """<_ArgumentDecls>.add_to(11,12,13) should invoke <_ArgumentDecls>._safe_add_to(ns,...) for ns in [ENV, VAR, OPT]"""
         decls = SConsArguments._ArgumentDecls()
