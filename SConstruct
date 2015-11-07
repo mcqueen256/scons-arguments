@@ -31,6 +31,8 @@ SConscript('build/doc/SConscript', exports = ['env'])
 
 python = sys.executable
 
+AddOption('--with-coverage', action='store_true', help='run unit-test via coverage')
+
 env.AlwaysBuild(env.Alias('unit-test'))
 if 'unit-test' in COMMAND_LINE_TARGETS:
     # Note: SCons modules are in sys.path
@@ -41,8 +43,11 @@ if 'unit-test' in COMMAND_LINE_TARGETS:
         discoverflags = "-p *Tests.py"
     else:
         discoverflags = "-p '*Tests.py'"
-    testcom = '%(python)s -m unittest discover %(unittestflags)s %(discoverflags)s' % locals()
-    env.Execute(testcom, "Running unit tests")
+    if GetOption('with_coverage'):
+        testcom = (env.WhereIs(['python-coverage', 'coverage']) or 'coverage') + ' run --source=SConsArguments unit_tests/SConsArgumentsTests.py'
+    else:
+        testcom = '%(python)s -m unittest discover %(unittestflags)s %(discoverflags)s' % locals()
+    env.Execute(testcom, testcom)
 
 env.AlwaysBuild(env.Alias('test'))
 if 'test' in COMMAND_LINE_TARGETS:

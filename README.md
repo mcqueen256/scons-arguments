@@ -1,9 +1,9 @@
 scons-arguments
 ===============
 
-| travis-ci | appveyor  |
-|-----------|-----------|
-|[![Build Status](https://travis-ci.org/ptomulik/scons-arguments.png?branch=master)](https://travis-ci.org/ptomulik/scons-arguments)| [![Build status](https://ci.appveyor.com/api/projects/status/0fvtobp37lh1le0y/branch/master?svg=true)](https://ci.appveyor.com/project/ptomulik/scons-arguments/branch/master) |
+| travis-ci | appveyor  | coveralls |
+|-----------|-----------|-----------|
+|[![Build Status](https://travis-ci.org/ptomulik/scons-arguments.png?branch=master)](https://travis-ci.org/ptomulik/scons-arguments)| [![Build status](https://ci.appveyor.com/api/projects/status/0fvtobp37lh1le0y/branch/master?svg=true)](https://ci.appveyor.com/project/ptomulik/scons-arguments/branch/master) | [![Coverage Status](https://coveralls.io/repos/ptomulik/scons-arguments/badge.svg?branch=master&service=github)](https://coveralls.io/github/ptomulik/scons-arguments?branch=master) |
 
 Welcome to ``scons-arguments``.
 
