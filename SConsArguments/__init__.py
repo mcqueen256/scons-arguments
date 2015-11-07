@@ -1045,10 +1045,10 @@ class _Arguments(object):
                 resp[k] = envp[k]
         return res
 
-    def ReplaceUnaltered(self, env, org, new):
+    def OverwriteUnaltered(self, env, org, new):
         #--------------------------------------------------------------------
-        """Replace values of unaltered *arguments* in **env** with
-        corresponding values from **new**.
+        """Overwrite unaltered *arguments* in **env** with corresponding values
+        from **new**.
 
         For every *argument* stored in **env**, if its value is same as
         corresponding value in **org** the value in **env** gets replaced with
@@ -1087,7 +1087,7 @@ class _Arguments(object):
                     pass
         return chg
 
-    def WithUnalteredReplaced(self, env, org, new):
+    def ReplaceUnaltered(self, env, org, new):
         #--------------------------------------------------------------------
         """Return result of replacing *arguments* stored in **env** with
         corresponding values from **new**, while replacing only unaltered
@@ -1250,7 +1250,7 @@ class _Arguments(object):
         alt = self.GetAltered(env, org)
         if filename:
             self.SaveVariables(variables, filename, env)
-        chg = self.ReplaceUnaltered(env, org, ose)
+        chg = self.OverwriteUnaltered(env, org, ose)
         alt.update(chg)
         return alt
 

@@ -975,24 +975,24 @@ class Test__Arguments(unittest.TestCase):
         self.assertEqual(altered, {'env_k' : 'K', 'env_s' : None})
 
     @unittest.skipIf(_mock_missing, "requires mock module")
-    def test_ReplaceUnaltered_1(self):
-        """Test <_Arguments>.ReplaceUnaltered()"""
+    def test_OverwriteUnaltered_1(self):
+        """Test <_Arguments>.OverwriteUnaltered()"""
         args = SConsArguments._Arguments(self._decls_mock_5())
         env = { 'env_k' : 'K', 'env_e' : 'E', 'env_s' : None, 'env_x' : 'X' }
         org = { 'env_k' : 'k', 'env_e' : 'E' }
         new = { 'k' : 'new K', 'e' : 'new E', 's' : 'new S', 'x' : 'new X'}
-        chg = args.ReplaceUnaltered(env, org, new)
+        chg = args.OverwriteUnaltered(env, org, new)
         self.assertEqual(env, { 'env_k' : 'K', 'env_e' : 'new E', 'env_s' : None, 'env_x' : 'X' })
         self.assertEqual(chg, { 'env_e' : 'new E' })
 
     @unittest.skipIf(_mock_missing, "requires mock module")
-    def test_WithUnalteredReplaced_1(self):
-        """Test <_Arguments>.ReplaceUnaltered()"""
+    def test_ReplaceUnaltered_1(self):
+        """Test <_Arguments>.OverwriteUnaltered()"""
         args = SConsArguments._Arguments(self._decls_mock_5())
         env = { 'env_k' : 'K',      'env_e' : 'E',                      'env_x' : 'X'       }
         org = { 'env_k' : 'org K',  'env_e' : 'E',      'env_y' : 'y',                      }
         new = { 'k'     : 'new K',  'e'     : 'new E',                  'x'     : 'new X'   }
-        ret = args.WithUnalteredReplaced(env, org, new)
+        ret = args.ReplaceUnaltered(env, org, new)
         self.assertEqual(ret, { 'env_k' : 'K', 'env_e' : 'new E'              })
         self.assertEqual(env, { 'env_k' : 'K', 'env_e' : 'E',   'env_x' : 'X' })
 
@@ -1007,7 +1007,7 @@ class Test__Arguments(unittest.TestCase):
         args.UpdateEnvironment = mock.Mock(name = 'UpdateEnvironment')
         args.GetAltered = mock.Mock(name = 'GetAltered', return_value = _test_alt)
         args.SaveVariables = mock.Mock(name = 'SaveVariables')
-        args.ReplaceUnaltered = mock.Mock(name = 'ReplaceUnaltered', return_value = 'chg')
+        args.OverwriteUnaltered = mock.Mock(name = 'OverwriteUnaltered', return_value = 'chg')
 
         args.Postprocess('env', 'variables', 'options', 'ose', 'args', 'filename')
 
@@ -1015,7 +1015,7 @@ class Test__Arguments(unittest.TestCase):
         args.UpdateEnvironment.assert_called_once_with('env', 'variables', 'options', 'args')
         args.GetAltered.assert_called_once_with('env', 'org')
         args.SaveVariables.assert_called_once_with('variables', 'filename', 'env')
-        args.ReplaceUnaltered.assert_called_once_with('env', 'org', 'ose')
+        args.OverwriteUnaltered.assert_called_once_with('env', 'org', 'ose')
         _test_alt.update.assert_called_once_with('chg')
 
     @unittest.skipIf(_mock_missing, "requires mock module")
