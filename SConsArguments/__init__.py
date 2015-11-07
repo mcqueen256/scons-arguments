@@ -2599,7 +2599,7 @@ class _ArgumentDecls(dict):
         """Create and initialize the corresponding ``ns`` variables (where
         ``ns`` is one of `ENV`, `VAR` or `OPT`).
 
-        This function calls `safe_add_to()` for each ``ns`` from ``(ENV,
+        This function calls `_safe_add_to()` for each ``ns`` from ``(ENV,
         VAR, OPT)``.
 
         :Parameters:
