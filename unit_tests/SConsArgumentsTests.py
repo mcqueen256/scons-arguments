@@ -140,10 +140,10 @@ class Test__invert_dict(unittest.TestCase):
 #############################################################################
 class Test__ArgumentsProxy(unittest.TestCase):
     def test___init___1(self):
-        """_ArgumentsProxy.__init__(tgt) should set default attributes"""
-        tgt = 'tgt'
-        proxy = SConsArguments._ArgumentsProxy(tgt)
-        self.assertIs(proxy.tgt, tgt)
+        """_ArgumentsProxy.__init__(target) should set default attributes"""
+        target = 'target'
+        proxy = SConsArguments._ArgumentsProxy(target)
+        self.assertIs(proxy.target, target)
         self.assertEqual(proxy._ArgumentsProxy__rename, {})
         self.assertEqual(proxy._ArgumentsProxy__irename, {})
         self.assertEqual(proxy._ArgumentsProxy__resubst, {})
@@ -151,11 +151,11 @@ class Test__ArgumentsProxy(unittest.TestCase):
         self.assertEqual(proxy.is_strict(), False)
 
     def test___init___2(self):
-        """_ArgumentsProxy.__init__(tgt, arg1, arg2, arg3, arg4, True) should set attributes"""
-        tgt = 'tgt'
+        """_ArgumentsProxy.__init__(target, arg1, arg2, arg3, arg4, True) should set attributes"""
+        target = 'target'
         arg1, arg2, arg3, arg4 = 'arg1', 'arg2', 'arg3', 'arg4'
-        proxy = SConsArguments._ArgumentsProxy(tgt, arg1, arg2, arg3, arg4, True)
-        self.assertIs(proxy.tgt, tgt)
+        proxy = SConsArguments._ArgumentsProxy(target, arg1, arg2, arg3, arg4, True)
+        self.assertIs(proxy.target, target)
         self.assertIs(proxy._ArgumentsProxy__rename,   arg1)
         self.assertIs(proxy._ArgumentsProxy__resubst,  arg2)
         self.assertIs(proxy._ArgumentsProxy__irename,  arg3)
@@ -719,38 +719,38 @@ class Test__Arguments(unittest.TestCase):
         self.assertEqual(args.get_key(SConsArguments.VAR, 'bar'), 'VAR_BAR')
         self.assertEqual(args.get_key(SConsArguments.OPT, 'bar'), 'OPT_BAR')
 
-    def test_env_key_x(self):
-        """_Arguments(decls).env_key('x') should raise KeyError"""
+    def test_get_env_key_x(self):
+        """_Arguments(decls).get_env_key('x') should raise KeyError"""
         args = SConsArguments._Arguments(self._decls_mock_4())
         with self.assertRaises(KeyError):
-            args.env_key('x')
+            args.get_env_key('x')
 
-    def test_env_key_a(self):
-        """_Arguments(decls).env_key('a') should == 'env_a'"""
+    def test_get_env_key_a(self):
+        """_Arguments(decls).get_env_key('a') should == 'env_a'"""
         args = SConsArguments._Arguments(self._decls_mock_4())
-        self.assertEqual(args.env_key('a'), 'env_a')
+        self.assertEqual(args.get_env_key('a'), 'env_a')
 
-    def test_var_key_x(self):
-        """_Arguments(decls).var_key('x') should raise KeyError"""
-        args = SConsArguments._Arguments(self._decls_mock_4())
-        with self.assertRaises(KeyError):
-            args.var_key('x')
-
-    def test_var_key_a(self):
-        """_Arguments(decls).var_key('a') should == 'var_a'"""
-        args = SConsArguments._Arguments(self._decls_mock_4())
-        self.assertEqual(args.var_key('a'), 'var_a')
-
-    def test_opt_key_x(self):
-        """_Arguments(decls).opt_key('x') should raise KeyError"""
+    def test_get_var_key_x(self):
+        """_Arguments(decls).get_var_key('x') should raise KeyError"""
         args = SConsArguments._Arguments(self._decls_mock_4())
         with self.assertRaises(KeyError):
-            args.opt_key('x')
+            args.get_var_key('x')
 
-    def test_opt_key_a(self):
-        """_Arguments(decls).opt_key('a') should == 'opt_a'"""
+    def test_get_var_key_a(self):
+        """_Arguments(decls).get_var_key('a') should == 'var_a'"""
         args = SConsArguments._Arguments(self._decls_mock_4())
-        self.assertEqual(args.opt_key('a'), 'opt_a')
+        self.assertEqual(args.get_var_key('a'), 'var_a')
+
+    def test_get_opt_key_x(self):
+        """_Arguments(decls).get_opt_key('x') should raise KeyError"""
+        args = SConsArguments._Arguments(self._decls_mock_4())
+        with self.assertRaises(KeyError):
+            args.get_opt_key('x')
+
+    def test_get_opt_key_a(self):
+        """_Arguments(decls).get_opt_key('a') should == 'opt_a'"""
+        args = SConsArguments._Arguments(self._decls_mock_4())
+        self.assertEqual(args.get_opt_key('a'), 'opt_a')
 
     def test_update_env_from_vars_1(self):
         """_Arguments(decls).update_env_from_vars('env', variables)"""
