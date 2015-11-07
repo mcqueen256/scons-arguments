@@ -1031,7 +1031,7 @@ class _Arguments(object):
 
         :Return:
             Dictionary with *arguments* that changed their value. The keys are
-            in ENV namespace (i.e. they're same as keys in **env**).
+            in ENV namespace (i.e. they're same as keys in `env`).
 
         .. _SCons environment:  http://www.scons.org/doc/HTML/scons-user.html#chap-environments
         """
@@ -1047,12 +1047,12 @@ class _Arguments(object):
 
     def OverwriteUnaltered(self, env, org, new):
         #--------------------------------------------------------------------
-        """Overwrite unaltered *arguments* in **env** with corresponding values
-        from **new**.
+        """Overwrite unaltered *arguments* in `env` with corresponding values
+        from `new`.
 
-        For every *argument* stored in **env**, if its value is same as
-        corresponding value in **org** the value in **env** gets replaced with
-        corresponding value in **new**.
+        For every *argument* stored in `env`, if its value is same as
+        corresponding value in `org` the value in `env` gets replaced with
+        corresponding value in `new`.
 
         :Parameters:
             env
@@ -1063,13 +1063,13 @@ class _Arguments(object):
                 Dict containing original (default) values of variables;
                 the keys in `org` should be in ENV namespace,
             new
-                Dict with new values to be used to update entries in **env**;
+                Dict with new values to be used to update entries in `env`;
                 the keys in `new` should identify *argument* names (they're
                 not in ENV/VAR/OPT namespace as opposite to `env` and `org`).
 
         :Return:
-            A dictionary containing only the values from **new** that were
-            assigned to **env**.
+            A dictionary containing only the values from `new` that were
+            assigned to `env`.
 
         .. _SCons environment:  http://www.scons.org/doc/HTML/scons-user.html#chap-environments
         """
@@ -1089,8 +1089,8 @@ class _Arguments(object):
 
     def ReplaceUnaltered(self, env, org, new):
         #--------------------------------------------------------------------
-        """Return result of replacing *arguments* stored in **env** with
-        corresponding values from **new**, while replacing only unaltered
+        """Return result of replacing *arguments* stored in `env` with
+        corresponding values from `new`, while replacing only unaltered
         values (see `_is_unaltered()`).
 
         :Parameters:
@@ -1102,7 +1102,7 @@ class _Arguments(object):
                 Dict containing orginal (default) values of variables;
                 the keys in `org` should be in ENV namespace,
             new
-                Dict with new values to be used instead of those from **env**;
+                Dict with new values to be used instead of those from `env`;
                 the keys in `new` should identify *argument* names (they're
                 not in ENV/VAR/OPT namespace as opposite to `env` and `org`).
 
@@ -1139,8 +1139,8 @@ class _Arguments(object):
     def Postprocess(self, env, variables=None, use_options=False, ose={},
                     args=None, filename=None):
         #--------------------------------------------------------------------
-        """Postprocess **variables** and **options** updating variables in
-        **env** and optionally saving them to file.
+        """Postprocess `variables` and **options** updating variables in
+        `env` and optionally saving them to file.
 
         This method gathers values from `variables`, command-line options and
         writes them to `env`. After that it optionally saves the variables
@@ -1224,9 +1224,9 @@ class _Arguments(object):
             ose : dict
                 third source of data, usually taken from ``os.environ``
             args
-                passed as **args** to `UpdateEnvironment()`.
+                passed as `args` to `UpdateEnvironment()`.
             filename : str|None
-                Name of the file to save current values of **variables**.
+                Name of the file to save current values of `variables`.
                 By default (``None``) variables are not saved.
 
         :Return:
@@ -1235,7 +1235,7 @@ class _Arguments(object):
 
         :Note:
             Often you will have to preprocess ``os.environ`` before passing it
-            as **ose**. This is necessary especially when your *argument* use
+            as `ose`. This is necessary especially when your *argument* use
             ``converter``. In that case you have to pass values from
             ``os.environ`` through a similar converter too.
 
