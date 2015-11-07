@@ -454,14 +454,14 @@ corresponding <a class="rst-reference external" href="http://www.scons.org/doc/H
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="SConsArguments._Arguments-class.html#ReplaceUnaltered" class="summary-sig-name">ReplaceUnaltered</a>(<span class="summary-sig-arg">self</span>,
+          <td><span class="summary-sig"><a href="SConsArguments._Arguments-class.html#OverwriteUnaltered" class="summary-sig-name">OverwriteUnaltered</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">env</span>,
         <span class="summary-sig-arg">org</span>,
         <span class="summary-sig-arg">new</span>)</span><br />
-      Replace values of unaltered <em>arguments</em> in <strong>env</strong> with
-corresponding values from <strong>new</strong>.</td>
+      Overwrite unaltered <em>arguments</em> in <strong>env</strong> with corresponding values
+from <strong>new</strong>.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="SConsArguments-pysrc.html#_Arguments.ReplaceUnaltered">source&nbsp;code</a></span>
+            <span class="codelink"><a href="SConsArguments-pysrc.html#_Arguments.OverwriteUnaltered">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -475,7 +475,7 @@ corresponding values from <strong>new</strong>.</td>
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="SConsArguments._Arguments-class.html#WithUnalteredReplaced" class="summary-sig-name">WithUnalteredReplaced</a>(<span class="summary-sig-arg">self</span>,
+          <td><span class="summary-sig"><a href="SConsArguments._Arguments-class.html#ReplaceUnaltered" class="summary-sig-name">ReplaceUnaltered</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">env</span>,
         <span class="summary-sig-arg">org</span>,
         <span class="summary-sig-arg">new</span>)</span><br />
@@ -483,7 +483,7 @@ corresponding values from <strong>new</strong>.</td>
 corresponding values from <strong>new</strong>, while replacing only unaltered
 values (see <a href="SConsArguments._Arguments-class.html#_is_unaltered" class="link" onclick="show_private();">_is_unaltered()</a>).</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="SConsArguments-pysrc.html#_Arguments.WithUnalteredReplaced">source&nbsp;code</a></span>
+            <span class="codelink"><a href="SConsArguments-pysrc.html#_Arguments.ReplaceUnaltered">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -998,25 +998,25 @@ in ENV namespace (i.e. they're same as keys in <strong>env</strong>).</dd>
   </dl>
 </td></tr></table>
 </div>
-<a name="ReplaceUnaltered"></a>
+<a name="OverwriteUnaltered"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">ReplaceUnaltered</span>(<span class="sig-arg">self</span>,
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">OverwriteUnaltered</span>(<span class="sig-arg">self</span>,
         <span class="sig-arg">env</span>,
         <span class="sig-arg">org</span>,
         <span class="sig-arg">new</span>)</span>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="SConsArguments-pysrc.html#_Arguments.ReplaceUnaltered">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="SConsArguments-pysrc.html#_Arguments.OverwriteUnaltered">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
-  <p>Replace values of unaltered <em>arguments</em> in <strong>env</strong> with
-corresponding values from <strong>new</strong>.</p>
+  <p>Overwrite unaltered <em>arguments</em> in <strong>env</strong> with corresponding values
+from <strong>new</strong>.</p>
 <p>For every <em>argument</em> stored in <strong>env</strong>, if its value is same as
 corresponding value in <strong>org</strong> the value in <strong>env</strong> gets replaced with
 corresponding value in <strong>new</strong>.</p>
@@ -1038,20 +1038,20 @@ assigned to <strong>env</strong>.</dd>
   </dl>
 </td></tr></table>
 </div>
-<a name="WithUnalteredReplaced"></a>
+<a name="ReplaceUnaltered"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">WithUnalteredReplaced</span>(<span class="sig-arg">self</span>,
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">ReplaceUnaltered</span>(<span class="sig-arg">self</span>,
         <span class="sig-arg">env</span>,
         <span class="sig-arg">org</span>,
         <span class="sig-arg">new</span>)</span>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="SConsArguments-pysrc.html#_Arguments.WithUnalteredReplaced">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="SConsArguments-pysrc.html#_Arguments.ReplaceUnaltered">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
@@ -1273,7 +1273,7 @@ transformed back to namespace of <em>arguments</em>.</dd>
   <tr>
     <td align="left" class="footer">
     Generated by Epydoc 3.0.1
-    on Sat Nov  7 19:01:43 2015
+    on Sat Nov  7 22:33:13 2015
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

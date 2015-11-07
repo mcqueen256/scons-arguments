@@ -97,7 +97,6 @@ SConsArguments._ArgumentDecls._resubst_decl_defaults	SConsArguments._ArgumentDec
 SConsArguments._ArgumentDecls._add_to	SConsArguments._ArgumentDecls-class.html#_add_to
 SConsArguments._Arguments	SConsArguments._Arguments-class.html
 SConsArguments._Arguments.Demangle	SConsArguments._Arguments-class.html#Demangle
-SConsArguments._Arguments.WithUnalteredReplaced	SConsArguments._Arguments-class.html#WithUnalteredReplaced
 SConsArguments._Arguments._is_unaltered	SConsArguments._Arguments-class.html#_is_unaltered
 SConsArguments._Arguments.__init_supp_dicts	SConsArguments._Arguments-class.html#__init_supp_dicts
 SConsArguments._Arguments.GenerateVariablesHelpText	SConsArguments._Arguments-class.html#GenerateVariablesHelpText
@@ -105,6 +104,7 @@ SConsArguments._Arguments.Postprocess	SConsArguments._Arguments-class.html#Postp
 SConsArguments._Arguments.update_env_from_opts	SConsArguments._Arguments-class.html#update_env_from_opts
 SConsArguments._Arguments.EnvProxy	SConsArguments._Arguments-class.html#EnvProxy
 SConsArguments._Arguments.__init__	SConsArguments._Arguments-class.html#__init__
+SConsArguments._Arguments.OverwriteUnaltered	SConsArguments._Arguments-class.html#OverwriteUnaltered
 SConsArguments._Arguments._Arguments__reset_supp_dicts	SConsArguments._Arguments-class.html#_Arguments__reset_supp_dicts
 SConsArguments._Arguments.ReplaceUnaltered	SConsArguments._Arguments-class.html#ReplaceUnaltered
 SConsArguments._Arguments.get_keys	SConsArguments._Arguments-class.html#get_keys
@@ -114,11 +114,11 @@ SConsArguments._Arguments.get_key	SConsArguments._Arguments-class.html#get_key
 SConsArguments._Arguments.SaveVariables	SConsArguments._Arguments-class.html#SaveVariables
 SConsArguments._Arguments._Arguments__init_supp_dicts	SConsArguments._Arguments-class.html#_Arguments__init_supp_dicts
 SConsArguments._Arguments.get_opt_key	SConsArguments._Arguments-class.html#get_opt_key
-SConsArguments._Arguments.VarEnvProxy	SConsArguments._Arguments-class.html#VarEnvProxy
+SConsArguments._Arguments.update_env_from_vars	SConsArguments._Arguments-class.html#update_env_from_vars
 SConsArguments._Arguments.OptEnvProxy	SConsArguments._Arguments-class.html#OptEnvProxy
 SConsArguments._Arguments.GetCurrentValues	SConsArguments._Arguments-class.html#GetCurrentValues
 SConsArguments._Arguments.__reset_supp_dicts	SConsArguments._Arguments-class.html#__reset_supp_dicts
-SConsArguments._Arguments.update_env_from_vars	SConsArguments._Arguments-class.html#update_env_from_vars
+SConsArguments._Arguments.VarEnvProxy	SConsArguments._Arguments-class.html#VarEnvProxy
 SConsArguments._Arguments.GetAltered	SConsArguments._Arguments-class.html#GetAltered
 SConsArguments._Arguments.get_env_key	SConsArguments._Arguments-class.html#get_env_key
 SConsArguments._ArgumentsProxy	SConsArguments._ArgumentsProxy-class.html
