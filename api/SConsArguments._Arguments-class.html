@@ -63,21 +63,15 @@ object --+
 </pre>
 
 <hr />
-<p>A dict-like object which correlates construction variables from SCons
-environment with command-line variables (<tt class="rst-docutils literal">variable=value</tt>) and
-command-line options (<tt class="rst-docutils literal"><span class="pre">--option=value</span></tt>).</p>
+<p>Binds <em>arguments</em> to their <em>endpoints</em> (construction variables,
+command-line variables and command-line options).</p>
+<p>In fact, the only internal data the object holds is a list of supplementary
+dictionaries to map the names of variables between the namespace of
+<em>arguments</em> and namespaces of their <em>endpoints</em>.</p>
 <p><strong>Note</strong>:</p>
 <blockquote>
-In several places we use <tt class="rst-docutils literal">ns</tt> as placeholder for one of the <tt class="rst-docutils literal">ENV</tt>,
-<tt class="rst-docutils literal">VAR</tt> or <tt class="rst-docutils literal">OPT</tt> constants which represent selection of
-&quot;corresponding Environment construction variable&quot;, &quot;corresponding SCons
-command-line variable&quot; or &quot;corresponding SCons command-line option&quot;
-respectively.  So, for example the call <tt class="rst-docutils literal"><span class="pre">args.get_key(ENV,&quot;foo&quot;)</span></tt>
-returns the key of construction variable in SCons environment (<tt class="rst-docutils literal">ENV</tt>)
-which is &quot;bound&quot; to our <em>Argument</em> <tt class="rst-docutils literal">foo</tt>.</blockquote>
-<p>In fact, the only internal data the object holds is a list of supplementary
-dictionaries to map the names of variables from one namespace (e.g <tt class="rst-docutils literal">ENV</tt>)
-to another (e.g. <tt class="rst-docutils literal">OPT</tt>).</p>
+In several places we use <tt class="rst-docutils literal">ns</tt> as placeholder for one of the <a href="SConsArguments-module.html#ENV" class="link">ENV</a>,
+<a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a> <em>endpoint</em> selectors.</blockquote>
 
 <!-- ==================== INSTANCE METHODS ==================== -->
 <a name="section-InstanceMethods"></a>
@@ -104,7 +98,7 @@ to another (e.g. <tt class="rst-docutils literal">OPT</tt>).</p>
         <tr>
           <td><span class="summary-sig"><a href="SConsArguments._Arguments-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">decls</span>)</span><br />
-      Initializes <a href="SConsArguments._Arguments-class.html" class="link" onclick="show_private();">_Arguments</a> object from <em>Argument</em> Declarations <code class="link">decls</code>.</td>
+      Initializes <a href="SConsArguments._Arguments-class.html" class="link" onclick="show_private();">_Arguments</a> object from <a href="SConsArguments._ArgumentDecls-class.html" class="link" onclick="show_private();">_ArgumentDecls</a>.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="SConsArguments-pysrc.html#_Arguments.__init__">source&nbsp;code</a></span>
             
@@ -121,7 +115,8 @@ to another (e.g. <tt class="rst-docutils literal">OPT</tt>).</p>
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
           <td><span class="summary-sig"><a name="__reset_supp_dicts"></a><span class="summary-sig-name">__reset_supp_dicts</span>(<span class="summary-sig-arg">self</span>)</span><br />
-      Initialize empty supplementary dictionaries to empty state</td>
+      Initialize empty supplementary dictionaries to empty state. This is
+internal method and IS <strong>NOT a part of public API</strong></td>
           <td align="right" valign="top">
             <span class="codelink"><a href="SConsArguments-pysrc.html#_Arguments.__reset_supp_dicts">source&nbsp;code</a></span>
             
@@ -140,7 +135,8 @@ to another (e.g. <tt class="rst-docutils literal">OPT</tt>).</p>
           <td><span class="summary-sig"><a name="__init_supp_dicts"></a><span class="summary-sig-name">__init_supp_dicts</span>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">decls</span>)</span><br />
       Initialize supplementary dictionaries according to variable
-declarations.</td>
+declarations. This is internal method and IS <strong>NOT a part of public
+API</strong></td>
           <td align="right" valign="top">
             <span class="codelink"><a href="SConsArguments-pysrc.html#_Arguments.__init_supp_dicts">source&nbsp;code</a></span>
             
@@ -160,9 +156,9 @@ declarations.</td>
         <span class="summary-sig-arg">env</span>,
         <span class="summary-sig-arg">*args</span>,
         <span class="summary-sig-arg">**kw</span>)</span><br />
-      Return proxy to SCons environment <code class="link">env</code> which uses keys from
-<a href="SConsArguments-module.html#VAR" class="link">VAR</a> namespace to access corresponding environment construction
-variables</td>
+      Return &quot;VAR-to-ENV&quot; proxy. With this proxy you may access
+construction variables in SCons environment <code class="link">env</code> while using keys from
+<a href="SConsArguments-module.html#VAR" class="link">VAR</a> namespace (command-line variables).</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="SConsArguments-pysrc.html#_Arguments.VarEnvProxy">source&nbsp;code</a></span>
             
@@ -182,9 +178,9 @@ variables</td>
         <span class="summary-sig-arg">env</span>,
         <span class="summary-sig-arg">*args</span>,
         <span class="summary-sig-arg">**kw</span>)</span><br />
-      Return proxy to SCons environment <code class="link">env</code> which uses keys from
-<a href="SConsArguments-module.html#OPT" class="link">OPT</a> namespace to access corresponding environment construction
-variables</td>
+      Return &quot;OPT-to-ENV&quot; proxy. With this proxy you may access
+construction variables in SCons environment <code class="link">env</code> while using keys from
+<a href="SConsArguments-module.html#OPT" class="link">OPT</a> namespace (command-line options).</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="SConsArguments-pysrc.html#_Arguments.OptEnvProxy">source&nbsp;code</a></span>
             
@@ -204,8 +200,9 @@ variables</td>
         <span class="summary-sig-arg">env</span>,
         <span class="summary-sig-arg">*args</span>,
         <span class="summary-sig-arg">**kw</span>)</span><br />
-      Return proxy to SCons environment <code class="link">env</code> which uses original keys
-identifying <em>Arguments</em> to access construction variables</td>
+      Return proxy to SCons environment <code class="link">env</code> which uses <em>argument</em> names
+to access corresponding construction variables in SCons environment
+<code class="link">env</code>.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="SConsArguments-pysrc.html#_Arguments.EnvProxy">source&nbsp;code</a></span>
             
@@ -222,8 +219,7 @@ identifying <em>Arguments</em> to access construction variables</td>
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
           <td><span class="summary-sig"><a name="get_keys"></a><span class="summary-sig-name">get_keys</span>(<span class="summary-sig-arg">self</span>)</span><br />
-      Return the list of keys identifying <em>Arguments</em> defined in
-this object (list of <em>Argument</em> names).</td>
+      Return the list of <em>argument</em> names.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="SConsArguments-pysrc.html#_Arguments.get_keys">source&nbsp;code</a></span>
             
@@ -242,7 +238,7 @@ this object (list of <em>Argument</em> names).</td>
           <td><span class="summary-sig"><a href="SConsArguments._Arguments-class.html#get_key" class="summary-sig-name">get_key</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">ns</span>,
         <span class="summary-sig-arg">key</span>)</span><br />
-      Map <em>Argument</em> to a variable from <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a> namespace.
+      Map <em>argument</em> to a variable from <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a> namespace.
 Maps only names (keys), not values.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="SConsArguments-pysrc.html#_Arguments.get_key">source&nbsp;code</a></span>
@@ -259,10 +255,11 @@ Maps only names (keys), not values.</td>
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="env_key"></a><span class="summary-sig-name">env_key</span>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">key</span>)</span></td>
+          <td><span class="summary-sig"><a name="get_env_key"></a><span class="summary-sig-name">get_env_key</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">key</span>)</span><br />
+      Similar to <a href="SConsArguments._Arguments-class.html#get_key" class="link">get_key(ENV,key)</a></td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="SConsArguments-pysrc.html#_Arguments.env_key">source&nbsp;code</a></span>
+            <span class="codelink"><a href="SConsArguments-pysrc.html#_Arguments.get_env_key">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -276,10 +273,11 @@ Maps only names (keys), not values.</td>
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="var_key"></a><span class="summary-sig-name">var_key</span>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">key</span>)</span></td>
+          <td><span class="summary-sig"><a name="get_var_key"></a><span class="summary-sig-name">get_var_key</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">key</span>)</span><br />
+      Similar to <a href="SConsArguments._Arguments-class.html#get_key" class="link">get_key(VAR,key)</a></td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="SConsArguments-pysrc.html#_Arguments.var_key">source&nbsp;code</a></span>
+            <span class="codelink"><a href="SConsArguments-pysrc.html#_Arguments.get_var_key">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -293,10 +291,11 @@ Maps only names (keys), not values.</td>
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="opt_key"></a><span class="summary-sig-name">opt_key</span>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">key</span>)</span></td>
+          <td><span class="summary-sig"><a name="get_opt_key"></a><span class="summary-sig-name">get_opt_key</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">key</span>)</span><br />
+      Similar to <a href="SConsArguments._Arguments-class.html#get_key" class="link">get_key(OPT,key)</a></td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="SConsArguments-pysrc.html#_Arguments.opt_key">source&nbsp;code</a></span>
+            <span class="codelink"><a href="SConsArguments-pysrc.html#_Arguments.get_opt_key">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -380,7 +379,7 @@ corresponding <a class="rst-reference external" href="http://www.scons.org/doc/H
         <span class="summary-sig-arg">variables</span>,
         <span class="summary-sig-arg">filename</span>,
         <span class="summary-sig-arg">env</span>)</span><br />
-      Save the <code class="link">variables</code> to file mapping appropriately their names.</td>
+      Save the <code class="link">variables</code> to file, while mapping appropriately their names.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="SConsArguments-pysrc.html#_Arguments.SaveVariables">source&nbsp;code</a></span>
             
@@ -420,7 +419,7 @@ corresponding <a class="rst-reference external" href="http://www.scons.org/doc/H
         <tr>
           <td><span class="summary-sig"><a href="SConsArguments._Arguments-class.html#GetCurrentValues" class="summary-sig-name">GetCurrentValues</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">env</span>)</span><br />
-      Get current values of <em>Arguments</em> stored in environment</td>
+      Get current values of <em>arguments</em> stored in environment</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="SConsArguments-pysrc.html#_Arguments.GetCurrentValues">source&nbsp;code</a></span>
             
@@ -439,7 +438,7 @@ corresponding <a class="rst-reference external" href="http://www.scons.org/doc/H
           <td><span class="summary-sig"><a href="SConsArguments._Arguments-class.html#GetAltered" class="summary-sig-name">GetAltered</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">env</span>,
         <span class="summary-sig-arg">org</span>)</span><br />
-      Return <em>Arguments</em> which have changed with respect to orig.</td>
+      Return <em>arguments</em> stored in <code class="link">env</code> which have changed with respect to <code class="link">org</code>.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="SConsArguments-pysrc.html#_Arguments.GetAltered">source&nbsp;code</a></span>
             
@@ -459,7 +458,7 @@ corresponding <a class="rst-reference external" href="http://www.scons.org/doc/H
         <span class="summary-sig-arg">env</span>,
         <span class="summary-sig-arg">org</span>,
         <span class="summary-sig-arg">new</span>)</span><br />
-      Replace values of unaltered <em>Arguments</em> in <strong>env</strong> with
+      Replace values of unaltered <em>arguments</em> in <strong>env</strong> with
 corresponding values from <strong>new</strong>.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="SConsArguments-pysrc.html#_Arguments.ReplaceUnaltered">source&nbsp;code</a></span>
@@ -480,7 +479,7 @@ corresponding values from <strong>new</strong>.</td>
         <span class="summary-sig-arg">env</span>,
         <span class="summary-sig-arg">org</span>,
         <span class="summary-sig-arg">new</span>)</span><br />
-      Return result of replacing <em>Arguments</em> stored in <strong>env</strong> with
+      Return result of replacing <em>arguments</em> stored in <strong>env</strong> with
 corresponding values from <strong>new</strong>, while replacing only unaltered
 values (see <a href="SConsArguments._Arguments-class.html#_is_unaltered" class="link" onclick="show_private();">_is_unaltered()</a>).</td>
           <td align="right" valign="top">
@@ -524,7 +523,7 @@ values (see <a href="SConsArguments._Arguments-class.html#_is_unaltered" class="
         <tr>
           <td><span class="summary-sig"><a href="SConsArguments._Arguments-class.html#Demangle" class="summary-sig-name">Demangle</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">env</span>)</span><br />
-      Return dictionary containing variable values with original names.</td>
+      Transform-back variables from <tt class="rst-docutils literal">ENV</tt> to <em>arguments</em>.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="SConsArguments-pysrc.html#_Arguments.Demangle">source&nbsp;code</a></span>
             
@@ -543,7 +542,8 @@ values (see <a href="SConsArguments._Arguments-class.html#_is_unaltered" class="
           <td><span class="summary-sig"><a name="_Arguments__init_supp_dicts"></a><span class="summary-sig-name">_Arguments__init_supp_dicts</span>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">decls</span>)</span><br />
       Initialize supplementary dictionaries according to variable
-declarations.</td>
+declarations. This is internal method and IS <strong>NOT a part of public
+API</strong></td>
           <td align="right" valign="top">
             <span class="codelink"><a href="SConsArguments-pysrc.html#_Arguments._Arguments__init_supp_dicts">source&nbsp;code</a></span>
             
@@ -560,7 +560,8 @@ declarations.</td>
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
           <td><span class="summary-sig"><a name="_Arguments__reset_supp_dicts"></a><span class="summary-sig-name">_Arguments__reset_supp_dicts</span>(<span class="summary-sig-arg">self</span>)</span><br />
-      Initialize empty supplementary dictionaries to empty state</td>
+      Initialize empty supplementary dictionaries to empty state. This is
+internal method and IS <strong>NOT a part of public API</strong></td>
           <td align="right" valign="top">
             <span class="codelink"><a href="SConsArguments-pysrc.html#_Arguments._Arguments__reset_supp_dicts">source&nbsp;code</a></span>
             
@@ -685,11 +686,11 @@ declarations.</td>
     </td>
   </tr></table>
   
-  Initializes <a href="SConsArguments._Arguments-class.html" class="link" onclick="show_private();">_Arguments</a> object from <em>Argument</em> Declarations <code class="link">decls</code>.
+  Initializes <a href="SConsArguments._Arguments-class.html" class="link" onclick="show_private();">_Arguments</a> object from <a href="SConsArguments._ArgumentDecls-class.html" class="link" onclick="show_private();">_ArgumentDecls</a>.
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>decls</code></strong> (<a href="SConsArguments._ArgumentDecls-class.html" class="link" onclick="show_private();">_ArgumentDecls</a>) - declarations of <em>Arguments</em>,</li>
+        <li><strong class="pname"><code>decls</code></strong> (<a href="SConsArguments._ArgumentDecls-class.html" class="link" onclick="show_private();">_ArgumentDecls</a>) - declarations of <em>arguments</em>,</li>
     </ul></dd>
     <dt>Overrides:
         object.__init__
@@ -713,7 +714,7 @@ declarations.</td>
     </td>
   </tr></table>
   
-  <p>Map <em>Argument</em> to a variable from <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a> namespace.
+  <p>Map <em>argument</em> to a variable from <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a> namespace.
 Maps only names (keys), not values.</p>
 <p><strong>Example</strong>:</p>
 <pre class="rst-literal-block">
@@ -738,7 +739,7 @@ assert(args.get_key(SConsArguments.OPT, 'bar') == 'OPT_BAR')
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
         <li><strong class="pname"><code>ns</code></strong> (int) - namespace identifier, one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>,</li>
-        <li><strong class="pname"><code>key</code></strong> (string) - the input key (<em>Argument</em> name) to be mapped.</li>
+        <li><strong class="pname"><code>key</code></strong> (string) - the input key (<em>argument</em> name) to be mapped.</li>
     </ul></dd>
     <dt>Returns:</dt>
         <dd>The name of mapped variable (resultant key) from namespace <tt class="rst-docutils literal">ns</tt>.</dd>
@@ -857,7 +858,7 @@ when updating <code class="link">env</code>.</li>
     </td>
   </tr></table>
   
-  <p>Save the <code class="link">variables</code> to file mapping appropriately their names.</p>
+  <p>Save the <code class="link">variables</code> to file, while mapping appropriately their names.</p>
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
@@ -892,8 +893,9 @@ SCons variables,</li>
 <tt class="rst-docutils literal">variables.GenerateHelpText()</tt>.</p>
 <dl class="rst-docutils">
 <dt>Note:</dt>
-<dd>this function handles properly mapping names between namespaces
-where SCons command line variables and construction variables live.</dd>
+<dd>this function handles properly mapping names between namespace
+of SCons command line variables and namespace of SCons construction
+variables.</dd>
 </dl>
   <dl class="fields">
     <dt>Parameters:</dt>
@@ -922,7 +924,7 @@ SCons variables,</li>
     </td>
   </tr></table>
   
-  <p>Get current values of <em>Arguments</em> stored in environment</p>
+  <p>Get current values of <em>arguments</em> stored in environment</p>
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
@@ -954,12 +956,12 @@ SCons variables,</li>
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>cur</code></strong> - <em>Argument</em> proxy to <a class="rst-reference external" href="http://www.scons.org/doc/HTML/scons-user.html#chap-environments" target="_top">SCons Environment</a> or simply to a
+        <li><strong class="pname"><code>cur</code></strong> - <em>argument</em> proxy to <a class="rst-reference external" href="http://www.scons.org/doc/HTML/scons-user.html#chap-environments" target="_top">SCons Environment</a> or simply to a
 dictionary which holds current values of variables. An
 <a href="SConsArguments._ArgumentsProxy-class.html" class="link" onclick="show_private();">_ArgumentsProxy</a> object.</li>
-        <li><strong class="pname"><code>org</code></strong> - <em>Argument</em> proxy to a dictionary containig original values of
-<em>Arguments</em>.</li>
-        <li><strong class="pname"><code>v</code></strong> - <em>Argument</em> name to be verified.</li>
+        <li><strong class="pname"><code>org</code></strong> - <em>argument</em> proxy to a dictionary containig original values of
+<em>arguments</em>.</li>
+        <li><strong class="pname"><code>v</code></strong> - <em>argument</em> name to be verified.</li>
     </ul></dd>
     <dt>Returns:</dt>
         <dd><tt class="rst-docutils literal">True</tt> or <tt class="rst-docutils literal">False</tt></dd>
@@ -982,16 +984,16 @@ dictionary which holds current values of variables. An
     </td>
   </tr></table>
   
-  <p>Return <em>Arguments</em> which have changed with respect to orig.</p>
+  <p>Return <em>arguments</em> stored in <code class="link">env</code> which have changed with respect to <code class="link">org</code>.</p>
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
         <li><strong class="pname"><code>env</code></strong> - <a class="rst-reference external" href="http://www.scons.org/doc/HTML/scons-user.html#chap-environments" target="_top">SCons environment</a> object or simply a dictionary which holds
-current values of <em>Arguments</em>.</li>
+current values of <em>arguments</em>.</li>
         <li><strong class="pname"><code>org</code></strong> - Dict containing original (default) values of variables.</li>
     </ul></dd>
     <dt>Returns:</dt>
-        <dd>Dictionary with <em>Arguments</em> that changed their value. The keys are
+        <dd>Dictionary with <em>arguments</em> that changed their value. The keys are
 in ENV namespace (i.e. they're same as keys in <strong>env</strong>).</dd>
   </dl>
 </td></tr></table>
@@ -1013,21 +1015,21 @@ in ENV namespace (i.e. they're same as keys in <strong>env</strong>).</dd>
     </td>
   </tr></table>
   
-  <p>Replace values of unaltered <em>Arguments</em> in <strong>env</strong> with
+  <p>Replace values of unaltered <em>arguments</em> in <strong>env</strong> with
 corresponding values from <strong>new</strong>.</p>
-<p>For every <em>Argument</em> stored in <strong>env</strong>, if its value is same as
+<p>For every <em>argument</em> stored in <strong>env</strong>, if its value is same as
 corresponding value in <strong>org</strong> the value in <strong>env</strong> gets replaced with
 corresponding value in <strong>new</strong>.</p>
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
         <li><strong class="pname"><code>env</code></strong> - <a class="rst-reference external" href="http://www.scons.org/doc/HTML/scons-user.html#chap-environments" target="_top">SCons environment</a> object or simply a dict which holds
-curreng values of <em>Arguments</em>. It's also being updated with new
+curreng values of <em>arguments</em>. It's also being updated with new
 values; the keys in <code class="link">env</code> should be in ENV namespace,</li>
         <li><strong class="pname"><code>org</code></strong> - Dict containing original (default) values of variables;
 the keys in <code class="link">org</code> should be in ENV namespace,</li>
         <li><strong class="pname"><code>new</code></strong> - Dict with new values to be used to update entries in <strong>env</strong>;
-the keys in <code class="link">new</code> should identify <em>Argument</em> names (they're
+the keys in <code class="link">new</code> should identify <em>argument</em> names (they're
 not in ENV/VAR/OPT namespace as opposite to <code class="link">env</code> and <code class="link">org</code>).</li>
     </ul></dd>
     <dt>Returns:</dt>
@@ -1053,19 +1055,19 @@ assigned to <strong>env</strong>.</dd>
     </td>
   </tr></table>
   
-  <p>Return result of replacing <em>Arguments</em> stored in <strong>env</strong> with
+  <p>Return result of replacing <em>arguments</em> stored in <strong>env</strong> with
 corresponding values from <strong>new</strong>, while replacing only unaltered
 values (see <a href="SConsArguments._Arguments-class.html#_is_unaltered" class="link" onclick="show_private();">_is_unaltered()</a>).</p>
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
         <li><strong class="pname"><code>env</code></strong> - <a class="rst-reference external" href="http://www.scons.org/doc/HTML/scons-user.html#chap-environments" target="_top">SCons environment</a> object or simply a dict which holds
-current values of <em>Arguments</em>; the keys in <code class="link">env</code> should be in
+current values of <em>arguments</em>; the keys in <code class="link">env</code> should be in
 ENV namespace,</li>
         <li><strong class="pname"><code>org</code></strong> - Dict containing orginal (default) values of variables;
 the keys in <code class="link">org</code> should be in ENV namespace,</li>
         <li><strong class="pname"><code>new</code></strong> - Dict with new values to be used instead of those from <strong>env</strong>;
-the keys in <code class="link">new</code> should identify <em>Argument</em> names (they're
+the keys in <code class="link">new</code> should identify <em>argument</em> names (they're
 not in ENV/VAR/OPT namespace as opposite to <code class="link">env</code> and <code class="link">org</code>).</li>
     </ul></dd>
     <dt>Returns:</dt>
@@ -1168,7 +1170,7 @@ scons: `.' is up to date.
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
         <li><strong class="pname"><code>env</code></strong> - <a class="rst-reference external" href="http://www.scons.org/doc/HTML/scons-user.html#chap-environments" target="_top">SCons environment</a> object which holds current values of
-<em>Arguments</em>.</li>
+<em>arguments</em>.</li>
         <li><strong class="pname"><code>variables</code></strong> (<tt class="rst-docutils literal">SCons.Variables.Variables</tt> | None) - if not <tt class="rst-docutils literal">None</tt>, it should be a <a class="rst-reference external" href="http://www.scons.org/doc/latest/HTML/scons-api/SCons.Variables.Variables-class.html" target="_top">SCons.Variables.Variables</a>
 object with <a class="rst-reference external" href="http://www.scons.org/doc/HTML/scons-user.html#sect-command-line-variables" target="_top">SCons variables</a> to retrieve values from,</li>
         <li><strong class="pname"><code>options</code></strong> (boolean) - if <tt class="rst-docutils literal">True</tt>, <a class="rst-reference external" href="http://www.scons.org/doc/HTML/scons-user.html#sect-command-line-options" target="_top">command-line options</a> are taken into account
@@ -1184,7 +1186,7 @@ sources (variables, options or ose).</dd>
   </dl>
 <div class="fields">      <p><strong>Note:</strong>
         Often you will have to preprocess <tt class="rst-docutils literal">os.environ</tt> before passing it
-as <strong>ose</strong>. This is necessary especially when your <em>Argument</em> use
+as <strong>ose</strong>. This is necessary especially when your <em>argument</em> use
 <tt class="rst-docutils literal">converter</tt>. In that case you have to pass values from
 <tt class="rst-docutils literal">os.environ</tt> through a similar converter too.
       </p>
@@ -1205,51 +1207,41 @@ as <strong>ose</strong>. This is necessary especially when your <em>Argument</em
     </td>
   </tr></table>
   
-  <p>Return dictionary containing variable values with original names.</p>
-<p>It is possible, that names of <em>Arguments</em> are not same as names of
-their associated construction variables in <strong>env</strong>. This function
-returns a new dictionary having original <em>Argument</em> names as keys.</p>
-<p><strong>Example</strong>:</p>
-<pre class="rst-literal-block">
-# SConstruct
-from SConsArguments import DeclareArguments
+  <p>Transform-back variables from <tt class="rst-docutils literal">ENV</tt> to <em>arguments</em>.</p>
+<p>It is possible, that names of <em>arguments</em> are not same as names of
+their associated construction variables in <code class="link">env</code>. This function
+returns a new dictionary having original <em>argument</em> names as keys
+and with placeholders transformed-back to the namespace of <em>arguments</em>.</p>
+<p><strong>Example</strong></p>
+<pre class="py-doctest">
+<span class="py-comment"># SConstruct</span>
+<span class="py-keyword">from</span> SConsArguments <span class="py-keyword">import</span> DeclareArguments, UNDEFINED
 
 env = Environment()
-decls = DeclareArguments( foo = { 'env_key' : 'env_foo' } )
+decls = DeclareArguments( foo = { <span class="py-string">'env_key'</span> : <span class="py-string">'env_foo'</span>, <span class="py-string">'default'</span> : <span class="py-string">'default ${foo}'</span> } )
 args = decls.Commit(env)
 vars = args.Demangle(env)
 
-try:
-    print &quot;env['foo']: %r&quot; % env['foo']
-except KeyError:
-    print &quot;env['foo'] is missing&quot;
-
-try:
-    print &quot;env['env_foo']: %r&quot; % env['env_foo']
-except KeyError:
-    print &quot;env['foo'] is missing&quot;
-
-try:
-    print &quot;vars['foo']: %r&quot; % vars['foo']
-except KeyError:
-    print &quot;vars['foo'] is missing&quot;
-</pre>
+<span class="py-keyword">print</span> <span class="py-string">&quot;env['foo']: %r&quot;</span> % env.get(<span class="py-string">'foo'</span>, UNDEFINED)
+<span class="py-keyword">print</span> <span class="py-string">&quot;env['env_foo']: %r&quot;</span> % env.get(<span class="py-string">'env_foo'</span>, UNDEFINED)
+<span class="py-keyword">print</span> <span class="py-string">&quot;vars['foo']: %r&quot;</span> % vars.get(<span class="py-string">'foo'</span>, UNDEFINED)</pre>
 <p>The result of running the above SCons script is:</p>
 <pre class="rst-literal-block">
 ptomulik&#64;tea:$ scons -Q
-env['foo'] is missing
-env['env_foo']: None
-vars['foo']: None
+env['foo']: UNDEFINED
+env['env_foo']: 'default ${env_foo}'
+vars['foo']: 'default ${foo}'
 scons: `.' is up to date.
 </pre>
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
         <li><strong class="pname"><code>env</code></strong> - <a class="rst-reference external" href="http://www.scons.org/doc/HTML/scons-user.html#chap-environments" target="_top">SCons environment</a> object or simply a dict which holds
-current values of <em>Arguments</em>.</li>
+current values of <em>arguments</em>.</li>
     </ul></dd>
     <dt>Returns:</dt>
-        <dd>New dictionary with keys transformed back to <em>Argument</em> namespace.</dd>
+        <dd>New dictionary with keys (and placeholders appearing in values)
+transformed back to namespace of <em>arguments</em>.</dd>
   </dl>
 </td></tr></table>
 </div>
@@ -1281,7 +1273,7 @@ current values of <em>Arguments</em>.</li>
   <tr>
     <td align="left" class="footer">
     Generated by Epydoc 3.0.1
-    on Sat Nov  7 14:23:54 2015
+    on Sat Nov  7 18:30:17 2015
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

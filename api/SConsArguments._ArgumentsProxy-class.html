@@ -63,26 +63,19 @@ object --+
 </pre>
 
 <hr />
-<p>Proxy used to access construction variables stored in a <strong>target</strong>
-dictionary while using their <em>Argument</em> names.</p>
-<p>This object implements indirect access to variables stored in a <strong>target</strong>
-dictionary, (supposedly a <a class="rst-reference external" href="http://www.scons.org/doc/HTML/scons-user.html#chap-environments" target="_top">SCons environment</a> construction variables)
-while using their <em>Argument</em> names. The variable names (and placeholders
-found in their values) are translated forth and back from/to <em>Arguments</em>
-namespace when accessing the variables. The <a href="SConsArguments._ArgumentsProxy-class.html" class="link" onclick="show_private();">_ArgumentsProxy</a> object
-provides <a href="SConsArguments._ArgumentsProxy-class.html#subst" class="link">subst()</a> method, which handles the renaming in substitution
-strings, the method currently only works with SCons
-<tt class="rst-docutils literal">SubstitutionEnvironment</tt> object as the <strong>target</strong> dictionary.</p>
+<p>Proxy object used to access indirectly variables stored in a <strong>target</strong>
+dictionary. The indirection layer automatically maps variable names between
+two namespaces (<strong>user</strong> and <strong>target</strong>).</p>
 <p><strong>Example</strong>:</p>
 <pre class="rst-literal-block">
 user&#64;host:$ scons -Q -f -
 
 from SConsArguments import _ArgumentsProxy
 env = Environment()
-proxy = _ArgumentsProxy(env, { 'foo'     : 'ENV_FOO'     },
-                             { 'foo'     : '${ENV_FOO}'  },
-                             { 'ENV_FOO' : 'foo'         },
-                             { 'ENV_FOO' : '${foo}'      })
+proxy = _ArgumentsProxy(env, { 'foo'     : 'ENV_FOO'     }, # rename
+                             { 'foo'     : '${ENV_FOO}'  }, # resubst
+                             { 'ENV_FOO' : 'foo'         }, # inverse rename
+                             { 'ENV_FOO' : '${foo}'      }) # inverse resubst
 proxy['foo'] = &quot;FOO&quot;
 print &quot;proxy['foo'] is %r&quot; % proxy['foo']
 print &quot;env['ENV_FOO'] is %r&quot; % env['ENV_FOO']
@@ -116,7 +109,7 @@ scons: `.' is up to date.
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
           <td><span class="summary-sig"><a href="SConsArguments._ArgumentsProxy-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">tgt</span>,
+        <span class="summary-sig-arg">target</span>,
         <span class="summary-sig-arg">rename</span>=<span class="summary-sig-default"><code class="variable-group">{</code><code class="variable-group">}</code></span>,
         <span class="summary-sig-arg">resubst</span>=<span class="summary-sig-default"><code class="variable-group">{</code><code class="variable-group">}</code></span>,
         <span class="summary-sig-arg">irename</span>=<span class="summary-sig-default"><code class="variable-group">{</code><code class="variable-group">}</code></span>,
@@ -502,8 +495,10 @@ scons: `.' is up to date.
           <td><span class="summary-sig"><a href="SConsArguments._ArgumentsProxy-class.html#subst" class="summary-sig-name">subst</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">string</span>,
         <span class="summary-sig-arg">*args</span>)</span><br />
-      Interpolates construction variables from the Environment into the
-specific string, returning expanded result.</td>
+      Interpolates variables from the <strong>target</strong> dictionary into the
+specific string, returning expanded result. This method is only
+guaranteed to work when the <strong>target</strong> dict is a SCons
+<tt class="rst-docutils literal">SubstitutionEnvironment</tt>.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentsProxy.subst">source&nbsp;code</a></span>
             
@@ -738,7 +733,7 @@ specific string, returning expanded result.</td>
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
   <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">tgt</span>,
+        <span class="sig-arg">target</span>,
         <span class="sig-arg">rename</span>=<span class="sig-default"><code class="variable-group">{</code><code class="variable-group">}</code></span>,
         <span class="sig-arg">resubst</span>=<span class="sig-default"><code class="variable-group">{</code><code class="variable-group">}</code></span>,
         <span class="sig-arg">irename</span>=<span class="sig-default"><code class="variable-group">{</code><code class="variable-group">}</code></span>,
@@ -755,21 +750,21 @@ specific string, returning expanded result.</td>
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>tgt</code></strong> - the <strong>target</strong> dictionary to be proxied,</li>
-        <li><strong class="pname"><code>rename</code></strong> - dictionary used for mapping variable names from user namespace
-to environment namespace (used by <a href="SConsArguments._ArgumentsProxy-class.html#__setitem__" class="link">__setitem__()</a> and
+        <li><strong class="pname"><code>target</code></strong> - the <strong>target</strong> dictionary to be accessed via proxy,</li>
+        <li><strong class="pname"><code>rename</code></strong> - dictionary used for mapping variable names from <strong>user</strong>
+namespace to <strong>target</strong> namespace (used by <a href="SConsArguments._ArgumentsProxy-class.html#__setitem__" class="link">__setitem__()</a> and
 <a href="SConsArguments._ArgumentsProxy-class.html#__getitem__" class="link">__getitem__()</a>),</li>
         <li><strong class="pname"><code>resubst</code></strong> - dictionary used by to rename placeholders in values passed
-from user to environment  (used by <a href="SConsArguments._ArgumentsProxy-class.html#__setitem__" class="link">__setitem__()</a> and
+from <strong>user</strong> to <strong>target</strong> (used by <a href="SConsArguments._ArgumentsProxy-class.html#__setitem__" class="link">__setitem__()</a> and
 <a href="SConsArguments._ArgumentsProxy-class.html#subst" class="link">subst()</a>)</li>
-        <li><strong class="pname"><code>irename</code></strong> - dictionary used for mapping variable names from environment
-to user namespace (used by <tt class="rst-docutils literal">items()</tt>),</li>
-        <li><strong class="pname"><code>iresubst</code></strong> - dictionary used by to rename placeholders in values passed
-back from environment to user (used by <a href="SConsArguments._ArgumentsProxy-class.html#__getitem__" class="link">__getitem__()</a> for
-example)</li>
+        <li><strong class="pname"><code>irename</code></strong> - dictionary used for mapping variable names from <strong>target</strong>
+to <strong>user</strong> namespace (used by <tt class="rst-docutils literal">items()</tt>),</li>
+        <li><strong class="pname"><code>iresubst</code></strong> - dictionary used to rename placeholders in values passed
+back from <strong>target</strong> to <strong>user</strong> namespace (used by
+<a href="SConsArguments._ArgumentsProxy-class.html#__getitem__" class="link">__getitem__()</a> for example)</li>
         <li><strong class="pname"><code>strict</code></strong> - if <tt class="rst-docutils literal">True</tt> only the keys defined in rename/resubst
 dictionaries are allowed, otherwise the original variables
-from <tt class="rst-docutils literal">tgt</tt> are also accessible via their keys</li>
+from <tt class="rst-docutils literal">target</tt> are also accessible via their keys</li>
     </ul></dd>
     <dt>Overrides:
         object.__init__
@@ -794,7 +789,7 @@ from <tt class="rst-docutils literal">tgt</tt> are also accessible via their key
   <p>Whether the proxy is in &quot;strict&quot; mode</p>
 <p>A &quot;strict&quot; mode proxy allows to access only these variables for which
 entries exist in rename/resubst dictionaries. If some variable is
-missing from dictionaries, a KeyError is raised.</p>
+missing from dictionaries, a <tt class="rst-docutils literal">KeyError</tt> is raised.</p>
 <p>A &quot;non-strict&quot; proxy bypasses the rename/resubst dictionaries for
 variables that are not present therein and accesses the corresponding
 variable/option using Argument's name directly (without mapping).</p>
@@ -852,14 +847,17 @@ the &quot;strict&quot; mode</li>
     </td>
   </tr></table>
   
-  <p>Interpolates construction variables from the Environment into the
-specific string, returning expanded result.</p>
+  <p>Interpolates variables from the <strong>target</strong> dictionary into the
+specific string, returning expanded result. This method is only
+guaranteed to work when the <strong>target</strong> dict is a SCons
+<tt class="rst-docutils literal">SubstitutionEnvironment</tt>.</p>
 <p>This is merely same as</p>
 <pre class="py-doctest">
-self.tgt.subst(_resubst(string, self.__resubst), *args)</pre>
-<p>The core job of interpolating the variables is left to the <tt class="rst-docutils literal">tgt</tt>.
-What the method does is to replace <em>Argument</em> names with their
-construction variable names before substitution is made.</p>
+self.target.subst(_resubst(string, self.__resubst), *args)</pre>
+<p>The core job of interpolating the variables is left to the
+<tt class="rst-docutils literal">target.subst()</tt>. What this method does is to rename placeholders in
+string from <strong>user</strong> to <strong>target</strong> namespace before passing it to
+<tt class="rst-docutils literal">target.subst()</tt>.</p>
   <dl class="fields">
   </dl>
 </td></tr></table>
@@ -892,7 +890,7 @@ construction variable names before substitution is made.</p>
   <tr>
     <td align="left" class="footer">
     Generated by Epydoc 3.0.1
-    on Sat Nov  7 14:23:54 2015
+    on Sat Nov  7 18:30:17 2015
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

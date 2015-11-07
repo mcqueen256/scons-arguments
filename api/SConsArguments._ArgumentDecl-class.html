@@ -63,11 +63,11 @@ object --+
 </pre>
 
 <hr />
-<p>Declaration of single <em>Argument</em>.</p>
+<p>Declaration of single <em>argument</em>.</p>
 <p>This object holds information necessary to create construction variable in
 SCons Environment, SCons command-line variable (<tt class="rst-docutils literal">variable=value</tt>) and
 SCons command-line option (<tt class="rst-docutils literal"><span class="pre">--option=value</span></tt>) corresponding to a given
-<em>Argument</em> (it for example holds the names and default values of
+<em>argument</em> (it for example holds the names and default values of
 these variables/options before they get created).</p>
 <p><strong>Note</strong>:</p>
 <blockquote>
@@ -125,8 +125,8 @@ SCons environment (<tt class="rst-docutils literal">ENV</tt>).</blockquote>
           <td><span class="summary-sig"><a href="SConsArguments._ArgumentDecl-class.html#set_decl" class="summary-sig-name">set_decl</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">ns</span>,
         <span class="summary-sig-arg">decl</span>)</span><br />
-      Set declaration of related <em>endpoint</em> variable in <code class="link">ns</code> namespace,
-where <code class="link">ns</code> is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>.</td>
+      Declare related <em>endpoint</em> in <code class="link">ns</code> namespace. <code class="link">ns</code> is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>,
+<a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecl.set_decl">source&nbsp;code</a></span>
             
@@ -201,8 +201,8 @@ option</a>.</td>
         <tr>
           <td><span class="summary-sig"><a href="SConsArguments._ArgumentDecl-class.html#has_decl" class="summary-sig-name">has_decl</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">ns</span>)</span><br />
-      Test if declaration of corresponding <code class="link">ns</code> variable was provided,
-where <code class="link">ns</code> is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>.</td>
+      Test if declaration of <em>endpoint</em> <code class="link">ns</code> was provided. <code class="link">ns</code> is one of
+<a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecl.has_decl">source&nbsp;code</a></span>
             
@@ -271,8 +271,7 @@ where <code class="link">ns</code> is one of <a href="SConsArguments-module.html
         <tr>
           <td><span class="summary-sig"><a href="SConsArguments._ArgumentDecl-class.html#get_decl" class="summary-sig-name">get_decl</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">ns</span>)</span><br />
-      Return internal representation of declaration for <em>Endpoint</em>
-variable from <code class="link">ns</code> namespace.</td>
+      Return internal representation of declaration for <em>endpoint</em> <code class="link">ns</code>.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecl.get_decl">source&nbsp;code</a></span>
             
@@ -341,8 +340,8 @@ variable from <code class="link">ns</code> namespace.</td>
         <tr>
           <td><span class="summary-sig"><a href="SConsArguments._ArgumentDecl-class.html#get_key" class="summary-sig-name">get_key</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">ns</span>)</span><br />
-      Returns the key (variable name) identifying <em>endpoint</em> variable in
-namespace <code class="link">ns</code>, where <code class="link">ns</code> is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>.</td>
+      Returns the key (variable name) identifying <em>endpoint</em> variable from
+namespace <code class="link">ns</code>. <code class="link">ns</code> is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecl.get_key">source&nbsp;code</a></span>
             
@@ -412,8 +411,8 @@ namespace <code class="link">ns</code>, where <code class="link">ns</code> is on
           <td><span class="summary-sig"><a href="SConsArguments._ArgumentDecl-class.html#set_key" class="summary-sig-name">set_key</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">ns</span>,
         <span class="summary-sig-arg">key</span>)</span><br />
-      Define the identifying key of corresponding <code class="link">ns</code> variable, where
-<code class="link">ns</code> is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>.</td>
+      Rename the corresponding <em>endpoint</em> in <code class="link">ns</code> namespace. <code class="link">ns</code> is one
+of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecl.set_key">source&nbsp;code</a></span>
             
@@ -429,9 +428,9 @@ namespace <code class="link">ns</code>, where <code class="link">ns</code> is on
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="set_env_key"></a><span class="summary-sig-name">set_env_key</span>(<span class="summary-sig-arg">self</span>,
+          <td><span class="summary-sig"><a href="SConsArguments._ArgumentDecl-class.html#set_env_key" class="summary-sig-name">set_env_key</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">key</span>)</span><br />
-      Same as <a href="SConsArguments._ArgumentDecl-class.html#set_key" class="link">set_key(ENV, key)</a></td>
+      Same as <a href="SConsArguments._ArgumentDecl-class.html#set_key" class="link">set_key(ENV, key)</a>.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecl.set_env_key">source&nbsp;code</a></span>
             
@@ -447,9 +446,9 @@ namespace <code class="link">ns</code>, where <code class="link">ns</code> is on
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="set_var_key"></a><span class="summary-sig-name">set_var_key</span>(<span class="summary-sig-arg">self</span>,
+          <td><span class="summary-sig"><a href="SConsArguments._ArgumentDecl-class.html#set_var_key" class="summary-sig-name">set_var_key</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">key</span>)</span><br />
-      Same as <a href="SConsArguments._ArgumentDecl-class.html#set_key" class="link">set_key(VAR, key)</a></td>
+      Same as <a href="SConsArguments._ArgumentDecl-class.html#set_key" class="link">set_key(VAR, key)</a>.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecl.set_var_key">source&nbsp;code</a></span>
             
@@ -465,9 +464,9 @@ namespace <code class="link">ns</code>, where <code class="link">ns</code> is on
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="set_opt_key"></a><span class="summary-sig-name">set_opt_key</span>(<span class="summary-sig-arg">self</span>,
+          <td><span class="summary-sig"><a href="SConsArguments._ArgumentDecl-class.html#set_opt_key" class="summary-sig-name">set_opt_key</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">key</span>)</span><br />
-      Same as <a href="SConsArguments._ArgumentDecl-class.html#set_key" class="link">set_key(OPT, key)</a></td>
+      Same as <a href="SConsArguments._ArgumentDecl-class.html#set_key" class="link">set_key(OPT, key)</a>.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecl.set_opt_key">source&nbsp;code</a></span>
             
@@ -485,8 +484,8 @@ namespace <code class="link">ns</code>, where <code class="link">ns</code> is on
         <tr>
           <td><span class="summary-sig"><a href="SConsArguments._ArgumentDecl-class.html#get_default" class="summary-sig-name">get_default</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">ns</span>)</span><br />
-      Get the default value of corresponding <code class="link">ns</code> variable, where <code class="link">ns</code>
-is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a>, <a href="SConsArguments-module.html#OPT" class="link">OPT</a>.</td>
+      Get the default value of <code class="link">ns</code> <em>endpoint</em>. <code class="link">ns</code> is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>,
+<a href="SConsArguments-module.html#VAR" class="link">VAR</a>, <a href="SConsArguments-module.html#OPT" class="link">OPT</a>.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecl.get_default">source&nbsp;code</a></span>
             
@@ -556,8 +555,8 @@ is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href
           <td><span class="summary-sig"><a href="SConsArguments._ArgumentDecl-class.html#set_default" class="summary-sig-name">set_default</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">ns</span>,
         <span class="summary-sig-arg">default</span>)</span><br />
-      Define the default value of corresponding <code class="link">ns</code> variable, where
-<code class="link">ns</code> is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a>, <a href="SConsArguments-module.html#OPT" class="link">OPT</a>.</td>
+      Define the default value of <code class="link">ns</code> <em>endpoint</em>. <code class="link">ns</code> is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>,
+<a href="SConsArguments-module.html#VAR" class="link">VAR</a>, <a href="SConsArguments-module.html#OPT" class="link">OPT</a>.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecl.set_default">source&nbsp;code</a></span>
             
@@ -631,8 +630,8 @@ is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href
         <span class="summary-sig-arg">ns</span>,
         <span class="summary-sig-arg">*args</span>,
         <span class="summary-sig-arg">**kw</span>)</span><br />
-      Add new corresponding construction variable, command-line variable
-or command-line option depending on the <code class="link">ns</code> variable. The <code class="link">ns</code> is one
+      Add new construction variable, command-line variable or command-line
+option (an <em>endpoint</em>) depending on the <code class="link">ns</code> variable. The <code class="link">ns</code> is one
 of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecl.add_to">source&nbsp;code</a></span>
@@ -652,7 +651,7 @@ of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SCons
           <td><span class="summary-sig"><a href="SConsArguments._ArgumentDecl-class.html#add_to_env" class="summary-sig-name">add_to_env</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">env</span>)</span><br />
       Add construction variable to <a class="rst-reference external" href="http://www.scons.org/doc/HTML/scons-user.html#chap-environments" target="_top">SCons environment</a> corresponding to
-this <em>Argument</em> and set it do default value.</td>
+this <em>argument</em> and set it do default value.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecl.add_to_env">source&nbsp;code</a></span>
             
@@ -672,7 +671,7 @@ this <em>Argument</em> and set it do default value.</td>
         <span class="summary-sig-arg">variables</span>,
         <span class="summary-sig-arg">*args</span>,
         <span class="summary-sig-arg">**kw</span>)</span><br />
-      Add new SCons <a class="rst-reference external" href="http://www.scons.org/doc/HTML/scons-user.html#sect-command-line-variables" target="_top">command-line variable</a> corresponding to this <em>Argument</em>.</td>
+      Add new SCons <a class="rst-reference external" href="http://www.scons.org/doc/HTML/scons-user.html#sect-command-line-variables" target="_top">command-line variable</a> corresponding to this <em>argument</em>.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecl.add_to_var">source&nbsp;code</a></span>
             
@@ -689,7 +688,7 @@ this <em>Argument</em> and set it do default value.</td>
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
           <td><span class="summary-sig"><a href="SConsArguments._ArgumentDecl-class.html#add_to_opt" class="summary-sig-name">add_to_opt</a>(<span class="summary-sig-arg">self</span>)</span><br />
-      Add new SCons <a class="rst-reference external" href="http://www.scons.org/doc/HTML/scons-user.html#sect-command-line-options" target="_top">command-line option</a> corresponding to this <em>Argument</em>.</td>
+      Add new SCons <a class="rst-reference external" href="http://www.scons.org/doc/HTML/scons-user.html#sect-command-line-options" target="_top">command-line option</a> corresponding to this <em>argument</em>.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecl.add_to_opt">source&nbsp;code</a></span>
             
@@ -709,8 +708,7 @@ this <em>Argument</em> and set it do default value.</td>
         <span class="summary-sig-arg">ns</span>,
         <span class="summary-sig-arg">*args</span>)</span><br />
       Same as <a href="SConsArguments._ArgumentDecl-class.html#add_to" class="link">add_to()</a>, but does not raise exceptions when the
-corresponding <code class="link">ns</code> variable is not declared in this <a href="SConsArguments._ArgumentDecl-class.html" class="link" onclick="show_private();">_ArgumentDecl</a>
-object.</td>
+corresponding <code class="link">ns</code> <em>endpoint</em> is not found.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecl.safe_add_to">source&nbsp;code</a></span>
             
@@ -834,15 +832,16 @@ option</a>, same as  <tt class="rst-docutils literal">decl</tt> argument to <a h
     </td>
   </tr></table>
   
-  <p>Set declaration of related <em>endpoint</em> variable in <code class="link">ns</code> namespace,
-where <code class="link">ns</code> is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>.</p>
+  <p>Declare related <em>endpoint</em> in <code class="link">ns</code> namespace. <code class="link">ns</code> is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>,
+<a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>.</p>
 <p>This functions just dispatches the job between <a href="SConsArguments._ArgumentDecl-class.html#set_env_decl" class="link">set_env_decl()</a>,
 <a href="SConsArguments._ArgumentDecl-class.html#set_var_decl" class="link">set_var_decl()</a> and <a href="SConsArguments._ArgumentDecl-class.html#set_opt_decl" class="link">set_opt_decl()</a> according to <code class="link">ns</code> argument.</p>
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
         <li><strong class="pname"><code>ns</code></strong> (int) - one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>,</li>
-        <li><strong class="pname"><code>decl</code></strong> - declaration parameters passed to particular setter function.</li>
+        <li><strong class="pname"><code>decl</code></strong> - declaration parameters passed to particular setter method
+(<a href="SConsArguments._ArgumentDecl-class.html#set_env_decl" class="link">set_env_decl()</a>, <a href="SConsArguments._ArgumentDecl-class.html#set_var_decl" class="link">set_var_decl()</a>, or <a href="SConsArguments._ArgumentDecl-class.html#set_opt_decl" class="link">set_opt_decl()</a>).</li>
     </ul></dd>
   </dl>
 </td></tr></table>
@@ -992,8 +991,8 @@ Note, that we require the <tt class="rst-docutils literal">dest</tt> parameter.<
     </td>
   </tr></table>
   
-  Test if declaration of corresponding <code class="link">ns</code> variable was provided,
-where <code class="link">ns</code> is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>.
+  Test if declaration of <em>endpoint</em> <code class="link">ns</code> was provided. <code class="link">ns</code> is one of
+<a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>.
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
@@ -1019,8 +1018,7 @@ where <code class="link">ns</code> is one of <a href="SConsArguments-module.html
     </td>
   </tr></table>
   
-  <p>Return internal representation of declaration for <em>Endpoint</em>
-variable from <code class="link">ns</code> namespace.</p>
+  <p>Return internal representation of declaration for <em>endpoint</em> <code class="link">ns</code>.</p>
 <p>If the corresponding <code class="link">ns</code> declaration does not exist, or <code class="link">ns</code> is out of
 range, the method throws an IndexError.</p>
   <dl class="fields">
@@ -1048,8 +1046,8 @@ range, the method throws an IndexError.</p>
     </td>
   </tr></table>
   
-  Returns the key (variable name) identifying <em>endpoint</em> variable in
-namespace <code class="link">ns</code>, where <code class="link">ns</code> is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>.
+  Returns the key (variable name) identifying <em>endpoint</em> variable from
+namespace <code class="link">ns</code>. <code class="link">ns</code> is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>.
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
@@ -1076,21 +1074,104 @@ namespace <code class="link">ns</code>, where <code class="link">ns</code> is on
     </td>
   </tr></table>
   
-  <p>Define the identifying key of corresponding <code class="link">ns</code> variable, where
-<code class="link">ns</code> is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>.</p>
+  <p>Rename the corresponding <em>endpoint</em> in <code class="link">ns</code> namespace. <code class="link">ns</code> is one
+of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>.</p>
 <p>The corresponding declaration must exists, that is <tt class="rst-docutils literal">has_decl(ns)</tt>
 must be <tt class="rst-docutils literal">True</tt>. Otherwise, <tt class="rst-docutils literal">IndexError</tt> will be raised.</p>
 <dl class="rst-docutils">
 <dt><strong>Warning</strong></dt>
-<dd>This function should not be used by users. To change the key of
-corresponding <code class="link">ns</code> variable, use <a href="SConsArguments._ArgumentDecls-class.html#set_key" class="link">_ArgumentDecls.set_key()</a>.</dd>
+<dd>This method should not be used on <a href="SConsArguments._ArgumentDecl-class.html" class="link" onclick="show_private();">_ArgumentDecl</a> objects which
+belong to an <a href="SConsArguments._ArgumentDecls-class.html" class="link" onclick="show_private();">_ArgumentDecls</a> dictionary. To rename <em>endpoints</em> of
+such <em>arguments</em>, use <a href="SConsArguments._ArgumentDecls-class.html#set_key" class="link">_ArgumentDecls.set_key()</a>. This limitation
+may be removed in future.</dd>
 </dl>
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
         <li><strong class="pname"><code>ns</code></strong> (int) - one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a></li>
-        <li><strong class="pname"><code>key</code></strong> (string) - new key for the corresponding variable.</li>
+        <li><strong class="pname"><code>key</code></strong> (string) - new name for the <em>endpoint</em> <code class="link">ns</code>.</li>
     </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="set_env_key"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">set_env_key</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">key</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecl.set_env_key">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Same as <a href="SConsArguments._ArgumentDecl-class.html#set_key" class="link">set_key(ENV, key)</a>.</p>
+<dl class="rst-docutils">
+<dt><strong>Warning</strong></dt>
+<dd>This method should not be used on <a href="SConsArguments._ArgumentDecl-class.html" class="link" onclick="show_private();">_ArgumentDecl</a> objects which
+belong to an <a href="SConsArguments._ArgumentDecls-class.html" class="link" onclick="show_private();">_ArgumentDecls</a> dictionary. To rename <em>endpoints</em> of
+such <em>arguments</em>, use <a href="SConsArguments._ArgumentDecls-class.html#set_key" class="link">_ArgumentDecls.set_key()</a>. This limitation
+may be removed in future.</dd>
+</dl>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="set_var_key"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">set_var_key</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">key</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecl.set_var_key">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Same as <a href="SConsArguments._ArgumentDecl-class.html#set_key" class="link">set_key(VAR, key)</a>.</p>
+<dl class="rst-docutils">
+<dt><strong>Warning</strong></dt>
+<dd>This method should not be used on <a href="SConsArguments._ArgumentDecl-class.html" class="link" onclick="show_private();">_ArgumentDecl</a> objects which
+belong to an <a href="SConsArguments._ArgumentDecls-class.html" class="link" onclick="show_private();">_ArgumentDecls</a> dictionary. To rename <em>endpoints</em> of
+such <em>arguments</em>, use <a href="SConsArguments._ArgumentDecls-class.html#set_key" class="link">_ArgumentDecls.set_key()</a>. This limitation
+may be removed in future.</dd>
+</dl>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="set_opt_key"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">set_opt_key</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">key</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecl.set_opt_key">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Same as <a href="SConsArguments._ArgumentDecl-class.html#set_key" class="link">set_key(OPT, key)</a>.</p>
+<dl class="rst-docutils">
+<dt><strong>Warning</strong></dt>
+<dd>This method should not be used on <a href="SConsArguments._ArgumentDecl-class.html" class="link" onclick="show_private();">_ArgumentDecl</a> objects which
+belong to an <a href="SConsArguments._ArgumentDecls-class.html" class="link" onclick="show_private();">_ArgumentDecls</a> dictionary. To rename <em>endpoints</em> of
+such <em>arguments</em>, use <a href="SConsArguments._ArgumentDecls-class.html#set_key" class="link">_ArgumentDecls.set_key()</a>. This limitation
+may be removed in future.</dd>
+</dl>
+  <dl class="fields">
   </dl>
 </td></tr></table>
 </div>
@@ -1109,8 +1190,8 @@ corresponding <code class="link">ns</code> variable, use <a href="SConsArguments
     </td>
   </tr></table>
   
-  Get the default value of corresponding <code class="link">ns</code> variable, where <code class="link">ns</code>
-is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a>, <a href="SConsArguments-module.html#OPT" class="link">OPT</a>.
+  Get the default value of <code class="link">ns</code> <em>endpoint</em>. <code class="link">ns</code> is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>,
+<a href="SConsArguments-module.html#VAR" class="link">VAR</a>, <a href="SConsArguments-module.html#OPT" class="link">OPT</a>.
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
@@ -1135,8 +1216,8 @@ is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href
     </td>
   </tr></table>
   
-  Define the default value of corresponding <code class="link">ns</code> variable, where
-<code class="link">ns</code> is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a>, <a href="SConsArguments-module.html#OPT" class="link">OPT</a>.
+  Define the default value of <code class="link">ns</code> <em>endpoint</em>. <code class="link">ns</code> is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>,
+<a href="SConsArguments-module.html#VAR" class="link">VAR</a>, <a href="SConsArguments-module.html#OPT" class="link">OPT</a>.
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
@@ -1163,8 +1244,8 @@ is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href
     </td>
   </tr></table>
   
-  <p>Add new corresponding construction variable, command-line variable
-or command-line option depending on the <code class="link">ns</code> variable. The <code class="link">ns</code> is one
+  <p>Add new construction variable, command-line variable or command-line
+option (an <em>endpoint</em>) depending on the <code class="link">ns</code> variable. The <code class="link">ns</code> is one
 of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>.</p>
 <p>The method actually dispatches the job between <a href="SConsArguments._ArgumentDecl-class.html#add_to_env" class="link">add_to_env()</a>,
 <a href="SConsArguments._ArgumentDecl-class.html#add_to_var" class="link">add_to_var()</a> and <a href="SConsArguments._ArgumentDecl-class.html#add_to_opt" class="link">add_to_opt()</a>.</p>
@@ -1215,7 +1296,7 @@ passed to <a class="rst-reference external" href="http://www.scons.org/doc/lates
   </tr></table>
   
   <p>Add construction variable to <a class="rst-reference external" href="http://www.scons.org/doc/HTML/scons-user.html#chap-environments" target="_top">SCons environment</a> corresponding to
-this <em>Argument</em> and set it do default value.</p>
+this <em>argument</em> and set it do default value.</p>
 <p>The method raises <tt class="rst-docutils literal">IndexError</tt> if there is no declaration for
 construction variable in this <a href="SConsArguments._ArgumentDecl-class.html" class="link" onclick="show_private();">_ArgumentDecl</a> object.</p>
 <p><strong>Remarks</strong>:</p>
@@ -1224,7 +1305,7 @@ construction variable in this <a href="SConsArguments._ArgumentDecl-class.html" 
 <li>the construction variable is &quot;created&quot; with <tt class="rst-docutils literal">env.SetDefault()</tt>;
 existing construction variables are NOT overwritten by this call,</li>
 <li>the construction variable is not created if the default value
-of this <em>Argument</em> for construction variable is <a href="SConsArguments._undef-class.html" class="link">_undef</a>.</li>
+of this <em>argument</em> for construction variable is <a href="SConsArguments._undef-class.html" class="link">_undef</a>.</li>
 </ul>
 </blockquote>
   <dl class="fields">
@@ -1252,7 +1333,7 @@ of this <em>Argument</em> for construction variable is <a href="SConsArguments._
     </td>
   </tr></table>
   
-  <p>Add new SCons <a class="rst-reference external" href="http://www.scons.org/doc/HTML/scons-user.html#sect-command-line-variables" target="_top">command-line variable</a> corresponding to this <em>Argument</em>.</p>
+  <p>Add new SCons <a class="rst-reference external" href="http://www.scons.org/doc/HTML/scons-user.html#sect-command-line-variables" target="_top">command-line variable</a> corresponding to this <em>argument</em>.</p>
 <p>The method raises <tt class="rst-docutils literal">IndexError</tt> if there is no declaration for the
 corresponding command-line variable in this <a href="SConsArguments._ArgumentDecl-class.html" class="link" onclick="show_private();">_ArgumentDecl</a> object.</p>
   <dl class="fields">
@@ -1280,7 +1361,7 @@ passed to <a class="rst-reference external" href="http://www.scons.org/doc/lates
     </td>
   </tr></table>
   
-  <p>Add new SCons <a class="rst-reference external" href="http://www.scons.org/doc/HTML/scons-user.html#sect-command-line-options" target="_top">command-line option</a> corresponding to this <em>Argument</em>.</p>
+  <p>Add new SCons <a class="rst-reference external" href="http://www.scons.org/doc/HTML/scons-user.html#sect-command-line-options" target="_top">command-line option</a> corresponding to this <em>argument</em>.</p>
 <p>The method raises <tt class="rst-docutils literal">IndexError</tt> if there is no declaration for the
 command-line option in this <a href="SConsArguments._ArgumentDecl-class.html" class="link" onclick="show_private();">_ArgumentDecl</a> object.</p>
   <dl class="fields">
@@ -1304,8 +1385,7 @@ command-line option in this <a href="SConsArguments._ArgumentDecl-class.html" cl
   </tr></table>
   
   Same as <a href="SConsArguments._ArgumentDecl-class.html#add_to" class="link">add_to()</a>, but does not raise exceptions when the
-corresponding <code class="link">ns</code> variable is not declared in this <a href="SConsArguments._ArgumentDecl-class.html" class="link" onclick="show_private();">_ArgumentDecl</a>
-object.
+corresponding <code class="link">ns</code> <em>endpoint</em> is not found.
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
@@ -1346,7 +1426,7 @@ object.</dd>
   <tr>
     <td align="left" class="footer">
     Generated by Epydoc 3.0.1
-    on Sat Nov  7 14:23:54 2015
+    on Sat Nov  7 18:30:17 2015
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

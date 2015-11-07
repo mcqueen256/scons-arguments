@@ -65,25 +65,21 @@ object --+
 </pre>
 
 <hr />
-<p>Dictionary-like object with <em>Argument</em> declarations as values.</p>
+<p>Dict-like object with <em>argument</em> declarations as values.</p>
 <p>The <a href="SConsArguments._ArgumentDecls-class.html" class="link" onclick="show_private();">_ArgumentDecls</a> object is a subclass of <tt class="rst-docutils literal">dict</tt> with keys being
-strings identifying declared <em>Arguments</em> and values being instances of
-<a href="SConsArguments._ArgumentDecl-class.html" class="link" onclick="show_private();">_ArgumentDecl</a> objects. The <a href="SConsArguments._ArgumentDecls-class.html" class="link" onclick="show_private();">_ArgumentDecls</a> dictionary also maintains
-<em>supplementary dictionaries</em> used internally to map names of registered
-variables between four namespaces: <a href="SConsArguments-module.html#ENV" class="link">ENV</a> (construction variables in SCons
-environment), <a href="SConsArguments-module.html#VAR" class="link">VAR</a> (command-line variables <tt class="rst-docutils literal">variable=value</tt>), <a href="SConsArguments-module.html#OPT" class="link">OPT</a>
-(command-line options <tt class="rst-docutils literal"><span class="pre">--option=value</span></tt>) and <em>Argument</em> (the keys used to
-identify the <em>Arguments</em> declared within <a href="SConsArguments._ArgumentDecls-class.html" class="link" onclick="show_private();">_ArgumentDecls</a> dictionary).</p>
+<em>argument</em> names and values being instances of <a href="SConsArguments._ArgumentDecl-class.html" class="link" onclick="show_private();">_ArgumentDecl</a> objects. The
+<a href="SConsArguments._ArgumentDecls-class.html" class="link" onclick="show_private();">_ArgumentDecls</a> dictionary also maintains <em>supplementary dictionaries</em>
+used internally to map names of <em>arguments</em> and their <em>endpoints</em>.</p>
 <p>The usage of <a href="SConsArguments._ArgumentDecls-class.html" class="link" onclick="show_private();">_ArgumentDecls</a> may be split into three stages:</p>
 <blockquote>
 <ul class="rst-simple">
-<li>declaring <em>Arguments</em>; this may be done during object
+<li>declaring <em>arguments</em>; this may be done during object
 creation, see <a href="SConsArguments._ArgumentDecls-class.html#__init__" class="link">__init__()</a>; further declarations may be added or
 existing ones may be modified via dictionary interface, see
 <a href="SConsArguments._ArgumentDecls-class.html#__setitem__" class="link">__setitem__()</a>, <a href="SConsArguments._ArgumentDecls-class.html#update" class="link">update()</a> and others,</li>
-<li>committing declared variables, see <a href="SConsArguments._ArgumentDecls-class.html#commit" class="link">commit()</a>; after commit, the
-contents of <a href="SConsArguments._ArgumentDecls-class.html" class="link" onclick="show_private();">_ArgumentDecls</a> is &quot;frozen&quot; and any attempts to
-modifications end-up with a <code class="link">RuntimeError</code> exception being raised,</li>
+<li>committing declared variables, see <a href="SConsArguments._ArgumentDecls-class.html#commit" class="link">commit()</a>; after commit,
+any attempts to modify contents of <a href="SConsArguments._ArgumentDecls-class.html" class="link" onclick="show_private();">_ArgumentDecls</a> ends with a
+<code class="link">RuntimeError</code> exception being raised,</li>
 <li>creating related construction variables (<tt class="rst-docutils literal"><span class="pre">env[&quot;VARIABLE&quot;]=VALUE</span></tt>),
 command-line variables (<tt class="rst-docutils literal">variable=value</tt>) and command-line options
 (<tt class="rst-docutils literal"><span class="pre">--option=value</span></tt>) according to committed <a href="SConsArguments._ArgumentDecls-class.html" class="link" onclick="show_private();">_ArgumentDecls</a>
@@ -91,20 +87,14 @@ declarations, see <a href="SConsArguments._ArgumentDecls-class.html#add_to" clas
 well.</li>
 </ul>
 </blockquote>
-<p>After that, an instance of <a href="SConsArguments._Arguments-class.html" class="link" onclick="show_private();">_Arguments</a> should be created from <a href="SConsArguments._ArgumentDecls-class.html" class="link" onclick="show_private();">_ArgumentDecls</a> to
-keep track of created <em>Arguments</em> (and corresponding construction
-variables, command-line variables and command-line options). The dictionary
-<a href="SConsArguments._ArgumentDecls-class.html" class="link" onclick="show_private();">_ArgumentDecls</a> may be then disposed.</p>
+<p>After that, an instance of <a href="SConsArguments._Arguments-class.html" class="link" onclick="show_private();">_Arguments</a> should be created from
+<a href="SConsArguments._ArgumentDecls-class.html" class="link" onclick="show_private();">_ArgumentDecls</a> to keep track of created <em>arguments</em> (and corresponding
+construction variables, command-line variables and command-line options).
+The dictionary <a href="SConsArguments._ArgumentDecls-class.html" class="link" onclick="show_private();">_ArgumentDecls</a> may be then disposed.</p>
 <p><strong>Note</strong>:</p>
 <blockquote>
-In several places we use <tt class="rst-docutils literal">ns</tt> as placeholder for one of the <tt class="rst-docutils literal">ENV</tt>,
-<tt class="rst-docutils literal">VAR</tt> or <tt class="rst-docutils literal">OPT</tt> constants which represent selection of
-&quot;corresponding Environment construction variable&quot;, &quot;corresponding SCons
-command line variable&quot; or &quot;corresponding SCons command line option&quot;
-respectively.  So, for example the call
-<tt class="rst-docutils literal"><span class="pre">decls.set_key(ENV,&quot;foo&quot;,&quot;ENV_FOO&quot;)</span></tt> defines the name
-<tt class="rst-docutils literal">&quot;ENV_FOO&quot;</tt> to be used for construction variable in SCons environment
-(<tt class="rst-docutils literal">ENV</tt>) that will correspond to our <em>Argument</em> named <tt class="rst-docutils literal">foo</tt>.</blockquote>
+In several places we use <tt class="rst-docutils literal">ns</tt> as placeholder for one of the <a href="SConsArguments-module.html#ENV" class="link">ENV</a>,
+<a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a> selectors.</blockquote>
 
 <!-- ==================== INSTANCE METHODS ==================== -->
 <a name="section-InstanceMethods"></a>
@@ -152,7 +142,8 @@ new empty dictionary
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
           <td><span class="summary-sig"><a name="__reset_supp_dicts"></a><span class="summary-sig-name">__reset_supp_dicts</span>(<span class="summary-sig-arg">self</span>)</span><br />
-      Reset supplementary dictionaries to empty state</td>
+      Reset supplementary dictionaries to empty state. This method is for
+internal use, it IS <strong>NOT a part of public API</strong>.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecls.__reset_supp_dicts">source&nbsp;code</a></span>
             
@@ -170,7 +161,8 @@ new empty dictionary
         <tr>
           <td><span class="summary-sig"><a name="__update_supp_dicts"></a><span class="summary-sig-name">__update_supp_dicts</span>(<span class="summary-sig-arg">self</span>)</span><br />
       Update supplementary dictionaries to be in sync with the
-declarations contained in main dictionary</td>
+declarations contained in main dictionary. This method is for internal
+use, it IS <strong>NOT a part of public API</strong>.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecls.__update_supp_dicts">source&nbsp;code</a></span>
             
@@ -191,7 +183,8 @@ declarations contained in main dictionary</td>
         <span class="summary-sig-arg">key</span>,
         <span class="summary-sig-arg">ns_key</span>)</span><br />
       Replace in the supplementary dicts the key identifying corresponding
-<code class="link">ns</code> variable (where <code class="link">ns</code> is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>).</td>
+<code class="link">ns</code> variable (where <code class="link">ns</code> is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>). This method
+is for internal use, it IS <strong>NOT a part of public API</strong>.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecls.__replace_key_in_supp_dicts">source&nbsp;code</a></span>
             
@@ -212,7 +205,8 @@ declarations contained in main dictionary</td>
         <span class="summary-sig-arg">key</span>,
         <span class="summary-sig-arg">ns_key</span>)</span><br />
       Add to supplementary dictionaries the new <code class="link">ns</code> variable
-corresponding to <em>Argument</em> identified by <code class="link">key</code>.</td>
+corresponding to <em>argument</em> identified by <code class="link">key</code>. This method is for
+internal use, it IS <strong>NOT a part of public API</strong>.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecls.__append_key_to_supp_dicts">source&nbsp;code</a></span>
             
@@ -414,7 +408,7 @@ corresponding to <em>Argument</em> identified by <code class="link">key</code>.<
         <tr>
           <td><span class="summary-sig"><a href="SConsArguments._ArgumentDecls-class.html#get_rename_dict" class="summary-sig-name">get_rename_dict</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">ns</span>)</span><br />
-      Get the dictionary mapping variable names from <em>Argument</em> namespace
+      Get the dictionary mapping variable names from <em>argument</em> namespace
 to <code class="link">ns</code> (where <code class="link">ns</code> is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>).</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecls.get_rename_dict">source&nbsp;code</a></span>
@@ -434,7 +428,7 @@ to <code class="link">ns</code> (where <code class="link">ns</code> is one of <a
           <td><span class="summary-sig"><a href="SConsArguments._ArgumentDecls-class.html#get_irename_dict" class="summary-sig-name">get_irename_dict</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">ns</span>)</span><br />
       Get the dictionary mapping variable names from <code class="link">ns</code> namespace to
-<em>Argument</em> namespace (where <code class="link">ns</code> is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>).</td>
+<em>argument</em> namespace (where <code class="link">ns</code> is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>).</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecls.get_irename_dict">source&nbsp;code</a></span>
             
@@ -452,7 +446,7 @@ to <code class="link">ns</code> (where <code class="link">ns</code> is one of <a
         <tr>
           <td><span class="summary-sig"><a href="SConsArguments._ArgumentDecls-class.html#get_resubst_dict" class="summary-sig-name">get_resubst_dict</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">ns</span>)</span><br />
-      Get the dictionary mapping variable names from <em>Argument</em> namespace
+      Get the dictionary mapping variable names from <em>argument</em> namespace
 to placeholders for variable values from <code class="link">ns</code> namespace (where <code class="link">ns</code>
 is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>).</td>
           <td align="right" valign="top">
@@ -473,7 +467,7 @@ is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href
           <td><span class="summary-sig"><a href="SConsArguments._ArgumentDecls-class.html#get_iresubst_dict" class="summary-sig-name">get_iresubst_dict</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">ns</span>)</span><br />
       Get the dictionary mapping variable names from <code class="link">ns</code> namespace to
-placeholders for variable values from <em>Argument</em> namespace (where <code class="link">ns</code>
+placeholders for variable values from <em>argument</em> namespace (where <code class="link">ns</code>
 is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>).</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecls.get_iresubst_dict">source&nbsp;code</a></span>
@@ -534,8 +528,9 @@ is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href
           <td><span class="summary-sig"><a name="_add_to"></a><span class="summary-sig-name">_add_to</span>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">ns</span>,
         <span class="summary-sig-arg">*args</span>)</span><br />
-      Invoke <a href="SConsArguments._ArgumentDecl-class.html#add_to" class="link">_ArgumentDecl.add_to()</a> for each <em>Argument</em> declared
-in this dictionary.</td>
+      Invoke <a href="SConsArguments._ArgumentDecl-class.html#add_to" class="link">_ArgumentDecl.add_to()</a> for each <em>argument</em> declared
+in this dictionary. This method is for internal use, it IS <strong>NOT
+a part of public API</strong>.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecls._add_to">source&nbsp;code</a></span>
             
@@ -554,8 +549,9 @@ in this dictionary.</td>
           <td><span class="summary-sig"><a name="_safe_add_to"></a><span class="summary-sig-name">_safe_add_to</span>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">ns</span>,
         <span class="summary-sig-arg">*args</span>)</span><br />
-      Invoke <a href="SConsArguments._ArgumentDecl-class.html#safe_add_to" class="link">_ArgumentDecl.safe_add_to()</a> for each <em>Argument</em>
-declared in this dictionary.</td>
+      Invoke <a href="SConsArguments._ArgumentDecl-class.html#safe_add_to" class="link">_ArgumentDecl.safe_add_to()</a> for each <em>argument</em>
+declared in this dictionary. This method is for internal use, it IS
+<strong>NOT a part of public API</strong>.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecls._safe_add_to">source&nbsp;code</a></span>
             
@@ -573,7 +569,8 @@ declared in this dictionary.</td>
         <tr>
           <td><span class="summary-sig"><a name="_build_resubst_dicts"></a><span class="summary-sig-name">_build_resubst_dicts</span>(<span class="summary-sig-arg">self</span>)</span><br />
       Build supplementary dictionaries used to rename placeholders in
-values (forward, from <em>Argument</em> namespace to <tt class="rst-docutils literal">ns</tt> namespaces)</td>
+values (forward, from <em>argument</em> namespace to <tt class="rst-docutils literal">ns</tt> namespaces).
+This method is for internal use, it IS <strong>NOT a part of public API</strong>.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecls._build_resubst_dicts">source&nbsp;code</a></span>
             
@@ -591,7 +588,8 @@ values (forward, from <em>Argument</em> namespace to <tt class="rst-docutils lit
         <tr>
           <td><span class="summary-sig"><a name="_build_iresubst_dicts"></a><span class="summary-sig-name">_build_iresubst_dicts</span>(<span class="summary-sig-arg">self</span>)</span><br />
       Build supplementary dictionaries used to rename placeholders in
-values (inverse, from <tt class="rst-docutils literal">ns</tt> namespaces to <em>Argument</em> namespace)</td>
+values (inverse, from <tt class="rst-docutils literal">ns</tt> namespaces to <em>argument</em> namespace).
+This method is for internal use, it IS <strong>NOT a part of public API</strong>.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecls._build_iresubst_dicts">source&nbsp;code</a></span>
             
@@ -610,7 +608,8 @@ values (inverse, from <tt class="rst-docutils literal">ns</tt> namespaces to <em
           <td><span class="summary-sig"><a href="SConsArguments._ArgumentDecls-class.html#_resubst_decl_defaults" class="summary-sig-name" onclick="show_private();">_resubst_decl_defaults</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">decl</span>)</span><br />
       Rename placeholders found in the declarations of default values of
-<tt class="rst-docutils literal">ns</tt> corresponding variables for the given declaration <tt class="rst-docutils literal">decl</tt>.</td>
+<tt class="rst-docutils literal">ns</tt> corresponding variables for the given declaration <tt class="rst-docutils literal">decl</tt>.
+This method is for internal use, it IS <strong>NOT a part of public API</strong>.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecls._resubst_decl_defaults">source&nbsp;code</a></span>
             
@@ -628,7 +627,8 @@ values (inverse, from <tt class="rst-docutils literal">ns</tt> namespaces to <em
         <tr>
           <td><span class="summary-sig"><a name="__resubst_defaults"></a><span class="summary-sig-name">__resubst_defaults</span>(<span class="summary-sig-arg">self</span>)</span><br />
       Rename placeholders found in the declarations of default values of
-<tt class="rst-docutils literal">ns</tt> corresponding variables for all declared <em>Arguments</em>.</td>
+<tt class="rst-docutils literal">ns</tt> corresponding variables for all declared <em>arguments</em>. This
+method is for internal use, it IS <strong>NOT a part of public API</strong>.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecls.__resubst_defaults">source&nbsp;code</a></span>
             
@@ -645,7 +645,8 @@ values (inverse, from <tt class="rst-docutils literal">ns</tt> namespaces to <em
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
           <td><span class="summary-sig"><a name="__ensure_not_committed"></a><span class="summary-sig-name">__ensure_not_committed</span>(<span class="summary-sig-arg">self</span>)</span><br />
-      Raise exception if the object was already committed</td>
+      Raise exception if the object was already committed. This method
+is for internal use, it IS <strong>NOT a part of public API</strong>.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecls.__ensure_not_committed">source&nbsp;code</a></span>
             
@@ -662,7 +663,8 @@ values (inverse, from <tt class="rst-docutils literal">ns</tt> namespaces to <em
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
           <td><span class="summary-sig"><a name="__ensure_committed"></a><span class="summary-sig-name">__ensure_committed</span>(<span class="summary-sig-arg">self</span>)</span><br />
-      Raise exception if the object was not jet committed</td>
+      Raise exception if the object was not jet committed. This method is
+for internal use, it IS <strong>NOT a part of public API</strong></td>
           <td align="right" valign="top">
             <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecls.__ensure_committed">source&nbsp;code</a></span>
             
@@ -763,7 +765,8 @@ options.</td>
         <span class="summary-sig-arg">key</span>,
         <span class="summary-sig-arg">ns_key</span>)</span><br />
       Add to supplementary dictionaries the new <code class="link">ns</code> variable
-corresponding to <em>Argument</em> identified by <code class="link">key</code>.</td>
+corresponding to <em>argument</em> identified by <code class="link">key</code>. This method is for
+internal use, it IS <strong>NOT a part of public API</strong>.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecls._ArgumentDecls__append_key_to_supp_dicts">source&nbsp;code</a></span>
             
@@ -797,7 +800,8 @@ corresponding to <em>Argument</em> identified by <code class="link">key</code>.<
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
           <td><span class="summary-sig"><a name="_ArgumentDecls__ensure_committed"></a><span class="summary-sig-name">_ArgumentDecls__ensure_committed</span>(<span class="summary-sig-arg">self</span>)</span><br />
-      Raise exception if the object was not jet committed</td>
+      Raise exception if the object was not jet committed. This method is
+for internal use, it IS <strong>NOT a part of public API</strong></td>
           <td align="right" valign="top">
             <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecls._ArgumentDecls__ensure_committed">source&nbsp;code</a></span>
             
@@ -814,7 +818,8 @@ corresponding to <em>Argument</em> identified by <code class="link">key</code>.<
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
           <td><span class="summary-sig"><a name="_ArgumentDecls__ensure_not_committed"></a><span class="summary-sig-name">_ArgumentDecls__ensure_not_committed</span>(<span class="summary-sig-arg">self</span>)</span><br />
-      Raise exception if the object was already committed</td>
+      Raise exception if the object was already committed. This method
+is for internal use, it IS <strong>NOT a part of public API</strong>.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecls._ArgumentDecls__ensure_not_committed">source&nbsp;code</a></span>
             
@@ -835,7 +840,8 @@ corresponding to <em>Argument</em> identified by <code class="link">key</code>.<
         <span class="summary-sig-arg">key</span>,
         <span class="summary-sig-arg">ns_key</span>)</span><br />
       Replace in the supplementary dicts the key identifying corresponding
-<code class="link">ns</code> variable (where <code class="link">ns</code> is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>).</td>
+<code class="link">ns</code> variable (where <code class="link">ns</code> is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>). This method
+is for internal use, it IS <strong>NOT a part of public API</strong>.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecls._ArgumentDecls__replace_key_in_supp_dicts">source&nbsp;code</a></span>
             
@@ -852,7 +858,8 @@ corresponding to <em>Argument</em> identified by <code class="link">key</code>.<
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
           <td><span class="summary-sig"><a name="_ArgumentDecls__reset_supp_dicts"></a><span class="summary-sig-name">_ArgumentDecls__reset_supp_dicts</span>(<span class="summary-sig-arg">self</span>)</span><br />
-      Reset supplementary dictionaries to empty state</td>
+      Reset supplementary dictionaries to empty state. This method is for
+internal use, it IS <strong>NOT a part of public API</strong>.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecls._ArgumentDecls__reset_supp_dicts">source&nbsp;code</a></span>
             
@@ -870,7 +877,8 @@ corresponding to <em>Argument</em> identified by <code class="link">key</code>.<
         <tr>
           <td><span class="summary-sig"><a name="_ArgumentDecls__resubst_defaults"></a><span class="summary-sig-name">_ArgumentDecls__resubst_defaults</span>(<span class="summary-sig-arg">self</span>)</span><br />
       Rename placeholders found in the declarations of default values of
-<tt class="rst-docutils literal">ns</tt> corresponding variables for all declared <em>Arguments</em>.</td>
+<tt class="rst-docutils literal">ns</tt> corresponding variables for all declared <em>arguments</em>. This
+method is for internal use, it IS <strong>NOT a part of public API</strong>.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecls._ArgumentDecls__resubst_defaults">source&nbsp;code</a></span>
             
@@ -888,7 +896,8 @@ corresponding to <em>Argument</em> identified by <code class="link">key</code>.<
         <tr>
           <td><span class="summary-sig"><a name="_ArgumentDecls__update_supp_dicts"></a><span class="summary-sig-name">_ArgumentDecls__update_supp_dicts</span>(<span class="summary-sig-arg">self</span>)</span><br />
       Update supplementary dictionaries to be in sync with the
-declarations contained in main dictionary</td>
+declarations contained in main dictionary. This method is for internal
+use, it IS <strong>NOT a part of public API</strong>.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecls._ArgumentDecls__update_supp_dicts">source&nbsp;code</a></span>
             
@@ -1150,7 +1159,8 @@ new empty dictionary
   </tr></table>
   
   <p>Replace in the supplementary dicts the key identifying corresponding
-<code class="link">ns</code> variable (where <code class="link">ns</code> is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>).</p>
+<code class="link">ns</code> variable (where <code class="link">ns</code> is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>). This method
+is for internal use, it IS <strong>NOT a part of public API</strong>.</p>
 <p><strong>Note</strong>: This only alters rename/irename dictionaries, the
 resubst/iresubst dicts are not altered.</p>
 <p>If the corresponding <code class="link">ns</code> variable identified by <tt class="rst-docutils literal">ns_key</tt> already
@@ -1161,7 +1171,7 @@ dictionaries are left unaltered.</p>
     <dd><ul class="nomargin-top">
         <li><strong class="pname"><code>ns</code></strong> (int) - selector of the corresponding variable being renamed; one of
 <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>,</li>
-        <li><strong class="pname"><code>key</code></strong> (string) - the key identifying <em>Argument</em> declared within this
+        <li><strong class="pname"><code>key</code></strong> (string) - the key identifying <em>argument</em> declared within this
 <a href="SConsArguments._ArgumentDecls-class.html" class="link" onclick="show_private();">_ArgumentDecls</a> dictionary, which subject to modification,</li>
         <li><strong class="pname"><code>ns_key</code></strong> (string) - new name for the corresponding <code class="link">ns</code> variable.</li>
     </ul></dd>
@@ -1186,7 +1196,8 @@ dictionaries are left unaltered.</p>
   </tr></table>
   
   <p>Add to supplementary dictionaries the new <code class="link">ns</code> variable
-corresponding to <em>Argument</em> identified by <code class="link">key</code>.</p>
+corresponding to <em>argument</em> identified by <code class="link">key</code>. This method is for
+internal use, it IS <strong>NOT a part of public API</strong>.</p>
 <p>If the corresponding <code class="link">ns</code> variable identified by <tt class="rst-docutils literal">ns_key</tt> already
 exists in the supplementary dictionaries, a <tt class="rst-docutils literal">RuntimeError</tt> is raised.</p>
   <dl class="fields">
@@ -1194,7 +1205,7 @@ exists in the supplementary dictionaries, a <tt class="rst-docutils literal">Run
     <dd><ul class="nomargin-top">
         <li><strong class="pname"><code>ns</code></strong> (int) - selector of the corresponding variable being renamed; one of
 <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>,</li>
-        <li><strong class="pname"><code>key</code></strong> (string) - the key identifying <em>Argument</em> within this <a href="SConsArguments._ArgumentDecls-class.html" class="link" onclick="show_private();">_ArgumentDecls</a>
+        <li><strong class="pname"><code>key</code></strong> (string) - the key identifying <em>argument</em> within this <a href="SConsArguments._ArgumentDecls-class.html" class="link" onclick="show_private();">_ArgumentDecls</a>
 dictionary, which subject to modification,</li>
         <li><strong class="pname"><code>ns_key</code></strong> (string) - new name for the corresponding <code class="link">ns</code> variable.</li>
     </ul></dd>
@@ -1426,7 +1437,7 @@ dictionary, which subject to modification,</li>
     </td>
   </tr></table>
   
-  Get the dictionary mapping variable names from <em>Argument</em> namespace
+  Get the dictionary mapping variable names from <em>argument</em> namespace
 to <code class="link">ns</code> (where <code class="link">ns</code> is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>).
   <dl class="fields">
     <dt>Parameters:</dt>
@@ -1436,7 +1447,7 @@ to <code class="link">ns</code> (where <code class="link">ns</code> is one of <a
     </ul></dd>
     <dt>Returns:</dt>
         <dd>dictionary with items <tt class="rst-docutils literal">(key, ns_key)</tt>, where <tt class="rst-docutils literal">key</tt> is the key
-from <em>Argument</em> namespace and <tt class="rst-docutils literal">ns_key</tt> is variable name in the
+from <em>argument</em> namespace and <tt class="rst-docutils literal">ns_key</tt> is variable name in the
 <code class="link">ns</code> (<a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>) namespace</dd>
   </dl>
 </td></tr></table>
@@ -1457,7 +1468,7 @@ from <em>Argument</em> namespace and <tt class="rst-docutils literal">ns_key</tt
   </tr></table>
   
   Get the dictionary mapping variable names from <code class="link">ns</code> namespace to
-<em>Argument</em> namespace (where <code class="link">ns</code> is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>).
+<em>argument</em> namespace (where <code class="link">ns</code> is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>).
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
@@ -1466,7 +1477,7 @@ from <em>Argument</em> namespace and <tt class="rst-docutils literal">ns_key</tt
     </ul></dd>
     <dt>Returns:</dt>
         <dd>dictionary with items <tt class="rst-docutils literal">(ns_key, key)</tt>, where <tt class="rst-docutils literal">key</tt> is the key
-from <em>Argument</em> namespace and <tt class="rst-docutils literal">ns_key</tt> is variable name in the
+from <em>argument</em> namespace and <tt class="rst-docutils literal">ns_key</tt> is variable name in the
 <code class="link">ns</code> (<a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>) namespace</dd>
   </dl>
 </td></tr></table>
@@ -1486,7 +1497,7 @@ from <em>Argument</em> namespace and <tt class="rst-docutils literal">ns_key</tt
     </td>
   </tr></table>
   
-  <p>Get the dictionary mapping variable names from <em>Argument</em> namespace
+  <p>Get the dictionary mapping variable names from <em>argument</em> namespace
 to placeholders for variable values from <code class="link">ns</code> namespace (where <code class="link">ns</code>
 is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>).</p>
 <p><strong>Note</strong>:</p>
@@ -1501,7 +1512,7 @@ called.</blockquote>
     </ul></dd>
     <dt>Returns:</dt>
         <dd>dictionary with items <tt class="rst-docutils literal">(key, <span class="pre">&quot;${&quot;</span> + ns_key + <span class="pre">&quot;}&quot;)</span></tt>, where
-<tt class="rst-docutils literal">key</tt> is the key from <em>Argument</em> namespace and <tt class="rst-docutils literal">ns_key</tt> is
+<tt class="rst-docutils literal">key</tt> is the key from <em>argument</em> namespace and <tt class="rst-docutils literal">ns_key</tt> is
 variable name in the <code class="link">ns</code> (<a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>) namespace</dd>
   </dl>
 </td></tr></table>
@@ -1522,7 +1533,7 @@ variable name in the <code class="link">ns</code> (<a href="SConsArguments-modul
   </tr></table>
   
   <p>Get the dictionary mapping variable names from <code class="link">ns</code> namespace to
-placeholders for variable values from <em>Argument</em> namespace (where <code class="link">ns</code>
+placeholders for variable values from <em>argument</em> namespace (where <code class="link">ns</code>
 is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>).</p>
 <p><strong>Note</strong>:</p>
 <blockquote>
@@ -1536,7 +1547,7 @@ called.</blockquote>
     </ul></dd>
     <dt>Returns:</dt>
         <dd>dictionary with items <tt class="rst-docutils literal">(ns_key, <span class="pre">&quot;${&quot;</span> + key + <span class="pre">&quot;}&quot;)</span></tt>, where
-<tt class="rst-docutils literal">key</tt> is the key from <em>Argument</em> namespace and <tt class="rst-docutils literal">ns_key</tt> is
+<tt class="rst-docutils literal">key</tt> is the key from <em>argument</em> namespace and <tt class="rst-docutils literal">ns_key</tt> is
 variable name in the <code class="link">ns</code> (<a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>) namespace</dd>
   </dl>
 </td></tr></table>
@@ -1566,12 +1577,12 @@ raises an exception.</p>
     <dd><ul class="nomargin-top">
         <li><strong class="pname"><code>ns</code></strong> (int) - selector of the corresponding namespace; one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or
 <a href="SConsArguments-module.html#OPT" class="link">OPT</a>,</li>
-        <li><strong class="pname"><code>key</code></strong> (string) - key identifying an already declared <em>Argument</em> variable to which
+        <li><strong class="pname"><code>key</code></strong> (string) - key identifying an already declared <em>argument</em> variable to which
 the queried <code class="link">ns</code> variable corresponds,</li>
     </ul></dd>
     <dt>Returns:</dt>
         <dd>the key (name) identifying <code class="link">ns</code> variable corresponding to our
-<em>Argument</em> identified by <code class="link">key</code></dd>
+<em>argument</em> identified by <code class="link">key</code></dd>
   </dl>
 </td></tr></table>
 </div>
@@ -1601,12 +1612,12 @@ raises an exception.</p>
     <dd><ul class="nomargin-top">
         <li><strong class="pname"><code>ns</code></strong> (int) - selector of the corresponding namespace; one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or
 <a href="SConsArguments-module.html#OPT" class="link">OPT</a>,</li>
-        <li><strong class="pname"><code>key</code></strong> (string) - key identifying an already declared <em>Argument</em> to which
+        <li><strong class="pname"><code>key</code></strong> (string) - key identifying an already declared <em>argument</em> to which
 the queried <code class="link">ns</code> variable corresponds,</li>
     </ul></dd>
     <dt>Returns:</dt>
         <dd>the key (name) identifying <code class="link">ns</code> variable corresponding to our
-<em>Argument</em> identified by <code class="link">key</code></dd>
+<em>argument</em> identified by <code class="link">key</code></dd>
   </dl>
 </td></tr></table>
 </div>
@@ -1627,10 +1638,11 @@ the queried <code class="link">ns</code> variable corresponds,</li>
   
   Rename placeholders found in the declarations of default values of
 <tt class="rst-docutils literal">ns</tt> corresponding variables for the given declaration <tt class="rst-docutils literal">decl</tt>.
+This method is for internal use, it IS <strong>NOT a part of public API</strong>.
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>decl</code></strong> (_ArgumentDecl) - the <em>Argument</em> declaration to modify</li>
+        <li><strong class="pname"><code>decl</code></strong> (_ArgumentDecl) - the <em>argument</em> declaration to modify</li>
     </ul></dd>
   </dl>
 </td></tr></table>
@@ -1690,7 +1702,7 @@ VAR, OPT)</tt>.</p>
 <blockquote>
 <ul class="rst-simple">
 <li><tt class="rst-docutils literal">env</tt> is a SCons environment object to be updated with
-<em>Arguments</em> defined here and their defaults,</li>
+<em>arguments</em> defined here and their defaults,</li>
 <li><tt class="rst-docutils literal">variables</tt> is a SCons Variables object for which new
 command-line variables will be defined,</li>
 <li><tt class="rst-docutils literal">options</tt> is a Boolean deciding whether the
@@ -1730,10 +1742,10 @@ variables/options.</p></li>
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
         <li><strong class="pname"><code>env</code></strong> - a SCons environment object to be populated with default values
-of construction variables defined by <em>Arguments</em> declared here,</li>
+of construction variables defined by <em>arguments</em> declared here,</li>
         <li><strong class="pname"><code>variables</code></strong> - a <a class="rst-reference external" href="http://www.scons.org/doc/latest/HTML/scons-api/SCons.Variables.Variables-class.html" target="_top">SCons.Variables.Variables</a> object to be populated with new
-variables defined by <em>Arguments</em> declared here,</li>
-        <li><strong class="pname"><code>create_options</code></strong> (Boolean) - if <tt class="rst-docutils literal">True</tt>, the command-line create_options declared by <em>Arguments</em>
+variables defined by <em>arguments</em> declared here,</li>
+        <li><strong class="pname"><code>create_options</code></strong> (Boolean) - if <tt class="rst-docutils literal">True</tt>, the command-line create_options declared by <em>arguments</em>
 are created,</li>
         <li><strong class="pname"><code>create_args</code></strong> - if <tt class="rst-docutils literal">True</tt> (default) create and return a <a href="SConsArguments._Arguments-class.html" class="link" onclick="show_private();">_Arguments</a> object for
 further operation on variables and their values,</li>
@@ -1762,7 +1774,8 @@ otherwise returns <tt class="rst-docutils literal">None</tt>.</dd>
   </tr></table>
   
   <p>Add to supplementary dictionaries the new <code class="link">ns</code> variable
-corresponding to <em>Argument</em> identified by <code class="link">key</code>.</p>
+corresponding to <em>argument</em> identified by <code class="link">key</code>. This method is for
+internal use, it IS <strong>NOT a part of public API</strong>.</p>
 <p>If the corresponding <code class="link">ns</code> variable identified by <tt class="rst-docutils literal">ns_key</tt> already
 exists in the supplementary dictionaries, a <tt class="rst-docutils literal">RuntimeError</tt> is raised.</p>
   <dl class="fields">
@@ -1770,7 +1783,7 @@ exists in the supplementary dictionaries, a <tt class="rst-docutils literal">Run
     <dd><ul class="nomargin-top">
         <li><strong class="pname"><code>ns</code></strong> (int) - selector of the corresponding variable being renamed; one of
 <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>,</li>
-        <li><strong class="pname"><code>key</code></strong> (string) - the key identifying <em>Argument</em> within this <a href="SConsArguments._ArgumentDecls-class.html" class="link" onclick="show_private();">_ArgumentDecls</a>
+        <li><strong class="pname"><code>key</code></strong> (string) - the key identifying <em>argument</em> within this <a href="SConsArguments._ArgumentDecls-class.html" class="link" onclick="show_private();">_ArgumentDecls</a>
 dictionary, which subject to modification,</li>
         <li><strong class="pname"><code>ns_key</code></strong> (string) - new name for the corresponding <code class="link">ns</code> variable.</li>
     </ul></dd>
@@ -1795,7 +1808,8 @@ dictionary, which subject to modification,</li>
   </tr></table>
   
   <p>Replace in the supplementary dicts the key identifying corresponding
-<code class="link">ns</code> variable (where <code class="link">ns</code> is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>).</p>
+<code class="link">ns</code> variable (where <code class="link">ns</code> is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>). This method
+is for internal use, it IS <strong>NOT a part of public API</strong>.</p>
 <p><strong>Note</strong>: This only alters rename/irename dictionaries, the
 resubst/iresubst dicts are not altered.</p>
 <p>If the corresponding <code class="link">ns</code> variable identified by <tt class="rst-docutils literal">ns_key</tt> already
@@ -1806,7 +1820,7 @@ dictionaries are left unaltered.</p>
     <dd><ul class="nomargin-top">
         <li><strong class="pname"><code>ns</code></strong> (int) - selector of the corresponding variable being renamed; one of
 <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>,</li>
-        <li><strong class="pname"><code>key</code></strong> (string) - the key identifying <em>Argument</em> declared within this
+        <li><strong class="pname"><code>key</code></strong> (string) - the key identifying <em>argument</em> declared within this
 <a href="SConsArguments._ArgumentDecls-class.html" class="link" onclick="show_private();">_ArgumentDecls</a> dictionary, which subject to modification,</li>
         <li><strong class="pname"><code>ns_key</code></strong> (string) - new name for the corresponding <code class="link">ns</code> variable.</li>
     </ul></dd>
@@ -1841,7 +1855,7 @@ dictionaries are left unaltered.</p>
   <tr>
     <td align="left" class="footer">
     Generated by Epydoc 3.0.1
-    on Sat Nov  7 14:23:54 2015
+    on Sat Nov  7 18:30:17 2015
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"
