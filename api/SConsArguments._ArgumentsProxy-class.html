@@ -3,7 +3,7 @@
           "DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>SConsArguments._ArgumentsEnvProxy</title>
+  <title>SConsArguments._ArgumentsProxy</title>
   <link rel="stylesheet" href="epydoc.css" type="text/css" />
   <script type="text/javascript" src="epydoc.js"></script>
 </head>
@@ -38,7 +38,7 @@
     <td width="100%">
       <span class="breadcrumbs">
         <a href="SConsArguments-module.html">Package&nbsp;SConsArguments</a> ::
-        Class&nbsp;_ArgumentsEnvProxy
+        Class&nbsp;_ArgumentsProxy
       </span>
     </td>
     <td>
@@ -48,35 +48,41 @@
     onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
         <tr><td align="right"><span class="options"
             >[<a href="frames.html" target="_top">frames</a
-            >]&nbsp;|&nbsp;<a href="SConsArguments._ArgumentsEnvProxy-class.html"
+            >]&nbsp;|&nbsp;<a href="SConsArguments._ArgumentsProxy-class.html"
             target="_top">no&nbsp;frames</a>]</span></td></tr>
       </table>
     </td>
   </tr>
 </table>
 <!-- ==================== CLASS DESCRIPTION ==================== -->
-<h1 class="epydoc">Class _ArgumentsEnvProxy</h1><p class="nomargin-top"><span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentsEnvProxy">source&nbsp;code</a></span></p>
+<h1 class="epydoc">Class _ArgumentsProxy</h1><p class="nomargin-top"><span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentsProxy">source&nbsp;code</a></span></p>
 <pre class="base-tree">
 object --+
          |
-        <strong class="uidshort">_ArgumentsEnvProxy</strong>
+        <strong class="uidshort">_ArgumentsProxy</strong>
 </pre>
 
 <hr />
-<p>Proxy used to access construction variables in <a class="rst-reference external" href="http://www.scons.org/doc/HTML/scons-user.html#chap-environments" target="_top">SCons environment</a>
-using <strong>Argument</strong> names.</p>
-<p>This object reimplements several methods of SCons SubstitutionEnvironment
-used to access SCons construction variables. The variable names (and
-placeholders found in their values) are translated forth and back from/to
-<em>Arguments</em> namespace when accessing the variables.</p>
+<p>Proxy used to access construction variables stored in a <strong>target</strong>
+dictionary while using their <em>Argument</em> names.</p>
+<p>This object implements indirect access to variables stored in a <strong>target</strong>
+dictionary, (supposedly a <a class="rst-reference external" href="http://www.scons.org/doc/HTML/scons-user.html#chap-environments" target="_top">SCons environment</a> construction variables)
+while using their <em>Argument</em> names. The variable names (and placeholders
+found in their values) are translated forth and back from/to <em>Arguments</em>
+namespace when accessing the variables. The <a href="SConsArguments._ArgumentsProxy-class.html" class="link" onclick="show_private();">_ArgumentsProxy</a> object
+provides <a href="SConsArguments._ArgumentsProxy-class.html#subst" class="link">subst()</a> method, which handles the renaming in substitution
+strings, the method currently only works with SCons
+<tt class="rst-docutils literal">SubstitutionEnvironment</tt> object as the <strong>target</strong> dictionary.</p>
 <p><strong>Example</strong>:</p>
 <pre class="rst-literal-block">
 user&#64;host:$ scons -Q -f -
 
-from SConsArguments import _ArgumentsEnvProxy
+from SConsArguments import _ArgumentsProxy
 env = Environment()
-proxy = _ArgumentsEnvProxy(env, {'foo':'ENV_FOO'}, {'foo':'${ENV_FOO}'},
-                                {'ENV_FOO':'foo'}, {'ENV_FOO':'${foo}'})
+proxy = _ArgumentsProxy(env, { 'foo'     : 'ENV_FOO'     },
+                             { 'foo'     : '${ENV_FOO}'  },
+                             { 'ENV_FOO' : 'foo'         },
+                             { 'ENV_FOO' : '${foo}'      })
 proxy['foo'] = &quot;FOO&quot;
 print &quot;proxy['foo'] is %r&quot; % proxy['foo']
 print &quot;env['ENV_FOO'] is %r&quot; % env['ENV_FOO']
@@ -109,16 +115,16 @@ scons: `.' is up to date.
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="SConsArguments._ArgumentsEnvProxy-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">env</span>,
+          <td><span class="summary-sig"><a href="SConsArguments._ArgumentsProxy-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">tgt</span>,
         <span class="summary-sig-arg">rename</span>=<span class="summary-sig-default"><code class="variable-group">{</code><code class="variable-group">}</code></span>,
         <span class="summary-sig-arg">resubst</span>=<span class="summary-sig-default"><code class="variable-group">{</code><code class="variable-group">}</code></span>,
         <span class="summary-sig-arg">irename</span>=<span class="summary-sig-default"><code class="variable-group">{</code><code class="variable-group">}</code></span>,
         <span class="summary-sig-arg">iresubst</span>=<span class="summary-sig-default"><code class="variable-group">{</code><code class="variable-group">}</code></span>,
         <span class="summary-sig-arg">strict</span>=<span class="summary-sig-default">False</span>)</span><br />
-      Initializes <a href="SConsArguments._ArgumentsEnvProxy-class.html" class="link" onclick="show_private();">_ArgumentsEnvProxy</a> object.</td>
+      Initializes <a href="SConsArguments._ArgumentsProxy-class.html" class="link" onclick="show_private();">_ArgumentsProxy</a> object.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentsEnvProxy.__init__">source&nbsp;code</a></span>
+            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentsProxy.__init__">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -132,10 +138,10 @@ scons: `.' is up to date.
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="SConsArguments._ArgumentsEnvProxy-class.html#is_strict" class="summary-sig-name">is_strict</a>(<span class="summary-sig-arg">self</span>)</span><br />
+          <td><span class="summary-sig"><a href="SConsArguments._ArgumentsProxy-class.html#is_strict" class="summary-sig-name">is_strict</a>(<span class="summary-sig-arg">self</span>)</span><br />
       Whether the proxy is in &quot;strict&quot; mode</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentsEnvProxy.is_strict">source&nbsp;code</a></span>
+            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentsProxy.is_strict">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -149,11 +155,11 @@ scons: `.' is up to date.
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="SConsArguments._ArgumentsEnvProxy-class.html#set_strict" class="summary-sig-name">set_strict</a>(<span class="summary-sig-arg">self</span>,
+          <td><span class="summary-sig"><a href="SConsArguments._ArgumentsProxy-class.html#set_strict" class="summary-sig-name">set_strict</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">strict</span>)</span><br />
       Set the proxy to &quot;strict&quot; or &quot;non-strict&quot; mode</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentsEnvProxy.set_strict">source&nbsp;code</a></span>
+            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentsProxy.set_strict">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -170,7 +176,7 @@ scons: `.' is up to date.
           <td><span class="summary-sig"><a name="__setup_methods"></a><span class="summary-sig-name">__setup_methods</span>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">strict</span>)</span></td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentsEnvProxy.__setup_methods">source&nbsp;code</a></span>
+            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentsProxy.__setup_methods">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -187,7 +193,7 @@ scons: `.' is up to date.
           <td><span class="summary-sig"><a name="__delitem__"></a><span class="summary-sig-name">__delitem__</span>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">key</span>)</span></td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentsEnvProxy.__delitem__">source&nbsp;code</a></span>
+            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentsProxy.__delitem__">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -204,7 +210,7 @@ scons: `.' is up to date.
           <td><span class="summary-sig"><a name="__delitem__strict"></a><span class="summary-sig-name">__delitem__strict</span>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">key</span>)</span></td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentsEnvProxy.__delitem__strict">source&nbsp;code</a></span>
+            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentsProxy.__delitem__strict">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -221,7 +227,7 @@ scons: `.' is up to date.
           <td><span class="summary-sig"><a name="__delitem__nonstrict"></a><span class="summary-sig-name">__delitem__nonstrict</span>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">key</span>)</span></td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentsEnvProxy.__delitem__nonstrict">source&nbsp;code</a></span>
+            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentsProxy.__delitem__nonstrict">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -238,7 +244,7 @@ scons: `.' is up to date.
           <td><span class="summary-sig"><a name="__getitem__"></a><span class="summary-sig-name">__getitem__</span>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">key</span>)</span></td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentsEnvProxy.__getitem__">source&nbsp;code</a></span>
+            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentsProxy.__getitem__">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -255,7 +261,7 @@ scons: `.' is up to date.
           <td><span class="summary-sig"><a name="__getitem__strict"></a><span class="summary-sig-name">__getitem__strict</span>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">key</span>)</span></td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentsEnvProxy.__getitem__strict">source&nbsp;code</a></span>
+            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentsProxy.__getitem__strict">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -272,7 +278,7 @@ scons: `.' is up to date.
           <td><span class="summary-sig"><a name="__getitem__nonstrict"></a><span class="summary-sig-name">__getitem__nonstrict</span>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">key</span>)</span></td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentsEnvProxy.__getitem__nonstrict">source&nbsp;code</a></span>
+            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentsProxy.__getitem__nonstrict">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -290,7 +296,7 @@ scons: `.' is up to date.
         <span class="summary-sig-arg">key</span>,
         <span class="summary-sig-arg">value</span>)</span></td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentsEnvProxy.__setitem__">source&nbsp;code</a></span>
+            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentsProxy.__setitem__">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -308,7 +314,7 @@ scons: `.' is up to date.
         <span class="summary-sig-arg">key</span>,
         <span class="summary-sig-arg">value</span>)</span></td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentsEnvProxy.__setitem__strict">source&nbsp;code</a></span>
+            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentsProxy.__setitem__strict">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -326,7 +332,7 @@ scons: `.' is up to date.
         <span class="summary-sig-arg">key</span>,
         <span class="summary-sig-arg">value</span>)</span></td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentsEnvProxy.__setitem__nonstrict">source&nbsp;code</a></span>
+            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentsProxy.__setitem__nonstrict">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -344,7 +350,7 @@ scons: `.' is up to date.
         <span class="summary-sig-arg">key</span>,
         <span class="summary-sig-arg">default</span>=<span class="summary-sig-default">None</span>)</span></td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentsEnvProxy._get_strict">source&nbsp;code</a></span>
+            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentsProxy._get_strict">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -362,7 +368,7 @@ scons: `.' is up to date.
         <span class="summary-sig-arg">key</span>,
         <span class="summary-sig-arg">default</span>=<span class="summary-sig-default">None</span>)</span></td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentsEnvProxy._get_nonstrict">source&nbsp;code</a></span>
+            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentsProxy._get_nonstrict">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -379,7 +385,7 @@ scons: `.' is up to date.
           <td><span class="summary-sig"><a name="_has_key_strict"></a><span class="summary-sig-name">_has_key_strict</span>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">key</span>)</span></td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentsEnvProxy._has_key_strict">source&nbsp;code</a></span>
+            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentsProxy._has_key_strict">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -396,7 +402,7 @@ scons: `.' is up to date.
           <td><span class="summary-sig"><a name="_has_key_nonstrict"></a><span class="summary-sig-name">_has_key_nonstrict</span>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">key</span>)</span></td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentsEnvProxy._has_key_nonstrict">source&nbsp;code</a></span>
+            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentsProxy._has_key_nonstrict">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -413,7 +419,7 @@ scons: `.' is up to date.
           <td><span class="summary-sig"><a name="__contains__"></a><span class="summary-sig-name">__contains__</span>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">key</span>)</span></td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentsEnvProxy.__contains__">source&nbsp;code</a></span>
+            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentsProxy.__contains__">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -430,7 +436,7 @@ scons: `.' is up to date.
           <td><span class="summary-sig"><a name="__contains__strict"></a><span class="summary-sig-name">__contains__strict</span>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">key</span>)</span></td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentsEnvProxy.__contains__strict">source&nbsp;code</a></span>
+            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentsProxy.__contains__strict">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -447,7 +453,7 @@ scons: `.' is up to date.
           <td><span class="summary-sig"><a name="__contains__nonstrict"></a><span class="summary-sig-name">__contains__nonstrict</span>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">key</span>)</span></td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentsEnvProxy.__contains__nonstrict">source&nbsp;code</a></span>
+            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentsProxy.__contains__nonstrict">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -463,7 +469,7 @@ scons: `.' is up to date.
         <tr>
           <td><span class="summary-sig"><a name="_items_strict"></a><span class="summary-sig-name">_items_strict</span>(<span class="summary-sig-arg">self</span>)</span></td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentsEnvProxy._items_strict">source&nbsp;code</a></span>
+            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentsProxy._items_strict">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -479,7 +485,7 @@ scons: `.' is up to date.
         <tr>
           <td><span class="summary-sig"><a name="_items_nonstrict"></a><span class="summary-sig-name">_items_nonstrict</span>(<span class="summary-sig-arg">self</span>)</span></td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentsEnvProxy._items_nonstrict">source&nbsp;code</a></span>
+            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentsProxy._items_nonstrict">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -493,11 +499,13 @@ scons: `.' is up to date.
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="subst"></a><span class="summary-sig-name">subst</span>(<span class="summary-sig-arg">self</span>,
+          <td><span class="summary-sig"><a href="SConsArguments._ArgumentsProxy-class.html#subst" class="summary-sig-name">subst</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">string</span>,
-        <span class="summary-sig-arg">*args</span>)</span></td>
+        <span class="summary-sig-arg">*args</span>)</span><br />
+      Interpolates construction variables from the Environment into the
+specific string, returning expanded result.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentsEnvProxy.subst">source&nbsp;code</a></span>
+            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentsProxy.subst">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -511,10 +519,10 @@ scons: `.' is up to date.
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="_ArgumentsEnvProxy__contains__nonstrict"></a><span class="summary-sig-name">_ArgumentsEnvProxy__contains__nonstrict</span>(<span class="summary-sig-arg">self</span>,
+          <td><span class="summary-sig"><a name="_ArgumentsProxy__contains__nonstrict"></a><span class="summary-sig-name">_ArgumentsProxy__contains__nonstrict</span>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">key</span>)</span></td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentsEnvProxy._ArgumentsEnvProxy__contains__nonstrict">source&nbsp;code</a></span>
+            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentsProxy._ArgumentsProxy__contains__nonstrict">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -528,10 +536,10 @@ scons: `.' is up to date.
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="_ArgumentsEnvProxy__contains__strict"></a><span class="summary-sig-name">_ArgumentsEnvProxy__contains__strict</span>(<span class="summary-sig-arg">self</span>,
+          <td><span class="summary-sig"><a name="_ArgumentsProxy__contains__strict"></a><span class="summary-sig-name">_ArgumentsProxy__contains__strict</span>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">key</span>)</span></td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentsEnvProxy._ArgumentsEnvProxy__contains__strict">source&nbsp;code</a></span>
+            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentsProxy._ArgumentsProxy__contains__strict">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -545,10 +553,10 @@ scons: `.' is up to date.
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="_ArgumentsEnvProxy__delitem__nonstrict"></a><span class="summary-sig-name">_ArgumentsEnvProxy__delitem__nonstrict</span>(<span class="summary-sig-arg">self</span>,
+          <td><span class="summary-sig"><a name="_ArgumentsProxy__delitem__nonstrict"></a><span class="summary-sig-name">_ArgumentsProxy__delitem__nonstrict</span>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">key</span>)</span></td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentsEnvProxy._ArgumentsEnvProxy__delitem__nonstrict">source&nbsp;code</a></span>
+            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentsProxy._ArgumentsProxy__delitem__nonstrict">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -562,10 +570,10 @@ scons: `.' is up to date.
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="_ArgumentsEnvProxy__delitem__strict"></a><span class="summary-sig-name">_ArgumentsEnvProxy__delitem__strict</span>(<span class="summary-sig-arg">self</span>,
+          <td><span class="summary-sig"><a name="_ArgumentsProxy__delitem__strict"></a><span class="summary-sig-name">_ArgumentsProxy__delitem__strict</span>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">key</span>)</span></td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentsEnvProxy._ArgumentsEnvProxy__delitem__strict">source&nbsp;code</a></span>
+            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentsProxy._ArgumentsProxy__delitem__strict">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -579,10 +587,10 @@ scons: `.' is up to date.
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="_ArgumentsEnvProxy__getitem__nonstrict"></a><span class="summary-sig-name">_ArgumentsEnvProxy__getitem__nonstrict</span>(<span class="summary-sig-arg">self</span>,
+          <td><span class="summary-sig"><a name="_ArgumentsProxy__getitem__nonstrict"></a><span class="summary-sig-name">_ArgumentsProxy__getitem__nonstrict</span>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">key</span>)</span></td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentsEnvProxy._ArgumentsEnvProxy__getitem__nonstrict">source&nbsp;code</a></span>
+            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentsProxy._ArgumentsProxy__getitem__nonstrict">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -596,10 +604,10 @@ scons: `.' is up to date.
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="_ArgumentsEnvProxy__getitem__strict"></a><span class="summary-sig-name">_ArgumentsEnvProxy__getitem__strict</span>(<span class="summary-sig-arg">self</span>,
+          <td><span class="summary-sig"><a name="_ArgumentsProxy__getitem__strict"></a><span class="summary-sig-name">_ArgumentsProxy__getitem__strict</span>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">key</span>)</span></td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentsEnvProxy._ArgumentsEnvProxy__getitem__strict">source&nbsp;code</a></span>
+            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentsProxy._ArgumentsProxy__getitem__strict">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -613,11 +621,11 @@ scons: `.' is up to date.
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="_ArgumentsEnvProxy__setitem__nonstrict"></a><span class="summary-sig-name">_ArgumentsEnvProxy__setitem__nonstrict</span>(<span class="summary-sig-arg">self</span>,
+          <td><span class="summary-sig"><a name="_ArgumentsProxy__setitem__nonstrict"></a><span class="summary-sig-name">_ArgumentsProxy__setitem__nonstrict</span>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">key</span>,
         <span class="summary-sig-arg">value</span>)</span></td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentsEnvProxy._ArgumentsEnvProxy__setitem__nonstrict">source&nbsp;code</a></span>
+            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentsProxy._ArgumentsProxy__setitem__nonstrict">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -631,11 +639,11 @@ scons: `.' is up to date.
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="_ArgumentsEnvProxy__setitem__strict"></a><span class="summary-sig-name">_ArgumentsEnvProxy__setitem__strict</span>(<span class="summary-sig-arg">self</span>,
+          <td><span class="summary-sig"><a name="_ArgumentsProxy__setitem__strict"></a><span class="summary-sig-name">_ArgumentsProxy__setitem__strict</span>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">key</span>,
         <span class="summary-sig-arg">value</span>)</span></td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentsEnvProxy._ArgumentsEnvProxy__setitem__strict">source&nbsp;code</a></span>
+            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentsProxy._ArgumentsProxy__setitem__strict">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -649,10 +657,10 @@ scons: `.' is up to date.
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="_ArgumentsEnvProxy__setup_methods"></a><span class="summary-sig-name">_ArgumentsEnvProxy__setup_methods</span>(<span class="summary-sig-arg">self</span>,
+          <td><span class="summary-sig"><a name="_ArgumentsProxy__setup_methods"></a><span class="summary-sig-name">_ArgumentsProxy__setup_methods</span>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">strict</span>)</span></td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentsEnvProxy._ArgumentsEnvProxy__setup_methods">source&nbsp;code</a></span>
+            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentsProxy._ArgumentsProxy__setup_methods">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -730,7 +738,7 @@ scons: `.' is up to date.
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
   <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">env</span>,
+        <span class="sig-arg">tgt</span>,
         <span class="sig-arg">rename</span>=<span class="sig-default"><code class="variable-group">{</code><code class="variable-group">}</code></span>,
         <span class="sig-arg">resubst</span>=<span class="sig-default"><code class="variable-group">{</code><code class="variable-group">}</code></span>,
         <span class="sig-arg">irename</span>=<span class="sig-default"><code class="variable-group">{</code><code class="variable-group">}</code></span>,
@@ -739,29 +747,29 @@ scons: `.' is up to date.
     <br /><em class="fname">(Constructor)</em>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentsEnvProxy.__init__">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentsProxy.__init__">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
-  Initializes <a href="SConsArguments._ArgumentsEnvProxy-class.html" class="link" onclick="show_private();">_ArgumentsEnvProxy</a> object.
+  Initializes <a href="SConsArguments._ArgumentsProxy-class.html" class="link" onclick="show_private();">_ArgumentsProxy</a> object.
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>env</code></strong> - a SCons environment object to be proxied,</li>
+        <li><strong class="pname"><code>tgt</code></strong> - the <strong>target</strong> dictionary to be proxied,</li>
         <li><strong class="pname"><code>rename</code></strong> - dictionary used for mapping variable names from user namespace
-to environment namespace (used by <a href="SConsArguments._ArgumentsEnvProxy-class.html#__setitem__" class="link">__setitem__()</a> and
-<a href="SConsArguments._ArgumentsEnvProxy-class.html#__getitem__" class="link">__getitem__()</a>),</li>
+to environment namespace (used by <a href="SConsArguments._ArgumentsProxy-class.html#__setitem__" class="link">__setitem__()</a> and
+<a href="SConsArguments._ArgumentsProxy-class.html#__getitem__" class="link">__getitem__()</a>),</li>
         <li><strong class="pname"><code>resubst</code></strong> - dictionary used by to rename placeholders in values passed
-from user to environment  (used by <a href="SConsArguments._ArgumentsEnvProxy-class.html#__setitem__" class="link">__setitem__()</a> and
-<a href="SConsArguments._ArgumentsEnvProxy-class.html#subst" class="link">subst()</a>)</li>
+from user to environment  (used by <a href="SConsArguments._ArgumentsProxy-class.html#__setitem__" class="link">__setitem__()</a> and
+<a href="SConsArguments._ArgumentsProxy-class.html#subst" class="link">subst()</a>)</li>
         <li><strong class="pname"><code>irename</code></strong> - dictionary used for mapping variable names from environment
 to user namespace (used by <tt class="rst-docutils literal">items()</tt>),</li>
         <li><strong class="pname"><code>iresubst</code></strong> - dictionary used by to rename placeholders in values passed
-back from environment to user (used by <a href="SConsArguments._ArgumentsEnvProxy-class.html#__getitem__" class="link">__getitem__()</a> for
+back from environment to user (used by <a href="SConsArguments._ArgumentsProxy-class.html#__getitem__" class="link">__getitem__()</a> for
 example)</li>
         <li><strong class="pname"><code>strict</code></strong> - if <tt class="rst-docutils literal">True</tt> only the keys defined in rename/resubst
 dictionaries are allowed, otherwise the original variables
-from <tt class="rst-docutils literal">env</tt> are also accessible via their keys</li>
+from <tt class="rst-docutils literal">tgt</tt> are also accessible via their keys</li>
     </ul></dd>
     <dt>Overrides:
         object.__init__
@@ -779,7 +787,7 @@ from <tt class="rst-docutils literal">env</tt> are also accessible via their key
   <h3 class="epydoc"><span class="sig"><span class="sig-name">is_strict</span>(<span class="sig-arg">self</span>)</span>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentsEnvProxy.is_strict">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentsProxy.is_strict">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
@@ -807,7 +815,7 @@ variable/option using Argument's name directly (without mapping).</p>
         <span class="sig-arg">strict</span>)</span>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentsEnvProxy.set_strict">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentsProxy.set_strict">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
@@ -825,6 +833,34 @@ variable/option using Argument's name directly (without mapping).</p>
         <li><strong class="pname"><code>strict</code></strong> - determines whether to enable (<tt class="rst-docutils literal">True</tt>) or disable (<tt class="rst-docutils literal">False</tt>)
 the &quot;strict&quot; mode</li>
     </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="subst"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">subst</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">string</span>,
+        <span class="sig-arg">*args</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentsProxy.subst">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Interpolates construction variables from the Environment into the
+specific string, returning expanded result.</p>
+<p>This is merely same as</p>
+<pre class="py-doctest">
+self.tgt.subst(_resubst(string, self.__resubst), *args)</pre>
+<p>The core job of interpolating the variables is left to the <tt class="rst-docutils literal">tgt</tt>.
+What the method does is to replace <em>Argument</em> names with their
+construction variable names before substitution is made.</p>
+  <dl class="fields">
   </dl>
 </td></tr></table>
 </div>
@@ -856,7 +892,7 @@ the &quot;strict&quot; mode</li>
   <tr>
     <td align="left" class="footer">
     Generated by Epydoc 3.0.1
-    on Fri Nov  6 13:53:13 2015
+    on Sat Nov  7 01:43:47 2015
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

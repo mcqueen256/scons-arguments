@@ -65,12 +65,12 @@ object --+
 </pre>
 
 <hr />
-<p>Dictionary-like object to hold declarations of <em>Arguments</em>.</p>
-<p>The <a href="SConsArguments._ArgumentDecls-class.html" class="link" onclick="show_private();">_ArgumentDecls</a> object is a subclass of <tt class="rst-docutils literal">dict</tt> with keys being strings
-identifying declared <em>Arguments</em> and values being instances of
-<a href="SConsArguments._ArgumentDecl-class.html" class="link" onclick="show_private();">_ArgumentDecl</a> objects. The <a href="SConsArguments._ArgumentDecls-class.html" class="link" onclick="show_private();">_ArgumentDecls</a> dictionary also maintains internally
-<em>supplementary dictionaries</em> used to map names of registered variables
-between four namespaces: <a href="SConsArguments-module.html#ENV" class="link">ENV</a> (construction variables in SCons
+<p>Dictionary-like object with <em>Argument</em> declarations as values.</p>
+<p>The <a href="SConsArguments._ArgumentDecls-class.html" class="link" onclick="show_private();">_ArgumentDecls</a> object is a subclass of <tt class="rst-docutils literal">dict</tt> with keys being
+strings identifying declared <em>Arguments</em> and values being instances of
+<a href="SConsArguments._ArgumentDecl-class.html" class="link" onclick="show_private();">_ArgumentDecl</a> objects. The <a href="SConsArguments._ArgumentDecls-class.html" class="link" onclick="show_private();">_ArgumentDecls</a> dictionary also maintains
+<em>supplementary dictionaries</em> used internally to map names of registered
+variables between four namespaces: <a href="SConsArguments-module.html#ENV" class="link">ENV</a> (construction variables in SCons
 environment), <a href="SConsArguments-module.html#VAR" class="link">VAR</a> (command-line variables <tt class="rst-docutils literal">variable=value</tt>), <a href="SConsArguments-module.html#OPT" class="link">OPT</a>
 (command-line options <tt class="rst-docutils literal"><span class="pre">--option=value</span></tt>) and <em>Argument</em> (the keys used to
 identify the <em>Arguments</em> declared within <a href="SConsArguments._ArgumentDecls-class.html" class="link" onclick="show_private();">_ArgumentDecls</a> dictionary).</p>
@@ -82,8 +82,8 @@ creation, see <a href="SConsArguments._ArgumentDecls-class.html#__init__" class=
 existing ones may be modified via dictionary interface, see
 <a href="SConsArguments._ArgumentDecls-class.html#__setitem__" class="link">__setitem__()</a>, <a href="SConsArguments._ArgumentDecls-class.html#update" class="link">update()</a> and others,</li>
 <li>committing declared variables, see <a href="SConsArguments._ArgumentDecls-class.html#commit" class="link">commit()</a>; after commit, the
-contents of <a href="SConsArguments._ArgumentDecls-class.html" class="link" onclick="show_private();">_ArgumentDecls</a> is frozen and any attempts to modifications
-end-up with a <code class="link">RuntimeError</code> exception being raised,</li>
+contents of <a href="SConsArguments._ArgumentDecls-class.html" class="link" onclick="show_private();">_ArgumentDecls</a> is &quot;frozen&quot; and any attempts to
+modifications end-up with a <code class="link">RuntimeError</code> exception being raised,</li>
 <li>creating related construction variables (<tt class="rst-docutils literal"><span class="pre">env[&quot;VARIABLE&quot;]=VALUE</span></tt>),
 command-line variables (<tt class="rst-docutils literal">variable=value</tt>) and command-line options
 (<tt class="rst-docutils literal"><span class="pre">--option=value</span></tt>) according to committed <a href="SConsArguments._ArgumentDecls-class.html" class="link" onclick="show_private();">_ArgumentDecls</a>
@@ -102,7 +102,7 @@ In several places we use <tt class="rst-docutils literal">ns</tt> as placeholder
 &quot;corresponding Environment construction variable&quot;, &quot;corresponding SCons
 command line variable&quot; or &quot;corresponding SCons command line option&quot;
 respectively.  So, for example the call
-<tt class="rst-docutils literal"><span class="pre">decls.set_ns_key(ENV,&quot;foo&quot;,&quot;ENV_FOO&quot;)</span></tt> defines the name
+<tt class="rst-docutils literal"><span class="pre">decls.set_key(ENV,&quot;foo&quot;,&quot;ENV_FOO&quot;)</span></tt> defines the name
 <tt class="rst-docutils literal">&quot;ENV_FOO&quot;</tt> to be used for construction variable in SCons environment
 (<tt class="rst-docutils literal">ENV</tt>) that will correspond to our <em>Argument</em> named <tt class="rst-docutils literal">foo</tt>.</blockquote>
 
@@ -186,14 +186,14 @@ declarations contained in main dictionary</td>
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="SConsArguments._ArgumentDecls-class.html#__replace_ns_key_in_supp_dicts" class="summary-sig-name" onclick="show_private();">__replace_ns_key_in_supp_dicts</a>(<span class="summary-sig-arg">self</span>,
+          <td><span class="summary-sig"><a href="SConsArguments._ArgumentDecls-class.html#__replace_key_in_supp_dicts" class="summary-sig-name" onclick="show_private();">__replace_key_in_supp_dicts</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">ns</span>,
         <span class="summary-sig-arg">key</span>,
         <span class="summary-sig-arg">ns_key</span>)</span><br />
       Replace in the supplementary dicts the key identifying corresponding
 <code class="link">ns</code> variable (where <code class="link">ns</code> is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>).</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecls.__replace_ns_key_in_supp_dicts">source&nbsp;code</a></span>
+            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecls.__replace_key_in_supp_dicts">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -207,14 +207,14 @@ declarations contained in main dictionary</td>
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="SConsArguments._ArgumentDecls-class.html#__append_ns_key_to_supp_dicts" class="summary-sig-name" onclick="show_private();">__append_ns_key_to_supp_dicts</a>(<span class="summary-sig-arg">self</span>,
+          <td><span class="summary-sig"><a href="SConsArguments._ArgumentDecls-class.html#__append_key_to_supp_dicts" class="summary-sig-name" onclick="show_private();">__append_key_to_supp_dicts</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">ns</span>,
         <span class="summary-sig-arg">key</span>,
         <span class="summary-sig-arg">ns_key</span>)</span><br />
       Add to supplementary dictionaries the new <code class="link">ns</code> variable
 corresponding to <em>Argument</em> identified by <code class="link">key</code>.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecls.__append_ns_key_to_supp_dicts">source&nbsp;code</a></span>
+            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecls.__append_key_to_supp_dicts">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -265,7 +265,7 @@ corresponding to <em>Argument</em> identified by <code class="link">key</code>.<
         <tr>
           <td><span class="summary-sig"><a href="SConsArguments._ArgumentDecls-class.html#setdefault" class="summary-sig-name">setdefault</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">key</span>,
-        <span class="summary-sig-arg">value</span>=<span class="summary-sig-default">&lt;class 'SConsArguments._missing'&gt;</span>)</span></td>
+        <span class="summary-sig-arg">value</span>=<span class="summary-sig-default">MISSING</span>)</span></td>
           <td align="right" valign="top">
             <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecls.setdefault">source&nbsp;code</a></span>
             
@@ -412,12 +412,12 @@ corresponding to <em>Argument</em> identified by <code class="link">key</code>.<
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="SConsArguments._ArgumentDecls-class.html#get_ns_rename_dict" class="summary-sig-name">get_ns_rename_dict</a>(<span class="summary-sig-arg">self</span>,
+          <td><span class="summary-sig"><a href="SConsArguments._ArgumentDecls-class.html#get_rename_dict" class="summary-sig-name">get_rename_dict</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">ns</span>)</span><br />
       Get the dictionary mapping variable names from <em>Argument</em> namespace
 to <code class="link">ns</code> (where <code class="link">ns</code> is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>).</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecls.get_ns_rename_dict">source&nbsp;code</a></span>
+            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecls.get_rename_dict">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -431,12 +431,12 @@ to <code class="link">ns</code> (where <code class="link">ns</code> is one of <a
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="SConsArguments._ArgumentDecls-class.html#get_ns_irename_dict" class="summary-sig-name">get_ns_irename_dict</a>(<span class="summary-sig-arg">self</span>,
+          <td><span class="summary-sig"><a href="SConsArguments._ArgumentDecls-class.html#get_irename_dict" class="summary-sig-name">get_irename_dict</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">ns</span>)</span><br />
       Get the dictionary mapping variable names from <code class="link">ns</code> namespace to
 <em>Argument</em> namespace (where <code class="link">ns</code> is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>).</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecls.get_ns_irename_dict">source&nbsp;code</a></span>
+            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecls.get_irename_dict">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -450,13 +450,13 @@ to <code class="link">ns</code> (where <code class="link">ns</code> is one of <a
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="SConsArguments._ArgumentDecls-class.html#get_ns_resubst_dict" class="summary-sig-name">get_ns_resubst_dict</a>(<span class="summary-sig-arg">self</span>,
+          <td><span class="summary-sig"><a href="SConsArguments._ArgumentDecls-class.html#get_resubst_dict" class="summary-sig-name">get_resubst_dict</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">ns</span>)</span><br />
       Get the dictionary mapping variable names from <em>Argument</em> namespace
 to placeholders for variable values from <code class="link">ns</code> namespace (where <code class="link">ns</code>
 is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>).</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecls.get_ns_resubst_dict">source&nbsp;code</a></span>
+            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecls.get_resubst_dict">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -470,13 +470,13 @@ is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="SConsArguments._ArgumentDecls-class.html#get_ns_iresubst_dict" class="summary-sig-name">get_ns_iresubst_dict</a>(<span class="summary-sig-arg">self</span>,
+          <td><span class="summary-sig"><a href="SConsArguments._ArgumentDecls-class.html#get_iresubst_dict" class="summary-sig-name">get_iresubst_dict</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">ns</span>)</span><br />
       Get the dictionary mapping variable names from <code class="link">ns</code> namespace to
 placeholders for variable values from <em>Argument</em> namespace (where <code class="link">ns</code>
 is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>).</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecls.get_ns_iresubst_dict">source&nbsp;code</a></span>
+            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecls.get_iresubst_dict">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -490,13 +490,13 @@ is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="SConsArguments._ArgumentDecls-class.html#get_ns_key" class="summary-sig-name">get_ns_key</a>(<span class="summary-sig-arg">self</span>,
+          <td><span class="summary-sig"><a href="SConsArguments._ArgumentDecls-class.html#get_key" class="summary-sig-name">get_key</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">ns</span>,
         <span class="summary-sig-arg">key</span>)</span><br />
       Get the key identifying corresponding <code class="link">ns</code> variable  (where <code class="link">ns</code>
 is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>).</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecls.get_ns_key">source&nbsp;code</a></span>
+            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecls.get_key">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -510,14 +510,14 @@ is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="SConsArguments._ArgumentDecls-class.html#set_ns_key" class="summary-sig-name">set_ns_key</a>(<span class="summary-sig-arg">self</span>,
+          <td><span class="summary-sig"><a href="SConsArguments._ArgumentDecls-class.html#set_key" class="summary-sig-name">set_key</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">ns</span>,
         <span class="summary-sig-arg">key</span>,
         <span class="summary-sig-arg">ns_key</span>)</span><br />
       Change the key identifying a corresponding <code class="link">ns</code> variable (where
 <code class="link">ns</code> is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>).</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecls.set_ns_key">source&nbsp;code</a></span>
+            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecls.set_key">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -531,13 +531,13 @@ is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="_add_to_ns"></a><span class="summary-sig-name">_add_to_ns</span>(<span class="summary-sig-arg">self</span>,
+          <td><span class="summary-sig"><a name="_add_to"></a><span class="summary-sig-name">_add_to</span>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">ns</span>,
         <span class="summary-sig-arg">*args</span>)</span><br />
-      Invoke <a href="SConsArguments._ArgumentDecl-class.html#_add_to_ns" class="link" onclick="show_private();">_ArgumentDecl._add_to_ns()</a> for each <em>Argument</em> declared
+      Invoke <a href="SConsArguments._ArgumentDecl-class.html#add_to" class="link">_ArgumentDecl.add_to()</a> for each <em>Argument</em> declared
 in this dictionary.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecls._add_to_ns">source&nbsp;code</a></span>
+            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecls._add_to">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -551,13 +551,13 @@ in this dictionary.</td>
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="_safe_add_to_ns"></a><span class="summary-sig-name">_safe_add_to_ns</span>(<span class="summary-sig-arg">self</span>,
+          <td><span class="summary-sig"><a name="_safe_add_to"></a><span class="summary-sig-name">_safe_add_to</span>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">ns</span>,
         <span class="summary-sig-arg">*args</span>)</span><br />
-      Invoke <a href="SConsArguments._ArgumentDecl-class.html#_safe_add_to_ns" class="link" onclick="show_private();">_ArgumentDecl._safe_add_to_ns()</a> for each <em>Argument</em>
+      Invoke <a href="SConsArguments._ArgumentDecl-class.html#safe_add_to" class="link">_ArgumentDecl.safe_add_to()</a> for each <em>Argument</em>
 declared in this dictionary.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecls._safe_add_to_ns">source&nbsp;code</a></span>
+            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecls._safe_add_to">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -758,14 +758,14 @@ options.</td>
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="SConsArguments._ArgumentDecls-class.html#_ArgumentDecls__append_ns_key_to_supp_dicts" class="summary-sig-name" onclick="show_private();">_ArgumentDecls__append_ns_key_to_supp_dicts</a>(<span class="summary-sig-arg">self</span>,
+          <td><span class="summary-sig"><a href="SConsArguments._ArgumentDecls-class.html#_ArgumentDecls__append_key_to_supp_dicts" class="summary-sig-name" onclick="show_private();">_ArgumentDecls__append_key_to_supp_dicts</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">ns</span>,
         <span class="summary-sig-arg">key</span>,
         <span class="summary-sig-arg">ns_key</span>)</span><br />
       Add to supplementary dictionaries the new <code class="link">ns</code> variable
 corresponding to <em>Argument</em> identified by <code class="link">key</code>.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecls._ArgumentDecls__append_ns_key_to_supp_dicts">source&nbsp;code</a></span>
+            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecls._ArgumentDecls__append_key_to_supp_dicts">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -830,14 +830,14 @@ corresponding to <em>Argument</em> identified by <code class="link">key</code>.<
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="SConsArguments._ArgumentDecls-class.html#_ArgumentDecls__replace_ns_key_in_supp_dicts" class="summary-sig-name" onclick="show_private();">_ArgumentDecls__replace_ns_key_in_supp_dicts</a>(<span class="summary-sig-arg">self</span>,
+          <td><span class="summary-sig"><a href="SConsArguments._ArgumentDecls-class.html#_ArgumentDecls__replace_key_in_supp_dicts" class="summary-sig-name" onclick="show_private();">_ArgumentDecls__replace_key_in_supp_dicts</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">ns</span>,
         <span class="summary-sig-arg">key</span>,
         <span class="summary-sig-arg">ns_key</span>)</span><br />
       Replace in the supplementary dicts the key identifying corresponding
 <code class="link">ns</code> variable (where <code class="link">ns</code> is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>).</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecls._ArgumentDecls__replace_ns_key_in_supp_dicts">source&nbsp;code</a></span>
+            <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecls._ArgumentDecls__replace_key_in_supp_dicts">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -1013,7 +1013,7 @@ declarations contained in main dictionary</td>
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="_ArgumentDecls__validate_values"></a><span class="summary-sig-name">_ArgumentDecls__validate_values</span>(<span class="summary-sig-arg">initializer</span>=<span class="summary-sig-default">&lt;class 'SConsArguments._missing'&gt;</span>,
+          <td><span class="summary-sig"><a name="_ArgumentDecls__validate_values"></a><span class="summary-sig-name">_ArgumentDecls__validate_values</span>(<span class="summary-sig-arg">initializer</span>=<span class="summary-sig-default">MISSING</span>,
         <span class="summary-sig-arg">**kw</span>)</span></td>
           <td align="right" valign="top">
             <span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecls._ArgumentDecls__validate_values">source&nbsp;code</a></span>
@@ -1132,20 +1132,20 @@ new empty dictionary
   </dl>
 </td></tr></table>
 </div>
-<a name="__replace_ns_key_in_supp_dicts"></a>
+<a name="__replace_key_in_supp_dicts"></a>
 <div class="private">
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">__replace_ns_key_in_supp_dicts</span>(<span class="sig-arg">self</span>,
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__replace_key_in_supp_dicts</span>(<span class="sig-arg">self</span>,
         <span class="sig-arg">ns</span>,
         <span class="sig-arg">key</span>,
         <span class="sig-arg">ns_key</span>)</span>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecls.__replace_ns_key_in_supp_dicts">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecls.__replace_key_in_supp_dicts">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
@@ -1166,20 +1166,20 @@ dictionaries are left unaltered.</p>
   </dl>
 </td></tr></table>
 </div>
-<a name="__append_ns_key_to_supp_dicts"></a>
+<a name="__append_key_to_supp_dicts"></a>
 <div class="private">
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">__append_ns_key_to_supp_dicts</span>(<span class="sig-arg">self</span>,
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__append_key_to_supp_dicts</span>(<span class="sig-arg">self</span>,
         <span class="sig-arg">ns</span>,
         <span class="sig-arg">key</span>,
         <span class="sig-arg">ns_key</span>)</span>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecls.__append_ns_key_to_supp_dicts">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecls.__append_key_to_supp_dicts">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
@@ -1208,7 +1208,7 @@ dictionary, which subject to modification,</li>
   <tr valign="top"><td>
   <h3 class="epydoc"><span class="sig"><span class="sig-name">setdefault</span>(<span class="sig-arg">self</span>,
         <span class="sig-arg">key</span>,
-        <span class="sig-arg">value</span>=<span class="sig-default">&lt;class 'SConsArguments._missing'&gt;</span>)</span>
+        <span class="sig-arg">value</span>=<span class="sig-default">MISSING</span>)</span>
   </h3>
   </td><td align="right" valign="top"
     ><span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecls.setdefault">source&nbsp;code</a></span>&nbsp;
@@ -1409,18 +1409,18 @@ dictionary, which subject to modification,</li>
   </dl>
 </td></tr></table>
 </div>
-<a name="get_ns_rename_dict"></a>
+<a name="get_rename_dict"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">get_ns_rename_dict</span>(<span class="sig-arg">self</span>,
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">get_rename_dict</span>(<span class="sig-arg">self</span>,
         <span class="sig-arg">ns</span>)</span>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecls.get_ns_rename_dict">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecls.get_rename_dict">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
@@ -1439,18 +1439,18 @@ from <em>Argument</em> namespace and <tt class="rst-docutils literal">ns_key</tt
   </dl>
 </td></tr></table>
 </div>
-<a name="get_ns_irename_dict"></a>
+<a name="get_irename_dict"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">get_ns_irename_dict</span>(<span class="sig-arg">self</span>,
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">get_irename_dict</span>(<span class="sig-arg">self</span>,
         <span class="sig-arg">ns</span>)</span>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecls.get_ns_irename_dict">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecls.get_irename_dict">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
@@ -1469,18 +1469,18 @@ from <em>Argument</em> namespace and <tt class="rst-docutils literal">ns_key</tt
   </dl>
 </td></tr></table>
 </div>
-<a name="get_ns_resubst_dict"></a>
+<a name="get_resubst_dict"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">get_ns_resubst_dict</span>(<span class="sig-arg">self</span>,
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">get_resubst_dict</span>(<span class="sig-arg">self</span>,
         <span class="sig-arg">ns</span>)</span>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecls.get_ns_resubst_dict">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecls.get_resubst_dict">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
@@ -1504,18 +1504,18 @@ variable name in the <code class="link">ns</code> (<a href="SConsArguments-modul
   </dl>
 </td></tr></table>
 </div>
-<a name="get_ns_iresubst_dict"></a>
+<a name="get_iresubst_dict"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">get_ns_iresubst_dict</span>(<span class="sig-arg">self</span>,
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">get_iresubst_dict</span>(<span class="sig-arg">self</span>,
         <span class="sig-arg">ns</span>)</span>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecls.get_ns_iresubst_dict">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecls.get_iresubst_dict">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
@@ -1539,19 +1539,19 @@ variable name in the <code class="link">ns</code> (<a href="SConsArguments-modul
   </dl>
 </td></tr></table>
 </div>
-<a name="get_ns_key"></a>
+<a name="get_key"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">get_ns_key</span>(<span class="sig-arg">self</span>,
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">get_key</span>(<span class="sig-arg">self</span>,
         <span class="sig-arg">ns</span>,
         <span class="sig-arg">key</span>)</span>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecls.get_ns_key">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecls.get_key">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
@@ -1573,20 +1573,20 @@ the queried <code class="link">ns</code> variable corresponds,</li>
   </dl>
 </td></tr></table>
 </div>
-<a name="set_ns_key"></a>
+<a name="set_key"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">set_ns_key</span>(<span class="sig-arg">self</span>,
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">set_key</span>(<span class="sig-arg">self</span>,
         <span class="sig-arg">ns</span>,
         <span class="sig-arg">key</span>,
         <span class="sig-arg">ns_key</span>)</span>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecls.set_ns_key">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecls.set_key">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
@@ -1678,7 +1678,7 @@ makes call to <a href="SConsArguments._ArgumentDecls-class.html#add_to" class="l
   
   <p>Create and initialize the corresponding <tt class="rst-docutils literal">ns</tt> variables (where
 <tt class="rst-docutils literal">ns</tt> is one of <a href="SConsArguments-module.html#ENV" class="link">ENV</a>, <a href="SConsArguments-module.html#VAR" class="link">VAR</a> or <a href="SConsArguments-module.html#OPT" class="link">OPT</a>).</p>
-<p>This function calls <a href="SConsArguments._ArgumentDecls-class.html#_safe_add_to_ns" class="link" onclick="show_private();">_safe_add_to_ns()</a> for each <tt class="rst-docutils literal">ns</tt> from <tt class="rst-docutils literal">(ENV,
+<p>This function calls <a href="SConsArguments._ArgumentDecls-class.html#_safe_add_to" class="link" onclick="show_private();">_safe_add_to()</a> for each <tt class="rst-docutils literal">ns</tt> from <tt class="rst-docutils literal">(ENV,
 VAR, OPT)</tt>.</p>
   <dl class="fields">
     <dt>Parameters:</dt>
@@ -1742,20 +1742,20 @@ otherwise returns <tt class="rst-docutils literal">None</tt>.</dd>
   </dl>
 </td></tr></table>
 </div>
-<a name="_ArgumentDecls__append_ns_key_to_supp_dicts"></a>
+<a name="_ArgumentDecls__append_key_to_supp_dicts"></a>
 <div class="private">
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">_ArgumentDecls__append_ns_key_to_supp_dicts</span>(<span class="sig-arg">self</span>,
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">_ArgumentDecls__append_key_to_supp_dicts</span>(<span class="sig-arg">self</span>,
         <span class="sig-arg">ns</span>,
         <span class="sig-arg">key</span>,
         <span class="sig-arg">ns_key</span>)</span>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecls._ArgumentDecls__append_ns_key_to_supp_dicts">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecls._ArgumentDecls__append_key_to_supp_dicts">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
@@ -1775,20 +1775,20 @@ dictionary, which subject to modification,</li>
   </dl>
 </td></tr></table>
 </div>
-<a name="_ArgumentDecls__replace_ns_key_in_supp_dicts"></a>
+<a name="_ArgumentDecls__replace_key_in_supp_dicts"></a>
 <div class="private">
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">_ArgumentDecls__replace_ns_key_in_supp_dicts</span>(<span class="sig-arg">self</span>,
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">_ArgumentDecls__replace_key_in_supp_dicts</span>(<span class="sig-arg">self</span>,
         <span class="sig-arg">ns</span>,
         <span class="sig-arg">key</span>,
         <span class="sig-arg">ns_key</span>)</span>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecls._ArgumentDecls__replace_ns_key_in_supp_dicts">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="SConsArguments-pysrc.html#_ArgumentDecls._ArgumentDecls__replace_key_in_supp_dicts">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
@@ -1837,7 +1837,7 @@ dictionaries are left unaltered.</p>
   <tr>
     <td align="left" class="footer">
     Generated by Epydoc 3.0.1
-    on Thu Oct 22 20:49:46 2015
+    on Sat Nov  7 01:43:47 2015
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"
