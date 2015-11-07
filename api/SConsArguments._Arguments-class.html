@@ -458,8 +458,8 @@ corresponding <a class="rst-reference external" href="http://www.scons.org/doc/H
         <span class="summary-sig-arg">env</span>,
         <span class="summary-sig-arg">org</span>,
         <span class="summary-sig-arg">new</span>)</span><br />
-      Overwrite unaltered <em>arguments</em> in <strong>env</strong> with corresponding values
-from <strong>new</strong>.</td>
+      Overwrite unaltered <em>arguments</em> in <code class="link">env</code> with corresponding values
+from <code class="link">new</code>.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="SConsArguments-pysrc.html#_Arguments.OverwriteUnaltered">source&nbsp;code</a></span>
             
@@ -479,8 +479,8 @@ from <strong>new</strong>.</td>
         <span class="summary-sig-arg">env</span>,
         <span class="summary-sig-arg">org</span>,
         <span class="summary-sig-arg">new</span>)</span><br />
-      Return result of replacing <em>arguments</em> stored in <strong>env</strong> with
-corresponding values from <strong>new</strong>, while replacing only unaltered
+      Return result of replacing <em>arguments</em> stored in <code class="link">env</code> with
+corresponding values from <code class="link">new</code>, while replacing only unaltered
 values (see <a href="SConsArguments._Arguments-class.html#_is_unaltered" class="link" onclick="show_private();">_is_unaltered()</a>).</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="SConsArguments-pysrc.html#_Arguments.ReplaceUnaltered">source&nbsp;code</a></span>
@@ -504,8 +504,8 @@ values (see <a href="SConsArguments._Arguments-class.html#_is_unaltered" class="
         <span class="summary-sig-arg">ose</span>=<span class="summary-sig-default"><code class="variable-group">{</code><code class="variable-group">}</code></span>,
         <span class="summary-sig-arg">args</span>=<span class="summary-sig-default">None</span>,
         <span class="summary-sig-arg">filename</span>=<span class="summary-sig-default">None</span>)</span><br />
-      Postprocess <strong>variables</strong> and <strong>options</strong> updating variables in
-<strong>env</strong> and optionally saving them to file.</td>
+      Postprocess <code class="link">variables</code> and <strong>options</strong> updating variables in
+<code class="link">env</code> and optionally saving them to file.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="SConsArguments-pysrc.html#_Arguments.Postprocess">source&nbsp;code</a></span>
             
@@ -994,7 +994,7 @@ current values of <em>arguments</em>.</li>
     </ul></dd>
     <dt>Returns:</dt>
         <dd>Dictionary with <em>arguments</em> that changed their value. The keys are
-in ENV namespace (i.e. they're same as keys in <strong>env</strong>).</dd>
+in ENV namespace (i.e. they're same as keys in <code class="link">env</code>).</dd>
   </dl>
 </td></tr></table>
 </div>
@@ -1015,11 +1015,11 @@ in ENV namespace (i.e. they're same as keys in <strong>env</strong>).</dd>
     </td>
   </tr></table>
   
-  <p>Overwrite unaltered <em>arguments</em> in <strong>env</strong> with corresponding values
-from <strong>new</strong>.</p>
-<p>For every <em>argument</em> stored in <strong>env</strong>, if its value is same as
-corresponding value in <strong>org</strong> the value in <strong>env</strong> gets replaced with
-corresponding value in <strong>new</strong>.</p>
+  <p>Overwrite unaltered <em>arguments</em> in <code class="link">env</code> with corresponding values
+from <code class="link">new</code>.</p>
+<p>For every <em>argument</em> stored in <code class="link">env</code>, if its value is same as
+corresponding value in <code class="link">org</code> the value in <code class="link">env</code> gets replaced with
+corresponding value in <code class="link">new</code>.</p>
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
@@ -1028,13 +1028,13 @@ curreng values of <em>arguments</em>. It's also being updated with new
 values; the keys in <code class="link">env</code> should be in ENV namespace,</li>
         <li><strong class="pname"><code>org</code></strong> - Dict containing original (default) values of variables;
 the keys in <code class="link">org</code> should be in ENV namespace,</li>
-        <li><strong class="pname"><code>new</code></strong> - Dict with new values to be used to update entries in <strong>env</strong>;
+        <li><strong class="pname"><code>new</code></strong> - Dict with new values to be used to update entries in <code class="link">env</code>;
 the keys in <code class="link">new</code> should identify <em>argument</em> names (they're
 not in ENV/VAR/OPT namespace as opposite to <code class="link">env</code> and <code class="link">org</code>).</li>
     </ul></dd>
     <dt>Returns:</dt>
-        <dd>A dictionary containing only the values from <strong>new</strong> that were
-assigned to <strong>env</strong>.</dd>
+        <dd>A dictionary containing only the values from <code class="link">new</code> that were
+assigned to <code class="link">env</code>.</dd>
   </dl>
 </td></tr></table>
 </div>
@@ -1055,8 +1055,8 @@ assigned to <strong>env</strong>.</dd>
     </td>
   </tr></table>
   
-  <p>Return result of replacing <em>arguments</em> stored in <strong>env</strong> with
-corresponding values from <strong>new</strong>, while replacing only unaltered
+  <p>Return result of replacing <em>arguments</em> stored in <code class="link">env</code> with
+corresponding values from <code class="link">new</code>, while replacing only unaltered
 values (see <a href="SConsArguments._Arguments-class.html#_is_unaltered" class="link" onclick="show_private();">_is_unaltered()</a>).</p>
   <dl class="fields">
     <dt>Parameters:</dt>
@@ -1066,7 +1066,7 @@ current values of <em>arguments</em>; the keys in <code class="link">env</code> 
 ENV namespace,</li>
         <li><strong class="pname"><code>org</code></strong> - Dict containing orginal (default) values of variables;
 the keys in <code class="link">org</code> should be in ENV namespace,</li>
-        <li><strong class="pname"><code>new</code></strong> - Dict with new values to be used instead of those from <strong>env</strong>;
+        <li><strong class="pname"><code>new</code></strong> - Dict with new values to be used instead of those from <code class="link">env</code>;
 the keys in <code class="link">new</code> should identify <em>argument</em> names (they're
 not in ENV/VAR/OPT namespace as opposite to <code class="link">env</code> and <code class="link">org</code>).</li>
     </ul></dd>
@@ -1097,8 +1097,8 @@ will only contain variables that are present in in this object;</dd>
     </td>
   </tr></table>
   
-  <p>Postprocess <strong>variables</strong> and <strong>options</strong> updating variables in
-<strong>env</strong> and optionally saving them to file.</p>
+  <p>Postprocess <code class="link">variables</code> and <strong>options</strong> updating variables in
+<code class="link">env</code> and optionally saving them to file.</p>
 <p>This method gathers values from <code class="link">variables</code>, command-line options and
 writes them to <code class="link">env</code>. After that it optionally saves the variables
 to file (if <code class="link">filename</code> is given) and updates variables with values
@@ -1176,8 +1176,8 @@ object with <a class="rst-reference external" href="http://www.scons.org/doc/HTM
         <li><strong class="pname"><code>use_options</code></strong> (boolean) - if <tt class="rst-docutils literal">True</tt>, <a class="rst-reference external" href="http://www.scons.org/doc/HTML/scons-user.html#sect-command-line-options" target="_top">command-line options</a> are taken into account
 when updating <code class="link">env</code>.</li>
         <li><strong class="pname"><code>ose</code></strong> (dict) - third source of data, usually taken from <tt class="rst-docutils literal">os.environ</tt></li>
-        <li><strong class="pname"><code>args</code></strong> - passed as <strong>args</strong> to <a href="SConsArguments._Arguments-class.html#UpdateEnvironment" class="link">UpdateEnvironment()</a>.</li>
-        <li><strong class="pname"><code>filename</code></strong> (str|None) - Name of the file to save current values of <strong>variables</strong>.
+        <li><strong class="pname"><code>args</code></strong> - passed as <code class="link">args</code> to <a href="SConsArguments._Arguments-class.html#UpdateEnvironment" class="link">UpdateEnvironment()</a>.</li>
+        <li><strong class="pname"><code>filename</code></strong> (str|None) - Name of the file to save current values of <code class="link">variables</code>.
 By default (<tt class="rst-docutils literal">None</tt>) variables are not saved.</li>
     </ul></dd>
     <dt>Returns:</dt>
@@ -1186,7 +1186,7 @@ sources (variables, options or ose).</dd>
   </dl>
 <div class="fields">      <p><strong>Note:</strong>
         Often you will have to preprocess <tt class="rst-docutils literal">os.environ</tt> before passing it
-as <strong>ose</strong>. This is necessary especially when your <em>argument</em> use
+as <code class="link">ose</code>. This is necessary especially when your <em>argument</em> use
 <tt class="rst-docutils literal">converter</tt>. In that case you have to pass values from
 <tt class="rst-docutils literal">os.environ</tt> through a similar converter too.
       </p>
@@ -1273,7 +1273,7 @@ transformed back to namespace of <em>arguments</em>.</dd>
   <tr>
     <td align="left" class="footer">
     Generated by Epydoc 3.0.1
-    on Sat Nov  7 22:33:13 2015
+    on Sat Nov  7 22:39:11 2015
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

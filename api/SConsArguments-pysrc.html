@@ -1093,7 +1093,7 @@ SConsArguments._Arguments.__reset_supp_dicts" class="py-name" href="#" onclick="
 <a name="L1031"></a><tt class="py-lineno">1031</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
 <a name="L1032"></a><tt class="py-lineno">1032</tt>  <tt class="py-line"><tt class="py-docstring">        :Return:</tt> </tt>
 <a name="L1033"></a><tt class="py-lineno">1033</tt>  <tt class="py-line"><tt class="py-docstring">            Dictionary with *arguments* that changed their value. The keys are</tt> </tt>
-<a name="L1034"></a><tt class="py-lineno">1034</tt>  <tt class="py-line"><tt class="py-docstring">            in ENV namespace (i.e. they're same as keys in **env**).</tt> </tt>
+<a name="L1034"></a><tt class="py-lineno">1034</tt>  <tt class="py-line"><tt class="py-docstring">            in ENV namespace (i.e. they're same as keys in `env`).</tt> </tt>
 <a name="L1035"></a><tt class="py-lineno">1035</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
 <a name="L1036"></a><tt class="py-lineno">1036</tt>  <tt class="py-line"><tt class="py-docstring">        .. _SCons environment:  http://www.scons.org/doc/HTML/scons-user.html#chap-environments</tt> </tt>
 <a name="L1037"></a><tt class="py-lineno">1037</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
@@ -1109,12 +1109,12 @@ SConsArguments._Arguments.__reset_supp_dicts" class="py-name" href="#" onclick="
 </div><a name="L1047"></a><tt class="py-lineno">1047</tt>  <tt class="py-line"> </tt>
 <a name="_Arguments.OverwriteUnaltered"></a><div id="_Arguments.OverwriteUnaltered-def"><a name="L1048"></a><tt class="py-lineno">1048</tt> <a class="py-toggle" href="#" id="_Arguments.OverwriteUnaltered-toggle" onclick="return toggle('_Arguments.OverwriteUnaltered');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="SConsArguments._Arguments-class.html#OverwriteUnaltered">OverwriteUnaltered</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">env</tt><tt class="py-op">,</tt> <tt class="py-param">org</tt><tt class="py-op">,</tt> <tt class="py-param">new</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
 </div><div id="_Arguments.OverwriteUnaltered-collapsed" style="display:none;" pad="++++" indent="++++++++"></div><div id="_Arguments.OverwriteUnaltered-expanded"><a name="L1049"></a><tt class="py-lineno">1049</tt>  <tt class="py-line">        <tt class="py-comment">#--------------------------------------------------------------------</tt> </tt>
-<a name="L1050"></a><tt class="py-lineno">1050</tt>  <tt class="py-line">        <tt class="py-docstring">"""Overwrite unaltered *arguments* in **env** with corresponding values</tt> </tt>
-<a name="L1051"></a><tt class="py-lineno">1051</tt>  <tt class="py-line"><tt class="py-docstring">        from **new**.</tt> </tt>
+<a name="L1050"></a><tt class="py-lineno">1050</tt>  <tt class="py-line">        <tt class="py-docstring">"""Overwrite unaltered *arguments* in `env` with corresponding values</tt> </tt>
+<a name="L1051"></a><tt class="py-lineno">1051</tt>  <tt class="py-line"><tt class="py-docstring">        from `new`.</tt> </tt>
 <a name="L1052"></a><tt class="py-lineno">1052</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
-<a name="L1053"></a><tt class="py-lineno">1053</tt>  <tt class="py-line"><tt class="py-docstring">        For every *argument* stored in **env**, if its value is same as</tt> </tt>
-<a name="L1054"></a><tt class="py-lineno">1054</tt>  <tt class="py-line"><tt class="py-docstring">        corresponding value in **org** the value in **env** gets replaced with</tt> </tt>
-<a name="L1055"></a><tt class="py-lineno">1055</tt>  <tt class="py-line"><tt class="py-docstring">        corresponding value in **new**.</tt> </tt>
+<a name="L1053"></a><tt class="py-lineno">1053</tt>  <tt class="py-line"><tt class="py-docstring">        For every *argument* stored in `env`, if its value is same as</tt> </tt>
+<a name="L1054"></a><tt class="py-lineno">1054</tt>  <tt class="py-line"><tt class="py-docstring">        corresponding value in `org` the value in `env` gets replaced with</tt> </tt>
+<a name="L1055"></a><tt class="py-lineno">1055</tt>  <tt class="py-line"><tt class="py-docstring">        corresponding value in `new`.</tt> </tt>
 <a name="L1056"></a><tt class="py-lineno">1056</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
 <a name="L1057"></a><tt class="py-lineno">1057</tt>  <tt class="py-line"><tt class="py-docstring">        :Parameters:</tt> </tt>
 <a name="L1058"></a><tt class="py-lineno">1058</tt>  <tt class="py-line"><tt class="py-docstring">            env</tt> </tt>
@@ -1125,13 +1125,13 @@ SConsArguments._Arguments.__reset_supp_dicts" class="py-name" href="#" onclick="
 <a name="L1063"></a><tt class="py-lineno">1063</tt>  <tt class="py-line"><tt class="py-docstring">                Dict containing original (default) values of variables;</tt> </tt>
 <a name="L1064"></a><tt class="py-lineno">1064</tt>  <tt class="py-line"><tt class="py-docstring">                the keys in `org` should be in ENV namespace,</tt> </tt>
 <a name="L1065"></a><tt class="py-lineno">1065</tt>  <tt class="py-line"><tt class="py-docstring">            new</tt> </tt>
-<a name="L1066"></a><tt class="py-lineno">1066</tt>  <tt class="py-line"><tt class="py-docstring">                Dict with new values to be used to update entries in **env**;</tt> </tt>
+<a name="L1066"></a><tt class="py-lineno">1066</tt>  <tt class="py-line"><tt class="py-docstring">                Dict with new values to be used to update entries in `env`;</tt> </tt>
 <a name="L1067"></a><tt class="py-lineno">1067</tt>  <tt class="py-line"><tt class="py-docstring">                the keys in `new` should identify *argument* names (they're</tt> </tt>
 <a name="L1068"></a><tt class="py-lineno">1068</tt>  <tt class="py-line"><tt class="py-docstring">                not in ENV/VAR/OPT namespace as opposite to `env` and `org`).</tt> </tt>
 <a name="L1069"></a><tt class="py-lineno">1069</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
 <a name="L1070"></a><tt class="py-lineno">1070</tt>  <tt class="py-line"><tt class="py-docstring">        :Return:</tt> </tt>
-<a name="L1071"></a><tt class="py-lineno">1071</tt>  <tt class="py-line"><tt class="py-docstring">            A dictionary containing only the values from **new** that were</tt> </tt>
-<a name="L1072"></a><tt class="py-lineno">1072</tt>  <tt class="py-line"><tt class="py-docstring">            assigned to **env**.</tt> </tt>
+<a name="L1071"></a><tt class="py-lineno">1071</tt>  <tt class="py-line"><tt class="py-docstring">            A dictionary containing only the values from `new` that were</tt> </tt>
+<a name="L1072"></a><tt class="py-lineno">1072</tt>  <tt class="py-line"><tt class="py-docstring">            assigned to `env`.</tt> </tt>
 <a name="L1073"></a><tt class="py-lineno">1073</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
 <a name="L1074"></a><tt class="py-lineno">1074</tt>  <tt class="py-line"><tt class="py-docstring">        .. _SCons environment:  http://www.scons.org/doc/HTML/scons-user.html#chap-environments</tt> </tt>
 <a name="L1075"></a><tt class="py-lineno">1075</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
@@ -1151,8 +1151,8 @@ SConsArguments._Arguments.__reset_supp_dicts" class="py-name" href="#" onclick="
 </div><a name="L1089"></a><tt class="py-lineno">1089</tt>  <tt class="py-line"> </tt>
 <a name="_Arguments.ReplaceUnaltered"></a><div id="_Arguments.ReplaceUnaltered-def"><a name="L1090"></a><tt class="py-lineno">1090</tt> <a class="py-toggle" href="#" id="_Arguments.ReplaceUnaltered-toggle" onclick="return toggle('_Arguments.ReplaceUnaltered');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="SConsArguments._Arguments-class.html#ReplaceUnaltered">ReplaceUnaltered</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">env</tt><tt class="py-op">,</tt> <tt class="py-param">org</tt><tt class="py-op">,</tt> <tt class="py-param">new</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
 </div><div id="_Arguments.ReplaceUnaltered-collapsed" style="display:none;" pad="++++" indent="++++++++"></div><div id="_Arguments.ReplaceUnaltered-expanded"><a name="L1091"></a><tt class="py-lineno">1091</tt>  <tt class="py-line">        <tt class="py-comment">#--------------------------------------------------------------------</tt> </tt>
-<a name="L1092"></a><tt class="py-lineno">1092</tt>  <tt class="py-line">        <tt class="py-docstring">"""Return result of replacing *arguments* stored in **env** with</tt> </tt>
-<a name="L1093"></a><tt class="py-lineno">1093</tt>  <tt class="py-line"><tt class="py-docstring">        corresponding values from **new**, while replacing only unaltered</tt> </tt>
+<a name="L1092"></a><tt class="py-lineno">1092</tt>  <tt class="py-line">        <tt class="py-docstring">"""Return result of replacing *arguments* stored in `env` with</tt> </tt>
+<a name="L1093"></a><tt class="py-lineno">1093</tt>  <tt class="py-line"><tt class="py-docstring">        corresponding values from `new`, while replacing only unaltered</tt> </tt>
 <a name="L1094"></a><tt class="py-lineno">1094</tt>  <tt class="py-line"><tt class="py-docstring">        values (see `_is_unaltered()`).</tt> </tt>
 <a name="L1095"></a><tt class="py-lineno">1095</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
 <a name="L1096"></a><tt class="py-lineno">1096</tt>  <tt class="py-line"><tt class="py-docstring">        :Parameters:</tt> </tt>
@@ -1164,7 +1164,7 @@ SConsArguments._Arguments.__reset_supp_dicts" class="py-name" href="#" onclick="
 <a name="L1102"></a><tt class="py-lineno">1102</tt>  <tt class="py-line"><tt class="py-docstring">                Dict containing orginal (default) values of variables;</tt> </tt>
 <a name="L1103"></a><tt class="py-lineno">1103</tt>  <tt class="py-line"><tt class="py-docstring">                the keys in `org` should be in ENV namespace,</tt> </tt>
 <a name="L1104"></a><tt class="py-lineno">1104</tt>  <tt class="py-line"><tt class="py-docstring">            new</tt> </tt>
-<a name="L1105"></a><tt class="py-lineno">1105</tt>  <tt class="py-line"><tt class="py-docstring">                Dict with new values to be used instead of those from **env**;</tt> </tt>
+<a name="L1105"></a><tt class="py-lineno">1105</tt>  <tt class="py-line"><tt class="py-docstring">                Dict with new values to be used instead of those from `env`;</tt> </tt>
 <a name="L1106"></a><tt class="py-lineno">1106</tt>  <tt class="py-line"><tt class="py-docstring">                the keys in `new` should identify *argument* names (they're</tt> </tt>
 <a name="L1107"></a><tt class="py-lineno">1107</tt>  <tt class="py-line"><tt class="py-docstring">                not in ENV/VAR/OPT namespace as opposite to `env` and `org`).</tt> </tt>
 <a name="L1108"></a><tt class="py-lineno">1108</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
@@ -1201,8 +1201,8 @@ SConsArguments._Arguments.__reset_supp_dicts" class="py-name" href="#" onclick="
 <a name="_Arguments.Postprocess"></a><div id="_Arguments.Postprocess-def"><a name="L1139"></a><tt class="py-lineno">1139</tt> <a class="py-toggle" href="#" id="_Arguments.Postprocess-toggle" onclick="return toggle('_Arguments.Postprocess');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="SConsArguments._Arguments-class.html#Postprocess">Postprocess</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">env</tt><tt class="py-op">,</tt> <tt class="py-param">variables</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">,</tt> <tt class="py-param">use_options</tt><tt class="py-op">=</tt><tt class="py-name">False</tt><tt class="py-op">,</tt> <tt class="py-param">ose</tt><tt class="py-op">=</tt><tt class="py-op">{</tt><tt class="py-op">}</tt><tt class="py-op">,</tt> </tt>
 <a name="L1140"></a><tt class="py-lineno">1140</tt>  <tt class="py-line">                    <tt class="py-param">args</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">,</tt> <tt class="py-param">filename</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
 </div><div id="_Arguments.Postprocess-collapsed" style="display:none;" pad="++++" indent="++++++++"></div><div id="_Arguments.Postprocess-expanded"><a name="L1141"></a><tt class="py-lineno">1141</tt>  <tt class="py-line">        <tt class="py-comment">#--------------------------------------------------------------------</tt> </tt>
-<a name="L1142"></a><tt class="py-lineno">1142</tt>  <tt class="py-line">        <tt class="py-docstring">"""Postprocess **variables** and **options** updating variables in</tt> </tt>
-<a name="L1143"></a><tt class="py-lineno">1143</tt>  <tt class="py-line"><tt class="py-docstring">        **env** and optionally saving them to file.</tt> </tt>
+<a name="L1142"></a><tt class="py-lineno">1142</tt>  <tt class="py-line">        <tt class="py-docstring">"""Postprocess `variables` and **options** updating variables in</tt> </tt>
+<a name="L1143"></a><tt class="py-lineno">1143</tt>  <tt class="py-line"><tt class="py-docstring">        `env` and optionally saving them to file.</tt> </tt>
 <a name="L1144"></a><tt class="py-lineno">1144</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
 <a name="L1145"></a><tt class="py-lineno">1145</tt>  <tt class="py-line"><tt class="py-docstring">        This method gathers values from `variables`, command-line options and</tt> </tt>
 <a name="L1146"></a><tt class="py-lineno">1146</tt>  <tt class="py-line"><tt class="py-docstring">        writes them to `env`. After that it optionally saves the variables</tt> </tt>
@@ -1286,9 +1286,9 @@ SConsArguments._Arguments.__reset_supp_dicts" class="py-name" href="#" onclick="
 <a name="L1224"></a><tt class="py-lineno">1224</tt>  <tt class="py-line"><tt class="py-docstring">            ose : dict</tt> </tt>
 <a name="L1225"></a><tt class="py-lineno">1225</tt>  <tt class="py-line"><tt class="py-docstring">                third source of data, usually taken from ``os.environ``</tt> </tt>
 <a name="L1226"></a><tt class="py-lineno">1226</tt>  <tt class="py-line"><tt class="py-docstring">            args</tt> </tt>
-<a name="L1227"></a><tt class="py-lineno">1227</tt>  <tt class="py-line"><tt class="py-docstring">                passed as **args** to `UpdateEnvironment()`.</tt> </tt>
+<a name="L1227"></a><tt class="py-lineno">1227</tt>  <tt class="py-line"><tt class="py-docstring">                passed as `args` to `UpdateEnvironment()`.</tt> </tt>
 <a name="L1228"></a><tt class="py-lineno">1228</tt>  <tt class="py-line"><tt class="py-docstring">            filename : str|None</tt> </tt>
-<a name="L1229"></a><tt class="py-lineno">1229</tt>  <tt class="py-line"><tt class="py-docstring">                Name of the file to save current values of **variables**.</tt> </tt>
+<a name="L1229"></a><tt class="py-lineno">1229</tt>  <tt class="py-line"><tt class="py-docstring">                Name of the file to save current values of `variables`.</tt> </tt>
 <a name="L1230"></a><tt class="py-lineno">1230</tt>  <tt class="py-line"><tt class="py-docstring">                By default (``None``) variables are not saved.</tt> </tt>
 <a name="L1231"></a><tt class="py-lineno">1231</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
 <a name="L1232"></a><tt class="py-lineno">1232</tt>  <tt class="py-line"><tt class="py-docstring">        :Return:</tt> </tt>
@@ -1297,7 +1297,7 @@ SConsArguments._Arguments.__reset_supp_dicts" class="py-name" href="#" onclick="
 <a name="L1235"></a><tt class="py-lineno">1235</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
 <a name="L1236"></a><tt class="py-lineno">1236</tt>  <tt class="py-line"><tt class="py-docstring">        :Note:</tt> </tt>
 <a name="L1237"></a><tt class="py-lineno">1237</tt>  <tt class="py-line"><tt class="py-docstring">            Often you will have to preprocess ``os.environ`` before passing it</tt> </tt>
-<a name="L1238"></a><tt class="py-lineno">1238</tt>  <tt class="py-line"><tt class="py-docstring">            as **ose**. This is necessary especially when your *argument* use</tt> </tt>
+<a name="L1238"></a><tt class="py-lineno">1238</tt>  <tt class="py-line"><tt class="py-docstring">            as `ose`. This is necessary especially when your *argument* use</tt> </tt>
 <a name="L1239"></a><tt class="py-lineno">1239</tt>  <tt class="py-line"><tt class="py-docstring">            ``converter``. In that case you have to pass values from</tt> </tt>
 <a name="L1240"></a><tt class="py-lineno">1240</tt>  <tt class="py-line"><tt class="py-docstring">            ``os.environ`` through a similar converter too.</tt> </tt>
 <a name="L1241"></a><tt class="py-lineno">1241</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
@@ -2893,7 +2893,7 @@ expandto(location.href);
   <tr>
     <td align="left" class="footer">
     Generated by Epydoc 3.0.1
-    on Sat Nov  7 22:33:13 2015
+    on Sat Nov  7 22:39:11 2015
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"
