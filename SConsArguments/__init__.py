@@ -306,8 +306,8 @@ def _build_resubst_dict(rename_dict):
         ignored, so the entries of type ``"zzz":"zzz"`` do not enter the
         result.
     """
-    return dict(map(lambda (k,v): (k, '${' + v + '}'),
-                    filter(lambda (k,v) : k != v, rename_dict.iteritems())))
+    return dict(map(lambda x: (x[0], '${' + x[1] + '}'),
+                    filter(lambda x : x[0] != x[1], rename_dict.iteritems())))
 
 #############################################################################
 def _build_iresubst_dict(rename_dict):
@@ -333,8 +333,8 @@ def _build_iresubst_dict(rename_dict):
         val)`` with ``key==val`` are ignored, so the entries of type
         ``"zzz":"zzz"`` do not enter the result;
     """
-    return dict(map(lambda (k,v): (v, '${' + k + '}'),
-                    filter(lambda (k,v) : k != v, rename_dict.iteritems())))
+    return dict(map(lambda x: (x[1], '${' + x[0] + '}'),
+                    filter(lambda x : x[0] != x[1], rename_dict.iteritems())))
 
 #############################################################################
 def _compose_mappings(dict1, dict2):
@@ -358,11 +358,11 @@ def _compose_mappings(dict1, dict2):
         and ``v2 = dict2[v1]`` the corresponding item in returned dictionary is
         ``(k1,v2)``
     """
-    return dict(map(lambda (k,v) : (k, dict2[v]), dict1.iteritems()))
+    return dict(map(lambda x : (x[0], dict2[x[1]]), dict1.iteritems()))
 
 #############################################################################
 def _invert_dict(_dict):
-    return dict(map(lambda (k,v) : (v,k), _dict.iteritems()))
+    return dict(map(lambda x : (x[1],x[0]), _dict.iteritems()))
 
 #############################################################################
 class _ArgumentsProxy(object):
@@ -633,7 +633,7 @@ class _VariablesWrapper(object):
                     sys.path.insert(0, dir)
                 try:
                     values['__name__'] = filename
-                    exec open(filename, 'rU').read() in {}, values
+                    exec(open(filename, 'rU').read(), {}, values)
                 finally:
                     if dir:
                         del sys.path[0]
@@ -670,7 +670,7 @@ class _VariablesWrapper(object):
                         env[option.key] = option.converter(value)
                     except TypeError: # pragma: no cover
                         env[option.key] = option.converter(value, env)
-                except ValueError, x: # pragma: no cover
+                except ValueError as x: # pragma: no cover
                     raise SCons.Errors.UserError('Error converting option: %s\n%s'%(option.key, x))
 
 
