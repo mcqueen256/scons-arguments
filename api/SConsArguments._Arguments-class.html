@@ -436,25 +436,6 @@ corresponding <a class="rst-reference external" href="http://www.scons.org/doc/H
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="SConsArguments._Arguments-class.html#GetUnaltered" class="summary-sig-name">GetUnaltered</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">env</span>,
-        <span class="summary-sig-arg">org</span>)</span><br />
-      Return <em>Arguments</em> which are not changed with respect to <strong>org</strong>.</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="SConsArguments-pysrc.html#_Arguments.GetUnaltered">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
           <td><span class="summary-sig"><a href="SConsArguments._Arguments-class.html#GetAltered" class="summary-sig-name">GetAltered</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">env</span>,
         <span class="summary-sig-arg">org</span>)</span><br />
@@ -500,7 +481,8 @@ corresponding values from <strong>new</strong>.</td>
         <span class="summary-sig-arg">org</span>,
         <span class="summary-sig-arg">new</span>)</span><br />
       Return result of replacing <em>Arguments</em> stored in <strong>env</strong> with
-corresponding values from <strong>new</strong>, replacing only unaltered values.</td>
+corresponding values from <strong>new</strong>, while replacing only unaltered
+values (see <a href="SConsArguments._Arguments-class.html#_is_unaltered" class="link" onclick="show_private();">_is_unaltered()</a>).</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="SConsArguments-pysrc.html#_Arguments.WithUnalteredReplaced">source&nbsp;code</a></span>
             
@@ -540,11 +522,11 @@ corresponding values from <strong>new</strong>, replacing only unaltered values.
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="SConsArguments._Arguments-class.html#Unmangle" class="summary-sig-name">Unmangle</a>(<span class="summary-sig-arg">self</span>,
+          <td><span class="summary-sig"><a href="SConsArguments._Arguments-class.html#Demangle" class="summary-sig-name">Demangle</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">env</span>)</span><br />
       Return dictionary containing variable values with original names.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="SConsArguments-pysrc.html#_Arguments.Unmangle">source&nbsp;code</a></span>
+            <span class="codelink"><a href="SConsArguments-pysrc.html#_Arguments.Demangle">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -984,36 +966,6 @@ dictionary which holds current values of variables. An
   </dl>
 </td></tr></table>
 </div>
-<a name="GetUnaltered"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">GetUnaltered</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">env</span>,
-        <span class="sig-arg">org</span>)</span>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="SConsArguments-pysrc.html#_Arguments.GetUnaltered">source&nbsp;code</a></span>&nbsp;
-    </td>
-  </tr></table>
-  
-  <p>Return <em>Arguments</em> which are not changed with respect to <strong>org</strong>.</p>
-  <dl class="fields">
-    <dt>Parameters:</dt>
-    <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>env</code></strong> - <a class="rst-reference external" href="http://www.scons.org/doc/HTML/scons-user.html#chap-environments" target="_top">SCons environment</a> object or simply a dictionary which holds
-current values of <em>Arguments</em>.</li>
-        <li><strong class="pname"><code>org</code></strong> - Dict containing orginal (default) values of variables.</li>
-    </ul></dd>
-    <dt>Returns:</dt>
-        <dd>Dictionary with <em>Arguments</em> that didn't change their value. The
-keys are in ENV namespace (i.e. they're same as keys in <strong>env</strong>).</dd>
-  </dl>
-</td></tr></table>
-</div>
 <a name="GetAltered"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
@@ -1071,9 +1023,12 @@ corresponding value in <strong>new</strong>.</p>
     <dd><ul class="nomargin-top">
         <li><strong class="pname"><code>env</code></strong> - <a class="rst-reference external" href="http://www.scons.org/doc/HTML/scons-user.html#chap-environments" target="_top">SCons environment</a> object or simply a dict which holds
 curreng values of <em>Arguments</em>. It's also being updated with new
-values,</li>
-        <li><strong class="pname"><code>org</code></strong> - Dict containing orginal (default) values of variables</li>
-        <li><strong class="pname"><code>new</code></strong> - Dict with new values to be used to update entries in <strong>env</strong>.</li>
+values; the keys in <code class="link">env</code> should be in ENV namespace,</li>
+        <li><strong class="pname"><code>org</code></strong> - Dict containing original (default) values of variables;
+the keys in <code class="link">org</code> should be in ENV namespace,</li>
+        <li><strong class="pname"><code>new</code></strong> - Dict with new values to be used to update entries in <strong>env</strong>;
+the keys in <code class="link">new</code> should identify <em>Argument</em> names (they're
+not in ENV/VAR/OPT namespace as opposite to <code class="link">env</code> and <code class="link">org</code>).</li>
     </ul></dd>
     <dt>Returns:</dt>
         <dd>A dictionary containing only the values from <strong>new</strong> that were
@@ -1099,18 +1054,24 @@ assigned to <strong>env</strong>.</dd>
   </tr></table>
   
   <p>Return result of replacing <em>Arguments</em> stored in <strong>env</strong> with
-corresponding values from <strong>new</strong>, replacing only unaltered values.</p>
+corresponding values from <strong>new</strong>, while replacing only unaltered
+values (see <a href="SConsArguments._Arguments-class.html#_is_unaltered" class="link" onclick="show_private();">_is_unaltered()</a>).</p>
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
         <li><strong class="pname"><code>env</code></strong> - <a class="rst-reference external" href="http://www.scons.org/doc/HTML/scons-user.html#chap-environments" target="_top">SCons environment</a> object or simply a dict which holds
-current values of <em>Arguments</em>.</li>
-        <li><strong class="pname"><code>org</code></strong> - Dict containing orginal (default) values of variables</li>
-        <li><strong class="pname"><code>new</code></strong> - Dict with new values to be used instead of those from <strong>env</strong>.</li>
+current values of <em>Arguments</em>; the keys in <code class="link">env</code> should be in
+ENV namespace,</li>
+        <li><strong class="pname"><code>org</code></strong> - Dict containing orginal (default) values of variables;
+the keys in <code class="link">org</code> should be in ENV namespace,</li>
+        <li><strong class="pname"><code>new</code></strong> - Dict with new values to be used instead of those from <strong>env</strong>;
+the keys in <code class="link">new</code> should identify <em>Argument</em> names (they're
+not in ENV/VAR/OPT namespace as opposite to <code class="link">env</code> and <code class="link">org</code>).</li>
     </ul></dd>
     <dt>Returns:</dt>
-        <dd>New dictionary with values taken from <strong>env</strong> with some of them
-overwriten by corresponding values from <strong>new</strong>.</dd>
+        <dd>New dictionary with values taken from <code class="link">env</code> with some of them
+overwriten by corresponding values from <code class="link">new</code>; the returned dict
+will only contain variables that are present in in this object;</dd>
   </dl>
 </td></tr></table>
 </div>
@@ -1229,18 +1190,18 @@ as <strong>ose</strong>. This is necessary especially when your <em>Argument</em
       </p>
 </div></td></tr></table>
 </div>
-<a name="Unmangle"></a>
+<a name="Demangle"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">Unmangle</span>(<span class="sig-arg">self</span>,
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">Demangle</span>(<span class="sig-arg">self</span>,
         <span class="sig-arg">env</span>)</span>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="SConsArguments-pysrc.html#_Arguments.Unmangle">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="SConsArguments-pysrc.html#_Arguments.Demangle">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
@@ -1254,9 +1215,9 @@ returns a new dictionary having original <em>Argument</em> names as keys.</p>
 from SConsArguments import DeclareArguments
 
 env = Environment()
-gds = DeclareArguments( foo = { 'env_key' : 'env_foo' } )
-gvs = gds.Commit(env)
-var = gvs.Unmangle(env)
+decls = DeclareArguments( foo = { 'env_key' : 'env_foo' } )
+args = decls.Commit(env)
+vars = args.Demangle(env)
 
 try:
     print &quot;env['foo']: %r&quot; % env['foo']
@@ -1269,16 +1230,16 @@ except KeyError:
     print &quot;env['foo'] is missing&quot;
 
 try:
-    print &quot;var['foo']: %r&quot; % var['foo']
+    print &quot;vars['foo']: %r&quot; % vars['foo']
 except KeyError:
-    print &quot;var['foo'] is missing&quot;
+    print &quot;vars['foo'] is missing&quot;
 </pre>
 <p>The result of running the above SCons script is:</p>
 <pre class="rst-literal-block">
 ptomulik&#64;tea:$ scons -Q
 env['foo'] is missing
 env['env_foo']: None
-var['foo']: None
+vars['foo']: None
 scons: `.' is up to date.
 </pre>
   <dl class="fields">
@@ -1320,7 +1281,7 @@ current values of <em>Arguments</em>.</li>
   <tr>
     <td align="left" class="footer">
     Generated by Epydoc 3.0.1
-    on Sat Nov  7 01:43:47 2015
+    on Sat Nov  7 14:23:54 2015
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"
