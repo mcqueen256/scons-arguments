@@ -91,8 +91,6 @@ def warn(msg, **kw):
     except KeyError: quiet = False
     if not quiet:
         sys.stderr.write("%s: warning: %s\n" % (_script, msg))
-    untar(tar, **kw)
-    tar.close()
 
 def dload_scons_test(**kw):
     try: ver = kw['scons_test_version']
