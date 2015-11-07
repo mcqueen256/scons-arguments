@@ -1256,10 +1256,11 @@ class _Arguments(object):
 
     def Demangle(self, env):
         #--------------------------------------------------------------------
-        """Transform-back variables from ``ENV`` to *arguments*.
+        """Transform-back variables from ``ENV`` namespace to namespace of
+        *arguments*.
 
         It is possible, that names of *arguments* are not same as names of
-        their associated construction variables in `env`. This function
+        their associated construction variables in `env`. This method
         returns a new dictionary having original *argument* names as keys
         and with placeholders transformed-back to the namespace of *arguments*.
 
