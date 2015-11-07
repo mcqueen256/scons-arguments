@@ -226,7 +226,7 @@ for pkg in _args.packages:
     elif pkg.lower() == 'scons-docbook':
         dload_scons_docbook(**vars(_args))
     else:
-        warn("unsupported package: %r")
+        warn("unsupported package: %(pkg)r" % locals())
 
 # Local Variables:
 # # tab-width:4
