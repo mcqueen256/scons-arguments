@@ -470,8 +470,8 @@ class Test__VariablesWrapper(unittest.TestCase):
         _os_path_exists.assert_has_calls([mock.call('existing/file'), mock.call('inexistent/file')])
         _open.assert_called_once_with('existing/file','rU')
         validate_d.assert_called_once_with('d', 'D', env)
-        self.assertEquals(env, {'c' : 'C def', 'b' : 'B file', 'd' :'D', 'e' : 'E converted', 'f' : None, 'g' : 'G', 'h' : 'H def'})
-        self.assertEquals(variables.unknown, {'z' : 'Z'})
+        self.assertEqual(env, {'c' : 'C def', 'b' : 'B file', 'd' :'D', 'e' : 'E converted', 'f' : None, 'g' : 'G', 'h' : 'H def'})
+        self.assertEqual(variables.unknown, {'z' : 'Z'})
             
 
 #############################################################################
@@ -966,7 +966,7 @@ class Test__Arguments(unittest.TestCase):
         args = SConsArguments._Arguments(self._decls_mock_5())
         env = { 'env_k' : 'K', 'env_e' : 'E', 'env_s' : None, 'env_x' : 'X' }
         res = args.Demangle(env)
-        self.assertEquals(res, { 'k' : 'K', 'e' : 'E', 's' : None })
+        self.assertEqual(res, { 'k' : 'K', 'e' : 'E', 's' : None })
 
 #############################################################################
 class Test__ArgumentDecl(unittest.TestCase):
@@ -2181,7 +2181,7 @@ class Test__ArgumentDecls(unittest.TestCase):
         decls.commit()
         with self.assertRaises(RuntimeError) as cm:
            decls._ArgumentDecls__ensure_not_committed()
-        self.assertEquals(str(cm.exception), "declarations are already committed, can't be modified")
+        self.assertEqual(str(cm.exception), "declarations are already committed, can't be modified")
         
     def test___ensure_committed_1(self):
         """<_ArgumetnDecls>.__ensure_committed() should not raise on a committed <_ArgumentDecls>"""
@@ -2197,7 +2197,7 @@ class Test__ArgumentDecls(unittest.TestCase):
         decls = SConsArguments._ArgumentDecls()
         with self.assertRaises(RuntimeError) as cm:
            decls._ArgumentDecls__ensure_committed()
-        self.assertEquals(str(cm.exception), "declarations must be committed before performing this operation")
+        self.assertEqual(str(cm.exception), "declarations must be committed before performing this operation")
         
     def test_setdefault__TypeError_1(self):
         """<_ArgumentDecls>.setdefault('foo', None) should raise TypeError"""
