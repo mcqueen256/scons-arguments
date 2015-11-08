@@ -319,23 +319,40 @@ class Transformer(object):
             opt_name_suffix : str
                 a suffix that is by default used when composing option names,
                 default: ``''``
-            env_key_transform : lambda
+            env_key_transform : callable | bool
                 a lambda used to transform *argument* names to construction variables,
                 may be customized to completely redefine the way ENV keys are
-                transformed, 
-            var_key_transform : lambda
+                transformed, if `env_key_transform` is not callable, then if
+                evaluates to ``True`` a default transform is used, or if it
+                evaluates to ``False`` a ``lambda x : None`` is used
+            var_key_transform : callable | bool
                 a lambda used to transform *argument* names to command-line variables,
                 may be customized to completely redefine the way VAR keys are
-                transformed, 
-            opt_key_transform : lambda
+                transformed,  if `env_key_transform` is not callable, then if
+                evaluates to ``True`` a default transform is used, or if it
+                evaluates to ``False`` a ``lambda x : None`` is used
+            opt_key_transform : callable | bool
                 a lambda used to transform *argument* names to command-line option keys,
                 may be customized to completely redefine the way OPT keys are
-                transformed, 
-            option_transform : lambda
+                transformed, if `env_key_transform` is not callable, then if
+                evaluates to ``True`` a default transform is used, or if it
+                evaluates to ``False`` a ``lambda x : None`` is used
+            option_transform : callable | bool
                 a lambda used to transform *argument* names to command-line options,
                 may be customized to completely redefine the way option names are
-                transformed, 
+                transformed, if `env_key_transform` is not callable, then if
+                evaluates to ``True`` a default transform is used, or if it
+                evaluates to ``False`` a ``lambda x : None`` is used
         """
+        def get_lambda(name, default, kw2):
+            fcn = kw2.get(name, default)
+            if not callable(fcn):
+                if fcn:
+                    fcn = default
+                else:
+                    fcn = lambda x : None
+            return fcn
+
         self.env_key_prefix     = kw.get('env_key_prefix', '')
         self.env_key_suffix     = kw.get('env_key_suffix', '')
         self.var_key_prefix     = kw.get('var_key_prefix', '')
@@ -351,10 +368,10 @@ class Transformer(object):
         opt_key = lambda x : self.opt_key_prefix + x.lower() + self.opt_key_suffix
         option  = lambda x : self.opt_prefix + (self.opt_name_prefix + \
                                      x.lower() + self.opt_name_suffix).replace('_','-')
-        self.env_key_transform = kw.get('env_key_transform', env_key)
-        self.var_key_transform = kw.get('var_key_transform', var_key)
-        self.opt_key_transform = kw.get('opt_key_transform', opt_key)
-        self.option_transform  = kw.get('option_transform',  option)
+        self.env_key_transform = get_lambda('env_key_transform', env_key, kw)
+        self.var_key_transform = get_lambda('var_key_transform', var_key, kw)
+        self.opt_key_transform = get_lambda('opt_key_transform', opt_key, kw)
+        self.option_transform  = get_lambda('option_transform',  option,  kw)
 #############################################################################
 
 #############################################################################

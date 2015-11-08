@@ -133,6 +133,28 @@ class Test_Transformer(unittest.TestCase):
         self.assertEquals(tr.opt_key_transform('FOO'), 'foo')
         self.assertEquals(tr.option_transform('FOO'), '--foo-option')
 
+    def test_Transformer_5(self):
+        """Test Transformer with True instead of lambdas"""
+        tr = SConsArguments.Transformer(env_key_transform = True,
+                                        var_key_transform = True,
+                                        opt_key_transform = True,
+                                        option_transform = True)
+        self.assertEquals(tr.env_key_transform('FOO'), 'FOO')
+        self.assertEquals(tr.var_key_transform('FOO'), 'FOO')
+        self.assertEquals(tr.opt_key_transform('FOO'), 'foo')
+        self.assertEquals(tr.option_transform('FOO'), '--foo')
+
+    def test_Transformer_6(self):
+        """Test Transformer with False instead of lambdas"""
+        tr = SConsArguments.Transformer(env_key_transform = False,
+                                        var_key_transform = False,
+                                        opt_key_transform = False,
+                                        option_transform = False)
+        self.assertIs(tr.env_key_transform('FOO'), None)
+        self.assertIs(tr.var_key_transform('FOO'), None)
+        self.assertIs(tr.opt_key_transform('FOO'), None)
+        self.assertIs(tr.option_transform('FOO'),  None)
+
 #############################################################################
 class Test__resubst(unittest.TestCase):
     """Test SConsArguments._resubst() function"""
