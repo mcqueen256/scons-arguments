@@ -341,34 +341,34 @@ transformed, usage: <tt class="rst-docutils literal"><span class="pre">var_key_t
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>env_key_prefix</code></strong> - a prefix that is by default prepended to ENV key by the
+        <li><strong class="pname"><code>env_key_prefix</code></strong> (str) - a prefix that is by default prepended to ENV key by the
 <strong>env_key_transform</strong> lambda, default: <tt class="rst-docutils literal">''</tt></li>
-        <li><strong class="pname"><code>env_key_suffix</code></strong> - a suffix that is by default prepended to ENV key by the
+        <li><strong class="pname"><code>env_key_suffix</code></strong> (str) - a suffix that is by default prepended to ENV key by the
 <strong>env_key_transform</strong> lambda, default: <tt class="rst-docutils literal">''</tt></li>
-        <li><strong class="pname"><code>var_key_prefix</code></strong> - a prefix that is by default prepended to VAR key by the
+        <li><strong class="pname"><code>var_key_prefix</code></strong> (str) - a prefix that is by default prepended to VAR key by the
 <strong>var_key_transform</strong> lambda, default: <tt class="rst-docutils literal">''</tt></li>
-        <li><strong class="pname"><code>var_key_suffix</code></strong> - a suffix that is by default prepended to VAR key by the
+        <li><strong class="pname"><code>var_key_suffix</code></strong> (str) - a suffix that is by default prepended to VAR key by the
 <strong>var_key_transform</strong> lambda, default: <tt class="rst-docutils literal">''</tt></li>
-        <li><strong class="pname"><code>opt_key_prefix</code></strong> - a prefix that is by default prepended to OPT key by the
+        <li><strong class="pname"><code>opt_key_prefix</code></strong> (str) - a prefix that is by default prepended to OPT key by the
 <strong>opt_key_transform</strong> lambda, default: <tt class="rst-docutils literal">''</tt></li>
-        <li><strong class="pname"><code>opt_key_suffix</code></strong> - a suffix that is by default prepended to OPT key by the
+        <li><strong class="pname"><code>opt_key_suffix</code></strong> (str) - a suffix that is by default prepended to OPT key by the
 <strong>opt_key_transform</strong> lambda, default: <tt class="rst-docutils literal">''</tt></li>
-        <li><strong class="pname"><code>opt_prefix</code></strong> - a prefix that is by default used when composing option names,
+        <li><strong class="pname"><code>opt_prefix</code></strong> (str) - a prefix that is by default used when composing option names,
 usually a single or double dash, default: <tt class="rst-docutils literal"><span class="pre">'--'</span></tt></li>
-        <li><strong class="pname"><code>opt_name_prefix</code></strong> - additional prefix used when composing option names, inserted
+        <li><strong class="pname"><code>opt_name_prefix</code></strong> (str) - additional prefix used when composing option names, inserted
 between <strong>opt_prefix</strong> and the <em>argument</em> name, default: <tt class="rst-docutils literal">''</tt></li>
-        <li><strong class="pname"><code>opt_name_suffix</code></strong> - a suffix that is by default used when composing option names,
+        <li><strong class="pname"><code>opt_name_suffix</code></strong> (str) - a suffix that is by default used when composing option names,
 default: <tt class="rst-docutils literal">''</tt></li>
-        <li><strong class="pname"><code>env_key_transform</code></strong> - a lambda used to transform <em>argument</em> names to construction variables,
+        <li><strong class="pname"><code>env_key_transform</code></strong> (lambda) - a lambda used to transform <em>argument</em> names to construction variables,
 may be customized to completely redefine the way ENV keys are
 transformed,</li>
-        <li><strong class="pname"><code>var_key_transform</code></strong> - a lambda used to transform <em>argument</em> names to command-line variables,
+        <li><strong class="pname"><code>var_key_transform</code></strong> (lambda) - a lambda used to transform <em>argument</em> names to command-line variables,
 may be customized to completely redefine the way VAR keys are
 transformed,</li>
-        <li><strong class="pname"><code>opt_key_transform</code></strong> - a lambda used to transform <em>argument</em> names to command-line option keys,
+        <li><strong class="pname"><code>opt_key_transform</code></strong> (lambda) - a lambda used to transform <em>argument</em> names to command-line option keys,
 may be customized to completely redefine the way OPT keys are
 transformed,</li>
-        <li><strong class="pname"><code>option_transform</code></strong> - a lambda used to transform <em>argument</em> names to command-line options,
+        <li><strong class="pname"><code>option_transform</code></strong> (lambda) - a lambda used to transform <em>argument</em> names to command-line options,
 may be customized to completely redefine the way option names are
 transformed,</li>
     </ul></dd>
@@ -406,7 +406,7 @@ transformed,</li>
   <tr>
     <td align="left" class="footer">
     Generated by Epydoc 3.0.1
-    on Sun Nov  8 01:56:47 2015
+    on Sun Nov  8 02:06:59 2015
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"
