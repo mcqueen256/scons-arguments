@@ -291,49 +291,50 @@ class Transformer(object):
     def __init__(self, **kw):
         """Initializes `Transformer` object.
 
-        :Kwarg env_key_prefix: 
-            a prefix that is by default prepended to ENV key by the
-            **env_key_transform** lambda, default: ``''``
-        :Kwarg env_key_suffix:
-            a suffix that is by default prepended to ENV key by the
-            **env_key_transform** lambda, default: ``''``
-        :Kwarg var_key_prefix: 
-            a prefix that is by default prepended to VAR key by the
-            **var_key_transform** lambda, default: ``''``
-        :Kwarg var_key_suffix:
-            a suffix that is by default prepended to VAR key by the
-            **var_key_transform** lambda, default: ``''``
-        :Kwarg opt_key_prefix: 
-            a prefix that is by default prepended to OPT key by the
-            **opt_key_transform** lambda, default: ``''``
-        :Kwarg opt_key_suffix:
-            a suffix that is by default prepended to OPT key by the
-            **opt_key_transform** lambda, default: ``''``
-        :Kwarg opt_prefix:
-            a prefix that is by default used when composing option names,
-            usually a single or double dash, default: ``'--'``
-        :Kwarg opt_name_prefix:
-            additional prefix used when composing option names, inserted
-            between **opt_prefix** and the *argument* name, default: ``''``
-        :Kwarg opt_name_suffix:
-            a suffix that is by default used when composing option names,
-            default: ``''``
-        :Kwarg env_key_transform:
-            a lambda used to transform *argument* names to construction variables,
-            may be customized to completely redefine the way ENV keys are
-            transformed, 
-        :Kwarg var_key_transform:
-            a lambda used to transform *argument* names to command-line variables,
-            may be customized to completely redefine the way VAR keys are
-            transformed, 
-        :Kwarg opt_key_transform:
-            a lambda used to transform *argument* names to command-line option keys,
-            may be customized to completely redefine the way OPT keys are
-            transformed, 
-        :Kwarg option_transform:
-            a lambda used to transform *argument* names to command-line options,
-            may be customized to completely redefine the way option names are
-            transformed, 
+        :Keywords:
+            env_key_prefix : str
+                a prefix that is by default prepended to ENV key by the
+                **env_key_transform** lambda, default: ``''``
+            env_key_suffix : str
+                a suffix that is by default prepended to ENV key by the
+                **env_key_transform** lambda, default: ``''``
+            var_key_prefix : str
+                a prefix that is by default prepended to VAR key by the
+                **var_key_transform** lambda, default: ``''``
+            var_key_suffix : str
+                a suffix that is by default prepended to VAR key by the
+                **var_key_transform** lambda, default: ``''``
+            opt_key_prefix : str
+                a prefix that is by default prepended to OPT key by the
+                **opt_key_transform** lambda, default: ``''``
+            opt_key_suffix : str
+                a suffix that is by default prepended to OPT key by the
+                **opt_key_transform** lambda, default: ``''``
+            opt_prefix : str
+                a prefix that is by default used when composing option names,
+                usually a single or double dash, default: ``'--'``
+            opt_name_prefix : str
+                additional prefix used when composing option names, inserted
+                between **opt_prefix** and the *argument* name, default: ``''``
+            opt_name_suffix : str
+                a suffix that is by default used when composing option names,
+                default: ``''``
+            env_key_transform : lambda
+                a lambda used to transform *argument* names to construction variables,
+                may be customized to completely redefine the way ENV keys are
+                transformed, 
+            var_key_transform : lambda
+                a lambda used to transform *argument* names to command-line variables,
+                may be customized to completely redefine the way VAR keys are
+                transformed, 
+            opt_key_transform : lambda
+                a lambda used to transform *argument* names to command-line option keys,
+                may be customized to completely redefine the way OPT keys are
+                transformed, 
+            option_transform : lambda
+                a lambda used to transform *argument* names to command-line options,
+                may be customized to completely redefine the way option names are
+                transformed, 
         """
         self.env_key_prefix     = kw.get('env_key_prefix', '')
         self.env_key_suffix     = kw.get('env_key_suffix', '')
