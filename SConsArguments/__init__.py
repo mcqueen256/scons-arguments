@@ -218,6 +218,145 @@ ALL = 3
 #############################################################################
 
 #############################################################################
+class Transformer(object):
+    """Provides a systematic way to transform *argument* names into keys 
+    identifying *endpoints*.
+
+    This object may be helpful when generating multiple *arguments* where
+    the *endpoint* names may have to be derived from *argument* names in
+    a systematic way. The object provides four lambdas, which may be used
+    to transform *argument* names to *endpoint* names. By default, these
+    lambdas prepend preset prefixes and append preset suffixes to the name.
+    For option keys and names, the original key is lowercased. These prefixes,
+    as well as lambdas may be overwritten by user.
+
+    :Ivar env_key_prefix: 
+        a prefix that is by default prepended to ENV key by the
+        `env_key_transform` lambda, default: ``''``
+    :Ivar env_key_suffix:
+        a suffix that is by default prepended to ENV key by the
+        `env_key_transform` lambda, default: ``''``
+    :Ivar var_key_prefix: 
+        a prefix that is by default prepended to VAR key by the
+        `var_key_transform` lambda, default: ``''``
+    :Ivar var_key_suffix:
+        a suffix that is by default prepended to VAR key by the
+        `var_key_transform` lambda, default: ``''``
+    :Ivar opt_key_prefix: 
+        a prefix that is by default prepended to OPT key by the
+        `opt_key_transform` lambda, default: ``''``
+    :Ivar opt_key_suffix:
+        a suffix that is by default prepended to OPT key by the
+        `opt_key_transform` lambda, default: ``''``
+    :Ivar opt_prefix:
+        a prefix that is by default used when composing option names,
+        usually a single or double dash, default: ``'--'``
+    :Ivar opt_name_prefix:
+        additional prefix used when composing option names, inserted
+        between `opt_prefix` and the *argument* name, default: ``''``
+    :Ivar opt_name_suffix:
+        a suffix that is by default used when composing option names,
+        default: ``''``
+    :Ivar env_key_transform:
+        a lambda used to transform *argument* names to construction variables,
+        may be customized to completely redefine the way ENV keys are
+        transformed, usage: ``env_key_tranform('foo')``
+    :Ivar var_key_transform:
+        a lambda used to transform *argument* names to command-line variables,
+        may be customized to completely redefine the way VAR keys are
+        transformed, usage: ``var_key_tranform('foo')``
+    :Ivar opt_key_transform:
+        a lambda used to transform *argument* names to command-line option keys,
+        may be customized to completely redefine the way OPT keys are
+        transformed, usage: ``opt_key_tranform('foo')``
+    :Ivar option_transform:
+        a lambda used to transform *argument* names to command-line options,
+        may be customized to completely redefine the way option names are
+        transformed, usage: ``option_tranform('foo')`` 
+
+    **Example**
+
+    .. python::
+        import SConsArguments
+        tr = SConsArguments.Transformer(env_key_prefix = 'ENV_', env_key_suffix = '_VNE',
+                                        var_key_prefix = 'VAR_', var_key_suffix = '_RAV',
+                                        opt_key_prefix = 'Opt_', opt_key_suffix = '_tpO',
+                                        opt_prefix     = '-',
+                                        opt_name_prefix = 'on_', opt_name_suffix = '_no')
+        assert(tr.env_key_transform('FOO') == 'ENV_FOO_VNE')
+        assert(tr.var_key_transform('FOO') == 'VAR_FOO_RAV')
+        assert(tr.opt_key_transform('FOO') == 'Opt_foo_tpO')
+        assert(tr.option_transform('FOO')  == '-on-foo-no')
+    """
+    def __init__(self, **kw):
+        """Initializes `Transformer` object.
+
+        :Kwarg env_key_prefix: 
+            a prefix that is by default prepended to ENV key by the
+            **env_key_transform** lambda, default: ``''``
+        :Kwarg env_key_suffix:
+            a suffix that is by default prepended to ENV key by the
+            **env_key_transform** lambda, default: ``''``
+        :Kwarg var_key_prefix: 
+            a prefix that is by default prepended to VAR key by the
+            **var_key_transform** lambda, default: ``''``
+        :Kwarg var_key_suffix:
+            a suffix that is by default prepended to VAR key by the
+            **var_key_transform** lambda, default: ``''``
+        :Kwarg opt_key_prefix: 
+            a prefix that is by default prepended to OPT key by the
+            **opt_key_transform** lambda, default: ``''``
+        :Kwarg opt_key_suffix:
+            a suffix that is by default prepended to OPT key by the
+            **opt_key_transform** lambda, default: ``''``
+        :Kwarg opt_prefix:
+            a prefix that is by default used when composing option names,
+            usually a single or double dash, default: ``'--'``
+        :Kwarg opt_name_prefix:
+            additional prefix used when composing option names, inserted
+            between **opt_prefix** and the *argument* name, default: ``''``
+        :Kwarg opt_name_suffix:
+            a suffix that is by default used when composing option names,
+            default: ``''``
+        :Kwarg env_key_transform:
+            a lambda used to transform *argument* names to construction variables,
+            may be customized to completely redefine the way ENV keys are
+            transformed, 
+        :Kwarg var_key_transform:
+            a lambda used to transform *argument* names to command-line variables,
+            may be customized to completely redefine the way VAR keys are
+            transformed, 
+        :Kwarg opt_key_transform:
+            a lambda used to transform *argument* names to command-line option keys,
+            may be customized to completely redefine the way OPT keys are
+            transformed, 
+        :Kwarg option_transform:
+            a lambda used to transform *argument* names to command-line options,
+            may be customized to completely redefine the way option names are
+            transformed, 
+        """
+        self.env_key_prefix     = kw.get('env_key_prefix', '')
+        self.env_key_suffix     = kw.get('env_key_suffix', '')
+        self.var_key_prefix     = kw.get('var_key_prefix', '')
+        self.var_key_suffix     = kw.get('var_key_suffix', '')
+        self.opt_key_prefix     = kw.get('opt_key_prefix', '')
+        self.opt_key_suffix     = kw.get('opt_key_suffix', '')
+        self.opt_prefix         = kw.get('opt_prefix', '--')
+        self.opt_name_prefix    = kw.get('opt_name_prefix', '')
+        self.opt_name_suffix    = kw.get('opt_name_suffix', '')
+
+        env_key = lambda x : self.env_key_prefix + x + self.env_key_suffix
+        var_key = lambda x : self.var_key_prefix + x + self.var_key_suffix
+        opt_key = lambda x : self.opt_key_prefix + x.lower() + self.opt_key_suffix
+        option  = lambda x : self.opt_prefix + (self.opt_name_prefix + \
+                                     x.lower() + self.opt_name_suffix).replace('_','-')
+        self.env_key_transform = kw.get('env_key_transform', env_key)
+        self.var_key_transform = kw.get('var_key_transform', var_key)
+        self.opt_key_transform = kw.get('opt_key_transform', opt_key)
+        self.option_transform  = kw.get('option_transform',  option)
+#############################################################################
+
+#############################################################################
 class _missing_meta(type):
     "Meta-class for the `_missing` class"
     def __bool__(self):

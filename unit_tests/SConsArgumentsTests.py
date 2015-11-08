@@ -84,6 +84,56 @@ class Test_module_constants(unittest.TestCase):
         self.assertTrue(isinstance(SConsArguments._notfound,type))
 
 #############################################################################
+class Test_Transformer(unittest.TestCase):
+    def test_Transformer_1(self):
+        """Test default Transformer instance"""
+        tr = SConsArguments.Transformer()
+        self.assertEquals(tr.env_key_transform('FOO'), 'FOO')
+        self.assertEquals(tr.var_key_transform('FOO'), 'FOO')
+        self.assertEquals(tr.opt_key_transform('FOO'), 'foo')
+        self.assertEquals(tr.option_transform('FOO'), '--foo')
+
+    def test_Transformer_2(self):
+        """Test Transformer with prefixes/suffixes"""
+        tr = SConsArguments.Transformer(env_key_prefix = 'ENV_', env_key_suffix = '_VNE',
+                                        var_key_prefix = 'VAR_', var_key_suffix = '_RAV',
+                                        opt_key_prefix = 'OPT_', opt_key_suffix = '_TPO',
+                                        opt_prefix     = '-',
+                                        opt_name_prefix = 'on_', opt_name_suffix = '_no')
+        self.assertEquals(tr.env_key_transform('FOO'), 'ENV_FOO_VNE')
+        self.assertEquals(tr.var_key_transform('FOO'), 'VAR_FOO_RAV')
+        self.assertEquals(tr.opt_key_transform('FOO'), 'OPT_foo_TPO')
+        self.assertEquals(tr.option_transform('FOO'), '-on-foo-no')
+
+    def test_Transformer_3(self):
+        """Test Transformer with prefixes/suffixes changed on existing object"""
+        tr = SConsArguments.Transformer()
+        tr.env_key_prefix = 'ENV_'
+        tr.env_key_suffix = '_VNE'
+        tr.var_key_prefix = 'VAR_'
+        tr.var_key_suffix = '_RAV'
+        tr.opt_key_prefix = 'OPT_'
+        tr.opt_key_suffix = '_TPO'
+        tr.opt_prefix     = '-'
+        tr.opt_name_prefix = 'on_'
+        tr.opt_name_suffix = '_no'
+        self.assertEquals(tr.env_key_transform('FOO'), 'ENV_FOO_VNE')
+        self.assertEquals(tr.var_key_transform('FOO'), 'VAR_FOO_RAV')
+        self.assertEquals(tr.opt_key_transform('FOO'), 'OPT_foo_TPO')
+        self.assertEquals(tr.option_transform('FOO'), '-on-foo-no')
+
+    def test_Transformer_4(self):
+        """Test Transformer with custom lambdas"""
+        tr = SConsArguments.Transformer(env_key_transform = lambda x : x.lower().capitalize(),
+                                        var_key_transform = lambda x : x.upper(),
+                                        opt_key_transform = lambda x : x.lower(),
+                                        option_transform = lambda x : '--' + x.lower() + '-option' )
+        self.assertEquals(tr.env_key_transform('FOO'), 'Foo')
+        self.assertEquals(tr.var_key_transform('foo'), 'FOO')
+        self.assertEquals(tr.opt_key_transform('FOO'), 'foo')
+        self.assertEquals(tr.option_transform('FOO'), '--foo-option')
+
+#############################################################################
 class Test__resubst(unittest.TestCase):
     """Test SConsArguments._resubst() function"""
     def test__resubst_1(self):
@@ -3212,6 +3262,7 @@ if __name__ == "__main__":
     suite = unittest.TestSuite()
     # Load tests to test suite
     tclasses = [ Test_module_constants
+               , Test_Transformer
                , Test__resubst
                , Test__build_resubst_dict
                , Test__build_iresubst_dict
