@@ -3,7 +3,7 @@
           "DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>SConsArguments._missing_meta</title>
+  <title>SConsArguments.Transfomer</title>
   <link rel="stylesheet" href="epydoc.css" type="text/css" />
   <script type="text/javascript" src="epydoc.js"></script>
 </head>
@@ -38,7 +38,7 @@
     <td width="100%">
       <span class="breadcrumbs">
         <a href="SConsArguments-module.html">Package&nbsp;SConsArguments</a> ::
-        Class&nbsp;_missing_meta
+        Class&nbsp;Transfomer
       </span>
     </td>
     <td>
@@ -48,24 +48,23 @@
     onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
         <tr><td align="right"><span class="options"
             >[<a href="frames.html" target="_top">frames</a
-            >]&nbsp;|&nbsp;<a href="SConsArguments._missing_meta-class.html"
+            >]&nbsp;|&nbsp;<a href="SConsArguments.Transfomer-class.html"
             target="_top">no&nbsp;frames</a>]</span></td></tr>
       </table>
     </td>
   </tr>
 </table>
-<!-- ==================== TYPE DESCRIPTION ==================== -->
-<h1 class="epydoc">Type _missing_meta</h1><p class="nomargin-top"><span class="codelink"><a href="SConsArguments-pysrc.html#_missing_meta">source&nbsp;code</a></span></p>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class Transfomer</h1><p class="nomargin-top"><span class="codelink"><a href="SConsArguments-pysrc.html#Transfomer">source&nbsp;code</a></span></p>
 <pre class="base-tree">
-object --+    
-         |    
-      type --+
-             |
-            <strong class="uidshort">_missing_meta</strong>
+object --+
+         |
+        <strong class="uidshort">Transfomer</strong>
 </pre>
 
 <hr />
-Meta-class for the <a href="SConsArguments._missing-class.html" class="link" onclick="show_private();">_missing</a> class
+<p>May be used by external modules, which generate arguments massively.</p>
+<p>This object holds four lambdas for transforming keys and option names:</p>
 
 <!-- ==================== INSTANCE METHODS ==================== -->
 <a name="section-InstanceMethods"></a>
@@ -90,42 +89,11 @@ Meta-class for the <a href="SConsArguments._missing-class.html" class="link" onc
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="__bool__"></a><span class="summary-sig-name">__bool__</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td><span class="summary-sig"><a href="SConsArguments.Transfomer-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">**kw</span>)</span><br />
+      Initializes <code class="link">Transformer</code> object.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="SConsArguments-pysrc.html#_missing_meta.__bool__">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a name="__nonzero__"></a><span class="summary-sig-name">__nonzero__</span>(<span class="summary-sig-arg">self</span>)</span></td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="SConsArguments-pysrc.html#_missing_meta.__bool__">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a href="SConsArguments._missing_meta-class.html#__repr__" class="summary-sig-name">__repr__</a>(<span class="summary-sig-arg">cls</span>)</span><br />
-      repr(x)</td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="SConsArguments-pysrc.html#_missing_meta.__repr__">source&nbsp;code</a></span>
+            <span class="codelink"><a href="SConsArguments-pysrc.html#Transfomer.__init__">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -135,29 +103,16 @@ Meta-class for the <a href="SConsArguments._missing-class.html" class="link" onc
   </tr>
   <tr>
     <td colspan="2" class="summary">
-    <p class="indent-wrapped-lines"><b>Inherited from <code>type</code></b>:
-      <code>__call__</code>,
-      <code>__delattr__</code>,
-      <code>__eq__</code>,
-      <code>__ge__</code>,
-      <code>__getattribute__</code>,
-      <code>__gt__</code>,
-      <code>__hash__</code>,
-      <code>__init__</code>,
-      <code>__instancecheck__</code>,
-      <code>__le__</code>,
-      <code>__lt__</code>,
-      <code>__ne__</code>,
-      <code>__new__</code>,
-      <code>__setattr__</code>,
-      <code>__subclasscheck__</code>,
-      <code>__subclasses__</code>,
-      <code>mro</code>
-      </p>
     <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__delattr__</code>,
       <code>__format__</code>,
+      <code>__getattribute__</code>,
+      <code>__hash__</code>,
+      <code>__new__</code>,
       <code>__reduce__</code>,
       <code>__reduce_ex__</code>,
+      <code>__repr__</code>,
+      <code>__setattr__</code>,
       <code>__sizeof__</code>,
       <code>__str__</code>,
       <code>__subclasshook__</code>
@@ -184,18 +139,6 @@ Meta-class for the <a href="SConsArguments._missing-class.html" class="link" onc
 </tr>
   <tr>
     <td colspan="2" class="summary">
-    <p class="indent-wrapped-lines"><b>Inherited from <code>type</code></b>:
-      <code>__abstractmethods__</code>,
-      <code>__base__</code>,
-      <code>__bases__</code>,
-      <code>__basicsize__</code>,
-      <code>__dictoffset__</code>,
-      <code>__flags__</code>,
-      <code>__itemsize__</code>,
-      <code>__mro__</code>,
-      <code>__name__</code>,
-      <code>__weakrefoffset__</code>
-      </p>
     <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
       <code>__class__</code>
       </p>
@@ -220,26 +163,38 @@ Meta-class for the <a href="SConsArguments._missing-class.html" class="link" onc
   </td>
 </tr>
 </table>
-<a name="__repr__"></a>
+<a name="__init__"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr><td>
   <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">__repr__</span>(<span class="sig-arg">cls</span>)</span>
-    <br /><em class="fname">(Representation operator)</em>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">**kw</span>)</span>
+    <br /><em class="fname">(Constructor)</em>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="SConsArguments-pysrc.html#_missing_meta.__repr__">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="SConsArguments-pysrc.html#Transfomer.__init__">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
-  <p>repr(x)</p>
+  Initializes <code class="link">Transformer</code> object.
   <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>env_key_prefix</code></strong> - default: <tt class="rst-docutils literal">''</tt></li>
+        <li><strong class="pname"><code>env_key_suffix</code></strong> - default: <tt class="rst-docutils literal">''</tt></li>
+        <li><strong class="pname"><code>var_key_prefix</code></strong> - default: <tt class="rst-docutils literal">''</tt></li>
+        <li><strong class="pname"><code>var_key_suffix</code></strong> - default: <tt class="rst-docutils literal">''</tt></li>
+        <li><strong class="pname"><code>opt_key_prefix</code></strong> - default: <tt class="rst-docutils literal">''</tt></li>
+        <li><strong class="pname"><code>opt_key_suffix</code></strong> - default: <tt class="rst-docutils literal">''</tt></li>
+        <li><strong class="pname"><code>opt_prefix</code></strong> - default: <tt class="rst-docutils literal"><span class="pre">'--'</span></tt></li>
+        <li><strong class="pname"><code>opt_name_prefix</code></strong> - default: <tt class="rst-docutils literal">''</tt></li>
+        <li><strong class="pname"><code>opt_name_suffix</code></strong> - default: <tt class="rst-docutils literal">''</tt></li>
+    </ul></dd>
     <dt>Overrides:
-        object.__repr__
-        <dd><em class="note">(inherited documentation)</em></dd>
+        object.__init__
     </dt>
   </dl>
 </td></tr></table>
@@ -272,7 +227,7 @@ Meta-class for the <a href="SConsArguments._missing-class.html" class="link" onc
   <tr>
     <td align="left" class="footer">
     Generated by Epydoc 3.0.1
-    on Sun Nov  8 01:56:47 2015
+    on Sun Nov  8 01:06:29 2015
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"
