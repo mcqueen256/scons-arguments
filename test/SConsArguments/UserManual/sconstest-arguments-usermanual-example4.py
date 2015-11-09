@@ -36,9 +36,9 @@ test = TestSCons.TestSCons()
 test.dir_fixture('../../../SConsArguments', 'site_scons/SConsArguments')
 test.write('SConstruct',
 """
-from SConsArguments import ArgumentDecls
+from SConsArguments import ArgumentDeclarations
 # create multiple declarations at once
-decls = ArgumentDecls({
+decls = ArgumentDeclarations({
   # Argument 'foo'
   'foo' : ( {'ENV_FOO' : 'default ENV_FOO'},                 # ENV
             ('var_foo', 'var_foo help', ),                   # VAR

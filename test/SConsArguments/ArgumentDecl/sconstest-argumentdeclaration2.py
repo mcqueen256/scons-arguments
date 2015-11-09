@@ -22,13 +22,13 @@
 __docformat__ = "restructuredText"
 
 """
-Tests declaring variables with SConsArguments.ArgumentDecl()
+Tests declaring variables with SConsArguments.ArgumentDeclaration()
 """
 
 import TestSCons
 
 ##############################################################################
-# ArgumentDecl(): Test 4 - declare Argument that is bound to opt only.
+# ArgumentDeclaration(): Test 2 - declare Argument that is bound to env only.
 ##############################################################################
 test = TestSCons.TestSCons()
 test.dir_fixture('../../../SConsArguments', 'site_scons/SConsArguments')
@@ -37,33 +37,46 @@ test.write('SConstruct',
 # SConstruct
 import SConsArguments
 list = []
-list.append( SConsArguments.ArgumentDecl(None, None, (('-x', '--xvar'), {'dest' : 'opt_x', 'default' : 'opt x default'})) )
-list.append( SConsArguments.ArgumentDecl(opt_decl = (('-x', '--xvar'), {'dest' : 'opt_x', 'default' : 'opt x default'})) )
+list.append( SConsArguments.ArgumentDeclaration({'env_x' : 'env x default'}) )
+list.append( SConsArguments.ArgumentDeclaration({'env_x' : 'env x default'}, None) )
+list.append( SConsArguments.ArgumentDeclaration({'env_x' : 'env x default'}, None, None) )
+list.append( SConsArguments.ArgumentDeclaration(env_decl = {'env_x' : 'env x default'}) )
 
 i = 0
 for v in list:
     print "ARG[%d].has_decl(ENV): %r"    % (i, v.has_decl(SConsArguments.ENV))
     print "ARG[%d].has_decl(VAR): %r"    % (i, v.has_decl(SConsArguments.VAR))
     print "ARG[%d].has_decl(OPT): %r"    % (i, v.has_decl(SConsArguments.OPT))
-    print "ARG[%d].get_key(OPT): %r"     % (i, v.get_key(SConsArguments.OPT))
-    print "ARG[%d].get_default(OPT): %r" % (i, v.get_default(SConsArguments.OPT))
+    print "ARG[%d].get_key(ENV): %r"     % (i, v.get_key(SConsArguments.ENV))
+    print "ARG[%d].get_default(ENV): %r" % (i, v.get_default(SConsArguments.ENV))
     i += 1
 """)
-
 test.run()
 
 lines = [
-  "ARG[0].has_decl(ENV): False",
+  "ARG[0].has_decl(ENV): True",
   "ARG[0].has_decl(VAR): False",
-  "ARG[0].has_decl(OPT): True",
-  "ARG[0].get_key(OPT): 'opt_x'",
-  "ARG[0].get_default(OPT): 'opt x default'",
+  "ARG[0].has_decl(OPT): False",
+  "ARG[0].get_key(ENV): 'env_x'",
+  "ARG[0].get_default(ENV): 'env x default'",
 
-  "ARG[1].has_decl(ENV): False",
+  "ARG[1].has_decl(ENV): True",
   "ARG[1].has_decl(VAR): False",
-  "ARG[1].has_decl(OPT): True",
-  "ARG[1].get_key(OPT): 'opt_x'",
-  "ARG[1].get_default(OPT): 'opt x default'",
+  "ARG[1].has_decl(OPT): False",
+  "ARG[1].get_key(ENV): 'env_x'",
+  "ARG[1].get_default(ENV): 'env x default'",
+
+  "ARG[2].has_decl(ENV): True",
+  "ARG[2].has_decl(VAR): False",
+  "ARG[2].has_decl(OPT): False",
+  "ARG[2].get_key(ENV): 'env_x'",
+  "ARG[2].get_default(ENV): 'env x default'",
+
+  "ARG[3].has_decl(ENV): True",
+  "ARG[3].has_decl(VAR): False",
+  "ARG[3].has_decl(OPT): False",
+  "ARG[3].get_key(ENV): 'env_x'",
+  "ARG[3].get_default(ENV): 'env x default'",
 ]
 
 test.must_contain_all_lines(test.stdout(), lines)

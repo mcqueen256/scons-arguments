@@ -36,16 +36,16 @@ test = TestSCons.TestSCons()
 test.dir_fixture('../../../SConsArguments', 'site_scons/SConsArguments')
 test.write('SConstruct',
 """
-from SConsArguments import ArgumentDecls, ArgumentDecl
+from SConsArguments import ArgumentDeclarations, ArgumentDeclaration
 # create single declarations
-foodecl = ArgumentDecl( {'ENV_FOO' : 'default ENV_FOO'},        # ENV
+foodecl = ArgumentDeclaration( {'ENV_FOO' : 'default ENV_FOO'},        # ENV
               ('var_foo', 'var_foo help', ),                    # VAR
               ('--foo', {'dest' : "opt_foo"}) )                 # OPT
-bardecl = ArgumentDecl( {'ENV_BAR' : None},                     # ENV
+bardecl = ArgumentDeclaration( {'ENV_BAR' : None},                     # ENV
               ('var_bar', 'var_bar help', 'default var_bar'),   # VAR
               ('--bar', {'dest':"opt_bar", "type":"string"}))   # OPT
 # put them all together
-decls = ArgumentDecls({ 'foo' : foodecl, 'bar' : bardecl })
+decls = ArgumentDeclarations({ 'foo' : foodecl, 'bar' : bardecl })
 """)
 
 test.run(arguments = ['-Q'])

@@ -22,7 +22,7 @@
 __docformat__ = "restructuredText"
 
 """
-Tests declaring variables with SConsArguments.DeclareArguments() 
+Tests declaring variables with SConsArguments.DeclareArguments()
 """
 
 import TestSCons

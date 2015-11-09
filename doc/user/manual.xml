@@ -23,7 +23,7 @@
 		compacting the notation when defining multiple command-line
 		variables/options. It also provides a way to define
 		mutually-dependent arguments, where the (default) value of one
-		command-line argument may refer another arguments.</para>
+		command-line argument may refer other arguments.</para>
 	</section>
 	<section xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="sec-args-basics">
 		<title xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Arguments
@@ -62,10 +62,10 @@
 		incorporated into Arguments.</para>
 		<para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">With
 		Arguments, we maintain abstract variables whose values are settable
-		via scons command line and are passed to scons environment
-		automagically. Command line variables or options act as inputs for
-		Arguments whereas construction variables are their destination
-		points.</para>
+		via scons command line and are passed to scons environment without
+		much developer&apos;s effort. Command line variables or options act
+		as inputs for Arguments whereas construction variables are their
+		destination points.</para>
 		<para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
 			Arguments are implemented in
 			<code xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">SConsArguments</code>
@@ -106,19 +106,19 @@
 		declare Arguments. The goal is to prepare the whole collection of
 		Argument Declarations for further processing. Four factory methods
 		are provided for this purpose. The first two named
-		<function xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">ArgumentDecl</function>
+		<function xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">ArgumentDeclaration</function>
 		and
 		<function xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">DeclareArgument</function>
 		create an object representing a single Argument Declaration. The
 		other two named
-		<function xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">ArgumentDecls</function>
+		<function xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">ArgumentDeclarations</function>
 		and
 		<function xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">DeclareArguments</function>
 		create multiple declarations at once returning dict-like collection
 		where Argument Names are mapped onto Argument Declarations. The
-		dictionary is a kind of flat namespace which encloses multiple
-		Argument Declarations. In steps 2. and 3. of the previously outlined
-		procedure we will actually need this dict object.</para>
+		dictionary contains multiple Argument Declarations. In steps 2. and
+		3. of the previously outlined procedure we will actually need this
+		dict object.</para>
 		<section xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
 			<title xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Declaring
 			single Argument</title>
@@ -129,13 +129,13 @@
 			the plural declarations described in other sections.</para>
 			<para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Single
 			Argument declaration may be created with either
-			<methodname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">ArgumentDecl</methodname>
+			<methodname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">ArgumentDeclaration</methodname>
 			or
 			<methodname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">DeclareArgument</methodname>
 			. The prototype of
-			<methodname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">ArgumentDecl</methodname>
+			<methodname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">ArgumentDeclaration</methodname>
 			is</para>
-			<programlisting xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">_ArgumentDecl ArgumentDecl([env_decl[, var_decl[, opt_decl]]])</programlisting>
+			<programlisting xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">_ArgumentDeclaration ArgumentDeclaration([env_decl[, var_decl[, opt_decl]]])</programlisting>
 			<para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
 				The function creates Argument Declaration according to three
 				parameters:
@@ -148,9 +148,9 @@
 				them, just set it to
 				<constant xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">None</constant>
 				 :
-				<programlisting xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">decl = ArgumentDecl(env_decl, None, opt_decl)</programlisting>
+				<programlisting xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">decl = ArgumentDeclaration(env_decl, None, opt_decl)</programlisting>
 				or use only relevant named parameters:
-				<programlisting xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">decl = ArgumentDecl(env_decl = env_decl, opt_decl = opt_decl)</programlisting>
+				<programlisting xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">decl = ArgumentDeclaration(env_decl = env_decl, opt_decl = opt_decl)</programlisting>
 			</para>
 			<example xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="example-declaring-single-arg">
 				<title xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Declaring
@@ -162,8 +162,8 @@
 				and stores in construction variable named
 				<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">xvar</varname>
 				:</para>
-				<programlisting xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">from SConsArguments import ArgumentDecl
-decl = ArgumentDecl( {&apos;xvar&apos; : None}, None, (&apos;--xvar&apos;, {&apos;dest&apos; : &apos;xvar&apos;, &apos;type&apos; : &apos;string&apos;}) )</programlisting>
+				<programlisting xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">from SConsArguments import ArgumentDeclaration
+decl = ArgumentDeclaration( {&apos;xvar&apos; : None}, None, (&apos;--xvar&apos;, {&apos;dest&apos; : &apos;xvar&apos;, &apos;type&apos; : &apos;string&apos;}) )</programlisting>
 				<para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">The
 				above code creates a new Argument Declaration which associates
 				scons environment variable named
@@ -188,7 +188,7 @@ decl = ArgumentDecl( {&apos;xvar&apos; : None}, None, (&apos;--xvar&apos;, {&apo
 			</example>
 			<para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">The
 			parameters to
-			<methodname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">ArgumentDecl</methodname>
+			<methodname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">ArgumentDeclaration</methodname>
 			are summarized in the following table:</para>
 			<informaltable xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
 				<thead xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -316,7 +316,7 @@ decl = ArgumentDecl( {&apos;xvar&apos; : None}, None, (&apos;--xvar&apos;, {&apo
 			</informaltable>
 			<para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Sometimes,
 			when using
-			<methodname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">ArgumentDecl</methodname>
+			<methodname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">ArgumentDeclaration</methodname>
 			we have to repeat some data. For example, default values for
 			construction variable and command line variable are usually same.
 			The same applies to
@@ -332,7 +332,7 @@ decl = ArgumentDecl( {&apos;xvar&apos; : None}, None, (&apos;--xvar&apos;, {&apo
 			<para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">The
 			<methodname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">DeclareArgument</methodname>
 			has the following prototype</para>
-			<programlisting xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">_ArgumentDecl DeclareArgument(env_key = None, var_key = None, opt_key = None,
+			<programlisting xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">_ArgumentDeclaration DeclareArgument(env_key = None, var_key = None, opt_key = None,
       default = None, help = None, validator = None, converter = None, option = None,
       type = None, opt_default = None, metavar = None, nargs = None, choices = None,
       action = None, const = None, callback = None, callback_args = None,
@@ -583,40 +583,40 @@ decl = DeclareArgument(env_key = &apos;xvar&apos;, opt_key = &apos;xvar&apos;, o
 			create actual variables.</para>
 			<para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">There
 			is a special class named
-			<classname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">_ArgumentDecls</classname>
+			<classname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">_ArgumentDeclarations</classname>
 			which represents a collection of Argument Declarations. It&apos;s a
 			kind of dict, but it also adds few methods on its own. The
 			<code xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">SConsArguments</code>
 			module provides two factory methods to create such collections,
 			these are
-			<methodname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">ArgumentDecls</methodname>
+			<methodname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">ArgumentDeclarations</methodname>
 			and
 			<methodname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">DeclareArguments</methodname>
 			.</para>
 			<para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">The
-			<methodname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">ArgumentDecl</methodname>
+			<methodname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">ArgumentDeclaration</methodname>
 			function supports several forms of invocation. Here we give just a
 			couple of examples, the complete reference may be found in API
 			documentation.</para>
 			<example xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="example-using-gvardecls-with-a-dict-as-argument">
 				<title xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Using
-				ArgumentDecls with a dict of objects</title>
+				ArgumentDeclarations with a dict of objects</title>
 				<para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">In
 				the following example we declare two Arguments::
 				<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">foo</varname>
 				and
 				<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">bar</varname>
 				.</para>
-				<programlisting xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">from SConsArguments import ArgumentDecls, ArgumentDecl
+				<programlisting xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">from SConsArguments import ArgumentDeclarations, ArgumentDeclaration
 # create single declarations
-foodecl = ArgumentDecl( {&apos;ENV_FOO&apos; : &apos;default ENV_FOO&apos;},      # ENV
+foodecl = ArgumentDeclaration( {&apos;ENV_FOO&apos; : &apos;default ENV_FOO&apos;},      # ENV
             (&apos;var_foo&apos;, &apos;var_foo help&apos;, ),                    # VAR
             (&apos;--foo&apos;, {&apos;dest&apos; : &quot;opt_foo&quot;}) )                 # OPT
-bardecl = ArgumentDecl( {&apos;ENV_BAR&apos; : None},                   # ENV
+bardecl = ArgumentDeclaration( {&apos;ENV_BAR&apos; : None},                   # ENV
             (&apos;var_bar&apos;, &apos;var_bar help&apos;, &apos;default var_bar&apos;),   # VAR
             (&apos;--bar&apos;, {&apos;dest&apos;:&quot;opt_bar&quot;, &quot;type&quot;:&quot;string&quot;}))   # OPT
 # put them all together
-decls = ArgumentDecls({ &apos;foo&apos; : foodecl, &apos;bar&apos; : bardecl })</programlisting>
+decls = ArgumentDeclarations({ &apos;foo&apos; : foodecl, &apos;bar&apos; : bardecl })</programlisting>
 				<para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">The
 				keys in the above hash are Argument Names. Values are objects
 				representing Argument Declarations. Note, that in this example we
@@ -634,18 +634,18 @@ decls = ArgumentDecls({ &apos;foo&apos; : foodecl, &apos;bar&apos; : bardecl })<
 			<para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">You
 			don&apos;t have to create each Argument Declaration separatelly
 			before putting all your Arguments to a collection. Instead, you may
-			simply put declaration arguments as parameters to ArgumentDecls and
-			they will be passed to
-			<methodname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">ArgumentDecl</methodname>
+			simply put declaration arguments as parameters to
+			ArgumentDeclarations and they will be passed to
+			<methodname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">ArgumentDeclaration</methodname>
 			for you. With this, the
 			<xref xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" linkend="example-using-gvardecls-with-a-dict-as-argument"/>
 			may be refactored to the following form.</para>
 			<example xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
 				<title xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Using
-				ArgumentDecls with bare parameters</title>
-				<programlisting xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">from SConsArguments import ArgumentDecls
+				ArgumentDeclarations with bare parameters</title>
+				<programlisting xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">from SConsArguments import ArgumentDeclarations
 # create multiple declarations at once
-decls = ArgumentDecls({
+decls = ArgumentDeclarations({
 # Argument &apos;foo&apos;
 &apos;foo&apos; : ( {&apos;ENV_FOO&apos; : &apos;default ENV_FOO&apos;},                 # ENV
           (&apos;var_foo&apos;, &apos;var_foo help&apos;, ),                   # VAR
@@ -658,13 +658,13 @@ decls = ArgumentDecls({
 			</example>
 			<para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">We
 			may also pass a list (instead of dict) as an argument to
-			<methodname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">ArgumentDecls</methodname>
+			<methodname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">ArgumentDeclarations</methodname>
 			, for example</para>
 			<example xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
 				<title xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Using
-				ArgumentDecls with arrays</title>
-				<programlisting xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">from SConsArguments import ArgumentDecls
-decls = ArgumentDecls([
+				ArgumentDeclarations with arrays</title>
+				<programlisting xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">from SConsArguments import ArgumentDeclarations
+decls = ArgumentDeclarations([
 # Argument &apos;foo&apos;
 (&apos;foo&apos;,  ( {&apos;ENV_FOO&apos; : &apos;default ENV_FOO&apos;},                  # ENV
            (&apos;var_foo&apos;, &apos;var_foo help&apos;, ),                    # VAR
@@ -682,9 +682,9 @@ decls = ArgumentDecls([
 			follows</para>
 			<example xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="example-using-gvardecls-with-keyword-arguments">
 				<title xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Using
-				ArgumentDecls with keyword arguments</title>
-				<programlisting xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">from SConsArguments import ArgumentDecls
-decls = ArgumentDecls(
+				ArgumentDeclarations with keyword arguments</title>
+				<programlisting xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">from SConsArguments import ArgumentDeclarations
+decls = ArgumentDeclarations(
 # Argument &apos;foo&apos;
 foo =  ( {&apos;ENV_FOO&apos; : &apos;default ENV_FOO&apos;},                  # ENV
          (&apos;var_foo&apos;, &apos;var_foo help&apos;, ),                    # VAR
@@ -700,9 +700,9 @@ bar =  ( {&apos;ENV_BAR&apos; : None},                               # ENV
 			the syntaxes of dict, list and keyword arguments may be mixed.</para>
 			<example xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
 				<title xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Using
-				ArgumentDecls with array and keyword arguments</title>
-				<programlisting xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">from SConsArguments import ArgumentDecls
-decls = ArgumentDecls(
+				ArgumentDeclarations with array and keyword arguments</title>
+				<programlisting xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">from SConsArguments import ArgumentDeclarations
+decls = ArgumentDeclarations(
  # Argument &apos;foo&apos;
  [(&apos;foo&apos;,(  {&apos;ENV_FOO&apos; : &apos;ENV default FOO&apos;},                    # ENV
             (&apos;FOO&apos;,         &apos;FOO variable help&apos;, ),             # VAR
@@ -714,16 +714,16 @@ decls = ArgumentDecls(
 )</programlisting>
 			</example>
 			<para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Because
-			<classname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">_ArgumentDecls</classname>
+			<classname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">_ArgumentDeclarations</classname>
 			collection is a dict, it has this nice feature that we can remove,
 			add declarations or merge multiple
-			<classname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">_ArgumentDecls</classname>
+			<classname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">_ArgumentDeclarations</classname>
 			collections. That means, we don&apos;t have to declare all the
 			variables in a single call, but may spread out this task among
 			multiple SConscripts.</para>
-			<para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"><methodname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">ArgumentDecls</methodname>
+			<para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"><methodname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">ArgumentDeclarations</methodname>
 			inherits from
-			<methodname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">ArgumentDecl</methodname>
+			<methodname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">ArgumentDeclaration</methodname>
 			the feature that some data may have to be repeated. For those, who
 			want a more compact notation, we provide the
 			<methodname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">DeclareArguments</methodname>
@@ -750,7 +750,7 @@ bar = { &apos;env_key&apos;: &apos;ENV_BAR&apos;, &apos;var_key&apos; : &apos;va
 			<para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">In
 			the above example we&apos;ve used keyword arguments, but all the
 			calling conventions of
-			<methodname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">ArgumentDecls</methodname>
+			<methodname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">ArgumentDeclarations</methodname>
 			(that is passing list or dict, or mixing them with keyword
 			arguments) apply also to
 			<methodname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">DeclareArguments</methodname>
@@ -794,8 +794,8 @@ scons: `.&apos; is up to date.</screen>
 					 and
 					<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">bar</varname>
 					 as follows:
-					<programlisting xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">from SConsArguments import ArgumentDecls
-decls = ArgumentDecls(
+					<programlisting xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">from SConsArguments import ArgumentDeclarations
+decls = ArgumentDeclarations(
 foo = ( { &apos;ENV_FOO&apos; : None }, (&apos;VAR_FOO&apos;, &apos;Help for VAR_FOO&apos;, &apos;$VAR_BAR&apos;), None),
 bar = ( { &apos;ENV_BAR&apos; : None }, (&apos;VAR_BAR&apos;, &apos;Help for VAR_BAR&apos;, &apos;BAR&apos;), None),
 )</programlisting>
@@ -831,11 +831,11 @@ env[&apos;ENV_BAR&apos;] == &apos;BAR&apos;        # True</programlisting>
 		Argument Declarations</title>
 		<para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Once
 		created, Argument Declarations shall be committed with
-		<code xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">_ArgumentDecls.Commit()</code>
+		<code xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">_ArgumentDeclarations.Commit()</code>
 		method. By committing declarations you create their associatted
 		commandline options and variables, construction variables, fill them
-		with default values and freeze the declarations such that it&apos;s
-		guaranteed that they will not change. The
+		with default values and &quot;freeze&quot; the declarations such that
+		it&apos;s guaranteed that they will not change. The
 		<methodname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Commit</methodname>
 		method optionally spawns the actual Arguments (to this end we talked
 		about variable &quot;declarations&quot;, not the variables) which may
@@ -846,7 +846,7 @@ env[&apos;ENV_BAR&apos;] == &apos;BAR&apos;        # True</programlisting>
 		. Once
 		<classname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">_Arguments</classname>
 		are created, the
-		<classname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">_ArgumentDecls</classname>
+		<classname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">_ArgumentDeclarations</classname>
 		are no longer needed.</para>
 		<example xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
 			<title xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Committing

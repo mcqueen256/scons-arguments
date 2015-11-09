@@ -22,13 +22,13 @@
 __docformat__ = "restructuredText"
 
 """
-Tests declaring variables with SConsArguments.ArgumentDecl()
+Tests declaring variables with SConsArguments.ArgumentDeclaration()
 """
 
 import TestSCons
 
 ##############################################################################
-# ArgumentDecl(): Test 3 - declare Argument that is bound to var only.
+# ArgumentDeclaration(): Test 1 - declare Argument that is not bound to anything.
 ##############################################################################
 test = TestSCons.TestSCons()
 test.dir_fixture('../../../SConsArguments', 'site_scons/SConsArguments')
@@ -36,43 +36,12 @@ test.write('SConstruct',
 """
 # SConstruct
 import SConsArguments
-list = []
-list.append( SConsArguments.ArgumentDecl(None, ('var_x', 'help for var_x', 'var x default')) )
-list.append( SConsArguments.ArgumentDecl(None, ('var_x', 'help for var_x', 'var x default'), None) )
-list.append( SConsArguments.ArgumentDecl(var_decl = ('var_x', 'help for var_x', 'var x default')) )
-
-i = 0
-for v in list:
-    print "ARG[%d].has_decl(ENV): %r"    % (i, v.has_decl(SConsArguments.ENV))
-    print "ARG[%d].has_decl(VAR): %r"    % (i, v.has_decl(SConsArguments.VAR))
-    print "ARG[%d].has_decl(OPT): %r"    % (i, v.has_decl(SConsArguments.OPT))
-    print "ARG[%d].get_key(VAR): %r"     % (i, v.get_key(SConsArguments.VAR))
-    print "ARG[%d].get_default(VAR): %r" % (i, v.get_default(SConsArguments.VAR))
-    i += 1
+SConsArguments.ArgumentDeclaration()
+SConsArguments.ArgumentDeclaration(None)
+SConsArguments.ArgumentDeclaration(None,None)
+SConsArguments.ArgumentDeclaration(None,None,None)
 """)
 test.run()
-
-lines = [
-  "ARG[0].has_decl(ENV): False",
-  "ARG[0].has_decl(VAR): True",
-  "ARG[0].has_decl(OPT): False",
-  "ARG[0].get_key(VAR): 'var_x'",
-  "ARG[0].get_default(VAR): 'var x default'",
-
-  "ARG[1].has_decl(ENV): False",
-  "ARG[1].has_decl(VAR): True",
-  "ARG[1].has_decl(OPT): False",
-  "ARG[1].get_key(VAR): 'var_x'",
-  "ARG[1].get_default(VAR): 'var x default'",
-
-  "ARG[2].has_decl(ENV): False",
-  "ARG[2].has_decl(VAR): True",
-  "ARG[2].has_decl(OPT): False",
-  "ARG[2].get_key(VAR): 'var_x'",
-  "ARG[2].get_default(VAR): 'var x default'",
-]
-
-test.must_contain_all_lines(test.stdout(), lines)
 
 test.pass_test()
 
