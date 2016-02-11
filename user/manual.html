@@ -1,17 +1,17 @@
-<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><title>scons-arguments</title><link rel="stylesheet" type="text/css" href="docbook.css"></link><link rel="stylesheet" type="text/css" href="scons-arguments.css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.78.1"></meta></head><body><section class="article" id="idm45301565082592"><div class="titlepage"><div><div><h2 class="title">scons-arguments</h2></div><div><h3 class="subtitle"><em>User's
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><title>scons-arguments</title><link rel="stylesheet" type="text/css" href="docbook.css"></link><link rel="stylesheet" type="text/css" href="scons-arguments.css"></link><meta name="generator" content="DocBook XSL Stylesheets V1.79.1"></meta></head><body><section class="article" id="idm46152344935088"><div class="titlepage"><div><div><h2 class="title">scons-arguments</h2></div><div><h3 class="subtitle"><em>User's
 	Manual</em></h3></div><div><div class="author"><h3 class="author">Paweł
 			Tomulik</h3><code class="email">&lt;<a class="email" href="mailto:ptomulik@meil.pw.edu.pl">ptomulik@meil.pw.edu.pl</a>&gt;</code></div></div><div><p class="pubdate">2015-11-07</p></div></div><hr></hr></div><div class="toc"><div class="toc-title">Table of Contents</div><ul class="toc"><li><span class="section"><a href="#sec-intro">1. Introduction</a></span></li><li><span class="section"><a href="#sec-args-basics">2. Arguments
 		basics</a></span></li><li><span class="section"><a href="#sec-declaring-args">3. Declaring
-		Arguments</a></span><ul><li><span class="section"><a href="#idm45301565056736">3.1. Declaring
-			single Argument</a></span></li><li><span class="section"><a href="#idm45301562452672">3.2. Declaring
-			multiple Arguments</a></span></li><li><span class="section"><a href="#idm45301562421408">3.3. Default
+		Arguments</a></span><ul><li><span class="section"><a href="#idm46152344735120">3.1. Declaring
+			single Argument</a></span></li><li><span class="section"><a href="#idm46152340617952">3.2. Declaring
+			multiple Arguments</a></span></li><li><span class="section"><a href="#idm46152340586496">3.3. Default
 			values and substitutions</a></span></li></ul></li><li><span class="section"><a href="#sec-committing-args">4. Committing
 		Argument Declarations</a></span></li><li><span class="section"><a href="#sec-postprocessing-args">5. Postprocessing
-		Arguments</a></span></li><li><span class="section"><a href="#idm45301562359920">6. Accessing
-		Argument values</a></span></li><li><span class="section"><a href="#idm45301562347152">7. Putting
-		it all together</a></span><ul><li><span class="section"><a href="#idm45301562313056">7.1. Documenting
-			Command Line variables</a></span></li><li><span class="section"><a href="#idm45301562304112">7.2. Saving
-			command line variables to a file</a></span></li><li><span class="section"><a href="#idm45301562294384">7.3. Loading
+		Arguments</a></span></li><li><span class="section"><a href="#idm46152340525024">6. Accessing
+		Argument values</a></span></li><li><span class="section"><a href="#idm46152340512256">7. Putting
+		it all together</a></span><ul><li><span class="section"><a href="#idm46152340478160">7.1. Documenting
+			Command Line variables</a></span></li><li><span class="section"><a href="#idm46152340469216">7.2. Saving
+			command line variables to a file</a></span></li><li><span class="section"><a href="#idm46152340459488">7.3. Loading
 			command line variables from file</a></span></li></ul></li></ul></div><section class="section" id="sec-intro"><div class="titlepage"><div><div><h2 class="title" style="clear: both">1. Introduction</h2></div></div></div><p>The
 		<span class="package">scons-arguments</span>
 		package is an extension to
@@ -22,7 +22,7 @@
 		compacting the notation when defining multiple command-line
 		variables/options. It also provides a way to define
 		mutually-dependent arguments, where the (default) value of one
-		command-line argument may refer another arguments.</p></section><section class="section" id="sec-args-basics"><div class="titlepage"><div><div><h2 class="title" style="clear: both">2. Arguments
+		command-line argument may refer other arguments.</p></section><section class="section" id="sec-args-basics"><div class="titlepage"><div><div><h2 class="title" style="clear: both">2. Arguments
 		basics</h2></div></div></div><p>Arguments
 		are "special variables". In general, an Argument is an
 		object which associates up to three endpoints:</p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>a
@@ -44,10 +44,10 @@
 		addition, values from the operating system environment may be easily
 		incorporated into Arguments.</p><p>With
 		Arguments, we maintain abstract variables whose values are settable
-		via scons command line and are passed to scons environment
-		automagically. Command line variables or options act as inputs for
-		Arguments whereas construction variables are their destination
-		points.</p><p>
+		via scons command line and are passed to scons environment without
+		much developer's effort. Command line variables or options act
+		as inputs for Arguments whereas construction variables are their
+		destination points.</p><p>
 			Arguments are implemented in
 			<code class="code">SConsArguments</code>
 			 submodule:
@@ -74,31 +74,31 @@
 		declare Arguments. The goal is to prepare the whole collection of
 		Argument Declarations for further processing. Four factory methods
 		are provided for this purpose. The first two named
-		<code class="function">ArgumentDecl</code>
+		<code class="function">ArgumentDeclaration</code>
 		and
 		<code class="function">DeclareArgument</code>
 		create an object representing a single Argument Declaration. The
 		other two named
-		<code class="function">ArgumentDecls</code>
+		<code class="function">ArgumentDeclarations</code>
 		and
 		<code class="function">DeclareArguments</code>
 		create multiple declarations at once returning dict-like collection
 		where Argument Names are mapped onto Argument Declarations. The
-		dictionary is a kind of flat namespace which encloses multiple
-		Argument Declarations. In steps 2. and 3. of the previously outlined
-		procedure we will actually need this dict object.</p><section class="section" id="idm45301565056736"><div class="titlepage"><div><div><h3 class="title">3.1. Declaring
+		dictionary contains multiple Argument Declarations. In steps 2. and
+		3. of the previously outlined procedure we will actually need this
+		dict object.</p><section class="section" id="idm46152344735120"><div class="titlepage"><div><div><h3 class="title">3.1. Declaring
 			single Argument</h3></div></div></div><p>In
 			most scenarios you'll declare multiple arguments at once. This
 			section is provided only to document in details the parameters used
 			to declare single argument, because same parameters will appear in
 			the plural declarations described in other sections.</p><p>Single
 			Argument declaration may be created with either
-			<code class="methodname">ArgumentDecl</code>
+			<code class="methodname">ArgumentDeclaration</code>
 			or
 			<code class="methodname">DeclareArgument</code>
 			. The prototype of
-			<code class="methodname">ArgumentDecl</code>
-			is</p><pre class="programlisting">_ArgumentDecl ArgumentDecl([env_decl[, var_decl[, opt_decl]]])</pre><p>
+			<code class="methodname">ArgumentDeclaration</code>
+			is</p><pre class="programlisting">_ArgumentDeclaration ArgumentDeclaration([env_decl[, var_decl[, opt_decl]]])</pre><p>
 				The function creates Argument Declaration according to three
 				parameters:
 				<em class="parameter"><code>env_decl</code></em>
@@ -110,9 +110,9 @@
 				them, just set it to
 				<code class="constant">None</code>
 				 :
-				</p><pre class="programlisting">decl = ArgumentDecl(env_decl, None, opt_decl)</pre><p>
+				</p><pre class="programlisting">decl = ArgumentDeclaration(env_decl, None, opt_decl)</pre><p>
 				or use only relevant named parameters:
-				</p><pre class="programlisting">decl = ArgumentDecl(env_decl = env_decl, opt_decl = opt_decl)</pre><p>
+				</p><pre class="programlisting">decl = ArgumentDeclaration(env_decl = env_decl, opt_decl = opt_decl)</pre><p>
 			</p><div class="example" id="example-declaring-single-arg"><div class="example-title">Example 1. Declaring
 				single Argument</div><div class="example-contents"><p>Let's
 				create a string-valued variable which obtains it's value from
@@ -120,8 +120,8 @@
 				<code class="option">--xvar</code>
 				and stores in construction variable named
 				<code class="varname">xvar</code>
-				:</p><pre class="programlisting">from SConsArguments import ArgumentDecl
-decl = ArgumentDecl( {'xvar' : None}, None, ('--xvar', {'dest' : 'xvar', 'type' : 'string'}) )</pre><p>The
+				:</p><pre class="programlisting">from SConsArguments import ArgumentDeclaration
+decl = ArgumentDeclaration( {'xvar' : None}, None, ('--xvar', {'dest' : 'xvar', 'type' : 'string'}) )</pre><p>The
 				above code creates a new Argument Declaration which associates
 				scons environment variable named
 				<code class="varname">xvar</code>
@@ -143,7 +143,7 @@ decl = ArgumentDecl( {'xvar' : None}, None, ('--xvar', {'dest' : 'xvar', 'type' 
 				<span class="type">string</span>
 				.</p></div></div><br class="example-break"></br><p>The
 			parameters to
-			<code class="methodname">ArgumentDecl</code>
+			<code class="methodname">ArgumentDeclaration</code>
 			are summarized in the following table:</p><div class="informaltable"><table><thead><tr>
 						<th>name</th>
 						<th>type</th>
@@ -260,7 +260,7 @@ decl = ArgumentDecl( {'xvar' : None}, None, ('--xvar', {'dest' : 'xvar', 'type' 
 						</td>
 					</tr></tbody></table></div><p>Sometimes,
 			when using
-			<code class="methodname">ArgumentDecl</code>
+			<code class="methodname">ArgumentDeclaration</code>
 			we have to repeat some data. For example, default values for
 			construction variable and command line variable are usually same.
 			The same applies to
@@ -274,7 +274,7 @@ decl = ArgumentDecl( {'xvar' : None}, None, ('--xvar', {'dest' : 'xvar', 'type' 
 			<code class="methodname">DeclareArgument</code>
 			function.</p><p>The
 			<code class="methodname">DeclareArgument</code>
-			has the following prototype</p><pre class="programlisting">_ArgumentDecl DeclareArgument(env_key = None, var_key = None, opt_key = None,
+			has the following prototype</p><pre class="programlisting">_ArgumentDeclaration DeclareArgument(env_key = None, var_key = None, opt_key = None,
       default = None, help = None, validator = None, converter = None, option = None,
       type = None, opt_default = None, metavar = None, nargs = None, choices = None,
       action = None, const = None, callback = None, callback_args = None,
@@ -478,7 +478,7 @@ decl = DeclareArgument(env_key = 'xvar', opt_key = 'xvar', option = '--xvar', ty
 			Declaration. We can't do with it much more than determine the
 			associated objects (ENV, VAR, OPT) and their properties. More useful
 			things can be done once we collect all our Arguments together. This
-			is the matter of next subsections.</p></section><section class="section" id="idm45301562452672"><div class="titlepage"><div><div><h3 class="title">3.2. Declaring
+			is the matter of next subsections.</p></section><section class="section" id="idm46152340617952"><div class="titlepage"><div><div><h3 class="title">3.2. Declaring
 			multiple Arguments</h3></div></div></div><p>The
 			Argument workflow assumes that there is a point when all Argument
 			Declarations get collected together. At this point we have complete
@@ -489,35 +489,35 @@ decl = DeclareArgument(env_key = 'xvar', opt_key = 'xvar', option = '--xvar', ty
 			. Having all Arguments in a single dictionary we may commit them to
 			create actual variables.</p><p>There
 			is a special class named
-			<code class="classname">_ArgumentDecls</code>
+			<code class="classname">_ArgumentDeclarations</code>
 			which represents a collection of Argument Declarations. It's a
 			kind of dict, but it also adds few methods on its own. The
 			<code class="code">SConsArguments</code>
 			module provides two factory methods to create such collections,
 			these are
-			<code class="methodname">ArgumentDecls</code>
+			<code class="methodname">ArgumentDeclarations</code>
 			and
 			<code class="methodname">DeclareArguments</code>
 			.</p><p>The
-			<code class="methodname">ArgumentDecl</code>
+			<code class="methodname">ArgumentDeclaration</code>
 			function supports several forms of invocation. Here we give just a
 			couple of examples, the complete reference may be found in API
 			documentation.</p><div class="example" id="example-using-gvardecls-with-a-dict-as-argument"><div class="example-title">Example 3. Using
-				ArgumentDecls with a dict of objects</div><div class="example-contents"><p>In
+				ArgumentDeclarations with a dict of objects</div><div class="example-contents"><p>In
 				the following example we declare two Arguments::
 				<code class="varname">foo</code>
 				and
 				<code class="varname">bar</code>
-				.</p><pre class="programlisting">from SConsArguments import ArgumentDecls, ArgumentDecl
+				.</p><pre class="programlisting">from SConsArguments import ArgumentDeclarations, ArgumentDeclaration
 # create single declarations
-foodecl = ArgumentDecl( {'ENV_FOO' : 'default ENV_FOO'},      # ENV
+foodecl = ArgumentDeclaration( {'ENV_FOO' : 'default ENV_FOO'},      # ENV
             ('var_foo', 'var_foo help', ),                    # VAR
             ('--foo', {'dest' : "opt_foo"}) )                 # OPT
-bardecl = ArgumentDecl( {'ENV_BAR' : None},                   # ENV
+bardecl = ArgumentDeclaration( {'ENV_BAR' : None},                   # ENV
             ('var_bar', 'var_bar help', 'default var_bar'),   # VAR
             ('--bar', {'dest':"opt_bar", "type":"string"}))   # OPT
 # put them all together
-decls = ArgumentDecls({ 'foo' : foodecl, 'bar' : bardecl })</pre><p>The
+decls = ArgumentDeclarations({ 'foo' : foodecl, 'bar' : bardecl })</pre><p>The
 				keys in the above hash are Argument Names. Values are objects
 				representing Argument Declarations. Note, that in this example we
 				use different names for ENV, VAR and OPT. For example, the
@@ -532,16 +532,16 @@ decls = ArgumentDecls({ 'foo' : foodecl, 'bar' : bardecl })</pre><p>The
 				.</p></div></div><br class="example-break"></br><p>You
 			don't have to create each Argument Declaration separatelly
 			before putting all your Arguments to a collection. Instead, you may
-			simply put declaration arguments as parameters to ArgumentDecls and
-			they will be passed to
-			<code class="methodname">ArgumentDecl</code>
+			simply put declaration arguments as parameters to
+			ArgumentDeclarations and they will be passed to
+			<code class="methodname">ArgumentDeclaration</code>
 			for you. With this, the
-			<a class="xref" href="#example-using-gvardecls-with-a-dict-as-argument" title="Example 3. Using ArgumentDecls with a dict of objects">Example 3, “Using
-				ArgumentDecls with a dict of objects”</a>
-			may be refactored to the following form.</p><div class="example" id="idm45301562439632"><div class="example-title">Example 4. Using
-				ArgumentDecls with bare parameters</div><div class="example-contents"><pre class="programlisting">from SConsArguments import ArgumentDecls
+			<a class="xref" href="#example-using-gvardecls-with-a-dict-as-argument" title="Example 3. Using ArgumentDeclarations with a dict of objects">Example 3, “Using
+				ArgumentDeclarations with a dict of objects”</a>
+			may be refactored to the following form.</p><div class="example" id="idm46152340604880"><div class="example-title">Example 4. Using
+				ArgumentDeclarations with bare parameters</div><div class="example-contents"><pre class="programlisting">from SConsArguments import ArgumentDeclarations
 # create multiple declarations at once
-decls = ArgumentDecls({
+decls = ArgumentDeclarations({
 # Argument 'foo'
 'foo' : ( {'ENV_FOO' : 'default ENV_FOO'},                 # ENV
           ('var_foo', 'var_foo help', ),                   # VAR
@@ -552,10 +552,10 @@ decls = ArgumentDecls({
           ('--bar', {'dest':"opt_bar", "type":"string"}) ) # OPT
 })</pre></div></div><br class="example-break"></br><p>We
 			may also pass a list (instead of dict) as an argument to
-			<code class="methodname">ArgumentDecls</code>
-			, for example</p><div class="example" id="idm45301562437072"><div class="example-title">Example 5. Using
-				ArgumentDecls with arrays</div><div class="example-contents"><pre class="programlisting">from SConsArguments import ArgumentDecls
-decls = ArgumentDecls([
+			<code class="methodname">ArgumentDeclarations</code>
+			, for example</p><div class="example" id="idm46152340602256"><div class="example-title">Example 5. Using
+				ArgumentDeclarations with arrays</div><div class="example-contents"><pre class="programlisting">from SConsArguments import ArgumentDeclarations
+decls = ArgumentDeclarations([
 # Argument 'foo'
 ('foo',  ( {'ENV_FOO' : 'default ENV_FOO'},                  # ENV
            ('var_foo', 'var_foo help', ),                    # VAR
@@ -569,8 +569,8 @@ decls = ArgumentDecls([
 			third "cannonical" form of invocation is to use keyword
 			arguments, that is our variables foo and bar may be declared as
 			follows</p><div class="example" id="example-using-gvardecls-with-keyword-arguments"><div class="example-title">Example 6. Using
-				ArgumentDecls with keyword arguments</div><div class="example-contents"><pre class="programlisting">from SConsArguments import ArgumentDecls
-decls = ArgumentDecls(
+				ArgumentDeclarations with keyword arguments</div><div class="example-contents"><pre class="programlisting">from SConsArguments import ArgumentDeclarations
+decls = ArgumentDeclarations(
 # Argument 'foo'
 foo =  ( {'ENV_FOO' : 'default ENV_FOO'},                  # ENV
          ('var_foo', 'var_foo help', ),                    # VAR
@@ -581,9 +581,9 @@ bar =  ( {'ENV_BAR' : None},                               # ENV
          ('--bar', {'dest':"opt_bar", "type":"string"}) )  # OPT
 )</pre></div></div><br class="example-break"></br><p>Of
 			course the keyword arguments may be appended to normal arguments, so
-			the syntaxes of dict, list and keyword arguments may be mixed.</p><div class="example" id="idm45301562431712"><div class="example-title">Example 7. Using
-				ArgumentDecls with array and keyword arguments</div><div class="example-contents"><pre class="programlisting">from SConsArguments import ArgumentDecls
-decls = ArgumentDecls(
+			the syntaxes of dict, list and keyword arguments may be mixed.</p><div class="example" id="idm46152340596752"><div class="example-title">Example 7. Using
+				ArgumentDeclarations with array and keyword arguments</div><div class="example-contents"><pre class="programlisting">from SConsArguments import ArgumentDeclarations
+decls = ArgumentDeclarations(
  # Argument 'foo'
  [('foo',(  {'ENV_FOO' : 'ENV default FOO'},                    # ENV
             ('FOO',         'FOO variable help', ),             # VAR
@@ -593,23 +593,23 @@ decls = ArgumentDecls(
             ('GEEZ', 'GEEZ variable help', 'VAR default GEEZ'), # VAR
             ('--geez', {'dest':"opt_geez", "type":"string"}))   # OPT
 )</pre></div></div><br class="example-break"></br><p>Because
-			<code class="classname">_ArgumentDecls</code>
+			<code class="classname">_ArgumentDeclarations</code>
 			collection is a dict, it has this nice feature that we can remove,
 			add declarations or merge multiple
-			<code class="classname">_ArgumentDecls</code>
+			<code class="classname">_ArgumentDeclarations</code>
 			collections. That means, we don't have to declare all the
 			variables in a single call, but may spread out this task among
-			multiple SConscripts.</p><p><code class="methodname">ArgumentDecls</code>
+			multiple SConscripts.</p><p><code class="methodname">ArgumentDeclarations</code>
 			inherits from
-			<code class="methodname">ArgumentDecl</code>
+			<code class="methodname">ArgumentDeclaration</code>
 			the feature that some data may have to be repeated. For those, who
 			want a more compact notation, we provide the
 			<code class="methodname">DeclareArguments</code>
-			method which accepts the "unified" parameters.</p><div class="example" id="idm45301562426240"><div class="example-title">Example 8. Using
+			method which accepts the "unified" parameters.</p><div class="example" id="idm46152340591328"><div class="example-title">Example 8. Using
 				DeclareArguments</div><div class="example-contents"><p>In
 				this example we create variables foo and bar similar to
-				<a class="xref" href="#example-using-gvardecls-with-keyword-arguments" title="Example 6. Using ArgumentDecls with keyword arguments">Example 6, “Using
-				ArgumentDecls with keyword arguments”</a>
+				<a class="xref" href="#example-using-gvardecls-with-keyword-arguments" title="Example 6. Using ArgumentDeclarations with keyword arguments">Example 6, “Using
+				ArgumentDeclarations with keyword arguments”</a>
 				this time using
 				<code class="methodname">DeclareArguments</code>
 				.</p><pre class="programlisting">from SConsArguments import DeclareArguments
@@ -623,11 +623,11 @@ bar = { 'env_key': 'ENV_BAR', 'var_key' : 'var_bar', 'opt_key' : 'opt_bar',
 )</pre></div></div><br class="example-break"></br><p>In
 			the above example we've used keyword arguments, but all the
 			calling conventions of
-			<code class="methodname">ArgumentDecls</code>
+			<code class="methodname">ArgumentDeclarations</code>
 			(that is passing list or dict, or mixing them with keyword
 			arguments) apply also to
 			<code class="methodname">DeclareArguments</code>
-			.</p></section><section class="section" id="idm45301562421408"><div class="titlepage"><div><div><h3 class="title">3.3. Default
+			.</p></section><section class="section" id="idm46152340586496"><div class="titlepage"><div><div><h3 class="title">3.3. Default
 			values and substitutions</h3></div></div></div><p>
 				When declaring a Argument one may define default values for the
 				associated construction variable, command line variable and command
@@ -652,15 +652,15 @@ bar: BAR
 scons: `.' is up to date.</pre><p>
 			</p><p>Substitutions
 			may also be used in default values of command line variables and
-			comand line options.</p><div class="example" id="idm45301562417632"><div class="example-title">Example 9. Substitutions
+			comand line options.</p><div class="example" id="idm46152340582720"><div class="example-title">Example 9. Substitutions
 				in default values</div><div class="example-contents"><p>
 					Let's say, you have defined Arguments
 					<code class="varname">foo</code>
 					 and
 					<code class="varname">bar</code>
 					 as follows:
-					</p><pre class="programlisting">from SConsArguments import ArgumentDecls
-decls = ArgumentDecls(
+					</p><pre class="programlisting">from SConsArguments import ArgumentDeclarations
+decls = ArgumentDeclarations(
 foo = ( { 'ENV_FOO' : None }, ('VAR_FOO', 'Help for VAR_FOO', '$VAR_BAR'), None),
 bar = ( { 'ENV_BAR' : None }, ('VAR_BAR', 'Help for VAR_BAR', 'BAR'), None),
 )</pre><p>
@@ -689,11 +689,11 @@ env['ENV_BAR'] == 'BAR'        # True</pre><p>
 			.</p></section></section><section class="section" id="sec-committing-args"><div class="titlepage"><div><div><h2 class="title" style="clear: both">4. Committing
 		Argument Declarations</h2></div></div></div><p>Once
 		created, Argument Declarations shall be committed with
-		<code class="code">_ArgumentDecls.Commit()</code>
+		<code class="code">_ArgumentDeclarations.Commit()</code>
 		method. By committing declarations you create their associatted
 		commandline options and variables, construction variables, fill them
-		with default values and freeze the declarations such that it's
-		guaranteed that they will not change. The
+		with default values and "freeze" the declarations such that
+		it's guaranteed that they will not change. The
 		<code class="methodname">Commit</code>
 		method optionally spawns the actual Arguments (to this end we talked
 		about variable "declarations", not the variables) which may
@@ -704,8 +704,8 @@ env['ENV_BAR'] == 'BAR'        # True</pre><p>
 		. Once
 		<code class="classname">_Arguments</code>
 		are created, the
-		<code class="classname">_ArgumentDecls</code>
-		are no longer needed.</p><div class="example" id="idm45301562406080"><div class="example-title">Example 10. Committing
+		<code class="classname">_ArgumentDeclarations</code>
+		are no longer needed.</p><div class="example" id="idm46152340571184"><div class="example-title">Example 10. Committing
 			Argument Declarations</div><div class="example-contents"><p>
 				Having a collection
 				<code class="varname">decls</code>
@@ -855,7 +855,7 @@ args = SConsArguments._Arguments(decls)</pre></section><section class="section" 
 					current values of variables. By default (
 					<code class="literal">None</code>)
 					variables are not saved.</td>
-				</tr></tbody></table></div></section><section class="section" id="idm45301562359920"><div class="titlepage"><div><div><h2 class="title" style="clear: both">6. Accessing
+				</tr></tbody></table></div></section><section class="section" id="idm46152340525024"><div class="titlepage"><div><div><h2 class="title" style="clear: both">6. Accessing
 		Argument values</h2></div></div></div><p>Values
 		assigned to Arguments get stored in their associated variables in a
 		SCons environment. For example, a value of Argument
@@ -879,7 +879,7 @@ args = SConsArguments._Arguments(decls)</pre></section><section class="section" 
 		<code class="varname">foo</code>
 		and it would return the value of construction variable
 		<code class="varname">env_foo</code>
-		.</p><div class="example" id="idm45301562355280"><div class="example-title">Example 11. Accessing
+		.</p><div class="example" id="idm46152340520384"><div class="example-title">Example 11. Accessing
 			Argument Values via proxy</div><div class="example-contents"><p>In
 			this example, we create a Argument named
 			<code class="varname">foo</code>
@@ -920,7 +920,7 @@ scons: `.' is up to date.</pre><p>
 		access and the
 		<code class="methodname">subst</code>
 		method. So other methods, including builders, pseudobuilders etc. are
-		not available via proxy.</p></section><section class="section" id="idm45301562347152"><div class="titlepage"><div><div><h2 class="title" style="clear: both">7. Putting
+		not available via proxy.</p></section><section class="section" id="idm46152340512256"><div class="titlepage"><div><div><h2 class="title" style="clear: both">7. Putting
 		it all together</h2></div></div></div><p>
 			In this section we'll walk through a complete example.
 			We'll define three Arguments:
@@ -1036,7 +1036,7 @@ Local Options:
 --prefix=OPT_PREFIX         installation prefix
 --bindir=OPT_BINDIR         directory for installing executable programs
                               that users can run
-</pre><section class="section" id="idm45301562313056"><div class="titlepage"><div><div><h3 class="title">7.1. Documenting
+</pre><section class="section" id="idm46152340478160"><div class="titlepage"><div><div><h3 class="title">7.1. Documenting
 			Command Line variables</h3></div></div></div><p>Command
 			line variables, as opposed to command line options, have no help
 			strings generated by default. To generate help for command line
@@ -1049,7 +1049,7 @@ Local Options:
 			<code class="option">--prefix</code>
 			for example), such that they're not available anymore at help
 			screen. To circumvent this problem, we may dedicate separate option
-			to print help for command line variables.</p><div class="example" id="idm45301562309392"><div class="example-title">Example 13. Documenting
+			to print help for command line variables.</p><div class="example" id="idm46152340474496"><div class="example-title">Example 13. Documenting
 				command line variables</div><div class="example-contents"><pre class="programlisting">AddOption( '--help-variables', dest='help_variables', action='store_true',
          help='print help for CLI variables' )
 if GetOption('help_variables'):
@@ -1073,7 +1073,7 @@ PREFIX: installation prefix
 BINDIR: directory for installing executable programs that users can run
   default: ${EXEC_PREFIX}/bin
   actual: /usr/local/bin
-</pre></section><section class="section" id="idm45301562304112"><div class="titlepage"><div><div><h3 class="title">7.2. Saving
+</pre></section><section class="section" id="idm46152340469216"><div class="titlepage"><div><div><h3 class="title">7.2. Saving
 			command line variables to a file</h3></div></div></div><p>Easies
 			way to save Arguments is to pass
 			<em class="parameter"><code>filename</code></em>
@@ -1092,7 +1092,7 @@ BINDIR: directory for installing executable programs that users can run
 			not saved). This takes into account input from a command line
 			variable and a command line option associated with a given Argument.
 			In any case, however, the value is saved as it was set to a command
-			line variable.</p><div class="example" id="idm45301562298912"><div class="example-title">Example 14. Saving
+			line variable.</p><div class="example" id="idm46152340464016"><div class="example-title">Example 14. Saving
 				Arguments to file</div><div class="example-contents"><p>
 					If you integrate the following code snippet to the SConscript file
 					from
@@ -1106,7 +1106,7 @@ BINDIR: directory for installing executable programs that users can run
 <code class="prompt">ptomulik@tea:$</code> <span class="command"><strong>cat</strong></span> .scons.variables
 EXEC_PREFIX = '${PREFIX}/exec'
 PREFIX = '/opt'
-</pre></div></div><br class="example-break"></br></section><section class="section" id="idm45301562294384"><div class="titlepage"><div><div><h3 class="title">7.3. Loading
+</pre></div></div><br class="example-break"></br></section><section class="section" id="idm46152340459488"><div class="titlepage"><div><div><h3 class="title">7.3. Loading
 			command line variables from file</h3></div></div></div><p>This
 			is done in standard way, that is by using the feature of
 			<a class="link" href="www.scons.org/doc/HTML/scons-api/SCons.Variables.Variables-class.html" target="_top">SCons

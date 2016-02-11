@@ -3,7 +3,7 @@
           "DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>SConsArguments.Transformer</title>
+  <title>SConsArguments.NameConv._ArgumentNameConv</title>
   <link rel="stylesheet" href="epydoc.css" type="text/css" />
   <script type="text/javascript" src="epydoc.js"></script>
 </head>
@@ -38,7 +38,8 @@
     <td width="100%">
       <span class="breadcrumbs">
         <a href="SConsArguments-module.html">Package&nbsp;SConsArguments</a> ::
-        Class&nbsp;Transformer
+        <a href="SConsArguments.NameConv-module.html">Module&nbsp;NameConv</a> ::
+        Class&nbsp;_ArgumentNameConv
       </span>
     </td>
     <td>
@@ -48,23 +49,23 @@
     onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
         <tr><td align="right"><span class="options"
             >[<a href="frames.html" target="_top">frames</a
-            >]&nbsp;|&nbsp;<a href="SConsArguments.Transformer-class.html"
+            >]&nbsp;|&nbsp;<a href="SConsArguments.NameConv._ArgumentNameConv-class.html"
             target="_top">no&nbsp;frames</a>]</span></td></tr>
       </table>
     </td>
   </tr>
 </table>
 <!-- ==================== CLASS DESCRIPTION ==================== -->
-<h1 class="epydoc">Class Transformer</h1><p class="nomargin-top"><span class="codelink"><a href="SConsArguments-pysrc.html#Transformer">source&nbsp;code</a></span></p>
+<h1 class="epydoc">Class _ArgumentNameConv</h1><p class="nomargin-top"><span class="codelink"><a href="SConsArguments.NameConv-pysrc.html#_ArgumentNameConv">source&nbsp;code</a></span></p>
 <pre class="base-tree">
 object --+
          |
-        <strong class="uidshort">Transformer</strong>
+        <strong class="uidshort">_ArgumentNameConv</strong>
 </pre>
 
 <hr />
 <p>Provides a systematic way to transform <em>argument</em> names into keys
-identifying <em>endpoints</em>.</p>
+identifying their <em>endpoints</em>.</p>
 <p>This object may be helpful when generating multiple <em>arguments</em> where
 the <em>endpoint</em> names may have to be derived from <em>argument</em> names in
 a systematic way. The object provides four lambdas, which may be used
@@ -75,11 +76,11 @@ as well as lambdas may be overwritten by user.</p>
 <p><strong>Example</strong></p>
 <pre class="py-doctest">
 <span class="py-keyword">import</span> SConsArguments
-tr = SConsArguments.Transformer(env_key_prefix = <span class="py-string">'ENV_'</span>, env_key_suffix = <span class="py-string">'_VNE'</span>,
-                                var_key_prefix = <span class="py-string">'VAR_'</span>, var_key_suffix = <span class="py-string">'_RAV'</span>,
-                                opt_key_prefix = <span class="py-string">'Opt_'</span>, opt_key_suffix = <span class="py-string">'_tpO'</span>,
-                                opt_prefix     = <span class="py-string">'-'</span>,
-                                opt_name_prefix = <span class="py-string">'on_'</span>, opt_name_suffix = <span class="py-string">'_no'</span>)
+tr = SConsArguments._ArgumentNameConv(env_key_prefix = <span class="py-string">'ENV_'</span>, env_key_suffix = <span class="py-string">'_VNE'</span>,
+                                        var_key_prefix = <span class="py-string">'VAR_'</span>, var_key_suffix = <span class="py-string">'_RAV'</span>,
+                                        opt_key_prefix = <span class="py-string">'Opt_'</span>, opt_key_suffix = <span class="py-string">'_tpO'</span>,
+                                        opt_prefix     = <span class="py-string">'-'</span>,
+                                        opt_name_prefix = <span class="py-string">'on_'</span>, opt_name_suffix = <span class="py-string">'_no'</span>)
 assert(tr.env_key_transform(<span class="py-string">'FOO'</span>) == <span class="py-string">'ENV_FOO_VNE'</span>)
 assert(tr.var_key_transform(<span class="py-string">'FOO'</span>) == <span class="py-string">'VAR_FOO_RAV'</span>)
 assert(tr.opt_key_transform(<span class="py-string">'FOO'</span>) == <span class="py-string">'Opt_foo_tpO'</span>)
@@ -108,11 +109,11 @@ assert(tr.option_transform(<span class="py-string">'FOO'</span>)  == <span class
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="SConsArguments.Transformer-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
+          <td><span class="summary-sig"><a href="SConsArguments.NameConv._ArgumentNameConv-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">**kw</span>)</span><br />
-      Initializes <a href="SConsArguments.Transformer-class.html" class="link">Transformer</a> object.</td>
+      Initializes <a href="SConsArguments.NameConv._ArgumentNameConv-class.html" class="link" onclick="show_private();">_ArgumentNameConv</a> object.</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="SConsArguments-pysrc.html#Transformer.__init__">source&nbsp;code</a></span>
+            <span class="codelink"><a href="SConsArguments.NameConv-pysrc.html#_ArgumentNameConv.__init__">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -162,7 +163,7 @@ assert(tr.option_transform(<span class="py-string">'FOO'</span>)  == <span class
     </td><td class="summary">
         <a name="env_key_prefix"></a><span class="summary-name">env_key_prefix</span><br />
       a prefix that is by default prepended to ENV key by the
-<a href="SConsArguments.Transformer-class.html#env_key_transform" class="link">env_key_transform</a> lambda, default: <tt class="rst-docutils literal">''</tt>
+<a href="SConsArguments.NameConv._ArgumentNameConv-class.html#env_key_transform" class="link">env_key_transform</a> lambda, default: <tt class="rst-docutils literal">''</tt>
     </td>
   </tr>
 <tr>
@@ -171,7 +172,7 @@ assert(tr.option_transform(<span class="py-string">'FOO'</span>)  == <span class
     </td><td class="summary">
         <a name="env_key_suffix"></a><span class="summary-name">env_key_suffix</span><br />
       a suffix that is by default prepended to ENV key by the
-<a href="SConsArguments.Transformer-class.html#env_key_transform" class="link">env_key_transform</a> lambda, default: <tt class="rst-docutils literal">''</tt>
+<a href="SConsArguments.NameConv._ArgumentNameConv-class.html#env_key_transform" class="link">env_key_transform</a> lambda, default: <tt class="rst-docutils literal">''</tt>
     </td>
   </tr>
 <tr>
@@ -190,7 +191,7 @@ transformed, usage: <tt class="rst-docutils literal"><span class="pre">env_key_t
     </td><td class="summary">
         <a name="opt_key_prefix"></a><span class="summary-name">opt_key_prefix</span><br />
       a prefix that is by default prepended to OPT key by the
-<a href="SConsArguments.Transformer-class.html#opt_key_transform" class="link">opt_key_transform</a> lambda, default: <tt class="rst-docutils literal">''</tt>
+<a href="SConsArguments.NameConv._ArgumentNameConv-class.html#opt_key_transform" class="link">opt_key_transform</a> lambda, default: <tt class="rst-docutils literal">''</tt>
     </td>
   </tr>
 <tr>
@@ -199,7 +200,7 @@ transformed, usage: <tt class="rst-docutils literal"><span class="pre">env_key_t
     </td><td class="summary">
         <a name="opt_key_suffix"></a><span class="summary-name">opt_key_suffix</span><br />
       a suffix that is by default prepended to OPT key by the
-<a href="SConsArguments.Transformer-class.html#opt_key_transform" class="link">opt_key_transform</a> lambda, default: <tt class="rst-docutils literal">''</tt>
+<a href="SConsArguments.NameConv._ArgumentNameConv-class.html#opt_key_transform" class="link">opt_key_transform</a> lambda, default: <tt class="rst-docutils literal">''</tt>
     </td>
   </tr>
 <tr>
@@ -218,7 +219,7 @@ transformed, usage: <tt class="rst-docutils literal"><span class="pre">opt_key_t
     </td><td class="summary">
         <a name="opt_name_prefix"></a><span class="summary-name">opt_name_prefix</span><br />
       additional prefix used when composing option names, inserted
-between <a href="SConsArguments.Transformer-class.html#opt_prefix" class="link">opt_prefix</a> and the <em>argument</em> name, default: <tt class="rst-docutils literal">''</tt>
+between <a href="SConsArguments.NameConv._ArgumentNameConv-class.html#opt_prefix" class="link">opt_prefix</a> and the <em>argument</em> name, default: <tt class="rst-docutils literal">''</tt>
     </td>
   </tr>
 <tr>
@@ -255,7 +256,7 @@ transformed, usage: <tt class="rst-docutils literal"><span class="pre">option_tr
     </td><td class="summary">
         <a name="var_key_prefix"></a><span class="summary-name">var_key_prefix</span><br />
       a prefix that is by default prepended to VAR key by the
-<a href="SConsArguments.Transformer-class.html#var_key_transform" class="link">var_key_transform</a> lambda, default: <tt class="rst-docutils literal">''</tt>
+<a href="SConsArguments.NameConv._ArgumentNameConv-class.html#var_key_transform" class="link">var_key_transform</a> lambda, default: <tt class="rst-docutils literal">''</tt>
     </td>
   </tr>
 <tr>
@@ -264,7 +265,7 @@ transformed, usage: <tt class="rst-docutils literal"><span class="pre">option_tr
     </td><td class="summary">
         <a name="var_key_suffix"></a><span class="summary-name">var_key_suffix</span><br />
       a suffix that is by default prepended to VAR key by the
-<a href="SConsArguments.Transformer-class.html#var_key_transform" class="link">var_key_transform</a> lambda, default: <tt class="rst-docutils literal">''</tt>
+<a href="SConsArguments.NameConv._ArgumentNameConv-class.html#var_key_transform" class="link">var_key_transform</a> lambda, default: <tt class="rst-docutils literal">''</tt>
     </td>
   </tr>
 <tr>
@@ -333,11 +334,11 @@ transformed, usage: <tt class="rst-docutils literal"><span class="pre">var_key_t
     <br /><em class="fname">(Constructor)</em>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="SConsArguments-pysrc.html#Transformer.__init__">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="SConsArguments.NameConv-pysrc.html#_ArgumentNameConv.__init__">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
-  Initializes <a href="SConsArguments.Transformer-class.html" class="link">Transformer</a> object.
+  Initializes <a href="SConsArguments.NameConv._ArgumentNameConv-class.html" class="link" onclick="show_private();">_ArgumentNameConv</a> object.
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
@@ -359,18 +360,26 @@ usually a single or double dash, default: <tt class="rst-docutils literal"><span
 between <strong>opt_prefix</strong> and the <em>argument</em> name, default: <tt class="rst-docutils literal">''</tt></li>
         <li><strong class="pname"><code>opt_name_suffix</code></strong> (str) - a suffix that is by default used when composing option names,
 default: <tt class="rst-docutils literal">''</tt></li>
-        <li><strong class="pname"><code>env_key_transform</code></strong> (lambda) - a lambda used to transform <em>argument</em> names to construction variables,
+        <li><strong class="pname"><code>env_key_transform</code></strong> (callable | bool) - a lambda used to transform <em>argument</em> names to construction variables,
 may be customized to completely redefine the way ENV keys are
-transformed,</li>
-        <li><strong class="pname"><code>var_key_transform</code></strong> (lambda) - a lambda used to transform <em>argument</em> names to command-line variables,
+transformed, if <a href="SConsArguments.NameConv._ArgumentNameConv-class.html#env_key_transform" class="link">env_key_transform</a> is not callable, then if
+evaluates to <tt class="rst-docutils literal">True</tt> a default transform is used, or if it
+evaluates to <tt class="rst-docutils literal">False</tt> a <tt class="rst-docutils literal">lambda x : None</tt> is used</li>
+        <li><strong class="pname"><code>var_key_transform</code></strong> (callable | bool) - a lambda used to transform <em>argument</em> names to command-line variables,
 may be customized to completely redefine the way VAR keys are
-transformed,</li>
-        <li><strong class="pname"><code>opt_key_transform</code></strong> (lambda) - a lambda used to transform <em>argument</em> names to command-line option keys,
+transformed,  if <a href="SConsArguments.NameConv._ArgumentNameConv-class.html#env_key_transform" class="link">env_key_transform</a> is not callable, then if
+evaluates to <tt class="rst-docutils literal">True</tt> a default transform is used, or if it
+evaluates to <tt class="rst-docutils literal">False</tt> a <tt class="rst-docutils literal">lambda x : None</tt> is used</li>
+        <li><strong class="pname"><code>opt_key_transform</code></strong> (callable | bool) - a lambda used to transform <em>argument</em> names to command-line option keys,
 may be customized to completely redefine the way OPT keys are
-transformed,</li>
-        <li><strong class="pname"><code>option_transform</code></strong> (lambda) - a lambda used to transform <em>argument</em> names to command-line options,
+transformed, if <a href="SConsArguments.NameConv._ArgumentNameConv-class.html#env_key_transform" class="link">env_key_transform</a> is not callable, then if
+evaluates to <tt class="rst-docutils literal">True</tt> a default transform is used, or if it
+evaluates to <tt class="rst-docutils literal">False</tt> a <tt class="rst-docutils literal">lambda x : None</tt> is used</li>
+        <li><strong class="pname"><code>option_transform</code></strong> (callable | bool) - a lambda used to transform <em>argument</em> names to command-line options,
 may be customized to completely redefine the way option names are
-transformed,</li>
+transformed, if <a href="SConsArguments.NameConv._ArgumentNameConv-class.html#env_key_transform" class="link">env_key_transform</a> is not callable, then if
+evaluates to <tt class="rst-docutils literal">True</tt> a default transform is used, or if it
+evaluates to <tt class="rst-docutils literal">False</tt> a <tt class="rst-docutils literal">lambda x : None</tt> is used</li>
     </ul></dd>
     <dt>Overrides:
         object.__init__
@@ -406,7 +415,7 @@ transformed,</li>
   <tr>
     <td align="left" class="footer">
     Generated by Epydoc 3.0.1
-    on Sun Nov  8 02:06:59 2015
+    on Thu Feb 11 21:21:07 2016
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"
