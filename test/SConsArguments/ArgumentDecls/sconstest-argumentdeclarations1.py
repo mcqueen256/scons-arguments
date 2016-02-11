@@ -22,13 +22,13 @@
 __docformat__ = "restructuredText"
 
 """
-Tests declaring variables with SConsArguments.ArgumentDecl()
+Tests declaring variables with SConsArguments.ArgumentDeclarations()
 """
 
 import TestSCons
 
 ##############################################################################
-# ArgumentDecl(): Test 1 - declare Argument that is not bound to anything.
+# ArgumentDeclarations(): Test 1 - empty dictionary
 ##############################################################################
 test = TestSCons.TestSCons()
 test.dir_fixture('../../../SConsArguments', 'site_scons/SConsArguments')
@@ -36,12 +36,22 @@ test.write('SConstruct',
 """
 # SConstruct
 import SConsArguments
-SConsArguments.ArgumentDecl()
-SConsArguments.ArgumentDecl(None)
-SConsArguments.ArgumentDecl(None,None)
-SConsArguments.ArgumentDecl(None,None,None)
+list = []
+list.append( SConsArguments.ArgumentDeclarations() )
+list.append( SConsArguments.ArgumentDeclarations({}) )
+i = 0
+for v in list:
+    print "len(ARGS[%d]): %r" % (i, len(v))
+    i += 1
 """)
 test.run()
+
+lines = [
+  "len(ARGS[0]): 0",
+  "len(ARGS[1]): 0",
+]
+
+test.must_contain_all_lines(test.stdout(), lines)
 
 test.pass_test()
 

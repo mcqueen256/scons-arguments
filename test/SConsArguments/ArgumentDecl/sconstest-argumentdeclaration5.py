@@ -22,13 +22,13 @@
 __docformat__ = "restructuredText"
 
 """
-Tests declaring variables with SConsArguments.ArgumentDecl()
+Tests declaring variables with SConsArguments.ArgumentDeclaration()
 """
 
 import TestSCons
 
 ##############################################################################
-# ArgumentDecl(): Test 5 - test several calling conventions for ArgumentDecl().
+# ArgumentDeclaration(): Test 5 - test several calling conventions for ArgumentDeclaration().
 ##############################################################################
 test = TestSCons.TestSCons()
 test.dir_fixture('../../../SConsArguments', 'site_scons/SConsArguments')
@@ -37,13 +37,13 @@ test.write('SConstruct',
 # SConstruct
 import SConsArguments
 list = []
-list.append( SConsArguments.ArgumentDecl(('env_x', 'env x default'),
+list.append( SConsArguments.ArgumentDeclaration(('env_x', 'env x default'),
                                          ('var_x','help var_x', 'var x default'),
                                          (('-x', '-xvar'), {'dest' : 'opt_x', 'default' : 'opt x default'})) )
-list.append( SConsArguments.ArgumentDecl({'env_x': 'env x default'},
+list.append( SConsArguments.ArgumentDeclaration({'env_x': 'env x default'},
                                          {'key' : 'var_x', 'help' : 'help var_x', 'default' : 'var x default'},
                                          {'names' : ('-x', '-xvar'), 'dest' : 'opt_x', 'default' : 'opt x default'}) )
-list.append( SConsArguments.ArgumentDecl({'env_x': 'env x default'},
+list.append( SConsArguments.ArgumentDeclaration({'env_x': 'env x default'},
                                          {'key' : 'var_x', 'help' : 'help var_x', 'default' : 'var x default'},
                                          {'names' : ('-x', '-xvar'), 'kw' : {'dest' : 'opt_x', 'default' : 'opt x default'}}) )
 i = 0

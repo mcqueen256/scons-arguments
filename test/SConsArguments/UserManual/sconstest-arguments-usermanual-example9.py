@@ -36,8 +36,8 @@ test = TestSCons.TestSCons()
 test.dir_fixture('../../../SConsArguments', 'site_scons/SConsArguments')
 test.write('SConstruct',
 """
-from SConsArguments import ArgumentDecls
-decls = ArgumentDecls(
+from SConsArguments import ArgumentDeclarations
+decls = ArgumentDeclarations(
   foo = ( { 'ENV_FOO' : None }, ('VAR_FOO', 'Help for VAR_FOO', '$VAR_BAR'), None),
   bar = ( { 'ENV_BAR' : None }, ('VAR_BAR', 'Help for VAR_BAR', 'BAR'), None),
 )

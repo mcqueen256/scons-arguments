@@ -36,8 +36,8 @@ test = TestSCons.TestSCons()
 test.dir_fixture('../../../SConsArguments', 'site_scons/SConsArguments')
 test.write('SConstruct',
 """
-from SConsArguments import ArgumentDecl
-decl = ArgumentDecl( {'xvar' : None}, None, ('--xvar', {'dest' : 'xvar', 'type' : 'string'}) )
+from SConsArguments import ArgumentDeclaration
+decl = ArgumentDeclaration( {'xvar' : None}, None, ('--xvar', {'dest' : 'xvar', 'type' : 'string'}) )
 """)
 
 test.run(arguments = ['-Q'])

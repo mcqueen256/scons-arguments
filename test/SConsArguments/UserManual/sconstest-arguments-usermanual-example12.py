@@ -36,13 +36,13 @@ test = TestSCons.TestSCons()
 test.dir_fixture('../../../SConsArguments', 'site_scons/SConsArguments')
 test.write('SConstruct',
 """
-# SConstruct                                                                                         
+# SConstruct
 import SConsArguments
-decls = SConsArguments.DeclareArguments(                                                                            
-  prefix      = { 'env_key' : 'GNU_PREFIX', 'var_key' : 'PREFIX', 'opt_key' : 'opt_prefix',          
-                  'option' : '--prefix', 'default' : '/usr/local', 'type' : 'string',                
-                  'help' : 'installation prefix' },                                                  
-  exec_prefix = { 'env_key' : 'GNU_EXEC_PREFIX', 'var_key' : 'EXEC_PREFIX', 'opt_key' : 'opt_exec_prefix',                                                                                                
+decls = SConsArguments.DeclareArguments(
+  prefix      = { 'env_key' : 'GNU_PREFIX', 'var_key' : 'PREFIX', 'opt_key' : 'opt_prefix',
+                  'option' : '--prefix', 'default' : '/usr/local', 'type' : 'string',
+                  'help' : 'installation prefix' },
+  exec_prefix = { 'env_key' : 'GNU_EXEC_PREFIX', 'var_key' : 'EXEC_PREFIX', 'opt_key' : 'opt_exec_prefix',
                   'option' : '--exec-prefix', 'default' : '$prefix', 'type' : 'string',
                   'help' : 'installation prefix for executable files' },
   bindir      = { 'env_key' : 'GNU_BINDIR', 'var_key' : 'BINDIR', 'opt_key' : 'opt_bindir',

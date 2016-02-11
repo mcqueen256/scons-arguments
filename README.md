@@ -15,7 +15,7 @@ entities:
 - command line variable (e.g. ``scons PREFIX=/usr/bin`` in command line),
 - scons construction variable (e.g. ``env['PREFIX']`` inside of a scons script).
 
-*Arguments* allows to easily define how data should flow from scons command
+*Arguments* allow to easily define how data should flow from scons command
 line and operating system's environment to a scons environment (to scons
 construction variables).
 
@@ -158,7 +158,7 @@ End-to-end tests are stored under ``test/`` directory. To run particular test
 type (on Linux):
 
 ```shell
-SCONS_EXTERNAL_TEST=1 python runtest.py test/SConsArguments/ArgumentDecl/sconstest-argumentdecl1.py
+SCONS_EXTERNAL_TEST=1 python runtest.py test/SConsArguments/ArgumentDeclaration/sconstest-argumentdeclaration1.py
 ```
 
 

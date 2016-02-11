@@ -22,13 +22,13 @@
 __docformat__ = "restructuredText"
 
 """
-Tests declaring variables with SConsArguments.ArgumentDecls()
+Tests declaring variables with SConsArguments.ArgumentDeclarations()
 """
 
 import TestSCons
 
 ##############################################################################
-# ArgumentDecls(): Test 2 - using instances of _ArgumentDecl as entries
+# ArgumentDeclarations(): Test 3 - using bare arguments instead of instances of _ArgumentDeclaration
 ##############################################################################
 test = TestSCons.TestSCons()
 test.dir_fixture('../../../SConsArguments', 'site_scons/SConsArguments')
@@ -36,11 +36,11 @@ test.write('SConstruct',
 """
 # SConstruct
 import SConsArguments
-x = SConsArguments.DeclareArgument('env_x', 'var_x', 'opt_x', default = 'x default', option = '-x')
-y = SConsArguments.DeclareArgument('env_y', 'var_y', 'opt_y', default = 'y default', option = '-y')
+x = ( {'env_x' : 'env x default'}, ('var_x', None, 'var x default'), ('-x', {'dest' : 'opt_x', 'default' : 'opt x default'}) )
+y = [ {'env_y' : 'env y default'}, ('var_y', None, 'var y default'), ('-y', {'dest' : 'opt_y', 'default' : 'opt y default'}) ]
 list = []
-list.append( SConsArguments.ArgumentDecls(x = x, y = y) )
-list.append( SConsArguments.ArgumentDecls({'x' : x, 'y' : y}) )
+list.append( SConsArguments.ArgumentDeclarations(x = x, y = y) )
+list.append( SConsArguments.ArgumentDeclarations({'x' : x, 'y' : y}) )
 i = 0
 for v in list:
     for c in ['x', 'y']:
@@ -64,9 +64,9 @@ lines = [
         "ARGS[0]['x'].get_key(ENV): 'env_x'",
         "ARGS[0]['x'].get_key(VAR): 'var_x'",
         "ARGS[0]['x'].get_key(OPT): 'opt_x'",
-        "ARGS[0]['x'].get_default(ENV): 'x default'",
-        "ARGS[0]['x'].get_default(VAR): 'x default'",
-        "ARGS[0]['x'].get_default(OPT): UNDEFINED",
+        "ARGS[0]['x'].get_default(ENV): 'env x default'",
+        "ARGS[0]['x'].get_default(VAR): 'var x default'",
+        "ARGS[0]['x'].get_default(OPT): 'opt x default'",
 
         "ARGS[0]['y'].has_decl(ENV): True",
         "ARGS[0]['y'].has_decl(VAR): True",
@@ -74,9 +74,9 @@ lines = [
         "ARGS[0]['y'].get_key(ENV): 'env_y'",
         "ARGS[0]['y'].get_key(VAR): 'var_y'",
         "ARGS[0]['y'].get_key(OPT): 'opt_y'",
-        "ARGS[0]['y'].get_default(ENV): 'y default'",
-        "ARGS[0]['y'].get_default(VAR): 'y default'",
-        "ARGS[0]['y'].get_default(OPT): UNDEFINED",
+        "ARGS[0]['y'].get_default(ENV): 'env y default'",
+        "ARGS[0]['y'].get_default(VAR): 'var y default'",
+        "ARGS[0]['y'].get_default(OPT): 'opt y default'",
 
         "ARGS[1]['x'].has_decl(ENV): True",
         "ARGS[1]['x'].has_decl(VAR): True",
@@ -84,9 +84,9 @@ lines = [
         "ARGS[1]['x'].get_key(ENV): 'env_x'",
         "ARGS[1]['x'].get_key(VAR): 'var_x'",
         "ARGS[1]['x'].get_key(OPT): 'opt_x'",
-        "ARGS[1]['x'].get_default(ENV): 'x default'",
-        "ARGS[1]['x'].get_default(VAR): 'x default'",
-        "ARGS[1]['x'].get_default(OPT): UNDEFINED",
+        "ARGS[1]['x'].get_default(ENV): 'env x default'",
+        "ARGS[1]['x'].get_default(VAR): 'var x default'",
+        "ARGS[1]['x'].get_default(OPT): 'opt x default'",
 
         "ARGS[1]['y'].has_decl(ENV): True",
         "ARGS[1]['y'].has_decl(VAR): True",
@@ -94,9 +94,9 @@ lines = [
         "ARGS[1]['y'].get_key(ENV): 'env_y'",
         "ARGS[1]['y'].get_key(VAR): 'var_y'",
         "ARGS[1]['y'].get_key(OPT): 'opt_y'",
-        "ARGS[1]['y'].get_default(ENV): 'y default'",
-        "ARGS[1]['y'].get_default(VAR): 'y default'",
-        "ARGS[1]['y'].get_default(OPT): UNDEFINED",
+        "ARGS[1]['y'].get_default(ENV): 'env y default'",
+        "ARGS[1]['y'].get_default(VAR): 'var y default'",
+        "ARGS[1]['y'].get_default(OPT): 'opt y default'",
 ]
 
 test.must_contain_all_lines(test.stdout(), lines)
