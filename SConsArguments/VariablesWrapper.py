@@ -1,6 +1,6 @@
 """`SConsArguments.VariablesWrapper`
 
-TODO: Write documentation
+Provides the `_VariablesWrapper` class
 """
 
 #

@@ -1,6 +1,6 @@
 """`SConsArguments.Arguments`
 
-TODO: Write documentation
+Provides the `_Arguments` class.
 """
 
 #

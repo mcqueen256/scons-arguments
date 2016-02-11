@@ -1,4 +1,4 @@
-"""`SConsArguments.Transformer`
+"""`SConsArguments.NameConv`
 
 This module provides the `_ArgumentNameConv` class.
 """

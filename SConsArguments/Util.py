@@ -1,6 +1,6 @@
 """`SConsArguments.Util`
 
-TODO: Write documentation
+Common utilities
 """
 
 #

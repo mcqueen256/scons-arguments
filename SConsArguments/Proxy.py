@@ -1,6 +1,6 @@
 """`SConsArguments.Proxy`
 
-TODO: write documentation
+Provides the `_ArgumentsProxy` class
 """
 
 #
