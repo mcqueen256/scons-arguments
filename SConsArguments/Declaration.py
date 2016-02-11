@@ -1,6 +1,7 @@
 """`SConsArguments.Declaration`
 
-TODO: Write documentation
+Provides the `_ArgumentDeclaration` class and factory methods
+`ArgumentDeclaration` and `DeclareArgument`.
 """
 
 #
