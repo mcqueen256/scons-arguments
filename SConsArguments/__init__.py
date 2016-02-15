@@ -205,6 +205,7 @@ from .Util import ENV, VAR, OPT, ALL
 from .Util import _missing, MISSING, _undef, UNDEFINED, _notfound, NOTFOUND
 from .Util import _resubst, _build_resubst_dict, _build_iresubst_dict, _compose_mappings, _invert_dict
 from .VariablesWrapper import _VariablesWrapper
+from .Importer import ImportArguments
 
 # Local Variables:
 # # tab-width:4
