@@ -33,73 +33,114 @@ import unittest
 class Test__ArgumentNameConv(unittest.TestCase):
     def test__ArgumentNameConv_1(self):
         """Test default _ArgumentNameConv instance"""
-        tr = SConsArguments.NameConv._ArgumentNameConv()
-        self.assertEquals(tr.env_key_transform('FOO'), 'FOO')
-        self.assertEquals(tr.var_key_transform('FOO'), 'FOO')
-        self.assertEquals(tr.opt_key_transform('FOO'), 'foo')
-        self.assertEquals(tr.option_transform('FOO'), '--foo')
+        nc = SConsArguments.NameConv._ArgumentNameConv()
+        self.assertEquals(nc.env_key_transform('FOO'), 'FOO')
+        self.assertEquals(nc.var_key_transform('FOO'), 'FOO')
+        self.assertEquals(nc.opt_key_transform('FOO'), 'foo')
+        self.assertEquals(nc.option_transform('FOO'), '--foo')
 
     def test__ArgumentNameConv_2(self):
         """Test _ArgumentNameConv with prefixes/suffixes"""
-        tr = SConsArguments.NameConv._ArgumentNameConv(env_key_prefix = 'ENV_', env_key_suffix = '_VNE',
+        nc = SConsArguments.NameConv._ArgumentNameConv(env_key_prefix = 'ENV_', env_key_suffix = '_VNE',
                                                        var_key_prefix = 'VAR_', var_key_suffix = '_RAV',
                                                        opt_key_prefix = 'OPT_', opt_key_suffix = '_TPO',
                                                        opt_prefix     = '-',
                                                        opt_name_prefix = 'on_', opt_name_suffix = '_no')
-        self.assertEquals(tr.env_key_transform('FOO'), 'ENV_FOO_VNE')
-        self.assertEquals(tr.var_key_transform('FOO'), 'VAR_FOO_RAV')
-        self.assertEquals(tr.opt_key_transform('FOO'), 'OPT_foo_TPO')
-        self.assertEquals(tr.option_transform('FOO'), '-on-foo-no')
+        self.assertEquals(nc.env_key_transform('FOO'), 'ENV_FOO_VNE')
+        self.assertEquals(nc.var_key_transform('FOO'), 'VAR_FOO_RAV')
+        self.assertEquals(nc.opt_key_transform('FOO'), 'OPT_foo_TPO')
+        self.assertEquals(nc.option_transform('FOO'), '-on-foo-no')
 
     def test__ArgumentNameConv_3(self):
         """Test _ArgumentNameConv with prefixes/suffixes changed on existing object"""
-        tr = SConsArguments.NameConv._ArgumentNameConv()
-        tr.env_key_prefix = 'ENV_'
-        tr.env_key_suffix = '_VNE'
-        tr.var_key_prefix = 'VAR_'
-        tr.var_key_suffix = '_RAV'
-        tr.opt_key_prefix = 'OPT_'
-        tr.opt_key_suffix = '_TPO'
-        tr.opt_prefix     = '-'
-        tr.opt_name_prefix = 'on_'
-        tr.opt_name_suffix = '_no'
-        self.assertEquals(tr.env_key_transform('FOO'), 'ENV_FOO_VNE')
-        self.assertEquals(tr.var_key_transform('FOO'), 'VAR_FOO_RAV')
-        self.assertEquals(tr.opt_key_transform('FOO'), 'OPT_foo_TPO')
-        self.assertEquals(tr.option_transform('FOO'), '-on-foo-no')
+        nc = SConsArguments.NameConv._ArgumentNameConv()
+        nc.env_key_prefix = 'ENV_'
+        nc.env_key_suffix = '_VNE'
+        nc.var_key_prefix = 'VAR_'
+        nc.var_key_suffix = '_RAV'
+        nc.opt_key_prefix = 'OPT_'
+        nc.opt_key_suffix = '_TPO'
+        nc.opt_prefix     = '-'
+        nc.opt_name_prefix = 'on_'
+        nc.opt_name_suffix = '_no'
+        self.assertEquals(nc.env_key_transform('FOO'), 'ENV_FOO_VNE')
+        self.assertEquals(nc.var_key_transform('FOO'), 'VAR_FOO_RAV')
+        self.assertEquals(nc.opt_key_transform('FOO'), 'OPT_foo_TPO')
+        self.assertEquals(nc.option_transform('FOO'), '-on-foo-no')
 
     def test__ArgumentNameConv_4(self):
         """Test _ArgumentNameConv with custom lambdas"""
-        tr = SConsArguments.NameConv._ArgumentNameConv(env_key_transform = lambda x : x.lower().capitalize(),
+        nc = SConsArguments.NameConv._ArgumentNameConv(env_key_transform = lambda x : x.lower().capitalize(),
                                                        var_key_transform = lambda x : x.upper(),
                                                        opt_key_transform = lambda x : x.lower(),
-                                                       option_transform = lambda x : '--' + x.lower() + '-option' )
-        self.assertEquals(tr.env_key_transform('FOO'), 'Foo')
-        self.assertEquals(tr.var_key_transform('foo'), 'FOO')
-        self.assertEquals(tr.opt_key_transform('FOO'), 'foo')
-        self.assertEquals(tr.option_transform('FOO'), '--foo-option')
+                                                       opt_name_transform = lambda x : x.lower() + '-option' )
+        self.assertEquals(nc.env_key_transform('FOO'), 'Foo')
+        self.assertEquals(nc.var_key_transform('foo'), 'FOO')
+        self.assertEquals(nc.opt_key_transform('FOO'), 'foo')
+        self.assertEquals(nc.option_transform('FOO'), '--foo-option')
 
     def test__ArgumentNameConv_5(self):
         """Test _ArgumentNameConv with True instead of lambdas"""
-        tr = SConsArguments.NameConv._ArgumentNameConv(env_key_transform = True,
+        nc = SConsArguments.NameConv._ArgumentNameConv(env_key_transform = True,
                                                        var_key_transform = True,
                                                        opt_key_transform = True,
                                                        option_transform = True)
-        self.assertEquals(tr.env_key_transform('FOO'), 'FOO')
-        self.assertEquals(tr.var_key_transform('FOO'), 'FOO')
-        self.assertEquals(tr.opt_key_transform('FOO'), 'foo')
-        self.assertEquals(tr.option_transform('FOO'), '--foo')
+        self.assertEquals(nc.env_key_transform('FOO'), 'FOO')
+        self.assertEquals(nc.var_key_transform('FOO'), 'FOO')
+        self.assertEquals(nc.opt_key_transform('FOO'), 'foo')
+        self.assertEquals(nc.option_transform('FOO'), '--foo')
 
     def test__ArgumentNameConv_6(self):
         """Test _ArgumentNameConv with False instead of lambdas"""
-        tr = SConsArguments.NameConv._ArgumentNameConv(env_key_transform = False,
+        nc = SConsArguments.NameConv._ArgumentNameConv(env_key_transform = False,
                                                        var_key_transform = False,
                                                        opt_key_transform = False,
                                                        option_transform = False)
-        self.assertIs(tr.env_key_transform('FOO'), None)
-        self.assertIs(tr.var_key_transform('FOO'), None)
-        self.assertIs(tr.opt_key_transform('FOO'), None)
-        self.assertIs(tr.option_transform('FOO'),  None)
+        self.assertIs(nc.env_key_transform('FOO'), None)
+        self.assertIs(nc.var_key_transform('FOO'), None)
+        self.assertIs(nc.opt_key_transform('FOO'), None)
+        self.assertIs(nc.option_transform('FOO'),  None)
+
+    def test__ArgumentNameConv_name2dict_1(self):
+        """Test _ArgumentNameConv.name2dict() with default settings"""
+        nc = SConsArguments.NameConv._ArgumentNameConv()
+        d = nc.name2dict('FOO')
+        self.assertEqual(d, {'env_key' : 'FOO',
+                             'var_key' : 'FOO',
+                             'opt_key' : 'foo',
+                             'option'  : '--foo'})
+
+    def test__ArgumentNameConv_name2dict_2(self):
+        """Test _ArgumentNameConv.name2dict() with custom prefixes"""
+        nc = SConsArguments.NameConv._ArgumentNameConv(env_key_prefix = 'ENV_',
+                                                       env_key_suffix = '_VNE',
+                                                       var_key_prefix = 'VAR_',
+                                                       var_key_suffix = '_RAV',
+                                                       opt_key_prefix = 'OPT_',
+                                                       opt_key_suffix = '_TPO',
+                                                       opt_name_prefix = 'ON_',
+                                                       opt_name_suffix = '_NO')
+        d = nc.name2dict('FOO')
+        self.assertEqual(d, {'env_key' : 'ENV_FOO_VNE',
+                             'var_key' : 'VAR_FOO_RAV',
+                             'opt_key' : 'OPT_foo_TPO',
+                             'option'  : '--ON-foo-NO'})
+
+    def test__ArgumentNameConv_name2dict_3(self):
+        """Test _ArgumentNameConv.name2dict() with null transformers"""
+        nc1 = SConsArguments.NameConv._ArgumentNameConv(env_key_transform = False,
+                                                       var_key_transform = False,
+                                                       opt_key_transform = False,
+                                                       opt_name_transform = False)
+        d1 = nc1.name2dict('FOO')
+        self.assertEqual(d1, {})
+
+        nc2 = SConsArguments.NameConv._ArgumentNameConv(env_key_transform = False,
+                                                        var_key_transform = False,
+                                                        opt_key_transform = False,
+                                                        option_transform = False)
+        d2 = nc2.name2dict('FOO')
+        self.assertEqual(d2, {})
 
 #############################################################################
 if __name__ == "__main__":

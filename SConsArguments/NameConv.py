@@ -66,22 +66,6 @@ class _ArgumentNameConv(object):
     :Ivar opt_name_suffix:
         a suffix that is by default used when composing option names,
         default: ``''``
-    :Ivar env_key_transform:
-        a lambda used to transform *argument* names to construction variables,
-        may be customized to completely redefine the way ENV keys are
-        transformed, usage: ``env_key_tranform('foo')``
-    :Ivar var_key_transform:
-        a lambda used to transform *argument* names to command-line variables,
-        may be customized to completely redefine the way VAR keys are
-        transformed, usage: ``var_key_tranform('foo')``
-    :Ivar opt_key_transform:
-        a lambda used to transform *argument* names to command-line option keys,
-        may be customized to completely redefine the way OPT keys are
-        transformed, usage: ``opt_key_tranform('foo')``
-    :Ivar option_transform:
-        a lambda used to transform *argument* names to command-line options,
-        may be customized to completely redefine the way option names are
-        transformed, usage: ``option_tranform('foo')``
 
     **Example**
 
@@ -172,15 +156,97 @@ class _ArgumentNameConv(object):
         self.opt_name_prefix    = kw.get('opt_name_prefix', '')
         self.opt_name_suffix    = kw.get('opt_name_suffix', '')
 
-        env_key = lambda x : self.env_key_prefix + x + self.env_key_suffix
-        var_key = lambda x : self.var_key_prefix + x + self.var_key_suffix
-        opt_key = lambda x : self.opt_key_prefix + x.lower() + self.opt_key_suffix
-        option  = lambda x : self.opt_prefix + (self.opt_name_prefix + \
-                                     x.lower() + self.opt_name_suffix).replace('_','-')
-        self.env_key_transform = get_lambda('env_key_transform', env_key, kw)
-        self.var_key_transform = get_lambda('var_key_transform', var_key, kw)
-        self.opt_key_transform = get_lambda('opt_key_transform', opt_key, kw)
-        self.option_transform  = get_lambda('option_transform',  option,  kw)
+        self._env_key_fcn  = get_lambda('env_key_transform', lambda x : x, kw)
+        self._var_key_fcn  = get_lambda('var_key_transform', lambda x : x, kw)
+        self._opt_key_fcn  = get_lambda('opt_key_transform', lambda x : x.lower(), kw)
+        self._opt_name_fcn = get_lambda('opt_name_transform', lambda x : x.lower(), kw)
+        self._option_fcn   = get_lambda('option_transform', lambda x : x.replace('_', '-'), kw)
+
+    def env_key_transform(self, name):
+        """Transform *argument* name to construction variable name.
+
+        :Parameters:
+            name : str
+                the string to be transformed
+
+        Usage example: ``env_key = NameConv().env_key_tranform('foo')``
+        """
+        s = self._env_key_fcn(name)
+        if not s:
+            return None
+        return self.env_key_prefix + s + self.env_key_suffix
+
+    def var_key_transform(self, name):
+        """Transform *argument* name ``s`` to command-line variable name.
+
+        :Parameters:
+            name : str
+                the string to be transformed
+
+        Usage example: ``var_key = NameConv().var_key_tranform('foo')``
+        """
+        s = self._var_key_fcn(name)
+        if not s:
+            return None
+        return self.var_key_prefix + s + self.var_key_suffix
+
+    def opt_key_transform(self, name):
+        """Transform *argument* name ``s`` to command-line option key name.
+
+        :Parameters:
+            name : str
+                the string to be transformed
+
+        Usage example: ``opt_key = NameConv().opt_key_tranform('foo')``
+        """
+        s = self._opt_key_fcn(name)
+        if not s:
+            return None
+        return self.opt_key_prefix + s + self.opt_key_suffix
+
+    def opt_name_transform(self, s):
+        s = self._opt_name_fcn(s)
+        if not s:
+            return None
+        return self.opt_name_prefix + s + self.opt_name_suffix
+
+    def option_transform(self, name):
+        """Transform *argument* name to command-line option name (with ``--`` prefix).
+
+        :Parameters:
+            name : str
+                the string to be transformed
+
+        Usage example: ``option = NameConv().option_tranform('foo')``
+        """
+        s = self.opt_name_transform(name)
+        if not s:
+            return None
+        s = self._option_fcn(s)
+        if not s:
+            return None
+        return self.opt_prefix + s
+
+    def name2dict(self, name):
+        """Transform *argument* name to a dictionary possibly containing
+        env_key, var_key, opt_key and option.
+
+        :Parameters:
+            name : str
+                the string to be transformed
+
+        Usage example: ``d = NameConv().name2dict('foo')``
+        """
+        d = dict()
+        env_key = self.env_key_transform(name)
+        var_key = self.var_key_transform(name)
+        opt_key = self.opt_key_transform(name)
+        option  = self.option_transform(name)
+        if env_key: d['env_key'] = env_key
+        if var_key: d['var_key'] = var_key
+        if opt_key: d['opt_key'] = opt_key
+        if option:  d['option'] = option
+        return d
 
 # Local Variables:
 # # tab-width:4
