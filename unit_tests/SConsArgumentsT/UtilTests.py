@@ -74,6 +74,8 @@ class Test_module_constants(unittest.TestCase):
     def test__notfound(self):
         "Test SConsArguments.Util._notfound, it should be a class"
         self.assertTrue(isinstance(SConsArguments.Util._notfound,type))
+        self.assertFalse(bool(SConsArguments.Util._notfound))
+        self.assertEqual(str(SConsArguments.Util._notfound), 'NOTFOUND')
     def test_NOTFOUND(self):
         "Test SConsArguments.Util.NOTFOUND, it should be a class"
         self.assertTrue(isinstance(SConsArguments.Util.NOTFOUND,type))
