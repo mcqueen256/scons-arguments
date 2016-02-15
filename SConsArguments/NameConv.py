@@ -162,64 +162,72 @@ class _ArgumentNameConv(object):
         self._opt_name_fcn = get_lambda('opt_name_transform', lambda x : x.lower(), kw)
         self._option_fcn   = get_lambda('option_transform', lambda x : x.replace('_', '-'), kw)
 
-    def env_key_transform(self, name):
-        """Transform *argument* name to construction variable name.
+    def name2env(self, name):
+        """Transform *argument* name to corresponding construction variable name.
 
         :Parameters:
             name : str
                 the string to be transformed
 
-        Usage example: ``env_key = NameConv().env_key_tranform('foo')``
+        Usage example: ``env_key = NameConv().name2env('foo')``
         """
         s = self._env_key_fcn(name)
         if not s:
             return None
         return self.env_key_prefix + s + self.env_key_suffix
 
-    def var_key_transform(self, name):
-        """Transform *argument* name ``s`` to command-line variable name.
+    def name2var(self, name):
+        """Transform *argument* name to corresponding command-line variable name.
 
         :Parameters:
             name : str
                 the string to be transformed
 
-        Usage example: ``var_key = NameConv().var_key_tranform('foo')``
+        Usage example: ``var_key = NameConv().name2var('foo')``
         """
         s = self._var_key_fcn(name)
         if not s:
             return None
         return self.var_key_prefix + s + self.var_key_suffix
 
-    def opt_key_transform(self, name):
-        """Transform *argument* name ``s`` to command-line option key name.
+    def name2opt(self, name):
+        """Transform *argument* name to corresponding command-line option key.
 
         :Parameters:
             name : str
                 the string to be transformed
 
-        Usage example: ``opt_key = NameConv().opt_key_tranform('foo')``
+        Usage example: ``opt_key = NameConv().name2opt('foo')``
         """
         s = self._opt_key_fcn(name)
         if not s:
             return None
         return self.opt_key_prefix + s + self.opt_key_suffix
 
-    def opt_name_transform(self, s):
-        s = self._opt_name_fcn(s)
-        if not s:
-            return None
-        return self.opt_name_prefix + s + self.opt_name_suffix
-
-    def option_transform(self, name):
-        """Transform *argument* name to command-line option name (with ``--`` prefix).
+    def name2optname(self, name):
+        """Transform *argument* name to corresponding command-line option name (without ``--`` prefix).
 
         :Parameters:
             name : str
                 the string to be transformed
 
-        Usage example: ``option = NameConv().option_tranform('foo')``
+        Usage example: ``opt_key = NameConv().name2optname('foo')``
         """
-        s = self.opt_name_transform(name)
+        s = self._opt_name_fcn(name)
+        if not s:
+            return None
+        return self.opt_name_prefix + s + self.opt_name_suffix
+
+    def name2option(self, name):
+        """Transform *argument* name to corresponding command-line option name (with ``--`` prefix).
+
+        :Parameters:
+            name : str
+                the string to be transformed
+
+        Usage example: ``opt_key = NameConv().name2option('foo')``
+        """
+        s = self.name2optname(name)
         if not s:
             return None
         s = self._option_fcn(s)
@@ -238,15 +246,24 @@ class _ArgumentNameConv(object):
         Usage example: ``d = NameConv().name2dict('foo')``
         """
         d = dict()
-        env_key = self.env_key_transform(name)
-        var_key = self.var_key_transform(name)
-        opt_key = self.opt_key_transform(name)
-        option  = self.option_transform(name)
-        if env_key: d['env_key'] = env_key
-        if var_key: d['var_key'] = var_key
-        if opt_key: d['opt_key'] = opt_key
-        if option:  d['option'] = option
+        env = self.name2env(name)
+        var = self.name2var(name)
+        opt = self.name2opt(name)
+        option  = self.name2option(name)
+        if env:     d['env_key'] = env
+        if var:     d['var_key'] = var
+        if opt:     d['opt_key'] = opt
+        if option:  d['option']  = option
         return d
+
+    env_key_transform = name2env
+    """Alias for `name2env`"""
+    var_key_transform = name2var
+    """Alias for `name2var`"""
+    opt_key_transform = name2opt
+    """Alias for `name2opt`"""
+    option_transform = name2option
+    """Alias for `name2option`"""
 
 # Local Variables:
 # # tab-width:4
