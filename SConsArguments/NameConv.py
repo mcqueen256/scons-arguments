@@ -41,22 +41,22 @@ class _ArgumentNameConv(object):
 
     :Ivar env_key_prefix:
         a prefix that is by default prepended to ENV key by the
-        `env_key_transform` lambda, default: ``''``
+        `name2env` lambda, default: ``''``
     :Ivar env_key_suffix:
         a suffix that is by default prepended to ENV key by the
-        `env_key_transform` lambda, default: ``''``
+        `name2env` lambda, default: ``''``
     :Ivar var_key_prefix:
         a prefix that is by default prepended to VAR key by the
-        `var_key_transform` lambda, default: ``''``
+        `name2var` lambda, default: ``''``
     :Ivar var_key_suffix:
         a suffix that is by default prepended to VAR key by the
-        `var_key_transform` lambda, default: ``''``
+        `name2var` lambda, default: ``''``
     :Ivar opt_key_prefix:
         a prefix that is by default prepended to OPT key by the
-        `opt_key_transform` lambda, default: ``''``
+        `name2opt` lambda, default: ``''``
     :Ivar opt_key_suffix:
         a suffix that is by default prepended to OPT key by the
-        `opt_key_transform` lambda, default: ``''``
+        `name2opt` lambda, default: ``''``
     :Ivar opt_prefix:
         a prefix that is by default used when composing option names,
         usually a single or double dash, default: ``'--'``
@@ -76,10 +76,10 @@ class _ArgumentNameConv(object):
                                                 opt_key_prefix = 'Opt_', opt_key_suffix = '_tpO',
                                                 opt_prefix     = '-',
                                                 opt_name_prefix = 'on_', opt_name_suffix = '_no')
-        assert(tr.env_key_transform('FOO') == 'ENV_FOO_VNE')
-        assert(tr.var_key_transform('FOO') == 'VAR_FOO_RAV')
-        assert(tr.opt_key_transform('FOO') == 'Opt_foo_tpO')
-        assert(tr.option_transform('FOO')  == '-on-foo-no')
+        assert(tr.name2env('FOO') == 'ENV_FOO_VNE')
+        assert(tr.name2var('FOO') == 'VAR_FOO_RAV')
+        assert(tr.name2opt('FOO') == 'Opt_foo_tpO')
+        assert(tr.name2option('FOO')  == '-on-foo-no')
     """
     def __init__(self, **kw):
         """Initializes `_ArgumentNameConv` object.
@@ -115,25 +115,25 @@ class _ArgumentNameConv(object):
             env_key_transform : callable | bool
                 a lambda used to transform *argument* names to construction variables,
                 may be customized to completely redefine the way ENV keys are
-                transformed, if `env_key_transform` is not callable, then if
+                transformed, if ``env_key_transform`` is not callable, then if
                 evaluates to ``True`` a default transform is used, or if it
                 evaluates to ``False`` a ``lambda x : None`` is used
             var_key_transform : callable | bool
                 a lambda used to transform *argument* names to command-line variables,
                 may be customized to completely redefine the way VAR keys are
-                transformed,  if `env_key_transform` is not callable, then if
+                transformed,  if ``var_key_transform`` is not callable, then if
                 evaluates to ``True`` a default transform is used, or if it
                 evaluates to ``False`` a ``lambda x : None`` is used
             opt_key_transform : callable | bool
                 a lambda used to transform *argument* names to command-line option keys,
                 may be customized to completely redefine the way OPT keys are
-                transformed, if `env_key_transform` is not callable, then if
+                transformed, if ``opt_key_transform`` is not callable, then if
                 evaluates to ``True`` a default transform is used, or if it
                 evaluates to ``False`` a ``lambda x : None`` is used
             option_transform : callable | bool
                 a lambda used to transform *argument* names to command-line options,
                 may be customized to completely redefine the way option names are
-                transformed, if `env_key_transform` is not callable, then if
+                transformed, if ``option_transform`` is not callable, then if
                 evaluates to ``True`` a default transform is used, or if it
                 evaluates to ``False`` a ``lambda x : None`` is used
         """
