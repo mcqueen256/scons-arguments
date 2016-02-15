@@ -256,15 +256,6 @@ class _ArgumentNameConv(object):
         if option:  d['option']  = option
         return d
 
-    env_key_transform = name2env
-    """Alias for `name2env`"""
-    var_key_transform = name2var
-    """Alias for `name2var`"""
-    opt_key_transform = name2opt
-    """Alias for `name2opt`"""
-    option_transform = name2option
-    """Alias for `name2option`"""
-
 # Local Variables:
 # # tab-width:4
 # # indent-tabs-mode:nil
