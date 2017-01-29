@@ -17,6 +17,18 @@ SConsArguments.Declarations.ArgumentDeclarations	SConsArguments.Declarations-mod
 SConsArguments.Declarations.ArgumentDeclaration	SConsArguments.Declaration-module.html#ArgumentDeclaration
 SConsArguments.Declarations._build_iresubst_dict	SConsArguments.Util-module.html#_build_iresubst_dict
 SConsArguments.Declarations.__package__	SConsArguments.Declarations-module.html#__package__
+SConsArguments.Importer	SConsArguments.Importer-module.html
+SConsArguments.Importer._load_decl	SConsArguments.Importer-module.html#_load_decl
+SConsArguments.Importer._load_decls	SConsArguments.Importer-module.html#_load_decls
+SConsArguments.Importer.DeclareArgument	SConsArguments.Declaration-module.html#DeclareArgument
+SConsArguments.Importer.GetDefaultArgpath	SConsArguments.Importer-module.html#GetDefaultArgpath
+SConsArguments.Importer.ArgumentDeclarations	SConsArguments.Declarations-module.html#ArgumentDeclarations
+SConsArguments.Importer.__package__	SConsArguments.Importer-module.html#__package__
+SConsArguments.Importer._defaultArgpath	SConsArguments.Importer-module.html#_defaultArgpath
+SConsArguments.Importer.ImportArguments	SConsArguments.Importer-module.html#ImportArguments
+SConsArguments.Importer._initDefaultArgpath	SConsArguments.Importer-module.html#_initDefaultArgpath
+SConsArguments.Importer._load_dict_decl	SConsArguments.Importer-module.html#_load_dict_decl
+SConsArguments.Importer._import_argmod	SConsArguments.Importer-module.html#_import_argmod
 SConsArguments.NameConv	SConsArguments.NameConv-module.html
 SConsArguments.NameConv.__package__	SConsArguments.NameConv-module.html#__package__
 SConsArguments.Proxy	SConsArguments.Proxy-module.html
@@ -44,6 +56,7 @@ SConsArguments.ArgumentDeclaration	SConsArguments.Declaration-module.html#Argume
 SConsArguments._compose_mappings	SConsArguments.Util-module.html#_compose_mappings
 SConsArguments.DeclareArguments	SConsArguments.Declarations-module.html#DeclareArguments
 SConsArguments.ArgumentDeclarations	SConsArguments.Declarations-module.html#ArgumentDeclarations
+SConsArguments.ImportArguments	SConsArguments.Importer-module.html#ImportArguments
 SConsArguments._build_iresubst_dict	SConsArguments.Util-module.html#_build_iresubst_dict
 SConsArguments.Arguments._Arguments	SConsArguments.Arguments._Arguments-class.html
 SConsArguments.Arguments._Arguments.Demangle	SConsArguments.Arguments._Arguments-class.html#Demangle
