@@ -14,7 +14,7 @@
 			command line variables to a file</a></span></li><li><span class="section"><a href="#idm706">7.3. Loading 
 			command line variables from file</a></span></li></ul></li><li><span class="section"><a href="#idm712">8. Importing 
 		argument declarations from python modules</a></span><ul><li><span class="section"><a href="#idm720">8.1. Preparing 
-			module with argument declarations</a></span></li><li><span class="section"><a href="#idm733">8.2. Importing argument from a module</a></span></li></ul></li></ul></div><section class="section" id="sec-intro"><div class="titlepage"><div><div><h2 class="title" style="clear: both">1. Introduction</h2></div></div></div><p>The 
+			module with argument declarations</a></span></li><li><span class="section"><a href="#idm733">8.2. Importing argument declarations from a module</a></span></li></ul></li></ul></div><section class="section" id="sec-intro"><div class="titlepage"><div><div><h2 class="title" style="clear: both">1. Introduction</h2></div></div></div><p>The 
 		<span class="package">scons-arguments</span> 
 		package is an extension to 
 		<span class="productname"><a class="link" href="http://scons.org" target="_top">SCons</a></span> 
@@ -1161,7 +1161,7 @@ def arguments(**kw):
     return {
       'arg1' : { 'help' : 'This is argument 1' },
       'arg2' : { 'help' : 'This is argument 2' }
-    }</pre></div></div><br class="example-break"></br></section><section class="section" id="idm733"><div class="titlepage"><div><div><h3 class="title">8.2. Importing argument from a module</h3></div></div></div><p>Argument declarations can be imported from a module with the 
+    }</pre></div></div><br class="example-break"></br></section><section class="section" id="idm733"><div class="titlepage"><div><div><h3 class="title">8.2. Importing argument declarations from a module</h3></div></div></div><p>Argument declarations can be imported from a module with the 
 			<code class="function">ImportArguments</code> function.</p><pre class="programlisting">import SConsArguments
 decl = SConsArguments.ImportArguments('myargs')</pre><p>Having these declarations, we proceed as described in the 
 			previous sections (committing, postprocessing, etc.).</p><p>The prototype of <code class="function">ImportArguments</code> is the 
