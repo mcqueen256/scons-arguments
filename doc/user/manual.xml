@@ -781,8 +781,8 @@ bar = { &apos;env_key&apos;: &apos;ENV_BAR&apos;, &apos;var_key&apos; : &apos;va
 env = Environment()
 env[&apos;foo&apos;] = &quot;foo married $bar&quot;
 env[&apos;bar&apos;] = &quot;BAR&quot;
-print env.subst(&quot;foo: $foo&quot;)
-print env.subst(&quot;bar: $bar&quot;)</programlisting>
+print(env.subst(&quot;foo: $foo&quot;))
+print(env.subst(&quot;bar: $bar&quot;))</programlisting>
 				then you should expect at output
 				<screen xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">ptomulik@tea:$ scons -Q
 foo: foo married BAR
@@ -1101,7 +1101,7 @@ args.Postprocess(env, var)
 # create proxy object
 proxy = args.EnvProxy(env)
 # access variable via proxy
-print &quot;foo: %s&quot; % proxy[&apos;foo&apos;]
+print(&quot;foo: %s&quot; % proxy[&apos;foo&apos;])
 </programlisting>
 			<para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
 				The above script may be tested as follows
@@ -1113,9 +1113,9 @@ scons: `.&apos; is up to date.</screen>
 		<para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
 			The proxy object provides dict-like access to Arguments as well as 
 			substitutions. In the above example, you may freely replace the line
-			<programlisting xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">print &quot;foo: %s&quot; % proxy[&apos;foo&apos;]</programlisting>
+			<programlisting xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">print(&quot;foo: %s&quot; % proxy[&apos;foo&apos;])</programlisting>
 			with
-			<programlisting xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">print proxy.subst(&quot;foo: $foo&quot;)</programlisting>
+			<programlisting xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">print(proxy.subst(&quot;foo: $foo&quot;))</programlisting>
 		</para>
 		<para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Note, 
 		that the proxy object does not wrap all the functionality of the 
@@ -1214,16 +1214,16 @@ args.Postprocess(env, var, True)
 AddOption( &apos;--help-variables&apos;, dest=&apos;help_variables&apos;, action=&apos;store_true&apos;,
          help=&apos;print help for CLI variables&apos; )
 if GetOption(&apos;help_variables&apos;):
-  print args.GenerateVariablesHelpText(var, env)
+  print(args.GenerateVariablesHelpText(var, env))
   Exit(0)
 
 # Create proxy to access Arguments using their original names
 proxy = args.EnvProxy(env)
 
 # Print values.
-print proxy.subst(&apos;prefix: $prefix&apos;)
-print proxy.subst(&apos;exec_prefix: $exec_prefix&apos;)
-print proxy.subst(&apos;bindir: $bindir&apos;)
+print(proxy.subst(&apos;prefix: $prefix&apos;))
+print(proxy.subst(&apos;exec_prefix: $exec_prefix&apos;))
+print(proxy.subst(&apos;bindir: $bindir&apos;))
 </programlisting>
 		</example>
 		<para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Let&apos;s 
@@ -1305,7 +1305,7 @@ Local Options:
 				<programlisting xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">AddOption( &apos;--help-variables&apos;, dest=&apos;help_variables&apos;, action=&apos;store_true&apos;,
          help=&apos;print help for CLI variables&apos; )
 if GetOption(&apos;help_variables&apos;):
-  print args.GenerateVariablesHelpText(var, env)
+  print(args.GenerateVariablesHelpText(var, env))
   Exit(0)</programlisting>
 			</example>
 			<para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">If 
@@ -1392,21 +1392,20 @@ PREFIX = &apos;/opt&apos;
 		<title xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Importing 
 		argument declarations from python modules</title>
 		<para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Argument 
-		declarations may be delivered by python modules in a similar way as 
-		SCons tools are. A python module placed in an appropriate directory 
-		may be used for this purpose. The default search path for arguments 
-		modules is derived from default tool search path. If, for example, 
-		default tool search path contains 
-		<filename xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">~/.scons/site_scons/site_tools</filename>, 
-		then the corresponding directory for argument modules will be 
-		<filename xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">~/.scons/site_scons/site_arguments</filename>. 
-		The rule is, that we simply replace 
+		declarations may be delivered by &quot;special&quot; python modules 
+		in a similar way as SCons tools are. A python module placed in an 
+		appropriate directory may be used for this purpose. The default 
+		search path for these modules is constructed in a very similar way to 
+		that for tool modules. The main difference is, that we use 
+		<code xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">&quot;site_arguments&quot;</code> 
+		instead of 
 		<code xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">&quot;site_tools&quot;</code> 
-		in the last component of directory name with 
-		<code xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">&quot;site_arguments&quot;</code>. 
-		The argument modules may also be placed in the 
+		in the last component of default search path. Some argument modules 
+		may also be found in the 
 		<package xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">SConsArguments</package> 
-		package.</para>
+		package. They are delivered with the 
+		<package>scons-arguments</package> package and correspond to existing 
+		standard SCons tools.</para>
 		<section xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
 			<title xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Preparing 
 			module with argument declarations</title>
@@ -1423,15 +1422,17 @@ PREFIX = &apos;/opt&apos;
 			<code xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">bar</code> 
 			are argument names, and these keys are followed by argument 
 			declarations. Each declaration should have a form of dict with same 
-			keys as the parameters of DeclareArgument 
-			(<xref linkend="sec-declaring-single-arg"/>). Such a file should be 
-			placed somewhere within search path for argument modules, for 
-			example under <filename>site_scons/site_arguments</filename>. A 
-			simple module with two argument declarations is given in the 
+			keys as the parameters of <function>DeclareArgument</function> 
+			(<xref xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" linkend="sec-declaring-single-arg"/>). 
+			Such a file should be placed somewhere within search path for 
+			argument modules, for example under 
+			<filename xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">site_scons/site_arguments</filename>. 
+			A simple module with two argument declarations is given in the 
 			following example</para>
-			<example>
-				<title>A simple module with arguments</title>
-				<programlisting># site_scons/site_arguments/myargs.py
+			<example xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+				<title xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">A 
+				simple module with arguments</title>
+				<programlisting xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"># site_scons/site_arguments/myargs.py
 def arguments(**kw):
     return {
       &apos;arg1&apos; : { &apos;help&apos; : &apos;This is argument 1&apos; },
@@ -1439,58 +1440,57 @@ def arguments(**kw):
     }</programlisting>
 			</example>
 		</section>
-		<section>
-			<title>Importing argument declarations from a module</title>
-			<para>Argument declarations can be imported from a module with the 
-			<function>ImportArguments</function> function.</para>
-			<programlisting>import SConsArguments
+		<section xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+			<title xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Importing 
+			argument declarations from a module</title>
+			<para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Argument 
+			declarations can be imported from a module with the 
+			<function xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">ImportArguments</function> 
+			function.</para>
+			<programlisting xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">import SConsArguments
 decl = SConsArguments.ImportArguments(&apos;myargs&apos;)</programlisting>
-			<para>Having these declarations, we proceed as described in the 
-			previous sections (committing, postprocessing, etc.).</para>
-			<para>The prototype of <function>ImportArguments</function> is the 
-			following</para>
-			<programlisting>ImportArguments(modules, argpath=None, kwpass=None, **kw)</programlisting>
-			<para>The function accepts quite a lot of optional parameters (we 
-			refer an interested user to API reference). Here we only mention few 
-			of the most important.</para>
-			<informaltable>
-				<thead>
-					<tr>
-						<th>parameter</th>
-						<th>description</th>
+			<para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Having 
+			these declarations, we proceed as described in the previous sections 
+			(committing, postprocessing, etc.).</para>
+			<para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">The 
+			prototype of 
+			<function xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">ImportArguments</function> 
+			is the following</para>
+			<programlisting xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">ImportArguments(modules, argpath=None, **kw)</programlisting>
+			<para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">The 
+			function accepts quite a lot of optional parameters (we refer an 
+			interested user to API reference). Here we only mention few of them 
+			(most commonly used).</para>
+			<informaltable xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+				<thead xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+					<tr xmlns="http://docbook.org/ns/docbook">
+						<th xmlns="http://docbook.org/ns/docbook">parameter</th>
+						<th xmlns="http://docbook.org/ns/docbook">description</th>
 					</tr>
 				</thead>
-				<tbody>
-					<tr>
-						<td><parameter>modules</parameter></td>
-						<td>modules to be imported (their names); may be a single string 
-						or a collection (list) of strings.</td>
+				<tbody xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+					<tr xmlns="http://docbook.org/ns/docbook">
+						<td xmlns="http://docbook.org/ns/docbook"><parameter xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">modules</parameter></td>
+						<td xmlns="http://docbook.org/ns/docbook">modules to be imported 
+						(their names); may be a single string or a collection (list) of 
+						strings.</td>
 					</tr>
-					<tr>
-						<td><parameter>argpath</parameter></td>
-						<td>a list of directories to be searched for arguments&apos; 
-						modules prior to default search path</td>
+					<tr xmlns="http://docbook.org/ns/docbook">
+						<td xmlns="http://docbook.org/ns/docbook"><parameter xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">argpath</parameter></td>
+						<td xmlns="http://docbook.org/ns/docbook">a list of directories 
+						to be searched for arguments&apos; modules prior to default 
+						search path</td>
 					</tr>
-					<tr>
-						<td><parameter>kwpass</parameter></td>
-						<td>an optional hash with keyword arguments passed to the 
-						imported modules (to their <function>arguments()</function> 
-						functions); if, for example, we call 
-						<code>ImportArguments([&apos;mod1&apos;, &apos;mod2&apos;], None, 
-						{&apos;foo&apos; : &apos;FOO&apos;})</code>, then these function 
-						will be invoked as <code>mod1.arguments(foo = 
-						&apos;FOO&apos;)</code> and 
-						<code>mod2.arguments(foo=&apos;FOO&apos;)</code>.</td>
+					<tr xmlns="http://docbook.org/ns/docbook">
+						<td xmlns="http://docbook.org/ns/docbook"><parameter xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">name_filter</parameter></td>
+						<td xmlns="http://docbook.org/ns/docbook">a callable object used 
+						to filter-out unwanted arguments defined in the arguments based 
+						on their names; if 
+						<parameter xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">name_filter</parameter> 
+						is a list or set (a collection), only arguments listed in this 
+						collection will be imported.</td>
 					</tr>
-					<tr>
-						<td><parameter>name_filter</parameter></td>
-						<td>a callable object used to filter-out unwanted arguments 
-						defined in the arguments based on their names; if 
-						<parameter>name_filter</parameter> is a list or set (a 
-						collection), only arguments listed in this collection will be 
-						imported.</td>
-					</tr>
-					<tr/>
+					<tr xmlns="http://docbook.org/ns/docbook"/>
 				</tbody>
 			</informaltable>
 		</section>

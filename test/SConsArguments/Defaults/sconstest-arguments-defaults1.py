@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2012-2015 by Pawel Tomulik
+# Copyright (c) 2012-2017 by Pawel Tomulik
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -46,7 +46,7 @@ decls = SConsArguments.DeclareArguments(
 args = decls.Commit(env, var, True)
 args.Postprocess(env, var, True)
 for key in ['FOO', 'BAR', 'GEZ']:
-    try: print "env['%s']: %s" % (key, env[key])
+    try: print("env['%s']: %s" % (key, env[key]))
     except KeyError: pass
 """)
 

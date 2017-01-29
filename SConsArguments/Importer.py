@@ -57,14 +57,39 @@ example).
 
 __docformat__ = "restructuredText"
 
-from .Declarations import ArgumentDeclarations, DeclareArgument
-from .NameConv import _ArgumentNameConv
+from SConsArguments.Declarations import ArgumentDeclarations, DeclareArgument
+from SConsArguments.NameConv import _ArgumentNameConv
 import SCons.Util
 import SCons.Tool
-import importlib
+import SCons.Script.Main
+import SCons.Node.FS
+import SCons.Platform
+import SCons.Errors
 import types
 import os.path
 import sys
+
+def _load_module_file(name, path):
+    if sys.version_info < (3,4):
+        import imp
+        file, path, desc = imp.find_module(name, path)
+        try:
+            return imp.load_module(name, file, path, desc)
+        finally:
+            if file:
+                file.close()
+    else:
+        import importlib.util
+        spec = None
+        for finder in sys.meta_path:
+            spec = finder.find_spec(name, path)
+            if spec is not None:
+                break
+        if spec is None:
+            raise ImportError("No module named '%s'" % name)
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        return mod
 
 #############################################################################
 # This shall be initialized with _initDefaultArgpath(). It has to be a list.
@@ -72,27 +97,87 @@ _defaultArgpath = None
 """Default search path for arguments modules, see `GetDefaultArgpath()`."""
 
 #############################################################################
+def _handle_site_scons_dir(topdir, site_dir_name=None):
+    global _defaultArgpath
+
+    if site_dir_name:
+        err_if_not_found = True # user specified: err if missing
+    else:
+        site_dir_name = "site_scons"
+        err_if_not_found = False
+
+    site_dir = os.path.join(topdir, site_dir_name)
+    if not os.path.exists(site_dir):
+        if err_if_not_found:
+            raise SCons.Errors.UserError("site dir %s not found." % site_dir)
+        return
+
+    site_arguments_dirname = "site_arguments"
+    site_arguments_dir = os.path.join(site_dir, site_arguments_dirname)
+    if os.path.exists(site_arguments_dir):
+        _defaultArgpath.insert(0, os.path.abspath(site_arguments_dir))
+
+#############################################################################
+def _handle_all_site_scons_dirs(topdir):
+    platform = SCons.Platform.platform_default()
+    homedir = lambda d : os.path.expanduser('~/' + d)
+
+    if platform == 'win32' or platform == 'cygwin':
+        sysdirs = [ os.path.expandvars('$ALLUSERSPROFILE\\Application Data\\scons'),
+                    os.path.expandvars('$USERPROFILE\\Local Settings\\Application Data\\scons') ]
+        appdatadir = os.path.expandvars('$APPDATA\\scons')
+        if appdatadir not in sysdirs:
+            sysdirs.append(appdatadir)
+        sysdirs.append(homedir('.scons'))
+
+    elif platform == 'darwin': # MacOS X
+        sysdirs = [ '/Library/Application Support/SCons',
+                    '/opt/local/share/scons', # (for MacPorts)
+                    '/sw/share/scons', # (for Fink)
+                    homedir('Library/Application Support/SCons'),
+                    homedir('.scons') ]
+    elif platform == 'sunos': # Solaris
+        sysdirs = [ '/opt/sfw/scons',
+                    '/usr/share/scons',
+                    homedir('.scons') ]
+    else:
+        # assume posix-like, i.e. platform == 'posix'
+        sysdirs = [ '/usr/share/scons',
+                    homedir('.scons') ]
+
+    dirs = sysdirs + [topdir]
+    for d in dirs:
+        _handle_site_scons_dir(d)
+
+#############################################################################
 def _initDefaultArgpath():
     global _defaultArgpath
-    def tool_to_arg(path):
-        # Convert Toolpath to corresponding Argpath
-        parts = list(os.path.split(path))
-        if parts[-1] == 'site_tools':
-            parts[-1] = 'site_arguments'
-        return os.path.join(*parts)
-    _defaultArgpath = filter(os.path.exists, map(tool_to_arg, SCons.Tool.DefaultToolpath))
+
+    _defaultArgpath = []
+
+    site_dir = SCons.Script.Main.GetOption('site_dir')
+    no_site_dir = SCons.Script.Main.GetOption('no_site_dir')
+    topdir = SCons.Node.FS.get_default_fs().SConstruct_dir
+
+    if 'get_internal_path' in dir(topdir): # SCons >= 2.4.0
+        toppath = topdir.get_internal_path()
+    else:
+        toppath = topdir.path
+
+    if site_dir:
+        _handle_site_scons_dir(toppath, site_dir)
+    elif not no_site_dir:
+        _handle_all_site_scons_dirs(toppath)
 
 #############################################################################
 def GetDefaultArgpath():
     """Default list of directories searched for modules containing argument
     declarations.
 
-    The `_defaultArgpath` list returned by this function is constructed based
-    on default path used for SCons tools. If, for example,
-    ``SCons.Tool.DefaultToolpath`` contains path
-    ``'/foo/bar/site_scons/site_tools'``, then ``GetDefaultArgpath()`` will
-    return a list containing corresponding entry
-    ``'/foo/bar/site_scons/site_arguments'`` if such directory exists.
+    The `_defaultArgpath` list returned by this function is constructed in way
+    similar to that of default tool path. We just use ``"site_arguments"``
+    instead of ``"site_tools"`` in the last component, and ``"SConsArguments"``
+    instead of ``"SCons.Tool"``.
     """
     global _defaultArgpath
     if _defaultArgpath is None:
@@ -104,30 +189,22 @@ def _import_argmod(name, argpath = None, **kw):
     if isinstance(name, types.ModuleType):
         return name
 
-    oldpath = sys.path
-    sys.path = (argpath or []) + GetDefaultArgpath()
+    newpath = (argpath or []) + GetDefaultArgpath()
 
     try:
-        return importlib.import_module(name)
-    except ImportError:
+        return _load_module_file(name, newpath)
+    except ImportError as e:
         pass
-    finally:
-        sys.path = oldpath
 
     full_name = 'SConsArguments.' + name
 
     try:
         return sys.modules[full_name]
     except KeyError:
-        smpath = sys.modules['SConsArguments'].__path__
-        oldpath = sys.path
-        sys.path = smpath
         try:
-            return importlib.import_module(full_name)
-        except ImportError, e:
+            return _load_module_file(name, sys.modules['SConsArguments'].__path__)
+        except ImportError as e:
             raise RuntimeError("No module named %s : %s" % (name, e))
-        finally:
-            sys.path = oldpath
 
 #############################################################################
 def _load_dict_decl(name, decl, **kw):
@@ -147,7 +224,7 @@ def _load_dict_decl(name, decl, **kw):
                 'opt_key_prefix', 'opt_key_suffix', 'opt_key_transform',
                 'opt_prefix', 'opt_name_prefix', 'opt_name_suffix',
                 'option_transform' }
-        kw2.update({ k : v for (k,v) in kw.iteritems() if k in kws })
+        kw2.update({ k : v for (k,v) in kw.items() if k in kws })
         nameconv = _ArgumentNameConv(**kw2)
         forcenameconv = False
 
@@ -179,7 +256,7 @@ def _load_decls(args, **kw):
         name_filter = lambda x : x in allowed_names
     decls = ArgumentDeclarations()
     if SCons.Util.is_Dict(args):
-        for name, decl in args.iteritems():
+        for name, decl in args.items():
             if name_filter(name):
                 decls[name] = _load_decl(name, decl, **kw)
     else:
@@ -188,8 +265,12 @@ def _load_decls(args, **kw):
 
 
 #############################################################################
-def ImportArguments(modules, argpath = None, kwpass = None, **kw):
+def ImportArguments(modules, argpath = None, **kw):
     """Import argument declarations from modules
+
+    Note, that all the keyword arguments get passed to module's
+    ``argument(**kw)`` functions as ``**kw``. Not all meaningful keyword
+    arguments are listed here.
 
     :Parameters:
         modules : str|list
@@ -197,9 +278,6 @@ def ImportArguments(modules, argpath = None, kwpass = None, **kw):
         argpath : list
             A list of directories to be searched for arguments' modules prior
             to default ones (returned by `GetDefaultArgpath()`).
-        kwpass : dict
-            A dict passed as keyword arguments to the ``arguments(**kw)``
-            function of every imported module.
 
     :Keywords:
         preprocessor : callable
@@ -278,14 +356,73 @@ def ImportArguments(modules, argpath = None, kwpass = None, **kw):
     """
     # Load modules possibly containing arguments
     decls = ArgumentDeclarations()
-    if kwpass is None:
-        kwpass = dict()
     if SCons.Util.is_String(modules):
         modules = [ modules ]
     for modname in modules:
         mod = _import_argmod(modname, argpath)
-        decls.update(_load_decls(mod.arguments(**kwpass), **kw))
+        decls.update(_load_decls(mod.arguments(**kw), **kw))
     return decls
+
+#############################################################################
+def export_arguments(modname, args, groups = None, **kw):
+    """Helper function for arguments' module developers
+
+    :Parameters:
+        modname : str
+            name of the module calling this function
+
+        args : dict
+            a dictionary with all argument definitions that may be potentially
+            exported by the calling module.
+
+        groups : dict
+            argument groups (group names); the dictionary shall have group
+            names as keys followed by lists of argument names belonging to
+            these groups
+
+    :Keywords:
+        include_group : str | list
+            only include arguments assigned to the listed groups
+        ${modname}_include_group : str | list
+            only include arguments assigned to the listed groups
+        exclude_group : str | list
+            exclude arguments assigned to the listed groups
+        ${modname}_exclude_group : str | list
+            exclude arguments assigned to the listed groups
+        exclude_${group} : boolean
+            whether to exclude arguments belonging to a given ${group}; for
+            example, if there is a group named ``'progs'`` in **groups**,
+            then arguments belonging to ``'progs'`` may be excluded with
+            ``exclude_progs = True``,
+
+        ${modname}_exclude_${group} : boolean
+            works same way same as **exclude_${group}**, provided the
+            ``${modname}`` prefix is same as the value of **modname** argument
+            (so, if ``modname = 'foo'``, then ``foo_exclude_progs`` will
+            exclude all arguments belonging to a group named ``progs``)
+    """
+    include_groups = kw.get("%s_include_groups" % modname, kw.get('include_groups', None))
+    if SCons.Util.is_String(include_groups):
+        include_groups = [ include_groups ]
+
+    exclude_groups = kw.get("%s_exclude_groups" % modname, kw.get('exclude_groups', None))
+    if SCons.Util.is_String(exclude_groups):
+        exclude_groups = [ exclude_groups ]
+
+    if include_groups is not None:
+        include = set()
+        for groupname in include_groups:
+            include.update(groups.get(groupname,[]))
+    else:
+        include = set(args.keys())
+
+    exclude = set()
+    if exclude_groups is not None:
+        for groupname in exclude_groups:
+            exclude.update(groups.get(groupname,[]))
+
+    return { k : args[k] for k in (include - exclude) }
+
 
 
 # Local Variables:

@@ -1,6 +1,6 @@
 """ `SConsArgumentsT.NameConvTests`
 
-Unit tests for SConsArguments.NameConv
+Unit tests for `SConsArguments.NameConv`
 """
 
 __docformat__ = "restructuredText"

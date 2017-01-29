@@ -1,6 +1,6 @@
-""" SConsArguments.ProxyTests
+""" `SConsArgumentsT.ProxyTests`
 
-Unit tests for SConsArguments.Proxy
+Unit tests for `SConsArguments.Proxy`
 """
 
 __docformat__ = "restructuredText"

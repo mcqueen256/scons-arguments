@@ -26,7 +26,8 @@ Provides the `_VariablesWrapper` class
 
 __docformat__ = "restructuredText"
 
-from .Util import UNDEFINED
+from SConsArguments.Util import UNDEFINED
+import SCons.Errors
 
 #############################################################################
 class _VariablesWrapper(object):

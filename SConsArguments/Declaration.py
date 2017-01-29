@@ -28,7 +28,7 @@ Provides the `_ArgumentDeclaration` class and factory methods
 __docformat__ = "restructuredText"
 
 import SCons.Util
-from .Util import ENV, VAR, OPT, ALL, UNDEFINED
+from SConsArguments.Util import ENV, VAR, OPT, ALL, UNDEFINED
 
 #############################################################################
 class _ArgumentDeclaration(object):
@@ -131,7 +131,7 @@ class _ArgumentDeclaration(object):
             if not len(decl) == 1:
                 raise ValueError("dictionary 'decl' must have 1 item but " \
                                  "has %d" % len(decl))
-            first = decl.items()[0]
+            first = tuple(decl.items())[0]
             decl = { 'key' : first[0], 'default' : first[1] }
         elif SCons.Util.is_String(decl):
             decl = { 'key' : decl,  'default' : UNDEFINED }

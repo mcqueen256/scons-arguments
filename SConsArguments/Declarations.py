@@ -27,10 +27,10 @@ Provides `_ArgumentDeclarations` class and factory methods
 
 __docformat__ = "restructuredText"
 
-from .Util import ENV, VAR, OPT, ALL, MISSING, NOTFOUND
-from .Util import _build_resubst_dict, _build_iresubst_dict, _resubst
-from .Declaration import _ArgumentDeclaration, ArgumentDeclaration, DeclareArgument
-from .Arguments import _Arguments
+from SConsArguments.Util import ENV, VAR, OPT, ALL, MISSING, NOTFOUND
+from SConsArguments.Util import _build_resubst_dict, _build_iresubst_dict, _resubst
+from SConsArguments.Declaration import _ArgumentDeclaration, ArgumentDeclaration, DeclareArgument
+from SConsArguments.Arguments import _Arguments
 
 #############################################################################
 class _ArgumentDeclarations(dict):
@@ -111,7 +111,7 @@ class _ArgumentDeclarations(dict):
         declarations contained in main dictionary. This method is for internal
         use, it IS **NOT a part of public API**."""
         self.__reset_supp_dicts()
-        for x in self.iteritems(): self.__append_decl_to_supp_dicts(*x)
+        for x in self.items(): self.__append_decl_to_supp_dicts(*x)
 
     #========================================================================
     def __replace_key_in_supp_dicts(self, ns, key, ns_key):
@@ -401,14 +401,14 @@ class _ArgumentDeclarations(dict):
         """Invoke `_ArgumentDeclaration.add_to()` for each *argument* declared
         in this dictionary. This method is for internal use, it IS **NOT
         a part of public API**."""
-        for (k,v) in self.iteritems(): v.add_to(ns,*args)
+        for (k,v) in self.items(): v.add_to(ns,*args)
 
     #========================================================================
     def _safe_add_to(self, ns, *args):
         """Invoke `_ArgumentDeclaration.safe_add_to()` for each *argument*
         declared in this dictionary. This method is for internal use, it IS
         **NOT a part of public API**."""
-        for (k,v) in self.iteritems(): v.safe_add_to(ns, *args)
+        for (k,v) in self.items(): v.safe_add_to(ns, *args)
 
     #========================================================================
     def _build_resubst_dicts(self):
@@ -447,7 +447,7 @@ class _ArgumentDeclarations(dict):
         ``ns`` corresponding variables for all declared *arguments*. This
         method is for internal use, it IS **NOT a part of public API**.
         """
-        for (k,v) in self.iteritems():
+        for (k,v) in self.items():
             self._resubst_decl_defaults(v)
 
     #========================================================================

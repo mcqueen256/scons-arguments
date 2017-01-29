@@ -1,6 +1,6 @@
-""" SConsArguments.DeclarationTests
+""" `SConsArgumentsT.DeclarationTests`
 
-Unit tests for SConsArguments.Declaration
+Unit tests for `SConsArguments.Declaration`
 """
 
 __docformat__ = "restructuredText"

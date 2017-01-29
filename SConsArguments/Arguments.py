@@ -26,10 +26,10 @@ Provides the `_Arguments` class.
 
 __docformat__ = "restructuredText"
 
-from .Util import ENV, VAR, OPT, ALL, UNDEFINED
-from .Util import _compose_mappings, _invert_dict, _build_resubst_dict
-from .VariablesWrapper import _VariablesWrapper
-from .Proxy import _ArgumentsProxy
+from SConsArguments.Util import ENV, VAR, OPT, ALL, UNDEFINED
+from SConsArguments.Util import _compose_mappings, _invert_dict, _build_resubst_dict
+from SConsArguments.VariablesWrapper import _VariablesWrapper
+from SConsArguments.Proxy import _ArgumentsProxy
 
 #############################################################################
 class _Arguments(object):
@@ -524,7 +524,7 @@ class _Arguments(object):
             args = decls.Commit(env, var, False)
             args.Postprocess(env, var, False, os.environ, filename = '.scons.variables')
 
-            print "env['foo']: %r" % env['foo']
+            print("env['foo']: %r" % env['foo'])
 
         Sample session (the sequence order of the following commands is
         important)::
@@ -629,9 +629,9 @@ class _Arguments(object):
             args = decls.Commit(env)
             vars = args.Demangle(env)
 
-            print "env['foo']: %r" % env.get('foo', UNDEFINED)
-            print "env['env_foo']: %r" % env.get('env_foo', UNDEFINED)
-            print "vars['foo']: %r" % vars.get('foo', UNDEFINED)
+            print("env['foo']: %r" % env.get('foo', UNDEFINED))
+            print("env['env_foo']: %r" % env.get('env_foo', UNDEFINED))
+            print("vars['foo']: %r" % vars.get('foo', UNDEFINED))
 
         The result of running the above SCons script is::
 

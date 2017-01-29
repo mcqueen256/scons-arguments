@@ -21,6 +21,19 @@
 
 __docformat__ = "restructuredText"
 
+import unittest
+
+class TestCase(unittest.TestCase):
+    def assertAllPresent(self, collection, entries):
+        for ent in entries:
+            if ent not in collection:
+                raise AssertionError('%r is missing in collection %r' % (ent, collection))
+
+    def assertAllMissing(self, collection, entries):
+        for ent in entries:
+            if ent in collection:
+                raise AssertionError('%r is present in collection %r' % (ent, collection))
+
 
 # Local Variables:
 # # tab-width:4

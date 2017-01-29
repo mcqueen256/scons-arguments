@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2012-2015 by Pawel Tomulik
+# Copyright (c) 2012-2017 by Pawel Tomulik
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -57,16 +57,16 @@ args.Postprocess(env, var, True)
 AddOption( '--help-variables', dest='help_variables', action='store_true',
            help='print help for CLI variables' )
 if GetOption('help_variables'):
-    print args.GenerateVariablesHelpText(var, env)
+    print(args.GenerateVariablesHelpText(var, env))
     Exit(0)
 
 # Create proxy to access Arguments using their original names
 proxy = args.EnvProxy(env)
 
 # Print values.
-print proxy.subst('prefix: $prefix')
-print proxy.subst('exec_prefix: $exec_prefix')
-print proxy.subst('bindir: $bindir')
+print(proxy.subst('prefix: $prefix'))
+print(proxy.subst('exec_prefix: $exec_prefix'))
+print(proxy.subst('bindir: $bindir'))
 """)
 
 test.run(arguments = ['-Q'])

@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2012-2015 by Pawel Tomulik
+# Copyright (c) 2012-2017 by Pawel Tomulik
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -44,11 +44,11 @@ list.append( SConsArguments.ArgumentDeclaration(env_decl = {'env_x' : 'env x def
 
 i = 0
 for v in list:
-    print "ARG[%d].has_decl(ENV): %r"    % (i, v.has_decl(SConsArguments.ENV))
-    print "ARG[%d].has_decl(VAR): %r"    % (i, v.has_decl(SConsArguments.VAR))
-    print "ARG[%d].has_decl(OPT): %r"    % (i, v.has_decl(SConsArguments.OPT))
-    print "ARG[%d].get_key(ENV): %r"     % (i, v.get_key(SConsArguments.ENV))
-    print "ARG[%d].get_default(ENV): %r" % (i, v.get_default(SConsArguments.ENV))
+    print("ARG[%d].has_decl(ENV): %r"    % (i, v.has_decl(SConsArguments.ENV)))
+    print("ARG[%d].has_decl(VAR): %r"    % (i, v.has_decl(SConsArguments.VAR)))
+    print("ARG[%d].has_decl(OPT): %r"    % (i, v.has_decl(SConsArguments.OPT)))
+    print("ARG[%d].get_key(ENV): %r"     % (i, v.get_key(SConsArguments.ENV)))
+    print("ARG[%d].get_default(ENV): %r" % (i, v.get_default(SConsArguments.ENV)))
     i += 1
 """)
 test.run()

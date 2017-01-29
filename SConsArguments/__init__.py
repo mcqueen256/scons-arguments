@@ -112,9 +112,9 @@ command-line option ``--foo``).
     args = decls.Commit(env, variables, True)
     args.UpdateEnvironment(env, variables, True)
 
-    print "env['ENV_FOO']: %r" %  env['ENV_FOO']
-    print "env['ENV_BAR']: %r" %  env['ENV_BAR']
-    print "env['ENV_GEEZ']: %r" %  env['ENV_GEEZ']
+    print("env['ENV_FOO']: %r" %  env['ENV_FOO'])
+    print("env['ENV_BAR']: %r" %  env['ENV_BAR'])
+    print("env['ENV_GEEZ']: %r" %  env['ENV_GEEZ'])
 
 Running scons several times for this example, different results may be obtained
 depending on command-line variables and options provided. Let's do some
@@ -196,16 +196,16 @@ be a good starting point for developers and advanced users.
 
 __docformat__ = "restructuredText"
 
-from .Declaration import _ArgumentDeclaration, ArgumentDeclaration, DeclareArgument
-from .Declarations import _ArgumentDeclarations, ArgumentDeclarations, DeclareArguments
-from .Arguments import _Arguments
-from .Proxy import  _ArgumentsProxy
-from .NameConv import _ArgumentNameConv
-from .Util import ENV, VAR, OPT, ALL
-from .Util import _missing, MISSING, _undef, UNDEFINED, _notfound, NOTFOUND
-from .Util import _resubst, _build_resubst_dict, _build_iresubst_dict, _compose_mappings, _invert_dict
-from .VariablesWrapper import _VariablesWrapper
-from .Importer import ImportArguments
+from SConsArguments.Declaration import _ArgumentDeclaration, ArgumentDeclaration, DeclareArgument
+from SConsArguments.Declarations import _ArgumentDeclarations, ArgumentDeclarations, DeclareArguments
+from SConsArguments.Arguments import _Arguments
+from SConsArguments.Proxy import  _ArgumentsProxy
+from SConsArguments.NameConv import _ArgumentNameConv
+from SConsArguments.Util import ENV, VAR, OPT, ALL
+from SConsArguments.Util import _missing, MISSING, _undef, UNDEFINED, _notfound, NOTFOUND
+from SConsArguments.Util import _resubst, _build_resubst_dict, _build_iresubst_dict, _compose_mappings, _invert_dict
+from SConsArguments.VariablesWrapper import _VariablesWrapper
+from SConsArguments.Importer import ImportArguments
 
 # Local Variables:
 # # tab-width:4

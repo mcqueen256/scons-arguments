@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2012-2015 by Pawel Tomulik
+# Copyright (c) 2012-2017 by Pawel Tomulik
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -44,15 +44,15 @@ list.append( SConsArguments.DeclareArguments({'x' : x, 'y' : y}) )
 i = 0
 for v in list:
     for c in ['x', 'y']:
-        print "ARGS[%d][%r].has_decl(ENV): %r" % (i, c, v[c].has_decl(SConsArguments.ENV))
-        print "ARGS[%d][%r].has_decl(VAR): %r" % (i, c, v[c].has_decl(SConsArguments.VAR))
-        print "ARGS[%d][%r].has_decl(OPT): %r" % (i, c, v[c].has_decl(SConsArguments.OPT))
-        print "ARGS[%d][%r].get_key(ENV): %r" % (i, c, v[c].get_key(SConsArguments.ENV))
-        print "ARGS[%d][%r].get_key(VAR): %r" % (i, c, v[c].get_key(SConsArguments.VAR))
-        print "ARGS[%d][%r].get_key(OPT): %r" % (i, c, v[c].get_key(SConsArguments.OPT))
-        print "ARGS[%d][%r].get_default(ENV): %r" % (i, c, v[c].get_default(SConsArguments.ENV))
-        print "ARGS[%d][%r].get_default(VAR): %r" % (i, c, v[c].get_default(SConsArguments.VAR))
-        print "ARGS[%d][%r].get_default(OPT): %r" % (i, c, v[c].get_default(SConsArguments.OPT))
+        print("ARGS[%d][%r].has_decl(ENV): %r" % (i, c, v[c].has_decl(SConsArguments.ENV)))
+        print("ARGS[%d][%r].has_decl(VAR): %r" % (i, c, v[c].has_decl(SConsArguments.VAR)))
+        print("ARGS[%d][%r].has_decl(OPT): %r" % (i, c, v[c].has_decl(SConsArguments.OPT)))
+        print("ARGS[%d][%r].get_key(ENV): %r" % (i, c, v[c].get_key(SConsArguments.ENV)))
+        print("ARGS[%d][%r].get_key(VAR): %r" % (i, c, v[c].get_key(SConsArguments.VAR)))
+        print("ARGS[%d][%r].get_key(OPT): %r" % (i, c, v[c].get_key(SConsArguments.OPT)))
+        print("ARGS[%d][%r].get_default(ENV): %r" % (i, c, v[c].get_default(SConsArguments.ENV)))
+        print("ARGS[%d][%r].get_default(VAR): %r" % (i, c, v[c].get_default(SConsArguments.VAR)))
+        print("ARGS[%d][%r].get_default(OPT): %r" % (i, c, v[c].get_default(SConsArguments.OPT)))
     i += 1
 """)
 test.run()

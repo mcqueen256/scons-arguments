@@ -1,6 +1,6 @@
-""" SConsArguments.VariablesWrapperTests
+""" `SConsArguments.VariablesWrapperTests`
 
-Unit tests for SConsArguments.VariablesWrapper
+Unit tests for `SConsArguments.VariablesWrapper`
 """
 
 __docformat__ = "restructuredText"

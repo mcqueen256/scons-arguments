@@ -28,7 +28,7 @@ __docformat__ = "restructuredText"
 
 import SCons.Util
 import string
-from . import Util
+from SConsArguments import Util
 
 #############################################################################
 class _ArgumentsProxy(object):
@@ -49,8 +49,8 @@ class _ArgumentsProxy(object):
                                      { 'ENV_FOO' : 'foo'         }, # inverse rename
                                      { 'ENV_FOO' : '${foo}'      }) # inverse resubst
         proxy['foo'] = "FOO"
-        print "proxy['foo'] is %r" % proxy['foo']
-        print "env['ENV_FOO'] is %r" % env['ENV_FOO']
+        print("proxy['foo'] is %r" % proxy['foo'])
+        print("env['ENV_FOO'] is %r" % env['ENV_FOO'])
         <Ctl+D>
         proxy['foo'] is 'FOO'
         env['ENV_FOO'] is 'FOO'

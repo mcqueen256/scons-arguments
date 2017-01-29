@@ -44,7 +44,7 @@ if 'unit-test' in COMMAND_LINE_TARGETS:
     else:
         discoverflags = "-p '*Tests.py'"
     if GetOption('with_coverage'):
-        cmd = (env.WhereIs(['python-coverage', 'coverage']) or 'coverage') + ' run --source=SConsArguments'
+        cmd = (env.WhereIs('python-coverage') or env.WhereIs('coverage') or 'coverage') + ' run --source=SConsArguments'
     else:
         cmd = python
     testcom = '%(cmd)s -m unittest discover %(unittestflags)s %(discoverflags)s' % locals()

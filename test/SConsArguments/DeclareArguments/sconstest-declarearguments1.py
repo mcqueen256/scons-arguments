@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2012-2015 by Pawel Tomulik
+# Copyright (c) 2012-2017 by Pawel Tomulik
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -41,7 +41,7 @@ list.append( SConsArguments.DeclareArguments() )
 list.append( SConsArguments.DeclareArguments({}) )
 i = 0
 for v in list:
-    print "len(ARGS[%d]): %r" % (i, len(v))
+    print("len(ARGS[%d]): %r" % (i, len(v)))
     i += 1
 """)
 test.run()

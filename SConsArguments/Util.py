@@ -28,6 +28,7 @@ __docformat__ = "restructuredText"
 
 import SCons.Util
 import string
+import shlex
 
 #############################################################################
 ENV = 0
@@ -149,7 +150,7 @@ def _build_resubst_dict(rename_dict):
         result.
     """
     return dict(map(lambda x: (x[0], '${' + x[1] + '}'),
-                    filter(lambda x : x[0] != x[1], rename_dict.iteritems())))
+                    filter(lambda x : x[0] != x[1], rename_dict.items())))
 
 #############################################################################
 def _build_iresubst_dict(rename_dict):
@@ -176,7 +177,7 @@ def _build_iresubst_dict(rename_dict):
         ``"zzz":"zzz"`` do not enter the result;
     """
     return dict(map(lambda x: (x[1], '${' + x[0] + '}'),
-                    filter(lambda x : x[0] != x[1], rename_dict.iteritems())))
+                    filter(lambda x : x[0] != x[1], rename_dict.items())))
 
 #############################################################################
 def _compose_mappings(dict1, dict2):
@@ -200,11 +201,45 @@ def _compose_mappings(dict1, dict2):
         and ``v2 = dict2[v1]`` the corresponding item in returned dictionary is
         ``(k1,v2)``
     """
-    return dict(map(lambda x : (x[0], dict2[x[1]]), dict1.iteritems()))
+    return dict(map(lambda x : (x[0], dict2[x[1]]), dict1.items()))
 
 #############################################################################
 def _invert_dict(_dict):
-    return dict(map(lambda x : (x[1],x[0]), _dict.iteritems()))
+    return dict(map(lambda x : (x[1],x[0]), _dict.items()))
+
+#############################################################################
+def flags2list(arg):
+    splitter = shlex.shlex(arg, posix=True)
+    splitter.whitespace_split = True
+    return SCons.Util.CLVar(list(splitter))
+
+#############################################################################
+# FIXME: customizable path separator? what about Windows?
+def paths2list(arg):
+    splitter = shlex.shlex(arg, posix=True)
+    splitter.whitespace = [':']
+    splitter.whitespace_split = True
+    return SCons.Util.CLVar(list(splitter))
+
+#############################################################################
+def cdefs2list(arg):
+    splitter = shlex.shlex(arg,posix=True)
+    splitter.whitespace_split = True
+    return SCons.Util.CLVar(list(splitter))
+
+#############################################################################
+def yesno2bool(arg):
+    positives = ('y','yes','true','on','enable','enabled')
+    negatives = ('n','no','false','off','disable','disabled') 
+    if arg.lower() in positives:
+        return True
+    elif arg.lower() in negatives:
+        return False
+    try:
+        return bool(int(arg))
+    except ValueError:
+        pass
+    return None
 
 # Local Variables:
 # # tab-width:4
