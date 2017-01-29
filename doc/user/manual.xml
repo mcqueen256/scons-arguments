@@ -1403,7 +1403,7 @@ PREFIX = &apos;/opt&apos;
 		The rule is, that we simply replace 
 		<code xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">&quot;site_tools&quot;</code> 
 		in the last component of directory name with 
-		<code xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">&quot;simple_arguments&quot;</code>. 
+		<code xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">&quot;site_arguments&quot;</code>. 
 		The argument modules may also be placed in the 
 		<package xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">SConsArguments</package> 
 		package.</para>
