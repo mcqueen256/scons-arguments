@@ -1423,7 +1423,7 @@ PREFIX = &apos;/opt&apos;
 			<code xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">bar</code> 
 			are argument names, and these keys are followed by argument 
 			declarations. Each declaration should have a form of dict with same 
-			keys as arguments to DeclareArguments 
+			keys as the parameters of DeclareArgument 
 			(<xref linkend="sec-declaring-single-arg"/>). Such a file should be 
 			placed somewhere within search path for argument modules, for 
 			example under <filename>site_scons/site_arguments</filename>. A 
