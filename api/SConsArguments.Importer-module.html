@@ -112,6 +112,23 @@ example).</p>
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
+          <td><span class="summary-sig"><a name="_load_module_file"></a><span class="summary-sig-name">_load_module_file</span>(<span class="summary-sig-arg">name</span>,
+        <span class="summary-sig-arg">path</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="SConsArguments.Importer-pysrc.html#_load_module_file">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
           <td><span class="summary-sig"><a name="_initDefaultArgpath"></a><span class="summary-sig-name">_initDefaultArgpath</span>()</span></td>
           <td align="right" valign="top">
             <span class="codelink"><a href="SConsArguments.Importer-pysrc.html#_initDefaultArgpath">source&nbsp;code</a></span>
@@ -219,11 +236,30 @@ declarations.</td>
         <tr>
           <td><span class="summary-sig"><a href="SConsArguments.Importer-module.html#ImportArguments" class="summary-sig-name">ImportArguments</a>(<span class="summary-sig-arg">modules</span>,
         <span class="summary-sig-arg">argpath</span>=<span class="summary-sig-default">None</span>,
-        <span class="summary-sig-arg">kwpass</span>=<span class="summary-sig-default">None</span>,
         <span class="summary-sig-arg">**kw</span>)</span><br />
       Import argument declarations from modules</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="SConsArguments.Importer-pysrc.html#ImportArguments">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="SConsArguments.Importer-module.html#export_arguments" class="summary-sig-name">export_arguments</a>(<span class="summary-sig-arg">modname</span>,
+        <span class="summary-sig-arg">args</span>,
+        <span class="summary-sig-arg">groups</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">**kw</span>)</span><br />
+      Helper function for arguments' module developers</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="SConsArguments.Importer-pysrc.html#export_arguments">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -249,6 +285,13 @@ declarations.</td>
     </table>
   </td>
 </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_pyver"></a><span class="summary-name">_pyver</span> = <code title="(2, 7)"><code class="variable-group">(</code>2<code class="variable-op">, </code>7<code class="variable-group">)</code></code>
+    </td>
+  </tr>
 <tr class="private">
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
@@ -318,7 +361,6 @@ return a list containing corresponding entry
   <tr valign="top"><td>
   <h3 class="epydoc"><span class="sig"><span class="sig-name">ImportArguments</span>(<span class="sig-arg">modules</span>,
         <span class="sig-arg">argpath</span>=<span class="sig-default">None</span>,
-        <span class="sig-arg">kwpass</span>=<span class="sig-default">None</span>,
         <span class="sig-arg">**kw</span>)</span>
   </h3>
   </td><td align="right" valign="top"
@@ -326,15 +368,16 @@ return a list containing corresponding entry
     </td>
   </tr></table>
   
-  Import argument declarations from modules
+  <p>Import argument declarations from modules</p>
+<p>Note, that all the keyword arguments get passed to module's
+<tt class="rst-docutils literal"><span class="pre">argument(**kw)</span></tt> functions as <tt class="rst-docutils literal">**kw</tt>. Not all meaningful keyword
+arguments are listed here.</p>
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
         <li><strong class="pname"><code>modules</code></strong> (str|list) - Modules to be imported (names).</li>
         <li><strong class="pname"><code>argpath</code></strong> (list) - A list of directories to be searched for arguments' modules prior
 to default ones (returned by <a href="SConsArguments.Importer-module.html#GetDefaultArgpath" class="link">GetDefaultArgpath()</a>).</li>
-        <li><strong class="pname"><code>kwpass</code></strong> (dict) - A dict passed as keyword arguments to the <tt class="rst-docutils literal"><span class="pre">arguments(**kw)</span></tt>
-function of every imported module.</li>
         <li><strong class="pname"><code>preprocessor</code></strong> (callable) - A callable object used to preprocess every argument declaration
 when it's loaded from a module. This allows to customize arguments
 provided by third parties. It's used internally as follows:
@@ -395,6 +438,49 @@ containing the imported argument declarations.</dd>
   </dl>
 </td></tr></table>
 </div>
+<a name="export_arguments"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">export_arguments</span>(<span class="sig-arg">modname</span>,
+        <span class="sig-arg">args</span>,
+        <span class="sig-arg">groups</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">**kw</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="SConsArguments.Importer-pysrc.html#export_arguments">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  Helper function for arguments' module developers
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>modname</code></strong> (str) - name of the module calling this function</li>
+        <li><strong class="pname"><code>args</code></strong> (dict) - a dictionary with all argument definitions that may be potentially
+exported by the calling module.</li>
+        <li><strong class="pname"><code>groups</code></strong> (dict) - argument groups (group names); the dictionary shall have group
+names as keys followed by lists of argument names belonging to
+these groups</li>
+        <li><strong class="pname"><code>include_group</code></strong> (str | list) - only include arguments assigned to the listed groups</li>
+        <li><strong class="pname"><code>${modname}_include_group</code></strong> (str | list) - only include arguments assigned to the listed groups</li>
+        <li><strong class="pname"><code>exclude_group</code></strong> (str | list) - exclude arguments assigned to the listed groups</li>
+        <li><strong class="pname"><code>${modname}_exclude_group</code></strong> (str | list) - exclude arguments assigned to the listed groups</li>
+        <li><strong class="pname"><code>exclude_${group}</code></strong> (boolean) - whether to exclude arguments belonging to a given ${group}; for
+example, if there is a group named <tt class="rst-docutils literal">'progs'</tt> in <strong>groups</strong>,
+then arguments belonging to <tt class="rst-docutils literal">'progs'</tt> may be excluded with
+<tt class="rst-docutils literal">exclude_progs = True</tt>,</li>
+        <li><strong class="pname"><code>${modname}_exclude_${group}</code></strong> (boolean) - works same way same as <strong>exclude_${group}</strong>, provided the
+<tt class="rst-docutils literal">${modname}</tt> prefix is same as the value of <strong>modname</strong> argument
+(so, if <tt class="rst-docutils literal">modname = 'foo'</tt>, then <tt class="rst-docutils literal">foo_exclude_progs</tt> will
+exclude all arguments belonging to a group named <tt class="rst-docutils literal">progs</tt>)</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
 <br />
 <!-- ==================== NAVIGATION BAR ==================== -->
 <table class="navbar" border="0" width="100%" cellpadding="0"
@@ -423,7 +509,7 @@ containing the imported argument declarations.</dd>
   <tr>
     <td align="left" class="footer">
     Generated by Epydoc 3.0.1
-    on Sun Jan 29 16:46:12 2017
+    on Wed Feb  1 22:53:04 2017
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

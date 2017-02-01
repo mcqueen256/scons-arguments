@@ -156,9 +156,9 @@ variables = Variables()
 args = decls.Commit(env, variables, True)
 args.UpdateEnvironment(env, variables, True)
 
-<span class="py-keyword">print</span> <span class="py-string">&quot;env['ENV_FOO']: %r&quot;</span> %  env[<span class="py-string">'ENV_FOO'</span>]
-<span class="py-keyword">print</span> <span class="py-string">&quot;env['ENV_BAR']: %r&quot;</span> %  env[<span class="py-string">'ENV_BAR'</span>]
-<span class="py-keyword">print</span> <span class="py-string">&quot;env['ENV_GEEZ']: %r&quot;</span> %  env[<span class="py-string">'ENV_GEEZ'</span>]</pre>
+<span class="py-keyword">print</span>(<span class="py-string">&quot;env['ENV_FOO']: %r&quot;</span> %  env[<span class="py-string">'ENV_FOO'</span>])
+<span class="py-keyword">print</span>(<span class="py-string">&quot;env['ENV_BAR']: %r&quot;</span> %  env[<span class="py-string">'ENV_BAR'</span>])
+<span class="py-keyword">print</span>(<span class="py-string">&quot;env['ENV_GEEZ']: %r&quot;</span> %  env[<span class="py-string">'ENV_GEEZ'</span>])</pre>
 <p>Running scons several times for this example, different results may be obtained
 depending on command-line variables and options provided. Let's do some
 experiments, first show the help message to see available command-line options:</p>
@@ -240,6 +240,43 @@ be a good starting point for developers and advanced users.</p>
     <li> <strong class="uidlink"><a href="SConsArguments.Proxy-module.html">SConsArguments.Proxy</a></strong>: <em class="summary"><a href="SConsArguments.Proxy-module.html" class="link">SConsArguments.Proxy</a></em>    </li>
     <li> <strong class="uidlink"><a href="SConsArguments.Util-module.html">SConsArguments.Util</a></strong>: <em class="summary"><a href="SConsArguments.Util-module.html" class="link">SConsArguments.Util</a></em>    </li>
     <li> <strong class="uidlink"><a href="SConsArguments.VariablesWrapper-module.html">SConsArguments.VariablesWrapper</a></strong>: <em class="summary"><a href="SConsArguments.VariablesWrapper-module.html" class="link">SConsArguments.VariablesWrapper</a></em>    </li>
+    <li> <strong class="uidlink"><a href="SConsArguments.ar-module.html">SConsArguments.ar</a></strong>: <em class="summary"><a href="SConsArguments.ar-module.html" class="link">SConsArguments.ar</a></em>    </li>
+    <li> <strong class="uidlink"><a href="SConsArguments.as-module.html">SConsArguments.as</a></strong>: <em class="summary"><a href="SConsArguments.as-module.html" class="link">SConsArguments.as</a></em>    </li>
+    <li> <strong class="uidlink"><a href="SConsArguments.bitkeeper-module.html">SConsArguments.bitkeeper</a></strong>: <em class="summary"><a href="SConsArguments.bitkeeper-module.html" class="link">SConsArguments.bitkeeper</a></em>    </li>
+    <li> <strong class="uidlink"><a href="SConsArguments.cc-module.html">SConsArguments.cc</a></strong>: <em class="summary"><a href="SConsArguments.cc-module.html" class="link">SConsArguments.cc</a></em>    </li>
+    <li> <strong class="uidlink"><a href="SConsArguments.cvs-module.html">SConsArguments.cvs</a></strong>: <em class="summary"><a href="SConsArguments.cvs-module.html" class="link">SConsArguments.cvs</a></em>    </li>
+    <li> <strong class="uidlink"><a href="SConsArguments.dc-module.html">SConsArguments.dc</a></strong>: <em class="summary"><a href="SConsArguments.dc-module.html" class="link">SConsArguments.dc</a></em>    </li>
+    <li> <strong class="uidlink"><a href="SConsArguments.dlink-module.html">SConsArguments.dlink</a></strong>: <em class="summary"><a href="SConsArguments.dlink-module.html" class="link">SConsArguments.dlink</a></em>    </li>
+    <li> <strong class="uidlink"><a href="SConsArguments.docbook-module.html">SConsArguments.docbook</a></strong>: <em class="summary"><a href="SConsArguments.docbook-module.html" class="link">SConsArguments.docbook</a></em>    </li>
+    <li> <strong class="uidlink"><a href="SConsArguments.dvipdf-module.html">SConsArguments.dvipdf</a></strong>: <em class="summary"><a href="SConsArguments.dvipdf-module.html" class="link">SConsArguments.dvipdf</a></em>    </li>
+    <li> <strong class="uidlink"><a href="SConsArguments.dvips-module.html">SConsArguments.dvips</a></strong>: <em class="summary"><a href="SConsArguments.dvips-module.html" class="link">SConsArguments.dvips</a></em>    </li>
+    <li> <strong class="uidlink"><a href="SConsArguments.f03-module.html">SConsArguments.f03</a></strong>: <em class="summary"><a href="SConsArguments.f03-module.html" class="link">SConsArguments.f03</a></em>    </li>
+    <li> <strong class="uidlink"><a href="SConsArguments.f08-module.html">SConsArguments.f08</a></strong>: <em class="summary"><a href="SConsArguments.f08-module.html" class="link">SConsArguments.f08</a></em>    </li>
+    <li> <strong class="uidlink"><a href="SConsArguments.f77-module.html">SConsArguments.f77</a></strong>: <em class="summary"><a href="SConsArguments.f77-module.html" class="link">SConsArguments.f77</a></em>    </li>
+    <li> <strong class="uidlink"><a href="SConsArguments.f90-module.html">SConsArguments.f90</a></strong>: <em class="summary"><a href="SConsArguments.f90-module.html" class="link">SConsArguments.f90</a></em>    </li>
+    <li> <strong class="uidlink"><a href="SConsArguments.f95-module.html">SConsArguments.f95</a></strong>: <em class="summary"><a href="SConsArguments.f95-module.html" class="link">SConsArguments.f95</a></em>    </li>
+    <li> <strong class="uidlink"><a href="SConsArguments.fortran-module.html">SConsArguments.fortran</a></strong>: <em class="summary"><a href="SConsArguments.fortran-module.html" class="link">SConsArguments.fortran</a></em>    </li>
+    <li> <strong class="uidlink"><a href="SConsArguments.gettext-module.html">SConsArguments.gettext</a></strong>: <em class="summary"><a href="SConsArguments.gettext-module.html" class="link">SConsArguments.gettext</a></em>    </li>
+    <li> <strong class="uidlink"><a href="SConsArguments.gnulink-module.html">SConsArguments.gnulink</a></strong>: <em class="summary"><a href="SConsArguments.gnulink-module.html" class="link">SConsArguments.gnulink</a></em>    </li>
+    <li> <strong class="uidlink"><a href="SConsArguments.gs-module.html">SConsArguments.gs</a></strong>: <em class="summary"><a href="SConsArguments.gs-module.html" class="link">SConsArguments.gs</a></em>    </li>
+    <li> <strong class="uidlink"><a href="SConsArguments.jar-module.html">SConsArguments.jar</a></strong>: <em class="summary"><a href="SConsArguments.jar-module.html" class="link">SConsArguments.jar</a></em>    </li>
+    <li> <strong class="uidlink"><a href="SConsArguments.javac-module.html">SConsArguments.javac</a></strong>: <em class="summary"><a href="SConsArguments.javac-module.html" class="link">SConsArguments.javac</a></em>    </li>
+    <li> <strong class="uidlink"><a href="SConsArguments.lex-module.html">SConsArguments.lex</a></strong>: <em class="summary"><a href="SConsArguments.lex-module.html" class="link">SConsArguments.lex</a></em>    </li>
+    <li> <strong class="uidlink"><a href="SConsArguments.link-module.html">SConsArguments.link</a></strong>: <em class="summary"><a href="SConsArguments.link-module.html" class="link">SConsArguments.link</a></em>    </li>
+    <li> <strong class="uidlink"><a href="SConsArguments.m4-module.html">SConsArguments.m4</a></strong>: <em class="summary"><a href="SConsArguments.m4-module.html" class="link">SConsArguments.m4</a></em>    </li>
+    <li> <strong class="uidlink"><a href="SConsArguments.midl-module.html">SConsArguments.midl</a></strong>: <em class="summary"><a href="SConsArguments.midl-module.html" class="link">SConsArguments.midl</a></em>    </li>
+    <li> <strong class="uidlink"><a href="SConsArguments.mslink-module.html">SConsArguments.mslink</a></strong>: <em class="summary"><a href="SConsArguments.mslink-module.html" class="link">SConsArguments.mslink</a></em>    </li>
+    <li> <strong class="uidlink"><a href="SConsArguments.mssdk-module.html">SConsArguments.mssdk</a></strong>: <em class="summary"><a href="SConsArguments.mssdk-module.html" class="link">SConsArguments.mssdk</a></em>    </li>
+    <li> <strong class="uidlink"><a href="SConsArguments.perforce-module.html">SConsArguments.perforce</a></strong>: <em class="summary"><a href="SConsArguments.perforce-module.html" class="link">SConsArguments.perforce</a></em>    </li>
+    <li> <strong class="uidlink"><a href="SConsArguments.rcs-module.html">SConsArguments.rcs</a></strong>: <em class="summary"><a href="SConsArguments.rcs-module.html" class="link">SConsArguments.rcs</a></em>    </li>
+    <li> <strong class="uidlink"><a href="SConsArguments.rmic-module.html">SConsArguments.rmic</a></strong>: <em class="summary"><a href="SConsArguments.rmic-module.html" class="link">SConsArguments.rmic</a></em>    </li>
+    <li> <strong class="uidlink"><a href="SConsArguments.rpcgen-module.html">SConsArguments.rpcgen</a></strong>: <em class="summary"><a href="SConsArguments.rpcgen-module.html" class="link">SConsArguments.rpcgen</a></em>    </li>
+    <li> <strong class="uidlink"><a href="SConsArguments.sccs-module.html">SConsArguments.sccs</a></strong>: <em class="summary"><a href="SConsArguments.sccs-module.html" class="link">SConsArguments.sccs</a></em>    </li>
+    <li> <strong class="uidlink"><a href="SConsArguments.swig-module.html">SConsArguments.swig</a></strong>: <em class="summary"><a href="SConsArguments.swig-module.html" class="link">SConsArguments.swig</a></em>    </li>
+    <li> <strong class="uidlink"><a href="SConsArguments.tar-module.html">SConsArguments.tar</a></strong>: <em class="summary"><a href="SConsArguments.tar-module.html" class="link">SConsArguments.tar</a></em>    </li>
+    <li> <strong class="uidlink"><a href="SConsArguments.tex-module.html">SConsArguments.tex</a></strong>: <em class="summary"><a href="SConsArguments.tex-module.html" class="link">SConsArguments.tex</a></em>    </li>
+    <li> <strong class="uidlink"><a href="SConsArguments.yacc-module.html">SConsArguments.yacc</a></strong>: <em class="summary"><a href="SConsArguments.yacc-module.html" class="link">SConsArguments.yacc</a></em>    </li>
+    <li> <strong class="uidlink"><a href="SConsArguments.zip-module.html">SConsArguments.zip</a></strong>: <em class="summary"><a href="SConsArguments.zip-module.html" class="link">SConsArguments.zip</a></em>    </li>
   </ul></td></tr>
 </table>
 
@@ -296,7 +333,7 @@ be a good starting point for developers and advanced users.</p>
   <tr>
     <td align="left" class="footer">
     Generated by Epydoc 3.0.1
-    on Sun Jan 29 16:46:12 2017
+    on Wed Feb  1 22:53:04 2017
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

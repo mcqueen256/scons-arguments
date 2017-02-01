@@ -652,8 +652,8 @@ bar = { 'env_key': 'ENV_BAR', 'var_key' : 'var_bar', 'opt_key' : 'opt_bar',
 env = Environment()
 env['foo'] = "foo married $bar"
 env['bar'] = "BAR"
-print env.subst("foo: $foo")
-print env.subst("bar: $bar")</pre><p>
+print(env.subst("foo: $foo"))
+print(env.subst("bar: $bar"))</pre><p>
 				then you should expect at output
 				</p><pre class="screen">ptomulik@tea:$ scons -Q
 foo: foo married BAR
@@ -911,7 +911,7 @@ args.Postprocess(env, var)
 # create proxy object
 proxy = args.EnvProxy(env)
 # access variable via proxy
-print "foo: %s" % proxy['foo']
+print("foo: %s" % proxy['foo'])
 </pre><p>
 				The above script may be tested as follows
 				</p><pre class="screen"><code class="prompt">ptomulik@tea:$</code><span class="command"><strong>scons</strong></span><code class="option">-Q</code> foo="it's a foo"
@@ -920,9 +920,9 @@ scons: `.' is up to date.</pre><p>
 			</p></div></div><br class="example-break"></br><p>
 			The proxy object provides dict-like access to Arguments as well as 
 			substitutions. In the above example, you may freely replace the line
-			</p><pre class="programlisting">print "foo: %s" % proxy['foo']</pre><p>
+			</p><pre class="programlisting">print("foo: %s" % proxy['foo'])</pre><p>
 			with
-			</p><pre class="programlisting">print proxy.subst("foo: $foo")</pre><p>
+			</p><pre class="programlisting">print(proxy.subst("foo: $foo"))</pre><p>
 		</p><p>Note, 
 		that the proxy object does not wrap all the functionality of the 
 		environment, so most functions are not available. It just wraps dict 
@@ -989,16 +989,16 @@ args.Postprocess(env, var, True)
 AddOption( '--help-variables', dest='help_variables', action='store_true',
          help='print help for CLI variables' )
 if GetOption('help_variables'):
-  print args.GenerateVariablesHelpText(var, env)
+  print(args.GenerateVariablesHelpText(var, env))
   Exit(0)
 
 # Create proxy to access Arguments using their original names
 proxy = args.EnvProxy(env)
 
 # Print values.
-print proxy.subst('prefix: $prefix')
-print proxy.subst('exec_prefix: $exec_prefix')
-print proxy.subst('bindir: $bindir')
+print(proxy.subst('prefix: $prefix'))
+print(proxy.subst('exec_prefix: $exec_prefix'))
+print(proxy.subst('bindir: $bindir'))
 </pre></div></div><br class="example-break"></br><p>Let's 
 		play a while with the 
 		<a class="xref" href="#example-args-complete" title="Example 12. Complete example involving Arguments">Example 12, “Complete 
@@ -1062,7 +1062,7 @@ Local Options:
 				command line variables</div><div class="example-contents"><pre class="programlisting">AddOption( '--help-variables', dest='help_variables', action='store_true',
          help='print help for CLI variables' )
 if GetOption('help_variables'):
-  print args.GenerateVariablesHelpText(var, env)
+  print(args.GenerateVariablesHelpText(var, env))
   Exit(0)</pre></div></div><br class="example-break"></br><p>If 
 			we integrate this snippet into SConscript from 
 			<a class="xref" href="#example-args-complete" title="Example 12. Complete example involving Arguments">Example 12, “Complete 
