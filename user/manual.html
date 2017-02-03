@@ -13,8 +13,9 @@
 			Command Line variables</a></span></li><li><span class="section"><a href="#idm683">7.2. Saving 
 			command line variables to a file</a></span></li><li><span class="section"><a href="#idm706">7.3. Loading 
 			command line variables from file</a></span></li></ul></li><li><span class="section"><a href="#idm712">8. Importing 
-		argument declarations from python modules</a></span><ul><li><span class="section"><a href="#idm720">8.1. Preparing 
-			module with argument declarations</a></span></li><li><span class="section"><a href="#idm733">8.2. Importing argument declarations from a module</a></span></li></ul></li></ul></div><section class="section" id="sec-intro"><div class="titlepage"><div><div><h2 class="title" style="clear: both">1. Introduction</h2></div></div></div><p>The 
+		argument declarations from python modules</a></span><ul><li><span class="section"><a href="#idm719">8.1. Preparing 
+			module with argument declarations</a></span></li><li><span class="section"><a href="#idm733">8.2. Importing 
+			argument declarations from a module</a></span></li></ul></li></ul></div><section class="section" id="sec-intro"><div class="titlepage"><div><div><h2 class="title" style="clear: both">1. Introduction</h2></div></div></div><p>The 
 		<span class="package">scons-arguments</span> 
 		package is an extension to 
 		<span class="productname"><a class="link" href="http://scons.org" target="_top">SCons</a></span> 
@@ -1124,21 +1125,20 @@ PREFIX = '/opt'
 			parameter when creating command line variables</p><pre class="programlisting">var = Variables('.scons.variables')
 </pre></section></section><section class="section" id="idm712"><div class="titlepage"><div><div><h2 class="title" style="clear: both">8. Importing 
 		argument declarations from python modules</h2></div></div></div><p>Argument 
-		declarations may be delivered by python modules in a similar way as 
-		SCons tools are. A python module placed in an appropriate directory 
-		may be used for this purpose. The default search path for arguments 
-		modules is derived from default tool search path. If, for example, 
-		default tool search path contains 
-		<code class="filename">~/.scons/site_scons/site_tools</code>, 
-		then the corresponding directory for argument modules will be 
-		<code class="filename">~/.scons/site_scons/site_arguments</code>. 
-		The rule is, that we simply replace 
+		declarations may be delivered by "special" python modules 
+		in a similar way as SCons tools are. A python module placed in an 
+		appropriate directory may be used for this purpose. The default 
+		search path for these modules is constructed in a very similar way to 
+		that for tool modules. The main difference is, that we use 
+		<code class="code">"site_arguments"</code> 
+		instead of 
 		<code class="code">"site_tools"</code> 
-		in the last component of directory name with 
-		<code class="code">"site_arguments"</code>. 
-		The argument modules may also be placed in the 
+		in the last component of default search path. Some argument modules 
+		may also be found in the 
 		<span class="package">SConsArguments</span> 
-		package.</p><section class="section" id="idm720"><div class="titlepage"><div><div><h3 class="title">8.1. Preparing 
+		package. They are delivered with the 
+		<span class="package">scons-arguments</span> package and correspond to existing 
+		standard SCons tools.</p><section class="section" id="idm719"><div class="titlepage"><div><div><h3 class="title">8.1. Preparing 
 			module with argument declarations</h3></div></div></div><p>An 
 			argument module should provide a function named 
 			<code class="function">arguments</code> 
@@ -1150,49 +1150,51 @@ PREFIX = '/opt'
 			<code class="code">bar</code> 
 			are argument names, and these keys are followed by argument 
 			declarations. Each declaration should have a form of dict with same 
-			keys as the parameters of DeclareArgument 
+			keys as the parameters of <code class="function">DeclareArgument</code> 
 			(<a class="xref" href="#sec-declaring-single-arg" title="3.1. Declaring single Argument">Section 3.1, “Declaring 
-			single Argument”</a>). Such a file should be 
-			placed somewhere within search path for argument modules, for 
-			example under <code class="filename">site_scons/site_arguments</code>. A 
-			simple module with two argument declarations is given in the 
-			following example</p><div class="example" id="idm730"><div class="example-title">Example 15. A simple module with arguments</div><div class="example-contents"><pre class="programlisting"># site_scons/site_arguments/myargs.py
+			single Argument”</a>). 
+			Such a file should be placed somewhere within search path for 
+			argument modules, for example under 
+			<code class="filename">site_scons/site_arguments</code>. 
+			A simple module with two argument declarations is given in the 
+			following example</p><div class="example" id="idm730"><div class="example-title">Example 15. A 
+				simple module with arguments</div><div class="example-contents"><pre class="programlisting"># site_scons/site_arguments/myargs.py
 def arguments(**kw):
     return {
       'arg1' : { 'help' : 'This is argument 1' },
       'arg2' : { 'help' : 'This is argument 2' }
-    }</pre></div></div><br class="example-break"></br></section><section class="section" id="idm733"><div class="titlepage"><div><div><h3 class="title">8.2. Importing argument declarations from a module</h3></div></div></div><p>Argument declarations can be imported from a module with the 
-			<code class="function">ImportArguments</code> function.</p><pre class="programlisting">import SConsArguments
-decl = SConsArguments.ImportArguments('myargs')</pre><p>Having these declarations, we proceed as described in the 
-			previous sections (committing, postprocessing, etc.).</p><p>The prototype of <code class="function">ImportArguments</code> is the 
-			following</p><pre class="programlisting">ImportArguments(modules, argpath=None, kwpass=None, **kw)</pre><p>The function accepts quite a lot of optional parameters (we 
-			refer an interested user to API reference). Here we only mention few 
-			of the most important.</p><div class="informaltable"><table><thead><tr>
+    }</pre></div></div><br class="example-break"></br></section><section class="section" id="idm733"><div class="titlepage"><div><div><h3 class="title">8.2. Importing 
+			argument declarations from a module</h3></div></div></div><p>Argument 
+			declarations can be imported from a module with the 
+			<code class="function">ImportArguments</code> 
+			function.</p><pre class="programlisting">import SConsArguments
+decl = SConsArguments.ImportArguments('myargs')</pre><p>Having 
+			these declarations, we proceed as described in the previous sections 
+			(committing, postprocessing, etc.).</p><p>The 
+			prototype of 
+			<code class="function">ImportArguments</code> 
+			is the following</p><pre class="programlisting">ImportArguments(modules, argpath=None, **kw)</pre><p>The 
+			function accepts quite a lot of optional parameters (we refer an 
+			interested user to API reference). Here we only mention few of them 
+			(most commonly used).</p><div class="informaltable"><table><thead><tr>
 						<th>parameter</th>
 						<th>description</th>
 					</tr></thead><tbody><tr>
 						<td><em class="parameter"><code>modules</code></em></td>
-						<td>modules to be imported (their names); may be a single string 
-						or a collection (list) of strings.</td>
+						<td>modules to be imported 
+						(their names); may be a single string or a collection (list) of 
+						strings.</td>
 					</tr><tr>
 						<td><em class="parameter"><code>argpath</code></em></td>
-						<td>a list of directories to be searched for arguments' 
-						modules prior to default search path</td>
-					</tr><tr>
-						<td><em class="parameter"><code>kwpass</code></em></td>
-						<td>an optional hash with keyword arguments passed to the 
-						imported modules (to their <code class="function">arguments()</code> 
-						functions); if, for example, we call 
-						<code class="code">ImportArguments(['mod1', 'mod2'], None, 
-						{'foo' : 'FOO'})</code>, then these function 
-						will be invoked as <code class="code">mod1.arguments(foo = 
-						'FOO')</code> and 
-						<code class="code">mod2.arguments(foo='FOO')</code>.</td>
+						<td>a list of directories 
+						to be searched for arguments' modules prior to default 
+						search path</td>
 					</tr><tr>
 						<td><em class="parameter"><code>name_filter</code></em></td>
-						<td>a callable object used to filter-out unwanted arguments 
-						defined in the arguments based on their names; if 
-						<em class="parameter"><code>name_filter</code></em> is a list or set (a 
-						collection), only arguments listed in this collection will be 
-						imported.</td>
+						<td>a callable object used 
+						to filter-out unwanted arguments defined in the arguments based 
+						on their names; if 
+						<em class="parameter"><code>name_filter</code></em> 
+						is a list or set (a collection), only arguments listed in this 
+						collection will be imported.</td>
 					</tr><tr></tr></tbody></table></div></section></section></section></body></html>
