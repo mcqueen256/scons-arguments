@@ -14,6 +14,7 @@ addons:
   apt:
     packages:
       - docbook-xml
+      - docbook-xsl-ns
       - xsltproc
       - imagemagick
       - python-epydoc # because version from pip has a bug
