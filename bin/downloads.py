@@ -159,6 +159,8 @@ _all_packages = ['scons-test', 'scons-docbook']
 
 # scons
 _scons_versions = ['tip',
+                   '2.5.1', 
+                   '2.4.1', 
                    '2.4.0', 
                    '2.3.6',
                    '2.3.5',
