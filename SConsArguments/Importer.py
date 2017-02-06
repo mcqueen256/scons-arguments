@@ -30,9 +30,9 @@ and values specified by the documentation of
             'arg2' : { 'help' : 'This is arg2' }
         }
 
-This function may use the utility function
-`SConsArguments.Importer.export_argument()` to handle common parameteres. See
-the source code of existing modules in ``"SConsArguments"`` to find an example.
+This function may use the utility function `export_arguments()` to handle
+common parameteres. See the source code of existing modules in
+``"SConsArguments"`` to find an example.
 
 Modules may be imported with `ImportArguments()` function, which takes a
 module name(s) as firsta argument (so, `ImportArguments("mine")` for the above
