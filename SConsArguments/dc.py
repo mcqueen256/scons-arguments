@@ -43,7 +43,7 @@ Flags for programs:
 
 __docformat__ = "restructuredText"
 
-from SConsArguments.Util import flags2list, paths2list, cdefs2list
+from SConsArguments.Util import flags2list, paths2list
 from SConsArguments.Importer import export_arguments
 
 _all_arguments = {
