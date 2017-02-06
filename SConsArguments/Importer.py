@@ -381,25 +381,16 @@ def export_arguments(modname, args, groups = None, **kw):
             these groups
 
     :Keywords:
-        include_group : str | list
+        include_groups : str | list
             only include arguments assigned to the listed groups
-        ${modname}_include_group : str | list
-            only include arguments assigned to the listed groups
+        ${modname}_include_groups : str | list
+            only include arguments assigned to the listed groups; if defined,
+            the **include_groups** is ignored
         exclude_group : str | list
             exclude arguments assigned to the listed groups
         ${modname}_exclude_group : str | list
-            exclude arguments assigned to the listed groups
-        exclude_${group} : boolean
-            whether to exclude arguments belonging to a given ${group}; for
-            example, if there is a group named ``'progs'`` in **groups**,
-            then arguments belonging to ``'progs'`` may be excluded with
-            ``exclude_progs = True``,
-
-        ${modname}_exclude_${group} : boolean
-            works same way same as **exclude_${group}**, provided the
-            ``${modname}`` prefix is same as the value of **modname** argument
-            (so, if ``modname = 'foo'``, then ``foo_exclude_progs`` will
-            exclude all arguments belonging to a group named ``progs``)
+            exclude arguments assigned to the listed groups; if defined, the
+            **exclude_groups** is ignored
     """
     include_groups = kw.get("%s_include_groups" % modname, kw.get('include_groups', None))
     if SCons.Util.is_String(include_groups):
