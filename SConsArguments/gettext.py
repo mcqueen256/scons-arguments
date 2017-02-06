@@ -1,6 +1,6 @@
 """`SConsArguments.gettext`
 
-Defines arguments related to Fortran 03 compiler
+Defines arguments related to gettext tool
 
 **Arguments**
 
