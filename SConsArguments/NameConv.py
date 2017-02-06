@@ -169,7 +169,7 @@ class _ArgumentNameConv(object):
             name : str
                 the string to be transformed
 
-        Usage example: ``env_key = NameConv().name2env('foo')``
+        Usage example: ``env_key = _ArgumentNameConv().name2env('foo')``
         """
         s = self._env_key_fcn(name)
         if not s:
@@ -183,7 +183,7 @@ class _ArgumentNameConv(object):
             name : str
                 the string to be transformed
 
-        Usage example: ``var_key = NameConv().name2var('foo')``
+        Usage example: ``var_key = _ArgumentNameConv().name2var('foo')``
         """
         s = self._var_key_fcn(name)
         if not s:
@@ -197,7 +197,7 @@ class _ArgumentNameConv(object):
             name : str
                 the string to be transformed
 
-        Usage example: ``opt_key = NameConv().name2opt('foo')``
+        Usage example: ``opt_key = _ArgumentNameConv().name2opt('foo')``
         """
         s = self._opt_key_fcn(name)
         if not s:
@@ -211,7 +211,7 @@ class _ArgumentNameConv(object):
             name : str
                 the string to be transformed
 
-        Usage example: ``opt_key = NameConv().name2optname('foo')``
+        Usage example: ``opt_key = _ArgumentNameConv().name2optname('foo')``
         """
         s = self._opt_name_fcn(name)
         if not s:
@@ -225,7 +225,7 @@ class _ArgumentNameConv(object):
             name : str
                 the string to be transformed
 
-        Usage example: ``opt_key = NameConv().name2option('foo')``
+        Usage example: ``opt_key = _ArgumentNameConv().name2option('foo')``
         """
         s = self.name2optname(name)
         if not s:
@@ -243,7 +243,7 @@ class _ArgumentNameConv(object):
             name : str
                 the string to be transformed
 
-        Usage example: ``d = NameConv().name2dict('foo')``
+        Usage example: ``d = _ArgumentNameConv().name2dict('foo')``
         """
         d = dict()
         env = self.name2env(name)
