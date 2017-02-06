@@ -7,7 +7,7 @@ directory can act as a source of arguments' declarations. The default list of
 directories that are looked up for arguments' modules is called ``argpath``
 and is returned by `GetDefaultArgpath()`. The list is constructed similarly to
 the tools search path. In the default ``argpath`` we use ``"site_arguments"``
-instead of ``"site_tools"``in the last component of a directory name. This
+instead of ``"site_tools"`` in the last component of a directory name. This
 means that, in typical situation, argument modules will be placed in
 ``"site_scons/site_arguments/"``. Only existing directories get included in the
 default ``argpath``. Several modules are also included in the
