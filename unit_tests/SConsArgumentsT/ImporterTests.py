@@ -130,7 +130,8 @@ class Test__handle_site_scons_dir(unittest.TestCase):
     @unittest.skipIf(_mock_missing, "requires mock module")
     def test__handle_site_scons_dir_4(self):
         """Test SConsArguments.Importer._handle_site_scons_dir()"""
-        with mock.patch('os.path.exists', return_value = False):
+        with mock.patch('os.path.exists', return_value = False), \
+             mock.patch('os.path.join', side_effect = lambda *args : '/'.join(args)):
             with self.assertRaisesRegexp(SCons.Errors.UserError, "site dir top/dir/mysite not found"):
                 tested._defaultArgpath = ['initial']
                 tested._handle_site_scons_dir('top/dir', 'mysite')
