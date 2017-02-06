@@ -5,12 +5,13 @@ importing argument declarations from python modules is similar to that of
 loading SCons tools from python modules. A python file placed in appropriate
 directory can act as a source of arguments' declarations. The default list of
 directories that are looked up for arguments' modules is called ``argpath``
-and is returned by `GetDefaultArgpath()`. The list is derived from the
-SCons tools search path stored in ``SCons.Tool.DefaultToolpath``. To generate
-default ``argpath`` we just replace ``"site_tools"`` with ``"site_arguments"``
-in the last component of each directory name. This means that, in typical
-situation, argument modules will be placed in ``"site_scons/site_arguments/"``.
-Only existing directories get included in the default ``argpath``.
+and is returned by `GetDefaultArgpath()`. The list is constructed similarly to
+the tools search path. In the default ``argpath`` we use ``"site_arguments"``
+instead of ``"site_tools"``in the last component of a directory name. This
+means that, in typical situation, argument modules will be placed in
+``"site_scons/site_arguments/"``. Only existing directories get included in the
+default ``argpath``. Several modules are also included in the
+``SConsArguments`` package.
 
 A module containing argument declarations is a python module with the
 following function defined::
@@ -28,6 +29,10 @@ and values specified by the documentation of
             'arg1' : { 'help' : 'This is arg1' },
             'arg2' : { 'help' : 'This is arg2' }
         }
+
+This function may use the utility function
+`SConsArguments.Importer.export_argument()` to handle common parameteres. See
+the source code of existing modules in ``"SConsArguments"`` to find an example.
 
 Modules may be imported with `ImportArguments()` function, which takes a
 module name(s) as firsta argument (so, `ImportArguments("mine")` for the above
