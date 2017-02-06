@@ -114,10 +114,9 @@ SConsArguments.dc._groups	SConsArguments.dc-module.html#_groups
 SConsArguments.dc.flags2list	SConsArguments.Util-module.html#flags2list
 SConsArguments.dc.paths2list	SConsArguments.Util-module.html#paths2list
 SConsArguments.dc.__package__	SConsArguments.dc-module.html#__package__
-SConsArguments.dc.cdefs2list	SConsArguments.Util-module.html#cdefs2list
+SConsArguments.dc.arguments	SConsArguments.dc-module.html#arguments
 SConsArguments.dc._all_arguments	SConsArguments.dc-module.html#_all_arguments
 SConsArguments.dc.export_arguments	SConsArguments.Importer-module.html#export_arguments
-SConsArguments.dc.arguments	SConsArguments.dc-module.html#arguments
 SConsArguments.dlink	SConsArguments.dlink-module.html
 SConsArguments.dlink._groups	SConsArguments.dlink-module.html#_groups
 SConsArguments.dlink.flags2list	SConsArguments.Util-module.html#flags2list
@@ -243,10 +242,9 @@ SConsArguments.link._groups	SConsArguments.link-module.html#_groups
 SConsArguments.link.flags2list	SConsArguments.Util-module.html#flags2list
 SConsArguments.link.paths2list	SConsArguments.Util-module.html#paths2list
 SConsArguments.link.__package__	SConsArguments.link-module.html#__package__
-SConsArguments.link.cdefs2list	SConsArguments.Util-module.html#cdefs2list
+SConsArguments.link.arguments	SConsArguments.link-module.html#arguments
 SConsArguments.link._all_arguments	SConsArguments.link-module.html#_all_arguments
 SConsArguments.link.export_arguments	SConsArguments.Importer-module.html#export_arguments
-SConsArguments.link.arguments	SConsArguments.link-module.html#arguments
 SConsArguments.m4	SConsArguments.m4-module.html
 SConsArguments.m4._groups	SConsArguments.m4-module.html#_groups
 SConsArguments.m4.flags2list	SConsArguments.Util-module.html#flags2list
@@ -314,10 +312,9 @@ SConsArguments.swig._groups	SConsArguments.swig-module.html#_groups
 SConsArguments.swig.flags2list	SConsArguments.Util-module.html#flags2list
 SConsArguments.swig.paths2list	SConsArguments.Util-module.html#paths2list
 SConsArguments.swig.__package__	SConsArguments.swig-module.html#__package__
-SConsArguments.swig.cdefs2list	SConsArguments.Util-module.html#cdefs2list
+SConsArguments.swig.arguments	SConsArguments.swig-module.html#arguments
 SConsArguments.swig._all_arguments	SConsArguments.swig-module.html#_all_arguments
 SConsArguments.swig.export_arguments	SConsArguments.Importer-module.html#export_arguments
-SConsArguments.swig.arguments	SConsArguments.swig-module.html#arguments
 SConsArguments.tar	SConsArguments.tar-module.html
 SConsArguments.tar._groups	SConsArguments.tar-module.html#_groups
 SConsArguments.tar.flags2list	SConsArguments.Util-module.html#flags2list

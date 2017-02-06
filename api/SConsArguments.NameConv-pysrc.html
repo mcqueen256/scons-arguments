@@ -227,7 +227,7 @@
 <a name="L169"></a><tt class="py-lineno">169</tt>  <tt class="py-line"><tt class="py-docstring">            name : str</tt> </tt>
 <a name="L170"></a><tt class="py-lineno">170</tt>  <tt class="py-line"><tt class="py-docstring">                the string to be transformed</tt> </tt>
 <a name="L171"></a><tt class="py-lineno">171</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
-<a name="L172"></a><tt class="py-lineno">172</tt>  <tt class="py-line"><tt class="py-docstring">        Usage example: ``env_key = NameConv().name2env('foo')``</tt> </tt>
+<a name="L172"></a><tt class="py-lineno">172</tt>  <tt class="py-line"><tt class="py-docstring">        Usage example: ``env_key = _ArgumentNameConv().name2env('foo')``</tt> </tt>
 <a name="L173"></a><tt class="py-lineno">173</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
 <a name="L174"></a><tt class="py-lineno">174</tt>  <tt class="py-line">        <tt class="py-name">s</tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_env_key_fcn</tt><tt class="py-op">(</tt><tt class="py-name">name</tt><tt class="py-op">)</tt> </tt>
 <a name="L175"></a><tt class="py-lineno">175</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-keyword">not</tt> <tt class="py-name">s</tt><tt class="py-op">:</tt> </tt>
@@ -241,7 +241,7 @@
 <a name="L183"></a><tt class="py-lineno">183</tt>  <tt class="py-line"><tt class="py-docstring">            name : str</tt> </tt>
 <a name="L184"></a><tt class="py-lineno">184</tt>  <tt class="py-line"><tt class="py-docstring">                the string to be transformed</tt> </tt>
 <a name="L185"></a><tt class="py-lineno">185</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
-<a name="L186"></a><tt class="py-lineno">186</tt>  <tt class="py-line"><tt class="py-docstring">        Usage example: ``var_key = NameConv().name2var('foo')``</tt> </tt>
+<a name="L186"></a><tt class="py-lineno">186</tt>  <tt class="py-line"><tt class="py-docstring">        Usage example: ``var_key = _ArgumentNameConv().name2var('foo')``</tt> </tt>
 <a name="L187"></a><tt class="py-lineno">187</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
 <a name="L188"></a><tt class="py-lineno">188</tt>  <tt class="py-line">        <tt class="py-name">s</tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_var_key_fcn</tt><tt class="py-op">(</tt><tt class="py-name">name</tt><tt class="py-op">)</tt> </tt>
 <a name="L189"></a><tt class="py-lineno">189</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-keyword">not</tt> <tt class="py-name">s</tt><tt class="py-op">:</tt> </tt>
@@ -255,7 +255,7 @@
 <a name="L197"></a><tt class="py-lineno">197</tt>  <tt class="py-line"><tt class="py-docstring">            name : str</tt> </tt>
 <a name="L198"></a><tt class="py-lineno">198</tt>  <tt class="py-line"><tt class="py-docstring">                the string to be transformed</tt> </tt>
 <a name="L199"></a><tt class="py-lineno">199</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
-<a name="L200"></a><tt class="py-lineno">200</tt>  <tt class="py-line"><tt class="py-docstring">        Usage example: ``opt_key = NameConv().name2opt('foo')``</tt> </tt>
+<a name="L200"></a><tt class="py-lineno">200</tt>  <tt class="py-line"><tt class="py-docstring">        Usage example: ``opt_key = _ArgumentNameConv().name2opt('foo')``</tt> </tt>
 <a name="L201"></a><tt class="py-lineno">201</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
 <a name="L202"></a><tt class="py-lineno">202</tt>  <tt class="py-line">        <tt class="py-name">s</tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_opt_key_fcn</tt><tt class="py-op">(</tt><tt class="py-name">name</tt><tt class="py-op">)</tt> </tt>
 <a name="L203"></a><tt class="py-lineno">203</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-keyword">not</tt> <tt class="py-name">s</tt><tt class="py-op">:</tt> </tt>
@@ -269,7 +269,7 @@
 <a name="L211"></a><tt class="py-lineno">211</tt>  <tt class="py-line"><tt class="py-docstring">            name : str</tt> </tt>
 <a name="L212"></a><tt class="py-lineno">212</tt>  <tt class="py-line"><tt class="py-docstring">                the string to be transformed</tt> </tt>
 <a name="L213"></a><tt class="py-lineno">213</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
-<a name="L214"></a><tt class="py-lineno">214</tt>  <tt class="py-line"><tt class="py-docstring">        Usage example: ``opt_key = NameConv().name2optname('foo')``</tt> </tt>
+<a name="L214"></a><tt class="py-lineno">214</tt>  <tt class="py-line"><tt class="py-docstring">        Usage example: ``opt_key = _ArgumentNameConv().name2optname('foo')``</tt> </tt>
 <a name="L215"></a><tt class="py-lineno">215</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
 <a name="L216"></a><tt class="py-lineno">216</tt>  <tt class="py-line">        <tt class="py-name">s</tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_opt_name_fcn</tt><tt class="py-op">(</tt><tt class="py-name">name</tt><tt class="py-op">)</tt> </tt>
 <a name="L217"></a><tt class="py-lineno">217</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-keyword">not</tt> <tt class="py-name">s</tt><tt class="py-op">:</tt> </tt>
@@ -283,7 +283,7 @@
 <a name="L225"></a><tt class="py-lineno">225</tt>  <tt class="py-line"><tt class="py-docstring">            name : str</tt> </tt>
 <a name="L226"></a><tt class="py-lineno">226</tt>  <tt class="py-line"><tt class="py-docstring">                the string to be transformed</tt> </tt>
 <a name="L227"></a><tt class="py-lineno">227</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
-<a name="L228"></a><tt class="py-lineno">228</tt>  <tt class="py-line"><tt class="py-docstring">        Usage example: ``opt_key = NameConv().name2option('foo')``</tt> </tt>
+<a name="L228"></a><tt class="py-lineno">228</tt>  <tt class="py-line"><tt class="py-docstring">        Usage example: ``opt_key = _ArgumentNameConv().name2option('foo')``</tt> </tt>
 <a name="L229"></a><tt class="py-lineno">229</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
 <a name="L230"></a><tt class="py-lineno">230</tt>  <tt class="py-line">        <tt class="py-name">s</tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-0" class="py-name" targets="Method SConsArguments.NameConv._ArgumentNameConv.name2optname()=SConsArguments.NameConv._ArgumentNameConv-class.html#name2optname"><a title="SConsArguments.NameConv._ArgumentNameConv.name2optname" class="py-name" href="#" onclick="return doclink('link-0', 'name2optname', 'link-0');">name2optname</a></tt><tt class="py-op">(</tt><tt class="py-name">name</tt><tt class="py-op">)</tt> </tt>
 <a name="L231"></a><tt class="py-lineno">231</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-keyword">not</tt> <tt class="py-name">s</tt><tt class="py-op">:</tt> </tt>
@@ -301,7 +301,7 @@
 <a name="L243"></a><tt class="py-lineno">243</tt>  <tt class="py-line"><tt class="py-docstring">            name : str</tt> </tt>
 <a name="L244"></a><tt class="py-lineno">244</tt>  <tt class="py-line"><tt class="py-docstring">                the string to be transformed</tt> </tt>
 <a name="L245"></a><tt class="py-lineno">245</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
-<a name="L246"></a><tt class="py-lineno">246</tt>  <tt class="py-line"><tt class="py-docstring">        Usage example: ``d = NameConv().name2dict('foo')``</tt> </tt>
+<a name="L246"></a><tt class="py-lineno">246</tt>  <tt class="py-line"><tt class="py-docstring">        Usage example: ``d = _ArgumentNameConv().name2dict('foo')``</tt> </tt>
 <a name="L247"></a><tt class="py-lineno">247</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
 <a name="L248"></a><tt class="py-lineno">248</tt>  <tt class="py-line">        <tt class="py-name">d</tt> <tt class="py-op">=</tt> <tt class="py-name">dict</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
 <a name="L249"></a><tt class="py-lineno">249</tt>  <tt class="py-line">        <tt class="py-name">env</tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-1" class="py-name" targets="Method SConsArguments.NameConv._ArgumentNameConv.name2env()=SConsArguments.NameConv._ArgumentNameConv-class.html#name2env"><a title="SConsArguments.NameConv._ArgumentNameConv.name2env" class="py-name" href="#" onclick="return doclink('link-1', 'name2env', 'link-1');">name2env</a></tt><tt class="py-op">(</tt><tt class="py-name">name</tt><tt class="py-op">)</tt> </tt>
@@ -353,7 +353,7 @@ expandto(location.href);
   <tr>
     <td align="left" class="footer">
     Generated by Epydoc 3.0.1
-    on Fri Feb  3 16:13:48 2017
+    on Mon Feb  6 14:41:54 2017
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"
