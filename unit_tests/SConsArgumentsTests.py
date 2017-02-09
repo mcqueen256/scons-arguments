@@ -117,6 +117,9 @@ class Test_module_imports(unittest.TestCase):
     def test_VariablesWrapper(self):
         "Test SConsArguments._VariablesWrapper, should be SConsArguments.VariablesWrapper._VariablesWrapper"
         self.assertIs(SConsArguments._VariablesWrapper,SConsArguments.VariablesWrapper._VariablesWrapper)
+    def test_ImportArguments(self):
+        "Test SConsArguments._ImportArguments, should be SConsArguments.Importer.ImportArguments"
+        self.assertIs(SConsArguments.ImportArguments,SConsArguments.Importer.ImportArguments)
 
 #############################################################################
 if __name__ == "__main__":
