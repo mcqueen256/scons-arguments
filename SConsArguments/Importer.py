@@ -372,6 +372,26 @@ def ImportArguments(modules, argpath = None, **kw):
 def export_arguments(modname, args, groups = None, **kw):
     """Helper function for arguments' module developers
 
+    Performs common filtering/preprocessing on **args**, as described in
+    the description of function parameters below.
+
+    Typical use (in a module named ``'foo'``)::
+
+        from SConsArguments.Importer import export_arguments
+
+        _all_arguments = {
+          'FOO' : { 'help' : 'The foo program', ... },
+          'BAR' : { 'help' : 'The bar program', ...  },
+          'FOOFLAGS' : { 'help' : 'Flags for the foo program', ...  },
+          'BARFLAGS' : { 'help' : 'Flags for the bar program', ...  },
+          # ... more
+        }
+
+        _groups = { 'progs' : [ 'FOO', 'BAR' ], 'flags' : [ 'FOOFLAGS', 'BARFLAGS' ] }
+
+        def arguments(**kw):
+            return export_arguments('foo', _all_arguments, _groups, **kw)
+
     :Parameters:
         modname : str
             name of the module calling this function
@@ -396,6 +416,14 @@ def export_arguments(modname, args, groups = None, **kw):
         ${modname}_exclude_group : str | list
             exclude arguments assigned to the listed groups; if defined, the
             **exclude_groups** is ignored
+
+    :Returns:
+        A dict with argument names as keys, each followed by a dict which may
+        be passed directly as an argument to `SConsArguments.DeclareArgument`.
+        The whole dict returned by this function (name it ``result``) shall
+        have the form compliant with the `SConsArguments.DeclareArguments`,
+        such that it makes sense to call
+        `SConsArguments.DeclareArguments(**result)`.
     """
     include_groups = kw.get("%s_include_groups" % modname, kw.get('include_groups', None))
     if SCons.Util.is_String(include_groups):
