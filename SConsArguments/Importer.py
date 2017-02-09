@@ -164,10 +164,7 @@ def _initDefaultArgpath():
     no_site_dir = SCons.Script.Main.GetOption('no_site_dir')
     topdir = SCons.Node.FS.get_default_fs().SConstruct_dir
 
-    if 'get_internal_path' in dir(topdir): # SCons >= 2.4.0
-        toppath = topdir.get_internal_path()
-    else:
-        toppath = topdir.path
+    toppath = topdir.get_abspath()
 
     if site_dir:
         _handle_site_scons_dir(toppath, site_dir)

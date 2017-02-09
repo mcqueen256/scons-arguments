@@ -272,27 +272,12 @@ class Test__initDefaultArgpath(unittest.TestCase):
                  mock.patch("SConsArguments.Importer._handle_site_scons_dir") as m._handle_site_scons_dir, \
                  mock.patch("SConsArguments.Importer._handle_all_site_scons_dirs") as m._handle_all_site_scons_dirs:
 
-                m.get_internal_path = mock.MagicMock(return_value = 'topdir/path')
-                m.SConstruct_dir = mock.MagicMock(get_internal_path = m.get_internal_path)
+                m.get_abspath = mock.MagicMock(return_value = 'topdir/path')
+                m.SConstruct_dir = mock.MagicMock(get_abspath = m.get_abspath)
                 m.default_fs = mock.MagicMock(SConstruct_dir = m.SConstruct_dir)
                 m.get_default_fs.return_value = m.default_fs
 
                 yield m
-
-    @contextlib.contextmanager
-    def mocks2(self):
-        with mock.MagicMock() as m:
-            with mock.patch("SCons.Script.Main.GetOption") as m.GetOption, \
-                 mock.patch("SCons.Node.FS.get_default_fs") as m.get_default_fs, \
-                 mock.patch("SConsArguments.Importer._handle_site_scons_dir") as m._handle_site_scons_dir, \
-                 mock.patch("SConsArguments.Importer._handle_all_site_scons_dirs") as m._handle_all_site_scons_dirs:
-
-                m.SConstruct_dir = mock.MagicMock(path = 'topdir/path')
-                m.default_fs = mock.MagicMock(SConstruct_dir = m.SConstruct_dir)
-                m.get_default_fs.return_value = m.default_fs
-
-                yield m
-
 
     @unittest.skipIf(_mock_missing, "requires mock module")
     def test__initDefaultArgpath_1(self):
@@ -357,33 +342,6 @@ class Test__initDefaultArgpath(unittest.TestCase):
 
             self.assertIsInstance(tested._defaultArgpath, list)
             self.assertEqual(tested._defaultArgpath, ['topdir/path/site_scons'])
-
-    @unittest.skipIf(_mock_missing, "requires mock module")
-    def test__initDefaultArgpath_4(self):
-        """Test SConsArguments.Importer._initDefaultArgpath()"""
-        def get_option(name):
-            if name == 'site_dir':
-                return 'site_scons'
-            else:
-                return None
-
-        def handle_dir(topdir, site_dir):
-            tested._defaultArgpath.append(topdir + '/' + site_dir)
-
-        with self.mocks2() as m:
-
-            m.GetOption.side_effect = get_option
-            m._handle_site_scons_dir.side_effect = handle_dir
-
-            tested._defaultArgpath = None
-            tested._initDefaultArgpath()
-
-            m._handle_site_scons_dir.assert_called_once_with('topdir/path', 'site_scons')
-            m._handle_all_site_scons_dirs.assert_not_called()
-
-            self.assertIsInstance(tested._defaultArgpath, list)
-            self.assertEqual(tested._defaultArgpath, ['topdir/path/site_scons'])
-
 
 #############################################################################
 class Test_GetDefaultArgpath(unittest.TestCase):
