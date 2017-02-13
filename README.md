@@ -65,8 +65,8 @@ env = Environment()
 var = Variables()
 
 dcl = ImportArguments(['c++', 'cc', 'link'])
-arg = dcl.Commit(env, var, True)
-arg.Postprocess(env, var, True)
+arg = dcl.Commit(env, var)
+arg.Postprocess(env, var)
 if arg.HandleVariablesHelp(var, env):
   Exit(0)
 
