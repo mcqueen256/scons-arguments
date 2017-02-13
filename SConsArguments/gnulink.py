@@ -1,6 +1,6 @@
 """`SConsArguments.gnulink`
 
-Defines arguments related to D compiler
+Defines arguments related to GNU linker
 
 **Arguments**
 
