@@ -1,24 +1,6 @@
 """`SConsArguments.c++`
 
-Defines arguments related to the C++ compiler
-
-**Arguments**
-
-Programs:
-
-    CXX
-        The C++ compiler
-    SHCXX
-        The C++ compiler used for generating shared-library objects
-
-Flags for programs:
-
-    CXXFLAGS
-        General options that are passed to the C++ compiler
-
-    SHCXXFLAGS
-        Options that are passed to the C++ compiler to generate shared-library
-        objects
+See documentation for `SConsArguments.cxx`
 """
 
 #
@@ -42,53 +24,7 @@ Flags for programs:
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE
 
-__docformat__ = "restructuredText"
-
-from SConsArguments.Util import flags2list
-from SConsArguments.Importer import export_arguments
-
-_all_arguments = {
-  'CXX' : {
-      'help'        : 'The C++ compiler',
-      'metavar'     : 'PROG'
-  },
-  'SHCXX' : {
-      'help'        : 'The C++ compiler used for generating shared-library objects',
-      'metavar'     : 'PROG'
-  },
-  'CXXFLAGS' : {
-      'help'        : 'General options that are passed to the C++ compiler',
-      'metavar'     : 'FLAGS',
-      'converter'   : flags2list
-  },
-  'SHCXXFLAGS' : {
-      'help'        : 'Options that are passed to the C++ compiler to generate shared-library objects',
-      'metavar'     : 'FLAGS',
-      'converter'   : flags2list
-  }
-}
-
-_groups = {
-    'progs' : [ 'CXX', 'SHCXX' ],
-    'flags' : [ 'CXXFLAGS', 'SHCXXFLAGS' ]
-}
-
-def arguments(**kw):
-    """Returns argument declarations for 'c++' tool
-
-       :Keywords:
-            include_groups : str | list
-                include only arguments assigned to these groups
-            exclude_groups : str | list
-                exclude arguents assigned to these groups
-            cxx_include_groups : str | list
-                include only arguments assigned to these groups, this has
-                higher priority than **include_groups**
-            cxx_exclude_groups : str | list
-                exclude arguents assigned to these groups, this has higher
-                priority than **exclude_groups**
-    """
-    return export_arguments('cxx', _all_arguments, _groups, **kw)
+from SConsArguments.cxx import *
 
 # Local Variables:
 # # tab-width:4

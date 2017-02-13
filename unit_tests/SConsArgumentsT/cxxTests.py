@@ -28,29 +28,30 @@ __docformat__ = "restructuredText"
 
 import unittest
 import importlib
+import SConsArguments.cxx as tested
 from . import TestCase
 
-cxx = importlib.import_module('SConsArguments.c++')
+cplusplus = importlib.import_module('SConsArguments.c++')
 
 #############################################################################
 class Test_cxx(TestCase):
-    """Test SConsArguments.c++"""
-    def test_arguments1(self):
-        "Test SConsArguments.c++.arguments()"
-        decl = cxx.arguments()
+    """Test SConsArguments.cxx"""
+    def test_arguments_1(self):
+        "Test SConsArguments.cxx.arguments()"
+        decl = tested.arguments()
         self.assertEqual(decl['CXX']['help'], 'The C++ compiler')
         self.assertEqual(decl['CXX']['metavar'], 'PROG')
         self.assertEqual(decl['SHCXX']['help'], 'The C++ compiler used for generating shared-library objects')
         self.assertEqual(decl['SHCXX']['metavar'], 'PROG')
         self.assertEqual(decl['CXXFLAGS']['help'], 'General options that are passed to the C++ compiler')
         self.assertEqual(decl['CXXFLAGS']['metavar'], 'FLAGS')
-        self.assertEqual(decl['CXXFLAGS']['converter'], cxx.flags2list)
+        self.assertEqual(decl['CXXFLAGS']['converter'], tested.flags2list)
         self.assertEqual(decl['SHCXXFLAGS']['help'], 'Options that are passed to the C++ compiler to generate shared-library objects')
         self.assertEqual(decl['SHCXXFLAGS']['metavar'], 'FLAGS')
-        self.assertEqual(decl['SHCXXFLAGS']['converter'], cxx.flags2list)
+        self.assertEqual(decl['SHCXXFLAGS']['converter'], tested.flags2list)
 
     def test_arguments__groups_1(self):
-        "Test SConsArguments.as.arguments() with groups (exclude, include)"
+        "Test SConsArguments.cxx.arguments() with groups (exclude, include)"
         kws = [
                 { 'exclude_groups' : 'progs' },
                 { 'include_groups' : 'flags' },
@@ -58,12 +59,12 @@ class Test_cxx(TestCase):
                 { 'cxx_include_groups' : 'flags', 'include_groups' : 'progs' },
         ]
         for kw in kws:
-            decl = cxx.arguments(**kw)
+            decl = tested.arguments(**kw)
             self.assertAllMissing(decl, ['CXX', 'SHCXX'])
             self.assertAllPresent(decl, ['CXXFLAGS', 'SHCXXFLAGS'])
 
     def test_arguments__groups_2(self):
-        "Test SConsArguments.as.arguments() with groups (exclude, include)"
+        "Test SConsArguments.cxx.arguments() with groups (exclude, include)"
         kws = [
                 { 'include_groups' : 'progs' },
                 { 'exclude_groups' : 'flags' },
@@ -71,17 +72,23 @@ class Test_cxx(TestCase):
                 { 'cxx_exclude_groups' : 'flags', 'exclude_groups' : 'progs' },
         ]
         for kw in kws:
-            decl = cxx.arguments(**kw)
+            decl = tested.arguments(**kw)
             self.assertAllPresent(decl, ['CXX', 'SHCXX'])
             self.assertAllMissing(decl, ['CXXFLAGS', 'SHCXXFLAGS'])
 
+#############################################################################
+class Test_cplusplus(TestCase):
+    """Test SConsArguments.c++"""
+    def test_arguments_1(self):
+        "Test SConsArguments.c++.arguments()"
+        self.assertIs(cplusplus.arguments, tested.arguments)
 
 #############################################################################
 if __name__ == "__main__":
     ldr = unittest.TestLoader()
     suite = unittest.TestSuite()
     # Load tests to test suite
-    tclasses = [ Test_cxx ]
+    tclasses = [ Test_cxx, Test_cplusplus ]
 
     for tclass in tclasses:
         suite.addTests(ldr.loadTestsFromTestCase(tclass))
