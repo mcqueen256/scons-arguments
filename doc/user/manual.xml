@@ -1325,17 +1325,21 @@ BINDIR: directory for installing executable programs that users can run
   default: ${EXEC_PREFIX}/bin
   actual: /usr/local/bin
 </screen>
-			<para>The same effect may be achieved with fewer lines of code by 
-			<methodname>HandleVariablesHelp</methodname> method, which 
-			implements the code pattern presented in the previous example:</para>
-			<para>
-				<programlisting>if args.HandleVariablesHelp(var, env):
+			<para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">The 
+			same effect may be achieved with fewer lines of code by 
+			<methodname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">HandleVariablesHelp</methodname> 
+			method, which implements the code pattern presented in the previous 
+			example:</para>
+			<para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+				<programlisting xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">if args.HandleVariablesHelp(var, env):
    Exit(0)</programlisting>
 			</para>
-			<para>The function creates option named 
-			<option>--help-variables</option> which, when active, prints out 
-			documentation for all CLI variables created by 
-			<classname>_Arguments</classname>.</para>
+			<para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">The 
+			function creates option named 
+			<option xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">--help-variables</option> 
+			which, when active, prints out documentation for all CLI variables 
+			created by 
+			<classname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">_Arguments</classname>.</para>
 		</section>
 		<section xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
 			<title xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Saving 
@@ -1448,6 +1452,14 @@ def arguments(**kw):
       &apos;arg2&apos; : { &apos;help&apos; : &apos;This is argument 2&apos; }
     }</programlisting>
 			</example>
+			<para>For typical purposes, a function named 
+			<function>export_arguments()</function> (from 
+			<varname>SConsArguments.Importer</varname> module) may be used 
+			within the <function>arguments()</function> function to implement 
+			common parameters (grouping argumnents, filtering by group, etc.). 
+			See API documentation and source code of the argument modules 
+			provided by <package>scons-arguments</package> for more 
+			details.</para>
 		</section>
 		<section xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
 			<title xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Importing 
@@ -1465,7 +1477,7 @@ decl = SConsArguments.ImportArguments(&apos;myargs&apos;)</programlisting>
 			prototype of 
 			<function xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">ImportArguments</function> 
 			is the following</para>
-			<programlisting xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">ImportArguments(modules, argpath=None, **kw)</programlisting>
+			<programlisting xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">_ArgumentDeclarations ImportArguments(modules, argpath=None, **kw)</programlisting>
 			<para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">The 
 			function accepts quite a lot of optional parameters (we refer an 
 			interested user to API reference). Here we only mention few of them 
@@ -1498,6 +1510,342 @@ decl = SConsArguments.ImportArguments(&apos;myargs&apos;)</programlisting>
 						<parameter xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">name_filter</parameter> 
 						is a list or set (a collection), only arguments listed in this 
 						collection will be imported.</td>
+					</tr>
+					<tr xmlns="http://docbook.org/ns/docbook"/>
+				</tbody>
+			</informaltable>
+		</section>
+		<section xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+			<title xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Predefined 
+			modules</title>
+			<para xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">The 
+			<package xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">scons-arguments</package> 
+			package provides a number of predefined modules with arguments (CLI 
+			variables). The list of out-of-box modules tries to  mirror the list 
+			of built-in SCons tools. Below we&apos;ve enumerated them together 
+			with CLI variables they provide. By default, these CLI variables are 
+			mapped 1:1 to SCons environment variables, but this may be 
+			customized at load time (the <function>ImportArguments()</function> 
+			function provides quite a lot of parameters for customization). More 
+			details may be found in API documentation.</para>
+			<informaltable xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+				<thead xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+					<tr xmlns="http://docbook.org/ns/docbook">
+						<th xmlns="http://docbook.org/ns/docbook">module</th>
+						<th xmlns="http://docbook.org/ns/docbook">description</th>
+						<th xmlns="http://docbook.org/ns/docbook">some of the arguments 
+						provided by module</th>
+					</tr>
+				</thead>
+				<tbody xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+					<tr xmlns="http://docbook.org/ns/docbook">
+						<td xmlns="http://docbook.org/ns/docbook">ar</td>
+						<td xmlns="http://docbook.org/ns/docbook">Arguments related to 
+						static library archiver AR</td>
+						<td xmlns="http://docbook.org/ns/docbook"><varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">AR</varname>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">ARFLAGS</varname>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">RANLIB</varname>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">RANLIBFLAGS</varname></td>
+					</tr>
+					<tr xmlns="http://docbook.org/ns/docbook">
+						<td xmlns="http://docbook.org/ns/docbook">as</td>
+						<td xmlns="http://docbook.org/ns/docbook">Arguments related to 
+						the assembler AS</td>
+						<td xmlns="http://docbook.org/ns/docbook"><varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">AS</varname>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">ASFLAGS</varname>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">ASPPFLAGS</varname></td>
+					</tr>
+					<tr xmlns="http://docbook.org/ns/docbook">
+						<td xmlns="http://docbook.org/ns/docbook">bitkeeper</td>
+						<td xmlns="http://docbook.org/ns/docbook">Arguments related to 
+						BitKeeper</td>
+						<td xmlns="http://docbook.org/ns/docbook"><varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">BITKEEPER</varname>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">BITKEEPERFLAGS</varname></td>
+					</tr>
+					<tr xmlns="http://docbook.org/ns/docbook">
+						<td xmlns="http://docbook.org/ns/docbook">cc</td>
+						<td xmlns="http://docbook.org/ns/docbook">Arguments related to C 
+						compiler</td>
+						<td xmlns="http://docbook.org/ns/docbook"><varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">CC</varname>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">CCFLAGS</varname>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">CFLAGS</varname>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">CPPDEFINES</varname></td>
+					</tr>
+					<tr xmlns="http://docbook.org/ns/docbook">
+						<td xmlns="http://docbook.org/ns/docbook">cvs</td>
+						<td xmlns="http://docbook.org/ns/docbook">Arguments related to 
+						CVS, code versioning system</td>
+						<td xmlns="http://docbook.org/ns/docbook"><varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">CVS</varname>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">CVSCOFLAGS</varname>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">CVSFLAGS</varname></td>
+					</tr>
+					<tr xmlns="http://docbook.org/ns/docbook">
+						<td xmlns="http://docbook.org/ns/docbook">cxx, c++</td>
+						<td xmlns="http://docbook.org/ns/docbook">Arguments related to 
+						the C++ compiler</td>
+						<td xmlns="http://docbook.org/ns/docbook"><varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">CXX</varname>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">CXXFLAGS</varname></td>
+					</tr>
+					<tr xmlns="http://docbook.org/ns/docbook">
+						<td xmlns="http://docbook.org/ns/docbook">dc</td>
+						<td xmlns="http://docbook.org/ns/docbook">Arguments related to D 
+						compiler</td>
+						<td xmlns="http://docbook.org/ns/docbook"><varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">DC</varname>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">DFLAGS</varname>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">DPATH</varname></td>
+					</tr>
+					<tr xmlns="http://docbook.org/ns/docbook">
+						<td xmlns="http://docbook.org/ns/docbook">dlink</td>
+						<td xmlns="http://docbook.org/ns/docbook">Arguments related to D 
+						linker</td>
+						<td xmlns="http://docbook.org/ns/docbook"><varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">DLIB</varname>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">DLINK</varname>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">DLINKFLAGS</varname></td>
+					</tr>
+					<tr xmlns="http://docbook.org/ns/docbook">
+						<td xmlns="http://docbook.org/ns/docbook">docbook</td>
+						<td xmlns="http://docbook.org/ns/docbook">Arguments related to 
+						Docbook tool</td>
+						<td xmlns="http://docbook.org/ns/docbook"><varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">DOCBOOK_FOP</varname>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">DOCBOOK_FOPFLAGS</varname>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">DOCBOOK_XMLLINT</varname>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">DOCBOOK_XMLLINTFLAGS</varname>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">DOCBOOK_XSLTPROC</varname>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">DOCBOOK_XSLTPROCPARAMS</varname></td>
+					</tr>
+					<tr xmlns="http://docbook.org/ns/docbook">
+						<td xmlns="http://docbook.org/ns/docbook">dvipdf</td>
+						<td xmlns="http://docbook.org/ns/docbook">Arguments related to 
+						dvipdf</td>
+						<td xmlns="http://docbook.org/ns/docbook"><varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">DVIPDF</varname>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">DVIPDFFLAGS</varname></td>
+					</tr>
+					<tr xmlns="http://docbook.org/ns/docbook">
+						<td xmlns="http://docbook.org/ns/docbook">dvips</td>
+						<td xmlns="http://docbook.org/ns/docbook">Arguments related to 
+						dvips</td>
+						<td xmlns="http://docbook.org/ns/docbook"><varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">DVIPS</varname>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">DVIPSFLAGS</varname></td>
+					</tr>
+					<tr xmlns="http://docbook.org/ns/docbook">
+						<td xmlns="http://docbook.org/ns/docbook">f03</td>
+						<td xmlns="http://docbook.org/ns/docbook">Arguments related to 
+						Fortran 03 compiler</td>
+						<td xmlns="http://docbook.org/ns/docbook"><envar xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">F03</envar>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">F03FLAGS</varname>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">F03PATH</varname></td>
+					</tr>
+					<tr xmlns="http://docbook.org/ns/docbook">
+						<td xmlns="http://docbook.org/ns/docbook">f08</td>
+						<td xmlns="http://docbook.org/ns/docbook">Arguments related to 
+						Fortran 08 compiler</td>
+						<td xmlns="http://docbook.org/ns/docbook"><envar xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">F08</envar>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">F08FLAGS</varname>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">F08PATH</varname></td>
+					</tr>
+					<tr xmlns="http://docbook.org/ns/docbook">
+						<td xmlns="http://docbook.org/ns/docbook">f77</td>
+						<td xmlns="http://docbook.org/ns/docbook">Arguments related to 
+						Fortran 77 compiler</td>
+						<td xmlns="http://docbook.org/ns/docbook"><envar xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">F77</envar>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">F77FLAGS</varname>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">F77PATH</varname></td>
+					</tr>
+					<tr xmlns="http://docbook.org/ns/docbook">
+						<td xmlns="http://docbook.org/ns/docbook">f90</td>
+						<td xmlns="http://docbook.org/ns/docbook">Arguments related to 
+						Fortran 90 compiler</td>
+						<td xmlns="http://docbook.org/ns/docbook"><envar xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">F90</envar>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">F90FLAGS</varname>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">F90PATH</varname></td>
+					</tr>
+					<tr xmlns="http://docbook.org/ns/docbook">
+						<td xmlns="http://docbook.org/ns/docbook">f95</td>
+						<td xmlns="http://docbook.org/ns/docbook">Arguments related to 
+						Fortran 95 compiler</td>
+						<td xmlns="http://docbook.org/ns/docbook"><envar xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">F95</envar>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">F95FLAGS</varname>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">F95PATH</varname></td>
+					</tr>
+					<tr xmlns="http://docbook.org/ns/docbook">
+						<td xmlns="http://docbook.org/ns/docbook">fortran</td>
+						<td xmlns="http://docbook.org/ns/docbook">Arguments related to 
+						Fortran compiler</td>
+						<td xmlns="http://docbook.org/ns/docbook"><varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">FORTRAN</varname>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">FORTRANFLAGS</varname>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">FORTRANMODDIR</varname>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">FORTRANPATH</varname></td>
+					</tr>
+					<tr xmlns="http://docbook.org/ns/docbook">
+						<td xmlns="http://docbook.org/ns/docbook">gettext</td>
+						<td xmlns="http://docbook.org/ns/docbook">Arguments related to 
+						gettext tool</td>
+						<td xmlns="http://docbook.org/ns/docbook"><varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">MSGFMT</varname>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">MSGFMTFLAGS</varname>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">MSGINIT</varname>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">MSGINITFLAGS</varname>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">MSGMERGE</varname>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">MSGMERGEFLAGS</varname>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">XGETTEXT</varname>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">XGETTEXTFLAGS</varname>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">XGETTEXTPATH</varname></td>
+					</tr>
+					<tr xmlns="http://docbook.org/ns/docbook">
+						<td xmlns="http://docbook.org/ns/docbook">gnulink</td>
+						<td xmlns="http://docbook.org/ns/docbook">Arguments related to 
+						GNU linker</td>
+						<td xmlns="http://docbook.org/ns/docbook"><varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">RPATH</varname></td>
+					</tr>
+					<tr xmlns="http://docbook.org/ns/docbook">
+						<td xmlns="http://docbook.org/ns/docbook">gs</td>
+						<td xmlns="http://docbook.org/ns/docbook">Arguments related to 
+						Ghostscript</td>
+						<td xmlns="http://docbook.org/ns/docbook"><varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">GS</varname>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">GSFLAGS</varname></td>
+					</tr>
+					<tr xmlns="http://docbook.org/ns/docbook">
+						<td xmlns="http://docbook.org/ns/docbook">jar</td>
+						<td xmlns="http://docbook.org/ns/docbook">Arguments related Java 
+						archive tool</td>
+						<td xmlns="http://docbook.org/ns/docbook"><envar xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">JAR</envar>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">JARCHDIR</varname>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">JARFLAGS</varname></td>
+					</tr>
+					<tr xmlns="http://docbook.org/ns/docbook">
+						<td xmlns="http://docbook.org/ns/docbook">javac</td>
+						<td xmlns="http://docbook.org/ns/docbook">Arguments related to 
+						Java compiler</td>
+						<td xmlns="http://docbook.org/ns/docbook"><varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">JAVAC</varname>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">JAVACFLAGS</varname>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">JAVACLASSPATH</varname>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">JAVASOURCEPATH</varname>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">JAVAH</varname>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">JAVAHFLAGS</varname></td>
+					</tr>
+					<tr xmlns="http://docbook.org/ns/docbook">
+						<td xmlns="http://docbook.org/ns/docbook">lex</td>
+						<td xmlns="http://docbook.org/ns/docbook">Arguments related to 
+						lex</td>
+						<td xmlns="http://docbook.org/ns/docbook"><varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">LEX</varname>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">LEXFLAGS</varname></td>
+					</tr>
+					<tr xmlns="http://docbook.org/ns/docbook">
+						<td xmlns="http://docbook.org/ns/docbook">link</td>
+						<td xmlns="http://docbook.org/ns/docbook">Arguments related to 
+						the linker</td>
+						<td xmlns="http://docbook.org/ns/docbook"><varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">LDMODULE</varname>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">LDMODULEFLAGS</varname>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">LINK</varname>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">LIBPATH</varname>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">LINKFLAGS</varname></td>
+					</tr>
+					<tr xmlns="http://docbook.org/ns/docbook">
+						<td xmlns="http://docbook.org/ns/docbook">m4</td>
+						<td xmlns="http://docbook.org/ns/docbook">Arguments related to M4 
+						macro preprocessor</td>
+						<td xmlns="http://docbook.org/ns/docbook"><varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">M4</varname>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">M4FLAGS</varname></td>
+					</tr>
+					<tr xmlns="http://docbook.org/ns/docbook">
+						<td xmlns="http://docbook.org/ns/docbook">midl</td>
+						<td xmlns="http://docbook.org/ns/docbook">Arguments related to 
+						Microsoft IDL compiler</td>
+						<td xmlns="http://docbook.org/ns/docbook"><varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">MIDL</varname>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">MIDLFLAGS</varname></td>
+					</tr>
+					<tr xmlns="http://docbook.org/ns/docbook">
+						<td xmlns="http://docbook.org/ns/docbook">mslink</td>
+						<td xmlns="http://docbook.org/ns/docbook">Arguments related to 
+						Microsoft linker</td>
+						<td xmlns="http://docbook.org/ns/docbook"><varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">MT</varname>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">MRFLAGS</varname>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">REGSVR</varname>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">REGSVRFLAGS</varname></td>
+					</tr>
+					<tr xmlns="http://docbook.org/ns/docbook">
+						<td xmlns="http://docbook.org/ns/docbook">mssdk</td>
+						<td xmlns="http://docbook.org/ns/docbook">Arguments related to 
+						Microsoft SDK</td>
+						<td xmlns="http://docbook.org/ns/docbook"><varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">MSSDK_DIR</varname>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">MSSDK_VERSION</varname></td>
+					</tr>
+					<tr xmlns="http://docbook.org/ns/docbook">
+						<td xmlns="http://docbook.org/ns/docbook">perforce</td>
+						<td xmlns="http://docbook.org/ns/docbook">Arguments related to 
+						Perforce</td>
+						<td xmlns="http://docbook.org/ns/docbook"><varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">P4</varname>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">P4FLAGS</varname></td>
+					</tr>
+					<tr xmlns="http://docbook.org/ns/docbook">
+						<td xmlns="http://docbook.org/ns/docbook">rcs</td>
+						<td xmlns="http://docbook.org/ns/docbook">Arguments related to 
+						RCS tool</td>
+						<td xmlns="http://docbook.org/ns/docbook"><varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">RCS</varname>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">RCS_CO</varname>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">RCS_COFLAGS</varname></td>
+					</tr>
+					<tr xmlns="http://docbook.org/ns/docbook">
+						<td xmlns="http://docbook.org/ns/docbook">rmic</td>
+						<td xmlns="http://docbook.org/ns/docbook">Arguments related to 
+						Java RMI stub compiler</td>
+						<td xmlns="http://docbook.org/ns/docbook"><varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">RMIC</varname>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">RMICFLAGS</varname></td>
+					</tr>
+					<tr xmlns="http://docbook.org/ns/docbook">
+						<td xmlns="http://docbook.org/ns/docbook">rpcgen</td>
+						<td xmlns="http://docbook.org/ns/docbook">Arguments related to 
+						RPC protocol compiler</td>
+						<td xmlns="http://docbook.org/ns/docbook"><varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">RPCGEN</varname>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">RPCGENCLIENTFLAGS</varname>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">RPCGENFLAGS</varname>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">RPCGENHEADERFLAGS</varname>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">RPCGENSERVICEFLAGS</varname>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">RPCGENXDRFLAGS</varname></td>
+					</tr>
+					<tr xmlns="http://docbook.org/ns/docbook">
+						<td xmlns="http://docbook.org/ns/docbook">sccs</td>
+						<td xmlns="http://docbook.org/ns/docbook">Arguments related to 
+						SCCS tool</td>
+						<td xmlns="http://docbook.org/ns/docbook"><varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">SCCS</varname>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">SCCSFLAGS</varname>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">SCCSGETFLAGS</varname></td>
+					</tr>
+					<tr xmlns="http://docbook.org/ns/docbook">
+						<td xmlns="http://docbook.org/ns/docbook">tar</td>
+						<td xmlns="http://docbook.org/ns/docbook">Arguments related to 
+						tar archiver</td>
+						<td xmlns="http://docbook.org/ns/docbook"><varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">TAR</varname>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">TARFLAGS</varname></td>
+					</tr>
+					<tr xmlns="http://docbook.org/ns/docbook">
+						<td xmlns="http://docbook.org/ns/docbook">tex</td>
+						<td xmlns="http://docbook.org/ns/docbook">Arguments related to 
+						tex</td>
+						<td xmlns="http://docbook.org/ns/docbook"><varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">BIBTEX</varname>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">BIBTEXFLAGS</varname>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">LATEX</varname>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">LATEXFLAGS</varname>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">LATEXRETRIES</varname>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">MAKEINDEX</varname>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">MAKEINDEXFLAGS</varname>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">PDFLATEX</varname>, 
+						<varname>PDFLATEXFLAGS</varname>, <varname>PDFTEX</varname>, 
+						<varname>PDFTEXFLAGS</varname>, <varname>TEX</varname>, 
+						<varname>TEXFLAGS</varname>, <varname>TEXINPUTS</varname></td>
+					</tr>
+					<tr xmlns="http://docbook.org/ns/docbook">
+						<td xmlns="http://docbook.org/ns/docbook">yacc</td>
+						<td xmlns="http://docbook.org/ns/docbook">Arguments related to 
+						yacc</td>
+						<td xmlns="http://docbook.org/ns/docbook"><varname>YACC</varname>, 
+						<varname>YACCFLAGS</varname></td>
+					</tr>
+					<tr xmlns="http://docbook.org/ns/docbook">
+						<td xmlns="http://docbook.org/ns/docbook">zip</td>
+						<td xmlns="http://docbook.org/ns/docbook">Arguments related to 
+						zip</td>
+						<td xmlns="http://docbook.org/ns/docbook"><varname>ZIP</varname>, 
+						<varname>ZIPFLAGS</varname></td>
 					</tr>
 					<tr xmlns="http://docbook.org/ns/docbook"/>
 				</tbody>
