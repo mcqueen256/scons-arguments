@@ -78,16 +78,25 @@ and the C++ source code (file ``hello.cpp``):
 ```c++
 #include <iostream>
 
+#ifndef VERSION
+#define VERSION "unknown"
+#endif
+
 int main()
 {
-  std::cout << "Hello world" << std::endl;
+  std::cout << "Hello world (" VERSION ")" << std::endl;
   return 0;
 }
 ```
 
 Run ``scons --help``. Run ``scons --help-variables`` to see the full list of
 new command-line variables. Play with compiler/linker flags, for example run
-``scons CCFLAGS='-g -O2'``.
+``scons CCFLAGS='-g -O2'``. Try to define ``VERSION`` via command-line (example
+tested only on Linux/bash):
+
+```shell
+scons CPPDEFINES="-DVERSION='\\\"v. 1.2\\\"'"
+```
 
 DOCUMENTATION
 -------------
