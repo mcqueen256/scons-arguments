@@ -85,9 +85,9 @@ int main()
 }
 ```
 
-Just try to run ``scons``, then ``scons --help``. Use ``scons --help-variables``
-to see the full list of new command-line variables. Play with compiler/linker
-options, for example run ``scons CCFLAGS='-g -O2'``.
+Run ``scons --help``. Run ``scons --help-variables`` to see the full list of
+new command-line variables. Play with compiler/linker flags, for example run
+``scons CCFLAGS='-g -O2'``.
 
 DOCUMENTATION
 -------------
