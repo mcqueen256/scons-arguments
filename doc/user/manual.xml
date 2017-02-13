@@ -1196,26 +1196,23 @@ scons: `.&apos; is up to date.</screen>
 			<programlisting xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"># SConstruct
 import SConsArguments
 decls = SConsArguments.DeclareArguments(
-prefix      = { &apos;env_key&apos; : &apos;GNU_PREFIX&apos;, &apos;var_key&apos; : &apos;PREFIX&apos;, &apos;opt_key&apos; : &apos;opt_prefix&apos;,
-                &apos;option&apos; : &apos;--prefix&apos;, &apos;default&apos; : &apos;/usr/local&apos;, &apos;type&apos; : &apos;string&apos;,
-                &apos;help&apos; : &apos;installation prefix&apos; },
-exec_prefix = { &apos;env_key&apos; : &apos;GNU_EXEC_PREFIX&apos;, &apos;var_key&apos; : &apos;EXEC_PREFIX&apos;, &apos;opt_key&apos; : &apos;opt_exec_prefix&apos;,
-                &apos;option&apos; : &apos;--exec-prefix&apos;, &apos;default&apos; : &apos;$prefix&apos;, &apos;type&apos; : &apos;string&apos;,
-                &apos;help&apos; : &apos;installation prefix for executable files&apos; },
-bindir      = { &apos;env_key&apos; : &apos;GNU_BINDIR&apos;, &apos;var_key&apos; : &apos;BINDIR&apos;, &apos;opt_key&apos; : &apos;opt_bindir&apos;,
-                &apos;option&apos; : &apos;--bindir&apos;, &apos;default&apos; : &apos;$exec_prefix/bin&apos;, &apos;type&apos; : &apos;string&apos;,
-                &apos;help&apos; : &apos;directory for installing executable programs that users can run&apos; }
+  prefix      = { &apos;env_key&apos; : &apos;GNU_PREFIX&apos;, &apos;var_key&apos; : &apos;PREFIX&apos;, &apos;opt_key&apos; : &apos;opt_prefix&apos;,
+                  &apos;option&apos; : &apos;--prefix&apos;, &apos;default&apos; : &apos;/usr/local&apos;, &apos;type&apos; : &apos;string&apos;,
+                  &apos;help&apos; : &apos;installation prefix&apos; },
+  exec_prefix = { &apos;env_key&apos; : &apos;GNU_EXEC_PREFIX&apos;, &apos;var_key&apos; : &apos;EXEC_PREFIX&apos;, &apos;opt_key&apos; : &apos;opt_exec_prefix&apos;,
+                  &apos;option&apos; : &apos;--exec-prefix&apos;, &apos;default&apos; : &apos;$prefix&apos;, &apos;type&apos; : &apos;string&apos;,
+                  &apos;help&apos; : &apos;installation prefix for executable files&apos; },
+  bindir      = { &apos;env_key&apos; : &apos;GNU_BINDIR&apos;, &apos;var_key&apos; : &apos;BINDIR&apos;, &apos;opt_key&apos; : &apos;opt_bindir&apos;,
+                  &apos;option&apos; : &apos;--bindir&apos;, &apos;default&apos; : &apos;$exec_prefix/bin&apos;, &apos;type&apos; : &apos;string&apos;,
+                  &apos;help&apos; : &apos;directory for installing executable programs that users can run&apos; }
 )
 env = Environment()
 var = Variables()
 args = decls.Commit(env, var, True)
 args.Postprocess(env, var, True)
 
-AddOption( &apos;--help-variables&apos;, dest=&apos;help_variables&apos;, action=&apos;store_true&apos;,
-         help=&apos;print help for CLI variables&apos; )
-if GetOption(&apos;help_variables&apos;):
-  print(args.GenerateVariablesHelpText(var, env))
-  Exit(0)
+if args.HandleVariablesHelp(var, env):
+    Exit(0)
 
 # Create proxy to access Arguments using their original names
 proxy = args.EnvProxy(env)
@@ -1328,6 +1325,17 @@ BINDIR: directory for installing executable programs that users can run
   default: ${EXEC_PREFIX}/bin
   actual: /usr/local/bin
 </screen>
+			<para>The same effect may be achieved with fewer lines of code by 
+			<methodname>HandleVariablesHelp</methodname> method, which 
+			implements the code pattern presented in the previous example:</para>
+			<para>
+				<programlisting>if args.HandleVariablesHelp(var, env):
+   Exit(0)</programlisting>
+			</para>
+			<para>The function creates option named 
+			<option>--help-variables</option> which, when active, prints out 
+			documentation for all CLI variables created by 
+			<classname>_Arguments</classname>.</para>
 		</section>
 		<section xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
 			<title xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Saving 
@@ -1404,8 +1412,8 @@ PREFIX = &apos;/opt&apos;
 		may also be found in the 
 		<package xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">SConsArguments</package> 
 		package. They are delivered with the 
-		<package>scons-arguments</package> package and correspond to existing 
-		standard SCons tools.</para>
+		<package xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">scons-arguments</package> 
+		package and correspond to existing standard SCons tools.</para>
 		<section xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
 			<title xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">Preparing 
 			module with argument declarations</title>
@@ -1422,7 +1430,8 @@ PREFIX = &apos;/opt&apos;
 			<code xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">bar</code> 
 			are argument names, and these keys are followed by argument 
 			declarations. Each declaration should have a form of dict with same 
-			keys as the parameters of <function>DeclareArgument</function> 
+			keys as the parameters of 
+			<function xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">DeclareArgument</function> 
 			(<xref xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" linkend="sec-declaring-single-arg"/>). 
 			Such a file should be placed somewhere within search path for 
 			argument modules, for example under 

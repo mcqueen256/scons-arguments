@@ -54,10 +54,7 @@ var = Variables()
 args = decls.Commit(env, var, True)
 args.Postprocess(env, var, True)
 
-AddOption( '--help-variables', dest='help_variables', action='store_true',
-           help='print help for CLI variables' )
-if GetOption('help_variables'):
-    print(args.GenerateVariablesHelpText(var, env))
+if args.HandleVariablesHelp(var, env):
     Exit(0)
 
 # Create proxy to access Arguments using their original names
