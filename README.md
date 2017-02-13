@@ -53,7 +53,7 @@ QUICK EXAMPLE
 -------------
 
 A simple C++ project, with a SConstruct file accepting most of the C/C++
-compiler- and linker-related command-line arguments interface.
+compiler- and linker-related command-line arguments.
 
 ```python
 # SConstruct
