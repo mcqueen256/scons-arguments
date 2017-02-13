@@ -55,9 +55,10 @@ QUICK EXAMPLE
 A simple C++ project, with a SConstruct file accepting most of the C/C++
 compiler- and linker-related command-line arguments.
 
+SConstruct file:
+
 ```python
 # SConstruct
-
 from SConsArguments import ImportArguments
 
 env = Environment()
@@ -69,8 +70,10 @@ arg.Postprocess(env, var, True)
 if arg.HandleVariablesHelp(var, env):
   Exit(0)
 
-  env.Program('hello.cpp')
+env.Program('hello.cpp')
 ```
+
+and the C++ source code (file ``hello.cpp``):
 
 ```c++
 #include <iostream>
