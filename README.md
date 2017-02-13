@@ -19,6 +19,9 @@ entities:
 line and operating system's environment to a scons environment (to scons
 construction variables).
 
+The extension also provides a number of modules with predefined command-line
+arguments for core SCons tools (``cc``, ``c++``, ``link``, etc.).
+
 INSTALLATION
 ------------
 
@@ -45,6 +48,43 @@ In your `site_scons/site_init.py` add the following lines:
 import sys
 sys.path.append(Dir('#3rd/scons-arguments').abspath)
 ```
+
+QUICK EXAMPLE
+-------------
+
+A simple C++ project, with a SConstruct file accepting most of the C/C++
+compiler- and linker-related command-line arguments interface.
+
+```python
+# SConstruct
+
+from SConsArguments import ImportArguments
+
+env = Environment()
+var = Variables()
+
+dcl = ImportArguments(['c++', 'cc', 'link'])
+arg = dcl.Commit(env, var, True)
+arg.Postprocess(env, var, True)
+if arg.HandleVariablesHelp(var, env):
+  Exit(0)
+
+  env.Program('hello.cpp')
+```
+
+```c++
+#include <iostream>
+
+int main()
+{
+  std::cout << "Hello world" << std::endl;
+  return 0;
+}
+```
+
+Just try to run ``scons``, then ``scons --help``. Use ``scons --help-variables``
+to see the full list of new command-line variables. Play with compiler/linker
+options, for example run ``scons CCFLAGS='-g -O2'``.
 
 DOCUMENTATION
 -------------
