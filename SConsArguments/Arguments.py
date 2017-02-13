@@ -288,11 +288,9 @@ class _Arguments(object):
 
         :Parameters:
             variables : ``SCons.Variables.Variables``
-                if not ``None``, it should be an instance of
-                `SCons.Variables.Variables`_; this object is used to save
-                SCons variables,
+                should be an instance of `SCons.Variables.Variables`_
             env
-                `SCons environment`_ object to update,
+                `SCons environment`_ object
             args
                 other arguments passed verbatim to ``GenerateHelpText()``
 
@@ -302,6 +300,78 @@ class _Arguments(object):
         #--------------------------------------------------------------------
         proxy = self.VarEnvProxy(env)
         return _VariablesWrapper(variables).GenerateHelpText(proxy, *args, **kw)
+
+    def HandleVariablesHelp(self, variables, env, *args, **kw):
+        #--------------------------------------------------------------------
+        """Handle help option related to CLI variables
+
+        This function adds extra CLI option named ``--help-variables`` which
+        prints additional help describing all the CLI variables provided by
+        this **arguments** object. The function also handles printing the help.
+
+        Usage Example::
+
+            if args.HandleVariablesHelp(variables, env):
+                Exit(0)
+
+        :Parameters:
+
+            variables
+                should be an instance of `SCons.Variables.Variables`_
+            env
+                `SCons environment`_ object
+            args
+                other arguments passed verbatim to `GenerateVariablesHelpText`
+
+        :Keywords:
+            option_name : str
+                name of the option used to print help describing all local CLI
+                variables; default value is ``"--help-variables"``
+            option_help : str
+                help text for the option describing all local CLI variables
+            option_dest : str
+                passed as the ``dest`` parameter to ``AddOption()`` when
+                creating the option describing all the CLI variables
+            option_create : bool
+                whether to create the ``--help-variables`` option with
+                ``AddOption()``; defaults to ``True``
+            print_help : bool
+                whether to print the help describing all local CLI variables
+                when ``--help-variables`` is active; defaults to ``True``
+            output : file
+                a writable file object, where to print the help output to;
+                defaults to ``sys.stdout``
+
+
+        :Returns:
+            if the ``--help-variables`` option is active, then a help string
+            describing all the CLI variables is returned; otherwise ``None`` is
+            returned
+
+        .. _SCons.Variables.Variables: http://www.scons.org/doc/latest/HTML/scons-api/SCons.Variables.Variables-class.html
+        .. _SCons environment:  http://www.scons.org/doc/HTML/scons-user.html#chap-environments
+        """
+        #--------------------------------------------------------------------
+        from SCons.Script.Main import AddOption, GetOption
+        import sys
+
+        option_name = kw.get('option_name', '--help-variables')
+        option_help = kw.get('option_help', 'print help for CLI variables')
+        option_dest = kw.get('option_dest', 'help_variables')
+
+        option_create = kw.get('option_create', True)
+        if option_create:
+            AddOption(option_name, dest=option_dest, action='store_true', help=option_help)
+
+        if GetOption(option_dest):
+            local = {'option_name', 'option_help', 'option_dest',
+                     'option_create', 'print_help', 'output'}
+            kw2 = { k : kw[k] for k in kw.keys() if k not in local }
+            text = self.GenerateVariablesHelpText(variables, env, *args, **kw2)
+            if kw.get('print_help', True):
+                kw.get('output', sys.stdout).write(text)
+            return text
+        return None
 
     def GetCurrentValues(self, env):
         #--------------------------------------------------------------------

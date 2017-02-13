@@ -479,6 +479,82 @@ class Test__Arguments(unittest.TestCase):
             self.fail(str(e))
 
     @unittest.skipIf(_mock_missing, "requires mock module")
+    def test_HandleVariablesHelp_1(self):
+        """_Arguments(decls).HandleVariablesHelp('var1', 'env1', 'arg1', 'arg2', foo = 'foo1')"""
+        with mock.patch('sys.stdout') as mock_stdout, \
+             mock.patch('SCons.Script.Main.AddOption') as mock_AddOption, \
+             mock.patch('SCons.Script.Main.GetOption', return_value = True) as mock_GetOption:
+            args = SConsArguments.Arguments._Arguments(self._decls_mock_1())
+            args.GenerateVariablesHelpText = mock.Mock(return_value = 'All the help')
+            args.HandleVariablesHelp('var1', 'env1', 'arg1', 'arg2', foo='foo1')
+            mock_AddOption.assert_called_once_with('--help-variables',dest='help_variables',action='store_true',help='print help for CLI variables')
+            mock_GetOption.assert_called_once_with('help_variables')
+            args.GenerateVariablesHelpText.assert_called_once_with('var1', 'env1', 'arg1', 'arg2', foo='foo1')
+            mock_stdout.write.assert_called_once_with('All the help')
+
+    @unittest.skipIf(_mock_missing, "requires mock module")
+    def test_HandleVariablesHelp_2(self):
+        """_Arguments(decls).HandleVariablesHelp('var1', 'env1', option_name='--my-help', option_dest='my_help', option_help='Print My Help')"""
+        with mock.patch('sys.stdout') as mock_stdout, \
+             mock.patch('SCons.Script.Main.AddOption') as mock_AddOption, \
+             mock.patch('SCons.Script.Main.GetOption', return_value = True) as mock_GetOption:
+            args = SConsArguments.Arguments._Arguments(self._decls_mock_1())
+            args.GenerateVariablesHelpText = mock.Mock(return_value = 'All the help')
+            result = args.HandleVariablesHelp('var1', 'env1', option_name='--my-help', option_dest='my_help', option_help='Print My Help')
+            self.assertEqual(result, 'All the help')
+            mock_AddOption.assert_called_once_with('--my-help',dest='my_help',action='store_true',help='Print My Help')
+            mock_GetOption.assert_called_once_with('my_help')
+            args.GenerateVariablesHelpText.assert_called_once_with('var1','env1')
+            mock_stdout.write.assert_called_once_with('All the help')
+
+    @unittest.skipIf(_mock_missing, "requires mock module")
+    def test_HandleVariablesHelp_3(self):
+        """_Arguments(decls).HandleVariablesHelp('var1', 'env1', option_create=False)"""
+        with mock.patch('sys.stdout') as mock_stdout, \
+             mock.patch('SCons.Script.Main.AddOption') as mock_AddOption, \
+             mock.patch('SCons.Script.Main.GetOption', return_value = True) as mock_GetOption:
+            args = SConsArguments.Arguments._Arguments(self._decls_mock_1())
+            args.GenerateVariablesHelpText = mock.Mock(return_value = 'All the help')
+            result = args.HandleVariablesHelp('var1', 'env1', option_create=False)
+            self.assertEqual(result, 'All the help')
+            mock_AddOption.assert_not_called()
+            mock_GetOption.assert_called_once_with('help_variables')
+            args.GenerateVariablesHelpText.assert_called_once_with('var1', 'env1')
+            mock_stdout.write.assert_called_once_with('All the help')
+
+    @unittest.skipIf(_mock_missing, "requires mock module")
+    def test_HandleVariablesHelp_4(self):
+        """_Arguments(decls).HandleVariablesHelp('var1', 'env1', print_help=False)"""
+        with mock.patch('sys.stdout') as mock_stdout, \
+             mock.patch('SCons.Script.Main.AddOption') as mock_AddOption, \
+             mock.patch('SCons.Script.Main.GetOption', return_value = True) as mock_GetOption:
+            args = SConsArguments.Arguments._Arguments(self._decls_mock_1())
+            args.GenerateVariablesHelpText = mock.Mock(return_value = 'All the help')
+            result = args.HandleVariablesHelp('var1', 'env1', print_help=False)
+            self.assertEqual(result, 'All the help')
+            mock_AddOption.assert_called_once_with('--help-variables',dest='help_variables',action='store_true',help='print help for CLI variables')
+            mock_GetOption.assert_called_once_with('help_variables')
+            args.GenerateVariablesHelpText.assert_called_once_with('var1', 'env1')
+            mock_stdout.write.assert_not_called()
+
+    @unittest.skipIf(_mock_missing, "requires mock module")
+    def test_HandleVariablesHelp_5(self):
+        """_Arguments(decls).HandleVariablesHelp('var1', 'env1')"""
+        with mock.patch('sys.stdout') as mock_stdout, \
+             mock.patch('SCons.Script.Main.AddOption') as mock_AddOption, \
+             mock.patch('SCons.Script.Main.GetOption', return_value = False) as mock_GetOption:
+            args = SConsArguments.Arguments._Arguments(self._decls_mock_1())
+            args.GenerateVariablesHelpText = mock.Mock(return_value = 'All the help')
+            result = args.HandleVariablesHelp('var1', 'env1')
+            self.assertIs(result, None)
+            mock_AddOption.assert_called_once_with('--help-variables',dest='help_variables',action='store_true',help='print help for CLI variables')
+            mock_GetOption.assert_called_once_with('help_variables')
+            args.GenerateVariablesHelpText.assert_not_called()
+            mock_stdout.write.assert_not_called()
+
+
+
+    @unittest.skipIf(_mock_missing, "requires mock module")
     def test_GetCurrentValues_1(self):
         """_Arguments(decls).GetCurrentValues(env) works as expected"""
         args = SConsArguments.Arguments._Arguments(self._decls_mock_5())
