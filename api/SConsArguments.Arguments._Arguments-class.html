@@ -418,6 +418,27 @@ corresponding <a class="rst-reference external" href="http://www.scons.org/doc/H
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
+          <td><span class="summary-sig"><a href="SConsArguments.Arguments._Arguments-class.html#HandleVariablesHelp" class="summary-sig-name">HandleVariablesHelp</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">variables</span>,
+        <span class="summary-sig-arg">env</span>,
+        <span class="summary-sig-arg">*args</span>,
+        <span class="summary-sig-arg">**kw</span>)</span><br />
+      Handle help option related to CLI variables</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="SConsArguments.Arguments-pysrc.html#_Arguments.HandleVariablesHelp">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
           <td><span class="summary-sig"><a href="SConsArguments.Arguments._Arguments-class.html#GetCurrentValues" class="summary-sig-name">GetCurrentValues</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">env</span>)</span><br />
       Get current values of <em>arguments</em> stored in environment</td>
@@ -902,12 +923,62 @@ variables.</dd>
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
-        <li><strong class="pname"><code>variables</code></strong> (<tt class="rst-docutils literal">SCons.Variables.Variables</tt>) - if not <tt class="rst-docutils literal">None</tt>, it should be an instance of
-<a class="rst-reference external" href="http://www.scons.org/doc/latest/HTML/scons-api/SCons.Variables.Variables-class.html" target="_top">SCons.Variables.Variables</a>; this object is used to save
-SCons variables,</li>
-        <li><strong class="pname"><code>env</code></strong> - <a class="rst-reference external" href="http://www.scons.org/doc/HTML/scons-user.html#chap-environments" target="_top">SCons environment</a> object to update,</li>
+        <li><strong class="pname"><code>variables</code></strong> (<tt class="rst-docutils literal">SCons.Variables.Variables</tt>) - should be an instance of <a class="rst-reference external" href="http://www.scons.org/doc/latest/HTML/scons-api/SCons.Variables.Variables-class.html" target="_top">SCons.Variables.Variables</a></li>
+        <li><strong class="pname"><code>env</code></strong> - <a class="rst-reference external" href="http://www.scons.org/doc/HTML/scons-user.html#chap-environments" target="_top">SCons environment</a> object</li>
         <li><strong class="pname"><code>args</code></strong> - other arguments passed verbatim to <tt class="rst-docutils literal">GenerateHelpText()</tt></li>
     </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="HandleVariablesHelp"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">HandleVariablesHelp</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">variables</span>,
+        <span class="sig-arg">env</span>,
+        <span class="sig-arg">*args</span>,
+        <span class="sig-arg">**kw</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="SConsArguments.Arguments-pysrc.html#_Arguments.HandleVariablesHelp">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Handle help option related to CLI variables</p>
+<p>This function adds extra CLI option named <tt class="rst-docutils literal"><span class="pre">--help-variables</span></tt> which
+prints additional help describing all the CLI variables provided by
+this <strong>arguments</strong> object. The function also handles printing the help.</p>
+<p>Usage Example:</p>
+<pre class="rst-literal-block">
+if args.HandleVariablesHelp(variables, env):
+    Exit(0)
+</pre>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>variables</code></strong> - should be an instance of <a class="rst-reference external" href="http://www.scons.org/doc/latest/HTML/scons-api/SCons.Variables.Variables-class.html" target="_top">SCons.Variables.Variables</a></li>
+        <li><strong class="pname"><code>env</code></strong> - <a class="rst-reference external" href="http://www.scons.org/doc/HTML/scons-user.html#chap-environments" target="_top">SCons environment</a> object</li>
+        <li><strong class="pname"><code>args</code></strong> - other arguments passed verbatim to <a href="SConsArguments.Arguments._Arguments-class.html#GenerateVariablesHelpText" class="link">GenerateVariablesHelpText</a></li>
+        <li><strong class="pname"><code>option_name</code></strong> (str) - name of the option used to print help describing all local CLI
+variables; default value is <tt class="rst-docutils literal"><span class="pre">&quot;--help-variables&quot;</span></tt></li>
+        <li><strong class="pname"><code>option_help</code></strong> (str) - help text for the option describing all local CLI variables</li>
+        <li><strong class="pname"><code>option_dest</code></strong> (str) - passed as the <tt class="rst-docutils literal">dest</tt> parameter to <tt class="rst-docutils literal">AddOption()</tt> when
+creating the option describing all the CLI variables</li>
+        <li><strong class="pname"><code>option_create</code></strong> (bool) - whether to create the <tt class="rst-docutils literal"><span class="pre">--help-variables</span></tt> option with
+<tt class="rst-docutils literal">AddOption()</tt>; defaults to <tt class="rst-docutils literal">True</tt></li>
+        <li><strong class="pname"><code>print_help</code></strong> (bool) - whether to print the help describing all local CLI variables
+when <tt class="rst-docutils literal"><span class="pre">--help-variables</span></tt> is active; defaults to <tt class="rst-docutils literal">True</tt></li>
+        <li><strong class="pname"><code>output</code></strong> (file) - a writable file object, where to print the help output to;
+defaults to <tt class="rst-docutils literal">sys.stdout</tt></li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>if the <tt class="rst-docutils literal"><span class="pre">--help-variables</span></tt> option is active, then a help string
+describing all the CLI variables is returned; otherwise <tt class="rst-docutils literal">None</tt> is
+returned</dd>
   </dl>
 </td></tr></table>
 </div>
@@ -1276,7 +1347,7 @@ transformed back to namespace of <em>arguments</em>.</dd>
   <tr>
     <td align="left" class="footer">
     Generated by Epydoc 3.0.1
-    on Mon Feb  6 15:07:42 2017
+    on Mon Feb 13 22:54:11 2017
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

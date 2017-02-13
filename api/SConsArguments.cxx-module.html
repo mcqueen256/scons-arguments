@@ -3,7 +3,7 @@
           "DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>SConsArguments.tex</title>
+  <title>SConsArguments.cxx</title>
   <link rel="stylesheet" href="epydoc.css" type="text/css" />
   <script type="text/javascript" src="epydoc.js"></script>
 </head>
@@ -38,7 +38,7 @@
     <td width="100%">
       <span class="breadcrumbs">
         <a href="SConsArguments-module.html">Package&nbsp;SConsArguments</a> ::
-        Module&nbsp;tex
+        Module&nbsp;cxx
       </span>
     </td>
     <td>
@@ -48,55 +48,44 @@
     onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
         <tr><td align="right"><span class="options"
             >[<a href="frames.html" target="_top">frames</a
-            >]&nbsp;|&nbsp;<a href="SConsArguments.tex-module.html"
+            >]&nbsp;|&nbsp;<a href="SConsArguments.cxx-module.html"
             target="_top">no&nbsp;frames</a>]</span></td></tr>
       </table>
     </td>
   </tr>
 </table>
 <!-- ==================== MODULE DESCRIPTION ==================== -->
-<h1 class="epydoc">Module tex</h1><p class="nomargin-top"><span class="codelink"><a href="SConsArguments.tex-pysrc.html">source&nbsp;code</a></span></p>
-<p><a href="SConsArguments.tex-module.html" class="link">SConsArguments.tex</a></p>
-<p>Defines arguments related to tex</p>
+<h1 class="epydoc">Module cxx</h1><p class="nomargin-top"><span class="codelink"><a href="SConsArguments.cxx-pysrc.html">source&nbsp;code</a></span></p>
+<p><a href="SConsArguments.cxx-module.html" class="link">SConsArguments.cxx</a></p>
+<p>Defines arguments related to the C++ compiler. This module can be used in two
+ways, either by:</p>
+<pre class="rst-literal-block">
+decls = ImportArguments('cxx')
+</pre>
+<p>or:</p>
+<pre class="rst-literal-block">
+decls = ImportArguments('c++')
+</pre>
 <p><strong>Arguments</strong></p>
+<p>Programs:</p>
+<blockquote>
 <dl class="rst-docutils">
-<dt>Programs:</dt>
-<dd><dl class="rst-first rst-last rst-docutils">
-<dt>BIBTEX</dt>
-<dd>The bibliography generator for TeX and LaTeX</dd>
-<dt>LATEX</dt>
-<dd>The LaTeX structured formatter and typesetter</dd>
-<dt>MAKEINDEX</dt>
-<dd>The makeindex generator for the TeX</dd>
-<dt>PDFLATEX</dt>
-<dd>The pdflatex utility</dd>
-<dt>PDFTEX</dt>
-<dd>The pdftex utility</dd>
-<dt>TEX</dt>
-<dd>The TeX formatter and typesetter</dd>
+<dt>CXX</dt>
+<dd>The C++ compiler</dd>
+<dt>SHCXX</dt>
+<dd>The C++ compiler used for generating shared-library objects</dd>
 </dl>
-</dd>
-<dt>Flags for programs:</dt>
-<dd><dl class="rst-first rst-last rst-docutils">
-<dt>BIBTEXFLAGS</dt>
-<dd>General options passed to BibTeX</dd>
-<dt>LATEXFLAGS</dt>
-<dd>General options passed to the LaTeX structured formatter and typesetter</dd>
-<dt>LATEXRETRIES</dt>
-<dd>The maximum number of times that LaTeX will be re-run</dd>
-<dt>MAKEINDEXFLAGS</dt>
-<dd>General options passed to the makeindex</dd>
-<dt>PDFLATEXFLAGS</dt>
-<dd>General options passed to the pdflatex utility</dd>
-<dt>PDFTEXFLAGS</dt>
-<dd>General options passed to the pdftex utility</dd>
-<dt>TEXFLAGS</dt>
-<dd>General options passed to the TeX formatter and typesetter</dd>
-<dt>TEXINPUTS</dt>
-<dd>List of directories that the LaTeX program will search for include directories</dd>
+</blockquote>
+<p>Flags for programs:</p>
+<blockquote>
+<dl class="rst-docutils">
+<dt>CXXFLAGS</dt>
+<dd>General options that are passed to the C++ compiler</dd>
+<dt>SHCXXFLAGS</dt>
+<dd>Options that are passed to the C++ compiler to generate shared-library
+objects</dd>
 </dl>
-</dd>
-</dl>
+</blockquote>
 
 <!-- ==================== FUNCTIONS ==================== -->
 <a name="section-Functions"></a>
@@ -121,10 +110,10 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="SConsArguments.tex-module.html#arguments" class="summary-sig-name">arguments</a>(<span class="summary-sig-arg">**kw</span>)</span><br />
-      Returns argument declarations for 'tex' tool</td>
+          <td><span class="summary-sig"><a href="SConsArguments.cxx-module.html#arguments" class="summary-sig-name">arguments</a>(<span class="summary-sig-arg">**kw</span>)</span><br />
+      Returns argument declarations for 'c++' tool</td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="SConsArguments.tex-pysrc.html#arguments">source&nbsp;code</a></span>
+            <span class="codelink"><a href="SConsArguments.cxx-pysrc.html#arguments">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -154,30 +143,22 @@
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a href="SConsArguments.tex-module.html#_all_arguments" class="summary-name" onclick="show_private();">_all_arguments</a> = <code title="{'BIBTEX': {'help': 'The bibliography generator for TeX and LaTeX',
-            'metavar': 'PROG'},
- 'BIBTEXFLAGS': {'converter': &lt;__builtin__.function object&gt;,
-                 'help': 'General options passed to BibTeX',
-                 'metavar': 'FLAGS'},
- 'LATEX': {'help': 'The LaTeX structured formatter and typesetter',
+        <a href="SConsArguments.cxx-module.html#_all_arguments" class="summary-name" onclick="show_private();">_all_arguments</a> = <code title="{'CXX': {'help': 'The C++ compiler', 'metavar': 'PROG'},
+ 'CXXFLAGS': {'converter': &lt;__builtin__.function object&gt;,
+              'help': 'General options that are passed to the C++ comp\
+iler',
+              'metavar': 'FLAGS'},
+ 'SHCXX': {'help': 'The C++ compiler used for generating shared-librar\
+y objects',
            'metavar': 'PROG'},
- 'LATEXFLAGS': {'converter': &lt;__builtin__.function object&gt;, 'help': 'G\
-..."><code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string">BIBTEX</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string">help</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">The bibliography generat</code><code class="variable-ellipsis">...</code></code>
+..."><code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string">CXX</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string">help</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">The C++ compiler</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">metavar</code><code class="variable-ellipsis">...</code></code>
     </td>
   </tr>
 <tr class="private">
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
     </td><td class="summary">
-        <a href="SConsArguments.tex-module.html#_groups" class="summary-name" onclick="show_private();">_groups</a> = <code title="{'flags': ['BIBTEXFLAGS',
-           'LATEXFLAGS',
-           'LATEXRETRIES',
-           'MAKEINDEXFLAGS',
-           'PDFLATEXFLAGS',
-           'PDFTEXFLAGS',
-           'TEXFLAGS',
-           'TEXINPUTS'],
-..."><code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string">flags</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-group">[</code><code class="variable-quote">'</code><code class="variable-string">BIBTEXFLAGS</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">LATEXFLAGS</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">LATEXRETRIE</code><code class="variable-ellipsis">...</code></code>
+        <a href="SConsArguments.cxx-module.html#_groups" class="summary-name" onclick="show_private();">_groups</a> = <code title="{'flags': ['CXXFLAGS', 'SHCXXFLAGS'], 'progs': ['CXX', 'SHCXX']}"><code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string">flags</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-group">[</code><code class="variable-quote">'</code><code class="variable-string">CXXFLAGS</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">SHCXXFLAGS</code><code class="variable-quote">'</code><code class="variable-group">]</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">progs</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-group">[</code><code class="variable-quote">'</code><code class="variable-string">CXX</code><code class="variable-ellipsis">...</code></code>
     </td>
   </tr>
 <tr>
@@ -216,19 +197,19 @@
   <h3 class="epydoc"><span class="sig"><span class="sig-name">arguments</span>(<span class="sig-arg">**kw</span>)</span>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="SConsArguments.tex-pysrc.html#arguments">source&nbsp;code</a></span>&nbsp;
+    ><span class="codelink"><a href="SConsArguments.cxx-pysrc.html#arguments">source&nbsp;code</a></span>&nbsp;
     </td>
   </tr></table>
   
-  Returns argument declarations for 'tex' tool
+  Returns argument declarations for 'c++' tool
   <dl class="fields">
     <dt>Parameters:</dt>
     <dd><ul class="nomargin-top">
         <li><strong class="pname"><code>include_groups</code></strong> (str | list) - include only arguments assigned to these groups</li>
         <li><strong class="pname"><code>exclude_groups</code></strong> (str | list) - exclude arguents assigned to these groups</li>
-        <li><strong class="pname"><code>tex_include_groups</code></strong> (str | list) - include only arguments assigned to these groups, this has
+        <li><strong class="pname"><code>cxx_include_groups</code></strong> (str | list) - include only arguments assigned to these groups, this has
 higher priority than <strong>include_groups</strong></li>
-        <li><strong class="pname"><code>tex_exclude_groups</code></strong> (str | list) - exclude arguents assigned to these groups, this has higher
+        <li><strong class="pname"><code>cxx_exclude_groups</code></strong> (str | list) - exclude arguents assigned to these groups, this has higher
 priority than <strong>exclude_groups</strong></li>
     </ul></dd>
   </dl>
@@ -265,14 +246,14 @@ priority than <strong>exclude_groups</strong></li>
   <dl class="fields">
     <dt>Value:</dt>
       <dd><table><tr><td><pre class="variable">
-<code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string">BIBTEX</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string">help</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">The bibliography generator for TeX and LaTeX</code><code class="variable-quote">'</code><code class="variable-op">,</code>
-            <code class="variable-quote">'</code><code class="variable-string">metavar</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">PROG</code><code class="variable-quote">'</code><code class="variable-group">}</code><code class="variable-op">,</code>
- <code class="variable-quote">'</code><code class="variable-string">BIBTEXFLAGS</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string">converter</code><code class="variable-quote">'</code><code class="variable-op">: </code>&lt;__builtin__.function object&gt;<code class="variable-op">,</code>
-                 <code class="variable-quote">'</code><code class="variable-string">help</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">General options passed to BibTeX</code><code class="variable-quote">'</code><code class="variable-op">,</code>
-                 <code class="variable-quote">'</code><code class="variable-string">metavar</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">FLAGS</code><code class="variable-quote">'</code><code class="variable-group">}</code><code class="variable-op">,</code>
- <code class="variable-quote">'</code><code class="variable-string">LATEX</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string">help</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">The LaTeX structured formatter and typesetter</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+<code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string">CXX</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string">help</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">The C++ compiler</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">metavar</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">PROG</code><code class="variable-quote">'</code><code class="variable-group">}</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">CXXFLAGS</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string">converter</code><code class="variable-quote">'</code><code class="variable-op">: </code>&lt;__builtin__.function object&gt;<code class="variable-op">,</code>
+              <code class="variable-quote">'</code><code class="variable-string">help</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">General options that are passed to the C++ comp</code><span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+<code class="variable-string">iler</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+              <code class="variable-quote">'</code><code class="variable-string">metavar</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">FLAGS</code><code class="variable-quote">'</code><code class="variable-group">}</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">SHCXX</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string">help</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">The C++ compiler used for generating shared-librar</code><span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+<code class="variable-string">y objects</code><code class="variable-quote">'</code><code class="variable-op">,</code>
            <code class="variable-quote">'</code><code class="variable-string">metavar</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">PROG</code><code class="variable-quote">'</code><code class="variable-group">}</code><code class="variable-op">,</code>
- <code class="variable-quote">'</code><code class="variable-string">LATEXFLAGS</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string">converter</code><code class="variable-quote">'</code><code class="variable-op">: </code>&lt;__builtin__.function object&gt;<code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">help</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">G</code><span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
 <code class="variable-ellipsis">...</code>
 </pre></td></tr></table>
 </dd>
@@ -291,15 +272,7 @@ priority than <strong>exclude_groups</strong></li>
   <dl class="fields">
     <dt>Value:</dt>
       <dd><table><tr><td><pre class="variable">
-<code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string">flags</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-group">[</code><code class="variable-quote">'</code><code class="variable-string">BIBTEXFLAGS</code><code class="variable-quote">'</code><code class="variable-op">,</code>
-           <code class="variable-quote">'</code><code class="variable-string">LATEXFLAGS</code><code class="variable-quote">'</code><code class="variable-op">,</code>
-           <code class="variable-quote">'</code><code class="variable-string">LATEXRETRIES</code><code class="variable-quote">'</code><code class="variable-op">,</code>
-           <code class="variable-quote">'</code><code class="variable-string">MAKEINDEXFLAGS</code><code class="variable-quote">'</code><code class="variable-op">,</code>
-           <code class="variable-quote">'</code><code class="variable-string">PDFLATEXFLAGS</code><code class="variable-quote">'</code><code class="variable-op">,</code>
-           <code class="variable-quote">'</code><code class="variable-string">PDFTEXFLAGS</code><code class="variable-quote">'</code><code class="variable-op">,</code>
-           <code class="variable-quote">'</code><code class="variable-string">TEXFLAGS</code><code class="variable-quote">'</code><code class="variable-op">,</code>
-           <code class="variable-quote">'</code><code class="variable-string">TEXINPUTS</code><code class="variable-quote">'</code><code class="variable-group">]</code><code class="variable-op">,</code>
-<code class="variable-ellipsis">...</code>
+<code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string">flags</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-group">[</code><code class="variable-quote">'</code><code class="variable-string">CXXFLAGS</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">SHCXXFLAGS</code><code class="variable-quote">'</code><code class="variable-group">]</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">progs</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-group">[</code><code class="variable-quote">'</code><code class="variable-string">CXX</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">SHCXX</code><code class="variable-quote">'</code><code class="variable-group">]</code><code class="variable-group">}</code>
 </pre></td></tr></table>
 </dd>
   </dl>

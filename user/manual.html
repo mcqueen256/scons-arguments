@@ -10,12 +10,13 @@
 		Arguments</a></span></li><li><span class="section"><a href="#idm554">6. Accessing 
 		Argument values</a></span></li><li><span class="section"><a href="#idm582">7. Putting 
 		it all together</a></span><ul><li><span class="section"><a href="#idm664">7.1. Documenting 
-			Command Line variables</a></span></li><li><span class="section"><a href="#idm683">7.2. Saving 
-			command line variables to a file</a></span></li><li><span class="section"><a href="#idm706">7.3. Loading 
-			command line variables from file</a></span></li></ul></li><li><span class="section"><a href="#idm712">8. Importing 
-		argument declarations from python modules</a></span><ul><li><span class="section"><a href="#idm719">8.1. Preparing 
-			module with argument declarations</a></span></li><li><span class="section"><a href="#idm733">8.2. Importing 
-			argument declarations from a module</a></span></li></ul></li></ul></div><section class="section" id="sec-intro"><div class="titlepage"><div><div><h2 class="title" style="clear: both">1. Introduction</h2></div></div></div><p>The 
+			Command Line variables</a></span></li><li><span class="section"><a href="#idm690">7.2. Saving 
+			command line variables to a file</a></span></li><li><span class="section"><a href="#idm713">7.3. Loading 
+			command line variables from file</a></span></li></ul></li><li><span class="section"><a href="#idm719">8. Importing 
+		argument declarations from python modules</a></span><ul><li><span class="section"><a href="#idm726">8.1. Preparing 
+			module with argument declarations</a></span></li><li><span class="section"><a href="#idm745">8.2. Importing 
+			argument declarations from a module</a></span></li><li><span class="section"><a href="#idm775">8.3. Predefined 
+			modules</a></span></li></ul></li></ul></div><section class="section" id="sec-intro"><div class="titlepage"><div><div><h2 class="title" style="clear: both">1. Introduction</h2></div></div></div><p>The 
 		<span class="package">scons-arguments</span> 
 		package is an extension to 
 		<span class="productname"><a class="link" href="http://scons.org" target="_top">SCons</a></span> 
@@ -972,26 +973,23 @@ scons: `.' is up to date.</pre><p>
 			example involving Arguments</div><div class="example-contents"><pre class="programlisting"># SConstruct
 import SConsArguments
 decls = SConsArguments.DeclareArguments(
-prefix      = { 'env_key' : 'GNU_PREFIX', 'var_key' : 'PREFIX', 'opt_key' : 'opt_prefix',
-                'option' : '--prefix', 'default' : '/usr/local', 'type' : 'string',
-                'help' : 'installation prefix' },
-exec_prefix = { 'env_key' : 'GNU_EXEC_PREFIX', 'var_key' : 'EXEC_PREFIX', 'opt_key' : 'opt_exec_prefix',
-                'option' : '--exec-prefix', 'default' : '$prefix', 'type' : 'string',
-                'help' : 'installation prefix for executable files' },
-bindir      = { 'env_key' : 'GNU_BINDIR', 'var_key' : 'BINDIR', 'opt_key' : 'opt_bindir',
-                'option' : '--bindir', 'default' : '$exec_prefix/bin', 'type' : 'string',
-                'help' : 'directory for installing executable programs that users can run' }
+  prefix      = { 'env_key' : 'GNU_PREFIX', 'var_key' : 'PREFIX', 'opt_key' : 'opt_prefix',
+                  'option' : '--prefix', 'default' : '/usr/local', 'type' : 'string',
+                  'help' : 'installation prefix' },
+  exec_prefix = { 'env_key' : 'GNU_EXEC_PREFIX', 'var_key' : 'EXEC_PREFIX', 'opt_key' : 'opt_exec_prefix',
+                  'option' : '--exec-prefix', 'default' : '$prefix', 'type' : 'string',
+                  'help' : 'installation prefix for executable files' },
+  bindir      = { 'env_key' : 'GNU_BINDIR', 'var_key' : 'BINDIR', 'opt_key' : 'opt_bindir',
+                  'option' : '--bindir', 'default' : '$exec_prefix/bin', 'type' : 'string',
+                  'help' : 'directory for installing executable programs that users can run' }
 )
 env = Environment()
 var = Variables()
 args = decls.Commit(env, var, True)
 args.Postprocess(env, var, True)
 
-AddOption( '--help-variables', dest='help_variables', action='store_true',
-         help='print help for CLI variables' )
-if GetOption('help_variables'):
-  print(args.GenerateVariablesHelpText(var, env))
-  Exit(0)
+if args.HandleVariablesHelp(var, env):
+    Exit(0)
 
 # Create proxy to access Arguments using their original names
 proxy = args.EnvProxy(env)
@@ -1083,7 +1081,19 @@ PREFIX: installation prefix
 BINDIR: directory for installing executable programs that users can run
   default: ${EXEC_PREFIX}/bin
   actual: /usr/local/bin
-</pre></section><section class="section" id="idm683"><div class="titlepage"><div><div><h3 class="title">7.2. Saving 
+</pre><p>The 
+			same effect may be achieved with fewer lines of code by 
+			<code class="methodname">HandleVariablesHelp</code> 
+			method, which implements the code pattern presented in the previous 
+			example:</p><p>
+				</p><pre class="programlisting">if args.HandleVariablesHelp(var, env):
+   Exit(0)</pre><p>
+			</p><p>The 
+			function creates option named 
+			<code class="option">--help-variables</code> 
+			which, when active, prints out documentation for all CLI variables 
+			created by 
+			<code class="classname">_Arguments</code>.</p></section><section class="section" id="idm690"><div class="titlepage"><div><div><h3 class="title">7.2. Saving 
 			command line variables to a file</h3></div></div></div><p>Easies 
 			way to save Arguments is to pass 
 			<em class="parameter"><code>filename</code></em> 
@@ -1102,7 +1112,7 @@ BINDIR: directory for installing executable programs that users can run
 			not saved). This takes into account input from a command line 
 			variable and a command line option associated with a given Argument. 
 			In any case, however, the value is saved as it was set to a command 
-			line variable.</p><div class="example" id="idm695"><div class="example-title">Example 14. Saving 
+			line variable.</p><div class="example" id="idm702"><div class="example-title">Example 14. Saving 
 				Arguments to file</div><div class="example-contents"><p>
 					If you integrate the following code snippet to the SConscript file 
 					from 
@@ -1116,14 +1126,14 @@ BINDIR: directory for installing executable programs that users can run
 <code class="prompt">ptomulik@tea:$</code> <span class="command"><strong>cat</strong></span> .scons.variables
 EXEC_PREFIX = '${PREFIX}/exec'
 PREFIX = '/opt'
-</pre></div></div><br class="example-break"></br></section><section class="section" id="idm706"><div class="titlepage"><div><div><h3 class="title">7.3. Loading 
+</pre></div></div><br class="example-break"></br></section><section class="section" id="idm713"><div class="titlepage"><div><div><h3 class="title">7.3. Loading 
 			command line variables from file</h3></div></div></div><p>This 
 			is done in standard way, that is by using the feature of 
 			<a class="link" href="www.scons.org/doc/HTML/scons-api/SCons.Variables.Variables-class.html" target="_top">SCons 
 			Variables</a> . The only thing that has to be done is to provide 
 			<em class="parameter"><code>file</code></em> 
 			parameter when creating command line variables</p><pre class="programlisting">var = Variables('.scons.variables')
-</pre></section></section><section class="section" id="idm712"><div class="titlepage"><div><div><h2 class="title" style="clear: both">8. Importing 
+</pre></section></section><section class="section" id="idm719"><div class="titlepage"><div><div><h2 class="title" style="clear: both">8. Importing 
 		argument declarations from python modules</h2></div></div></div><p>Argument 
 		declarations may be delivered by "special" python modules 
 		in a similar way as SCons tools are. A python module placed in an 
@@ -1137,8 +1147,8 @@ PREFIX = '/opt'
 		may also be found in the 
 		<span class="package">SConsArguments</span> 
 		package. They are delivered with the 
-		<span class="package">scons-arguments</span> package and correspond to existing 
-		standard SCons tools.</p><section class="section" id="idm719"><div class="titlepage"><div><div><h3 class="title">8.1. Preparing 
+		<span class="package">scons-arguments</span> 
+		package and correspond to existing standard SCons tools.</p><section class="section" id="idm726"><div class="titlepage"><div><div><h3 class="title">8.1. Preparing 
 			module with argument declarations</h3></div></div></div><p>An 
 			argument module should provide a function named 
 			<code class="function">arguments</code> 
@@ -1150,20 +1160,28 @@ PREFIX = '/opt'
 			<code class="code">bar</code> 
 			are argument names, and these keys are followed by argument 
 			declarations. Each declaration should have a form of dict with same 
-			keys as the parameters of <code class="function">DeclareArgument</code> 
+			keys as the parameters of 
+			<code class="function">DeclareArgument</code> 
 			(<a class="xref" href="#sec-declaring-single-arg" title="3.1. Declaring single Argument">Section 3.1, “Declaring 
 			single Argument”</a>). 
 			Such a file should be placed somewhere within search path for 
 			argument modules, for example under 
 			<code class="filename">site_scons/site_arguments</code>. 
 			A simple module with two argument declarations is given in the 
-			following example</p><div class="example" id="idm730"><div class="example-title">Example 15. A 
+			following example</p><div class="example" id="idm737"><div class="example-title">Example 15. A 
 				simple module with arguments</div><div class="example-contents"><pre class="programlisting"># site_scons/site_arguments/myargs.py
 def arguments(**kw):
     return {
       'arg1' : { 'help' : 'This is argument 1' },
       'arg2' : { 'help' : 'This is argument 2' }
-    }</pre></div></div><br class="example-break"></br></section><section class="section" id="idm733"><div class="titlepage"><div><div><h3 class="title">8.2. Importing 
+    }</pre></div></div><br class="example-break"></br><p>For typical purposes, a function named 
+			<code class="function">export_arguments()</code> (from 
+			<code class="varname">SConsArguments.Importer</code> module) may be used 
+			within the <code class="function">arguments()</code> function to implement 
+			common parameters (grouping argumnents, filtering by group, etc.). 
+			See API documentation and source code of the argument modules 
+			provided by <span class="package">scons-arguments</span> for more 
+			details.</p></section><section class="section" id="idm745"><div class="titlepage"><div><div><h3 class="title">8.2. Importing 
 			argument declarations from a module</h3></div></div></div><p>Argument 
 			declarations can be imported from a module with the 
 			<code class="function">ImportArguments</code> 
@@ -1173,7 +1191,7 @@ decl = SConsArguments.ImportArguments('myargs')</pre><p>Having
 			(committing, postprocessing, etc.).</p><p>The 
 			prototype of 
 			<code class="function">ImportArguments</code> 
-			is the following</p><pre class="programlisting">ImportArguments(modules, argpath=None, **kw)</pre><p>The 
+			is the following</p><pre class="programlisting">_ArgumentDeclarations ImportArguments(modules, argpath=None, **kw)</pre><p>The 
 			function accepts quite a lot of optional parameters (we refer an 
 			interested user to API reference). Here we only mention few of them 
 			(most commonly used).</p><div class="informaltable"><table><thead><tr>
@@ -1197,4 +1215,291 @@ decl = SConsArguments.ImportArguments('myargs')</pre><p>Having
 						<em class="parameter"><code>name_filter</code></em> 
 						is a list or set (a collection), only arguments listed in this 
 						collection will be imported.</td>
+					</tr><tr></tr></tbody></table></div></section><section class="section" id="idm775"><div class="titlepage"><div><div><h3 class="title">8.3. Predefined 
+			modules</h3></div></div></div><p>The 
+			<span class="package">scons-arguments</span> 
+			package provides a number of predefined modules with arguments (CLI 
+			variables). The list of out-of-box modules tries to  mirror the list 
+			of built-in SCons tools. Below we've enumerated them together 
+			with CLI variables they provide. By default, these CLI variables are 
+			mapped 1:1 to SCons environment variables, but this may be 
+			customized at load time (the <code class="function">ImportArguments()</code> 
+			function provides quite a lot of parameters for customization). More 
+			details may be found in API documentation.</p><div class="informaltable"><table><thead><tr>
+						<th>module</th>
+						<th>description</th>
+						<th>some of the arguments 
+						provided by module</th>
+					</tr></thead><tbody><tr>
+						<td>ar</td>
+						<td>Arguments related to 
+						static library archiver AR</td>
+						<td><code class="varname">AR</code>, 
+						<code class="varname">ARFLAGS</code>, 
+						<code class="varname">RANLIB</code>, 
+						<code class="varname">RANLIBFLAGS</code></td>
+					</tr><tr>
+						<td>as</td>
+						<td>Arguments related to 
+						the assembler AS</td>
+						<td><code class="varname">AS</code>, 
+						<code class="varname">ASFLAGS</code>, 
+						<code class="varname">ASPPFLAGS</code></td>
+					</tr><tr>
+						<td>bitkeeper</td>
+						<td>Arguments related to 
+						BitKeeper</td>
+						<td><code class="varname">BITKEEPER</code>, 
+						<code class="varname">BITKEEPERFLAGS</code></td>
+					</tr><tr>
+						<td>cc</td>
+						<td>Arguments related to C 
+						compiler</td>
+						<td><code class="varname">CC</code>, 
+						<code class="varname">CCFLAGS</code>, 
+						<code class="varname">CFLAGS</code>, 
+						<code class="varname">CPPDEFINES</code></td>
+					</tr><tr>
+						<td>cvs</td>
+						<td>Arguments related to 
+						CVS, code versioning system</td>
+						<td><code class="varname">CVS</code>, 
+						<code class="varname">CVSCOFLAGS</code>, 
+						<code class="varname">CVSFLAGS</code></td>
+					</tr><tr>
+						<td>cxx, c++</td>
+						<td>Arguments related to 
+						the C++ compiler</td>
+						<td><code class="varname">CXX</code>, 
+						<code class="varname">CXXFLAGS</code></td>
+					</tr><tr>
+						<td>dc</td>
+						<td>Arguments related to D 
+						compiler</td>
+						<td><code class="varname">DC</code>, 
+						<code class="varname">DFLAGS</code>, 
+						<code class="varname">DPATH</code></td>
+					</tr><tr>
+						<td>dlink</td>
+						<td>Arguments related to D 
+						linker</td>
+						<td><code class="varname">DLIB</code>, 
+						<code class="varname">DLINK</code>, 
+						<code class="varname">DLINKFLAGS</code></td>
+					</tr><tr>
+						<td>docbook</td>
+						<td>Arguments related to 
+						Docbook tool</td>
+						<td><code class="varname">DOCBOOK_FOP</code>, 
+						<code class="varname">DOCBOOK_FOPFLAGS</code>, 
+						<code class="varname">DOCBOOK_XMLLINT</code>, 
+						<code class="varname">DOCBOOK_XMLLINTFLAGS</code>, 
+						<code class="varname">DOCBOOK_XSLTPROC</code>, 
+						<code class="varname">DOCBOOK_XSLTPROCPARAMS</code></td>
+					</tr><tr>
+						<td>dvipdf</td>
+						<td>Arguments related to 
+						dvipdf</td>
+						<td><code class="varname">DVIPDF</code>, 
+						<code class="varname">DVIPDFFLAGS</code></td>
+					</tr><tr>
+						<td>dvips</td>
+						<td>Arguments related to 
+						dvips</td>
+						<td><code class="varname">DVIPS</code>, 
+						<code class="varname">DVIPSFLAGS</code></td>
+					</tr><tr>
+						<td>f03</td>
+						<td>Arguments related to 
+						Fortran 03 compiler</td>
+						<td><code class="envar">F03</code>, 
+						<code class="varname">F03FLAGS</code>, 
+						<code class="varname">F03PATH</code></td>
+					</tr><tr>
+						<td>f08</td>
+						<td>Arguments related to 
+						Fortran 08 compiler</td>
+						<td><code class="envar">F08</code>, 
+						<code class="varname">F08FLAGS</code>, 
+						<code class="varname">F08PATH</code></td>
+					</tr><tr>
+						<td>f77</td>
+						<td>Arguments related to 
+						Fortran 77 compiler</td>
+						<td><code class="envar">F77</code>, 
+						<code class="varname">F77FLAGS</code>, 
+						<code class="varname">F77PATH</code></td>
+					</tr><tr>
+						<td>f90</td>
+						<td>Arguments related to 
+						Fortran 90 compiler</td>
+						<td><code class="envar">F90</code>, 
+						<code class="varname">F90FLAGS</code>, 
+						<code class="varname">F90PATH</code></td>
+					</tr><tr>
+						<td>f95</td>
+						<td>Arguments related to 
+						Fortran 95 compiler</td>
+						<td><code class="envar">F95</code>, 
+						<code class="varname">F95FLAGS</code>, 
+						<code class="varname">F95PATH</code></td>
+					</tr><tr>
+						<td>fortran</td>
+						<td>Arguments related to 
+						Fortran compiler</td>
+						<td><code class="varname">FORTRAN</code>, 
+						<code class="varname">FORTRANFLAGS</code>, 
+						<code class="varname">FORTRANMODDIR</code>, 
+						<code class="varname">FORTRANPATH</code></td>
+					</tr><tr>
+						<td>gettext</td>
+						<td>Arguments related to 
+						gettext tool</td>
+						<td><code class="varname">MSGFMT</code>, 
+						<code class="varname">MSGFMTFLAGS</code>, 
+						<code class="varname">MSGINIT</code>, 
+						<code class="varname">MSGINITFLAGS</code>, 
+						<code class="varname">MSGMERGE</code>, 
+						<code class="varname">MSGMERGEFLAGS</code>, 
+						<code class="varname">XGETTEXT</code>, 
+						<code class="varname">XGETTEXTFLAGS</code>, 
+						<code class="varname">XGETTEXTPATH</code></td>
+					</tr><tr>
+						<td>gnulink</td>
+						<td>Arguments related to 
+						GNU linker</td>
+						<td><code class="varname">RPATH</code></td>
+					</tr><tr>
+						<td>gs</td>
+						<td>Arguments related to 
+						Ghostscript</td>
+						<td><code class="varname">GS</code>, 
+						<code class="varname">GSFLAGS</code></td>
+					</tr><tr>
+						<td>jar</td>
+						<td>Arguments related Java 
+						archive tool</td>
+						<td><code class="envar">JAR</code>, 
+						<code class="varname">JARCHDIR</code>, 
+						<code class="varname">JARFLAGS</code></td>
+					</tr><tr>
+						<td>javac</td>
+						<td>Arguments related to 
+						Java compiler</td>
+						<td><code class="varname">JAVAC</code>, 
+						<code class="varname">JAVACFLAGS</code>, 
+						<code class="varname">JAVACLASSPATH</code>, 
+						<code class="varname">JAVASOURCEPATH</code>, 
+						<code class="varname">JAVAH</code>, 
+						<code class="varname">JAVAHFLAGS</code></td>
+					</tr><tr>
+						<td>lex</td>
+						<td>Arguments related to 
+						lex</td>
+						<td><code class="varname">LEX</code>, 
+						<code class="varname">LEXFLAGS</code></td>
+					</tr><tr>
+						<td>link</td>
+						<td>Arguments related to 
+						the linker</td>
+						<td><code class="varname">LDMODULE</code>, 
+						<code class="varname">LDMODULEFLAGS</code>, 
+						<code class="varname">LINK</code>, 
+						<code class="varname">LIBPATH</code>, 
+						<code class="varname">LINKFLAGS</code></td>
+					</tr><tr>
+						<td>m4</td>
+						<td>Arguments related to M4 
+						macro preprocessor</td>
+						<td><code class="varname">M4</code>, 
+						<code class="varname">M4FLAGS</code></td>
+					</tr><tr>
+						<td>midl</td>
+						<td>Arguments related to 
+						Microsoft IDL compiler</td>
+						<td><code class="varname">MIDL</code>, 
+						<code class="varname">MIDLFLAGS</code></td>
+					</tr><tr>
+						<td>mslink</td>
+						<td>Arguments related to 
+						Microsoft linker</td>
+						<td><code class="varname">MT</code>, 
+						<code class="varname">MRFLAGS</code>, 
+						<code class="varname">REGSVR</code>, 
+						<code class="varname">REGSVRFLAGS</code></td>
+					</tr><tr>
+						<td>mssdk</td>
+						<td>Arguments related to 
+						Microsoft SDK</td>
+						<td><code class="varname">MSSDK_DIR</code>, 
+						<code class="varname">MSSDK_VERSION</code></td>
+					</tr><tr>
+						<td>perforce</td>
+						<td>Arguments related to 
+						Perforce</td>
+						<td><code class="varname">P4</code>, 
+						<code class="varname">P4FLAGS</code></td>
+					</tr><tr>
+						<td>rcs</td>
+						<td>Arguments related to 
+						RCS tool</td>
+						<td><code class="varname">RCS</code>, 
+						<code class="varname">RCS_CO</code>, 
+						<code class="varname">RCS_COFLAGS</code></td>
+					</tr><tr>
+						<td>rmic</td>
+						<td>Arguments related to 
+						Java RMI stub compiler</td>
+						<td><code class="varname">RMIC</code>, 
+						<code class="varname">RMICFLAGS</code></td>
+					</tr><tr>
+						<td>rpcgen</td>
+						<td>Arguments related to 
+						RPC protocol compiler</td>
+						<td><code class="varname">RPCGEN</code>, 
+						<code class="varname">RPCGENCLIENTFLAGS</code>, 
+						<code class="varname">RPCGENFLAGS</code>, 
+						<code class="varname">RPCGENHEADERFLAGS</code>, 
+						<code class="varname">RPCGENSERVICEFLAGS</code>, 
+						<code class="varname">RPCGENXDRFLAGS</code></td>
+					</tr><tr>
+						<td>sccs</td>
+						<td>Arguments related to 
+						SCCS tool</td>
+						<td><code class="varname">SCCS</code>, 
+						<code class="varname">SCCSFLAGS</code>, 
+						<code class="varname">SCCSGETFLAGS</code></td>
+					</tr><tr>
+						<td>tar</td>
+						<td>Arguments related to 
+						tar archiver</td>
+						<td><code class="varname">TAR</code>, 
+						<code class="varname">TARFLAGS</code></td>
+					</tr><tr>
+						<td>tex</td>
+						<td>Arguments related to 
+						tex</td>
+						<td><code class="varname">BIBTEX</code>, 
+						<code class="varname">BIBTEXFLAGS</code>, 
+						<code class="varname">LATEX</code>, 
+						<code class="varname">LATEXFLAGS</code>, 
+						<code class="varname">LATEXRETRIES</code>, 
+						<code class="varname">MAKEINDEX</code>, 
+						<code class="varname">MAKEINDEXFLAGS</code>, 
+						<code class="varname">PDFLATEX</code>, 
+						<code class="varname">PDFLATEXFLAGS</code>, <code class="varname">PDFTEX</code>, 
+						<code class="varname">PDFTEXFLAGS</code>, <code class="varname">TEX</code>, 
+						<code class="varname">TEXFLAGS</code>, <code class="varname">TEXINPUTS</code></td>
+					</tr><tr>
+						<td>yacc</td>
+						<td>Arguments related to 
+						yacc</td>
+						<td><code class="varname">YACC</code>, 
+						<code class="varname">YACCFLAGS</code></td>
+					</tr><tr>
+						<td>zip</td>
+						<td>Arguments related to 
+						zip</td>
+						<td><code class="varname">ZIP</code>, 
+						<code class="varname">ZIPFLAGS</code></td>
 					</tr><tr></tr></tbody></table></div></section></section></section></body></html>
