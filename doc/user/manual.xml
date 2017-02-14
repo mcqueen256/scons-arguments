@@ -1822,7 +1822,8 @@ decl = SConsArguments.ImportArguments(&apos;myargs&apos;)</programlisting>
 						<td xmlns="http://docbook.org/ns/docbook">swig</td>
 						<td xmlns="http://docbook.org/ns/docbook">Arguments related to 
 						SWIG</td>
-						<td xmlns="http://docbook.org/ns/docbook"><varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">SWIGFLAGS</varname>, 
+            <td xmlns="http://docbook.org/ns/docbook"><varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">SWIGF</varname>, 
+            <varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">SWIGFLAGS</varname>, 
 						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">SWIGPATH</varname></td>
 					</tr>
 					<tr xmlns="http://docbook.org/ns/docbook">
