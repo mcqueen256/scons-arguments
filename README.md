@@ -25,7 +25,7 @@ arguments for core SCons tools (``cc``, ``c++``, ``link``, etc.).
 INSTALLATION
 ------------
 
-There are two method for installation:
+There are two methods of installation:
 
 ### Installation by simple copy
 
