@@ -1811,6 +1811,21 @@ decl = SConsArguments.ImportArguments(&apos;myargs&apos;)</programlisting>
 						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">SCCSGETFLAGS</varname></td>
 					</tr>
 					<tr xmlns="http://docbook.org/ns/docbook">
+						<td xmlns="http://docbook.org/ns/docbook">sunc++</td>
+						<td xmlns="http://docbook.org/ns/docbook">Arguments related to SunOS
+						</td>
+						<td xmlns="http://docbook.org/ns/docbook"><varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">PKGCHK</varname>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">PKGINFO</varname>
+            </td>
+					</tr>
+					<tr xmlns="http://docbook.org/ns/docbook">
+						<td xmlns="http://docbook.org/ns/docbook">swig</td>
+						<td xmlns="http://docbook.org/ns/docbook">Arguments related to 
+						SWIG</td>
+						<td xmlns="http://docbook.org/ns/docbook"><varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">SWIGFLAGS</varname>, 
+						<varname xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">SWIGPATH</varname></td>
+					</tr>
+					<tr xmlns="http://docbook.org/ns/docbook">
 						<td xmlns="http://docbook.org/ns/docbook">tar</td>
 						<td xmlns="http://docbook.org/ns/docbook">Arguments related to 
 						tar archiver</td>
