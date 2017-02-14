@@ -31,13 +31,15 @@ There are two methods of installation:
 
 Copy recursively ``SConsArguments/`` to your ``site_scons/`` directory
 
-    cp -r scons-arguments/SConsArguments your/projects/site_scons/
+```console
+cp -r scons-arguments/SConsArguments your/projects/site_scons/
+```
 
 ### Installation as a submodule in git-based projects
 
 Add the repository as a submodule to your project
 
-```shell
+```console
 git submodule add git://github.com/ptomulik/scons-arguments.git 3rd/scons-arguments
 ```
 
@@ -94,7 +96,7 @@ new command-line variables. Play with compiler/linker flags, for example run
 ``scons CCFLAGS='-g -O2'``. Try to define ``VERSION`` via command-line (example
 tested only on Linux/bash):
 
-```shell
+```console
 scons CPPDEFINES="-DVERSION='\\\"v. 1.2\\\"'"
 ```
 
@@ -110,7 +112,7 @@ Online User Manual may be found at:
 User documentation can be generated from the top level directory with the
 following command (see also requirements below)
 
-```shell
+```console
 scons user-doc
 ```
 The generated documentation is located in ``build/doc/user``.
@@ -124,7 +126,7 @@ Online API documentation may be found at:
 API documentation can be generated from the top level directory with the
 following command (see also requirements below)
 
-```shell
+```console
 scons api-doc
 ```
 
@@ -170,7 +172,7 @@ dated to 2008. The pip epydoc package 3.0.1 is not usable with current versions
 of python. Fortunately Debian package is patched to work with current python.
 Please use the ``python-epydoc`` package installed with apt-get.
 
-```shell
+```console
 apt-get install python-epydoc python-docutils python-pygments
 ```
 
@@ -183,7 +185,7 @@ We provide unit tests and end-to-end tests.
 
 To run unit tests type
 
-```shell
+```console
 scons unit-test
 ```
 
@@ -194,7 +196,7 @@ scons unit-test
 
 On Debian install them with:
 
-```shell
+```console
 apt-get install python-unittest2 python-mock
 ```
 
@@ -202,14 +204,14 @@ apt-get install python-unittest2 python-mock
 
 To run end-to-end tests, type
 
-```shell
+```console
 scons test
 ```
 
 End-to-end tests are stored under ``test/`` directory. To run particular test
 type (on Linux):
 
-```shell
+```console
 SCONS_EXTERNAL_TEST=1 python runtest.py test/SConsArguments/ArgumentDeclaration/sconstest-argumentdeclaration_1.py
 ```
 
@@ -220,13 +222,13 @@ SCONS_EXTERNAL_TEST=1 python runtest.py test/SConsArguments/ArgumentDeclaration/
 
 Download the SCons testing framework with:
 
-```shell
+```console
 python ./bin/downloads.py scons-test
 ```
 
 or
 
-```shell
+```console
 python ./bin/downloads.py
 ```
 
