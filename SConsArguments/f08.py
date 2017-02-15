@@ -92,12 +92,12 @@ def arguments(**kw):
             include_groups : str | list
                 include only arguments assigned to these groups
             exclude_groups : str | list
-                exclude arguents assigned to these groups
+                exclude arguments assigned to these groups
             f08_include_groups : str | list
                 include only arguments assigned to these groups, this has
                 higher priority than **include_groups**
             f08_exclude_groups : str | list
-                exclude arguents assigned to these groups, this has higher
+                exclude arguments assigned to these groups, this has higher
                 priority than **exclude_groups**
     """
     return export_arguments('f08', _all_arguments, _groups, **kw)

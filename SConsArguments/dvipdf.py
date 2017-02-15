@@ -63,12 +63,12 @@ def arguments(**kw):
             include_groups : str | list
                 include only arguments assigned to these groups
             exclude_groups : str | list
-                exclude arguents assigned to these groups
+                exclude arguments assigned to these groups
             dvipdf_include_groups : str | list
                 include only arguments assigned to these groups, this has
                 higher priority than **include_groups**
             dvipdf_exclude_groups : str | list
-                exclude arguents assigned to these groups, this has higher
+                exclude arguments assigned to these groups, this has higher
                 priority than **exclude_groups**
     """
     return export_arguments('dvipdf', _all_arguments, _groups, **kw)

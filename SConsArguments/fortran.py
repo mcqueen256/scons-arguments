@@ -98,12 +98,12 @@ def arguments(**kw):
             include_groups : str | list
                 include only arguments assigned to these groups
             exclude_groups : str | list
-                exclude arguents assigned to these groups
+                exclude arguments assigned to these groups
             fortran_include_groups : str | list
                 include only arguments assigned to these groups, this has
                 higher priority than **include_groups**
             fortran_exclude_groups : str | list
-                exclude arguents assigned to these groups, this has higher
+                exclude arguments assigned to these groups, this has higher
                 priority than **exclude_groups**
     """
     return export_arguments('fortran', _all_arguments, _groups, **kw)

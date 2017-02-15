@@ -143,12 +143,12 @@ def arguments(**kw):
             include_groups : str | list
                 include only arguments assigned to these groups
             exclude_groups : str | list
-                exclude arguents assigned to these groups
+                exclude arguments assigned to these groups
             cc_include_groups : str | list
                 include only arguments assigned to these groups, this has
                 higher priority than **include_groups**
             cc_exclude_groups : str | list
-                exclude arguents assigned to these groups, this has higher
+                exclude arguments assigned to these groups, this has higher
                 priority than **exclude_groups**
     """
     return export_arguments('cc', _all_arguments, _groups, **kw)

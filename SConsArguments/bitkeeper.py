@@ -66,12 +66,12 @@ def arguments(**kw):
             include_groups : str | list
                 include only arguments assigned to these groups
             exclude_groups : str | list
-                exclude arguents assigned to these groups
+                exclude arguments assigned to these groups
             bitkeeper_include_groups : str | list
                 include only arguments assigned to these groups, this has
                 higher priority than **include_groups**
             bitkeeper_exclude_groups : str | list
-                exclude arguents assigned to these groups, this has higher
+                exclude arguments assigned to these groups, this has higher
                 priority than **exclude_groups**
     """
     return export_arguments('bitkeeper', _all_arguments, _groups, **kw)
